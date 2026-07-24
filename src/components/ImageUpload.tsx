@@ -1,0 +1,255 @@
+// 🛡️ PROHIBIDO MODIFICAR SIN ORDEN EXPLÍCITA DEL USUARIO (Ver PROJECT_RULES.md)
+// ⚠️ CRITICAL WARNING: FILE PROTECTED BY PROJECT RULES.
+// DO NOT MODIFY THIS FILE WITHOUT EXPLICIT USER INSTRUCTION.
+
+"use client"
+
+import { useState, useCallback, useRef } from 'react'
+import Image from 'next/image'
+import { useLanguage } from '@/contexts/LanguageContext'
+import { uploadToCloudinary } from '@/lib/cloudinary'
+
+// 🚀 Función de compresión de imágenes (nativa, sin dependencias)
+async function compressImage(file: File): Promise<File> {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = (event) => {
+            const img = new (window as any).Image()
+            img.src = event.target?.result
+            img.onload = () => {
+                const canvas = document.createElement('canvas')
+                let width = img.width
+                let height = img.height
+
+                // Máximo 1920px en el lado más largo
+                const maxSize = 1920
+                if (width > height && width > maxSize) {
+                    height = (height * maxSize) / width
+                    width = maxSize
+                } else if (height > maxSize) {
+                    width = (width * maxSize) / height
+                    height = maxSize
+                }
+
+                canvas.width = width
+                canvas.height = height
+                const ctx = canvas.getContext('2d')
+                ctx?.drawImage(img, 0, 0, width, height)
+
+                canvas.toBlob(
+                    (blob) => {
+                        if (blob) {
+                            const compressedFile = new File([blob], file.name, {
+                                type: 'image/jpeg',
+                                lastModified: Date.now(),
+                            })
+                            console.log(`🗜️ Comprimido: ${(file.size / 1024 / 1024).toFixed(2)}MB → ${(compressedFile.size / 1024 / 1024).toFixed(2)}MB`)
+                            resolve(compressedFile)
+                        } else {
+                            reject(new Error('Error al comprimir imagen'))
+                        }
+                    },
+                    'image/jpeg',
+                    0.85 // Calidad 85%
+                )
+            }
+            img.onerror = reject
+        }
+        reader.onerror = reject
+    })
+}
+
+interface ImageUploadProps {
+    images: string[]
+    onImagesChange: (images: string[]) => Promise<void> | void
+    maxImages?: number
+    label?: string
+    required?: boolean
+    fallbackContent?: React.ReactNode  // Contenido a mostrar cuando no hay imágenes
+    imageType?: 'vehicle' | 'profile' | 'business' // 🛡️ NEW: Tipo de imagen para moderación
+}
+
+export default function ImageUpload({ images, onImagesChange, maxImages = 5, label, required = true, fallbackContent, imageType = 'vehicle' }: ImageUploadProps) {
+    const { t } = useLanguage()
+    const [uploading, setUploading] = useState(false)
+    const [uploadError, setUploadError] = useState<string | null>(null)
+    const fileInputRef = useRef<HTMLInputElement>(null)
+    const cameraInputRef = useRef<HTMLInputElement>(null)
+
+    // 🛡️ REMOVIDO: Usando utilidad centralizada lib/cloudinary.ts para mayor resiliencia
+
+    const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = Array.from(e.target.files || [])
+
+        if (files.length === 0) return
+
+        // Validar que no exceda el máximo (si NO es reemplazo único)
+        if (maxImages > 1 && images.length + files.length > maxImages) {
+            setUploadError(`Solo puedes subir máximo ${maxImages} imágenes`)
+            return
+        }
+
+        setUploading(true)
+        setUploadError(null)
+
+        try {
+            // 🚀 COMPRIMIR todas las imágenes ANTES de subir
+            console.log(`🗜️ Comprimiendo ${files.length} imagen(es)...`)
+            const compressedFiles = await Promise.all(
+                files.map(file => compressImage(file))
+            )
+
+            const uploadPromises = compressedFiles.map(file => uploadToCloudinary(file))
+            const urls = await Promise.all(uploadPromises)
+
+            // Si es max 1, REEMPLAZAR. Si no, AGREGAR.
+            if (maxImages === 1) {
+                await onImagesChange([urls[0]])
+            } else {
+                await onImagesChange([...images, ...urls])
+            }
+        } catch (error: any) {
+            console.error('Error subiendo imágenes:', error)
+            // Mostrar mensaje enviado desde el backend (moderación) o genérico
+            setUploadError(error.message || 'Error al subir imágenes. Intenta de nuevo.')
+        } finally {
+            setUploading(false)
+            // Reset input
+            e.target.value = ''
+        }
+    }
+
+    const removeImage = (index: number) => {
+        const newImages = images.filter((_, i) => i !== index)
+        onImagesChange(newImages)
+    }
+
+    return (
+        <div>
+            <div className="mb-4">
+                <label className="block text-sm font-medium text-text-primary mb-2">
+                    {label || t('publish.labels.vehicle_photos')} {required && <span className="text-red-500">*</span>}
+                </label>
+                <p className="text-xs text-text-secondary mb-3">
+                    {maxImages === 1
+                        ? t('image_upload.business_desc')
+                        : t('image_upload.vehicle_desc', { max: maxImages.toString() })
+                    }
+                </p>
+
+                <div className="flex gap-3">
+                    {/* Botón de Galería */}
+                    <button
+                        type="button"
+                        disabled={uploading || (maxImages > 1 && images.length >= maxImages)}
+                        onClick={() => fileInputRef.current?.click()}
+                        className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg transition font-medium disabled:opacity-50 ${uploading
+                            ? 'bg-gray-400 text-white cursor-not-allowed'
+                            : 'bg-surface-highlight text-text-primary hover:bg-surface border border-transparent hover:border-primary-700/50'
+                            }`}
+                    >
+                        {uploading ? (
+                            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        ) : (
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                        )}
+                        <span>
+                            {maxImages === 1 && images.length > 0
+                                ? t('image_upload.change_gallery')
+                                : t('image_upload.choose_gallery')}
+                        </span>
+                    </button>
+
+                    {/* Botón de Cámara */}
+                    <button
+                        type="button"
+                        disabled={uploading || (maxImages > 1 && images.length >= maxImages)}
+                        onClick={() => cameraInputRef.current?.click()}
+                        className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg transition font-medium disabled:opacity-50 ${uploading
+                            ? 'bg-gray-400 text-white cursor-not-allowed'
+                            : 'bg-primary-700/10 text-primary-400 hover:bg-primary-700/20 border border-primary-700/30 hover:border-primary-700'
+                            }`}
+                    >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <span>{t('image_upload.take_photo')}</span>
+                    </button>
+
+                    <input
+                        ref={fileInputRef}
+                        type="file"
+                        multiple={maxImages > 1}
+                        accept="image/*"
+                        onChange={handleFileSelect}
+                        className="hidden"
+                    />
+                    <input
+                        ref={cameraInputRef}
+                        type="file"
+                        accept="image/*"
+                        capture="environment"
+                        onChange={handleFileSelect}
+                        className="hidden"
+                    />
+                </div>
+
+                {uploadError && (
+                    <p className="text-sm text-red-400 mt-2">{uploadError}</p>
+                )}
+            </div>
+
+            {/* Grid de imágenes */}
+            {images.length > 0 && (
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {images.map((url, index) => (
+                        <div key={index} className={`relative bg-surface-highlight rounded-lg overflow-hidden group ${maxImages === 1 ? 'w-full max-w-sm mx-auto flex justify-center bg-black/50' : 'aspect-video'}`}>
+                            <img
+                                src={url}
+                                alt={`Foto ${index + 1}`}
+                                className={maxImages === 1 ? "max-w-full h-auto max-h-96 object-contain" : "w-full h-full object-contain bg-black/50"}
+                            />
+
+                            {/* Badge de foto principal */}
+                            {index === 0 && (
+                                <div className="absolute top-2 left-2 px-2 py-1 bg-primary-700 text-white text-xs font-medium rounded shadow-sm">
+                                    {t('image_upload.main_photo')}
+                                </div>
+                            )}
+
+                            {/* Botón de eliminar */}
+                            <button
+                                type="button"
+                                onClick={() => removeImage(index)}
+                                className="absolute top-2 right-2 w-8 h-8 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition flex items-center justify-center hover:bg-red-600"
+                            >
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                    ))}
+                </div>
+            )}
+
+            {images.length === 0 && (
+                fallbackContent ? (
+                    fallbackContent
+                ) : (
+                    <div className="border-2 border-dashed border-surface-highlight rounded-lg p-8 text-center">
+                        <svg className="w-12 h-12 text-text-secondary mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <p className="text-text-secondary text-sm">
+                            {t('image_upload.no_photos_yet')}
+                        </p>
+                    </div>
+                )
+            )}
+        </div>
+    )
+}

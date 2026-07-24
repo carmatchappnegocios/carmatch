@@ -1,0 +1,22 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.carmatch.app",
+      "sha256_cert_fingerprints": [
+        "33:9D:14:2E:84:25:1B:80:56:40:2E:D1:41:CF:AE:C9:6B:5A:FB:2B:26:D6:04:53:9D:BE:C3:FB:B5:FC:D9:C2"
+      ]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "net.carmatchapp.twa",
+      "sha256_cert_fingerprints": [
+        "33:9D:14:2E:84:25:1B:80:56:40:2E:D1:41:CF:AE:C9:6B:5A:FB:2B:26:D6:04:53:9D:BE:C3:FB:B5:FC:D9:C2"
+      ]
+    }
+  }
+]

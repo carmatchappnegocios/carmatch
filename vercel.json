@@ -1,0 +1,52 @@
+{
+    "headers": [
+        {
+            "source": "/.well-known/assetlinks.json",
+            "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=3600"
+                }
+            ]
+        },
+        {
+            "source": "/(.*).webmanifest",
+            "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "application/manifest+json"
+                }
+            ]
+        }
+    ],
+    "crons": [
+        {
+            "path": "/api/cron/daily-maintenance",
+            "schedule": "0 9 * * *"
+        },
+        {
+            "path": "/api/cron/engagement",
+            "schedule": "0 9 * * *"
+        },
+        {
+            "path": "/api/cron/engagement",
+            "schedule": "0 20 * * *"
+        },
+        {
+            "path": "/api/cron/update-vehicles",
+            "schedule": "0 0 * * 0"
+        },
+        {
+            "path": "/api/cron/update-taxonomy",
+            "schedule": "0 3 * * 0"
+        },
+        {
+            "path": "/api/cron/ai-health",
+            "schedule": "0 4 * * *"
+        }
+    ]
+}

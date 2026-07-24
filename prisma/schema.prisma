@@ -1,0 +1,1044 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [postgis]
+}
+
+model User {
+  id                      String                    @id @default(cuid())
+  email                   String                    @unique
+  emailVerified           DateTime?
+  name                    String?
+  image                   String?
+  password                String?
+  phone                   String?
+  city                    String?
+  credits                 Int                       @default(0)
+  isActive                Boolean                   @default(true)
+  createdAt               DateTime                  @default(now())
+  updatedAt               DateTime                  @updatedAt
+  lastLatitude            Float?
+  lastLongitude           Float?
+  lastLocationUpdate      DateTime?
+  isAdmin                 Boolean                   @default(false)
+  fraudStrikes            Int                       @default(0)
+  lifetimeBusinessCount   Int                       @default(0)
+  lifetimeVehicleCount    Int                       @default(0)
+  trustedContactId        String?
+  country                 String?                   @default("MX")
+  accounts                Account[]
+  analyticsEvents         AnalyticsEvent[]
+  businesses              Business[]
+  businessFavorites       BusinessFavorite[]
+  buyerChats              Chat[]                    @relation("BuyerChats")
+  sellerChats             Chat[]                    @relation("SellerChats")
+  creditTransactions      CreditTransaction[]
+  fingerprints            DigitalFingerprint[]
+  dislikes                Dislike[]
+  fakeNotifCounters       FakeNotificationCounter[]
+  favorites               Favorite[]
+  sentMessages            Message[]
+  notifications           Notification[]
+  payments                Payment[]
+  paymentMethods          PaymentMethod[]
+  publicationFingerprints PublicationFingerprint[]
+  pushSubscriptions       PushSubscription[]
+  reportsMade             Report[]                  @relation("Reporter")
+  reportsReceived         Report[]                  @relation("ReportedUser")
+  reportMessages          ReportMessage[]
+  counterpartAlerts       SOSAlert[]                @relation("CounterpartAlerts")
+  victimAlerts            SOSAlert[]                @relation("VictimAlerts")
+  locationLogs            LocationLog[]
+  sessions                Session[]
+  betaSessions            BetaSession[]
+  studioConversations     StudioConversation[]
+  studioMessages          StudioMessage[]
+  trustedContact          User?                     @relation("TrustedContact", fields: [trustedContactId], references: [id])
+  trustedBy               User[]                    @relation("TrustedContact")
+  vehicles                Vehicle[]
+
+  @@index([email])
+  @@index([city])
+}
+
+model Waitlist {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  source    String?  @default("landing")
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
+
+model SystemSettings {
+  id               String   @id @default("global")
+  nextReasonNumber Int      @default(1)
+  updatedAt        DateTime @updatedAt
+}
+
+model StudioConversation {
+  id        String          @id @default(cuid())
+  userId    String
+  title     String          @default("Nueva Idea")
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages  StudioMessage[]
+
+  @@index([userId])
+  @@index([updatedAt])
+}
+
+model StudioMessage {
+  id             String              @id @default(cuid())
+  userId         String
+  conversationId String?
+  role           String              @default("assistant")
+  content        String
+  type           String?
+  imagePrompt    String?
+  images         Json?
+  platforms      Json?
+  createdAt      DateTime            @default(now())
+  conversation   StudioConversation? @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  user           User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([conversationId])
+  @@index([createdAt])
+}
+
+model SystemLog {
+  id        String   @id @default(cuid())
+  level     String
+  message   String
+  source    String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Vehicle {
+  id                 String           @id @default(cuid())
+  userId             String
+  title              String
+  description        String
+  brand              String
+  model              String
+  year               Int
+  price              Decimal          @db.Decimal(15, 2)
+  city               String
+  colony             String?
+  state              String?
+  country            String?          @default("MX")
+  images             String[]
+  status             VehicleStatus    @default(ACTIVE)
+  moderationStatus   ModerationStatus @default(PENDING_AI)
+  isFreePublication  Boolean          @default(true)
+  publishedAt        DateTime         @default(now())
+  expiresAt          DateTime?
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  mileage            Int?
+  transmission       String?
+  fuel               String?
+  engine             String?
+  doors              Int?
+  color              String?
+  vehicleType        String?
+  condition          String?
+  accidents          Boolean?
+  owners             Int?
+  features           String[]
+  searchIndex        String?
+  displacement       Float?
+  cargoCapacity      Float?
+  operatingHours     Int?
+  latitude           Float?
+  longitude          Float?
+  currency           String           @default("MXN")
+  mileageUnit        String           @default("km")
+  passengers         Int?
+  traction           String?
+  aspiration         String?
+  axles              Int?
+  batteryCapacity    Float?
+  cylinders          Int?
+  hp                 Int?
+  moderationFeedback String?
+  range              Int?
+  torque             String?
+  weight             Int?
+  fakeFavorites      Int              @default(0)
+  views              Int              @default(0)
+  version            String?
+  chats              Chat[]
+  dislikes           Dislike[]
+  favorites          Favorite[]
+  notifications      Notification[]
+  reports            Report[]
+  user               User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([city])
+  @@index([status])
+  @@index([vehicleType])
+  @@index([brand])
+  @@index([year])
+  @@index([price])
+  @@index([latitude, longitude])
+  @@index([status, createdAt])
+  @@index([status, price])
+  @@index([status, year])
+  @@index([model])
+  @@index([status, brand])
+  @@index([status, vehicleType])
+}
+
+model Business {
+  id                  String                    @id @default(cuid())
+  userId              String
+  name                String
+  category            String
+  description         String?
+  phone               String?
+  additionalPhones    String[]
+  whatsapp            String?
+  telegram            String?
+  website             String?
+  facebook            String?
+  instagram           String?
+  tiktok              String?
+  hours               String?
+  address             String
+  street              String?
+  streetNumber        String?
+  colony              String?
+  city                String
+  state               String?
+  country             String?                   @default("MX")
+  latitude            Float
+  longitude           Float
+  images              String[]
+  services            String[]
+  isActive            Boolean                   @default(true)
+  isFreePublication   Boolean                   @default(true)
+  publishedAt         DateTime                  @default(now())
+  expiresAt           DateTime?
+  createdAt           DateTime                  @default(now())
+  updatedAt           DateTime                  @updatedAt
+  hasEmergencyService Boolean                   @default(false)
+  hasHomeService      Boolean                   @default(false)
+  is24Hours           Boolean                   @default(false)
+  hasMiniWeb          Boolean                   @default(false)
+  isSafeMeetingPoint  Boolean                   @default(false)
+  slug                String?                   @unique
+  user                User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  analytics           BusinessAnalytics?
+  favorites           BusinessFavorite[]
+  notificationLogs    BusinessNotificationLog[]
+  views               BusinessView[]
+  notifications       Notification[]
+  reports             Report[]
+
+  @@index([userId])
+  @@index([category])
+  @@index([city])
+  @@index([latitude, longitude])
+  @@index([isActive])
+  @@index([expiresAt])
+  @@index([slug])
+}
+
+model BusinessAnalytics {
+  id                   String    @id @default(cuid())
+  businessId           String    @unique
+  realViews            Int       @default(0)
+  realClicks           Int       @default(0)
+  realSearches         Int       @default(0)
+  fakeViews            Int       @default(0)
+  fakeSearches         Int       @default(0)
+  lastFakeNotification DateTime?
+  monthlyFakeCount     Int       @default(0)
+  currentMonth         Int
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  business             Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@index([businessId])
+}
+
+model BusinessNotificationLog {
+  id         String   @id @default(cuid())
+  businessId String
+  type       String
+  message    String
+  category   String
+  createdAt  DateTime @default(now())
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@index([businessId, createdAt])
+}
+
+model Favorite {
+  id        String   @id @default(cuid())
+  userId    String
+  vehicleId String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  vehicle   Vehicle  @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, vehicleId])
+  @@index([userId])
+}
+
+model Dislike {
+  id        String   @id @default(cuid())
+  userId    String
+  vehicleId String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  vehicle   Vehicle  @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, vehicleId])
+  @@index([userId])
+}
+
+model BusinessView {
+  id         String   @id @default(cuid())
+  userId     String?
+  businessId String
+  createdAt  DateTime @default(now())
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@index([businessId])
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model BusinessFavorite {
+  id         String   @id @default(cuid())
+  userId     String
+  businessId String
+  createdAt  DateTime @default(now())
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, businessId])
+  @@index([userId])
+  @@index([businessId])
+}
+
+model DigitalFingerprint {
+  id         String   @id @default(cuid())
+  userId     String
+  ipAddress  String
+  userAgent  String?
+  createdAt  DateTime @default(now())
+  deviceHash String   @unique
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([deviceHash])
+  @@index([ipAddress])
+}
+
+model PublicationFingerprint {
+  id              String   @id @default(cuid())
+  userId          String
+  publicationType String
+  publicationId   String
+  latitude        Float
+  longitude       Float
+  ipAddress       String
+  deviceHash      String
+  userAgent       String?
+  createdAt       DateTime @default(now())
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([publicationType])
+  @@index([latitude, longitude])
+  @@index([deviceHash])
+  @@index([ipAddress])
+  @@index([publicationId])
+}
+
+model Payment {
+  id            String        @id @default(cuid())
+  userId        String
+  amount        Decimal       @db.Decimal(10, 2)
+  currency      String        @default("MXN")
+  status        PaymentStatus @default(PENDING)
+  paymentMethod String?
+  transactionId String?       @unique
+  creditsAdded  Int
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+}
+
+model CreditPackage {
+  id              String   @id @default(cuid())
+  name            String
+  credits         Int
+  price           Decimal  @db.Decimal(10, 2)
+  discountPercent Int      @default(0)
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+}
+
+model Chat {
+  id           String        @id @default(cuid())
+  vehicleId    String
+  buyerId      String
+  sellerId     String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  appointments Appointment[]
+  buyer        User          @relation("BuyerChats", fields: [buyerId], references: [id], onDelete: Cascade)
+  seller       User          @relation("SellerChats", fields: [sellerId], references: [id], onDelete: Cascade)
+  vehicle      Vehicle       @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+  messages     Message[]
+
+  @@unique([vehicleId, buyerId])
+  @@index([buyerId])
+  @@index([sellerId])
+  @@index([vehicleId])
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  chatId    String
+  senderId  String
+  content   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  chat      Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  sender    User     @relation(fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@index([chatId])
+  @@index([senderId])
+  @@index([createdAt])
+}
+
+model Notification {
+  id         String    @id @default(cuid())
+  userId     String
+  type       String
+  title      String
+  message    String
+  link       String?
+  metadata   Json?
+  isRead     Boolean   @default(false)
+  isFake     Boolean   @default(false)
+  vehicleId  String?
+  businessId String?
+  fromUserId String?
+  createdAt  DateTime  @default(now())
+  count      Int       @default(1)
+  updatedAt  DateTime  @default(now()) @updatedAt
+  business   Business? @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  vehicle    Vehicle?  @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([isRead])
+  @@index([createdAt])
+}
+
+model PushSubscription {
+  id        String   @id @default(cuid())
+  userId    String
+  endpoint  String
+  p256dh    String
+  auth      String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model SimulatedMetric {
+  id         String   @id @default(cuid())
+  targetId   String
+  targetType String
+  month      String
+  count      Int      @default(0)
+  target     Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([targetId, month])
+  @@index([targetType])
+}
+
+model Appointment {
+  id                  String    @id @default(cuid())
+  chatId              String
+  proposerId          String
+  date                DateTime
+  location            String
+  address             String?
+  latitude            Float?
+  longitude           Float?
+  status              String
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  lastSafetyCheck     DateTime?
+  monitoringActive    Boolean   @default(false)
+  missedResponseCount Int           @default(0)
+  notifiedMilestones  String[]
+  buyerArrived        Boolean       @default(false)
+  sellerArrived       Boolean       @default(false)
+  trackingEndTime     DateTime?
+  chat                Chat          @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  locationLogs        LocationLog[]
+
+  @@index([chatId])
+  @@index([status])
+  @@index([date])
+}
+
+model SOSAlert {
+  id             String   @id @default(cuid())
+  victimId       String
+  counterpartId  String?
+  chatId         String
+  appointmentId  String?
+  status         String   @default("ACTIVE")
+  victimLat      Float?
+  victimLng      Float?
+  counterpartLat Float?
+  counterpartLng Float?
+  expiresAt      DateTime?
+  isFalseAlarm   Boolean       @default(false)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  counterpart    User?         @relation("CounterpartAlerts", fields: [counterpartId], references: [id])
+  victim         User          @relation("VictimAlerts", fields: [victimId], references: [id])
+  locationLogs   LocationLog[]
+}
+
+model PaymentMethod {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String
+  last4     String
+  brand     String?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model CreditTransaction {
+  id          String   @id @default(cuid())
+  userId      String
+  amount      Int
+  description String
+  relatedId   String?
+  details     Json?
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model FakeNotificationCounter {
+  id            String   @id @default(cuid())
+  userId        String
+  monthYear     String
+  targetCount   Int
+  currentCount  Int      @default(0)
+  lastGenerated DateTime @default(now())
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, monthYear])
+  @@index([monthYear])
+}
+
+model AnalyticsEvent {
+  id         String   @id @default(cuid())
+  userId     String?
+  eventType  String
+  entityType String
+  entityId   String?
+  metadata   Json?
+  createdAt  DateTime @default(now())
+  user       User?    @relation(fields: [userId], references: [id])
+
+  @@index([eventType])
+  @@index([entityType])
+  @@index([createdAt])
+}
+
+model Brand {
+  id         String    @id @default(cuid())
+  name       String    @unique
+  category   String
+  logoUrl    String?
+  isActive   Boolean   @default(true)
+  source     String    @default("manual")
+  confidence Float?
+  verifiedAt DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  models     Model[]
+
+  @@index([category])
+  @@index([isActive])
+  @@index([source])
+}
+
+model Model {
+  id               String    @id @default(cuid())
+  name             String
+  brandId          String
+  yearIntroduced   Int?
+  yearDiscontinued Int?
+  isElectric       Boolean   @default(false)
+  isHybrid         Boolean   @default(false)
+  isActive         Boolean   @default(true)
+  source           String    @default("manual")
+  confidence       Float?
+  verifiedAt       DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  brand            Brand     @relation(fields: [brandId], references: [id], onDelete: Cascade)
+
+  @@unique([brandId, name])
+  @@index([brandId])
+  @@index([isActive])
+  @@index([yearIntroduced])
+}
+
+model VehicleType {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  category    String
+  icon        String?
+  description String?
+  isActive    Boolean  @default(true)
+  source      String   @default("manual")
+  createdAt   DateTime @default(now())
+
+  @@index([category])
+  @@index([isActive])
+}
+
+model AutoUpdateLog {
+  id                  String   @id @default(cuid())
+  status              String
+  brandsAdded         Int      @default(0)
+  modelsAdded         Int      @default(0)
+  typesAdded          Int      @default(0)
+  errors              String?
+  executionTime       Int?
+  metadata            Json?
+  createdAt           DateTime @default(now())
+  confidenceThreshold Float?
+  region              String?
+  source              String?
+  totalProcessed      Int      @default(0)
+  triggeredBy         String?
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model spatial_ref_sys {
+  srid      Int     @id
+  auth_name String? @db.VarChar(256)
+  auth_srid Int?
+  srtext    String? @db.VarChar(2048)
+  proj4text String? @db.VarChar(2048)
+}
+
+model SearchMetric {
+  id           String   @id @default(cuid())
+  query        String?
+  category     String?
+  latitude     Float
+  longitude    Float
+  userId       String?
+  createdAt    DateTime @default(now())
+  brand        String?
+  maxPrice     Float?
+  maxYear      Int?
+  minPrice     Float?
+  minYear      Int?
+  model        String?
+  vehicleType  String?
+  color        String?
+  fuel         String?
+  transmission String?
+  cylinders    Int?
+  features     String[]
+
+  @@index([latitude, longitude])
+  @@index([createdAt])
+  @@index([brand])
+  @@index([category])
+  @@index([vehicleType])
+  @@index([model])
+}
+
+model OpportunityLog {
+  id           String   @id @default(cuid())
+  businessType String
+  latitude     Float
+  longitude    Float
+  reason       String?
+  createdAt    DateTime @default(now())
+
+  @@index([latitude, longitude])
+  @@index([createdAt])
+}
+
+model Report {
+  id           String          @id @default(cuid())
+  reporterId   String?
+  reason       String
+  description  String?
+  status       ReportStatus    @default(PENDING)
+  vehicleId    String?
+  businessId   String?
+  targetUserId String?
+  imageUrl     String?
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  business     Business?       @relation(fields: [businessId], references: [id])
+  reporter     User?           @relation("Reporter", fields: [reporterId], references: [id], onDelete: Cascade)
+  targetUser   User?           @relation("ReportedUser", fields: [targetUserId], references: [id])
+  vehicle      Vehicle?        @relation(fields: [vehicleId], references: [id])
+  messages     ReportMessage[]
+
+  @@index([reporterId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model ReportMessage {
+  id        String   @id @default(cuid())
+  reportId  String
+  senderId  String?
+  content   String
+  createdAt DateTime @default(now())
+  report    Report   @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  sender    User?    @relation(fields: [senderId], references: [id])
+
+  @@index([reportId])
+  @@index([senderId])
+}
+
+model PublicityCampaign {
+  id                    String    @id @default(cuid())
+  title                 String
+  clientName            String?
+  imageUrl              String
+  targetUrl             String?
+  startDate             DateTime
+  endDate               DateTime
+  isActive              Boolean   @default(true)
+  impressionCount       Int       @default(0)
+  clickCount            Int       @default(0)
+  socialMediaEnabled    Boolean   @default(false)
+  lastSocialPost        DateTime?
+  postingFrequencyHours Int       @default(6)
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  metadata              Json?
+
+  @@index([isActive])
+  @@index([startDate, endDate])
+}
+
+model SocialPost {
+  id             String         @id @default(cuid())
+  campaignId     String?
+  platform       SocialPlatform @default(INSTAGRAM)
+  content        String
+  imageUrl       String?
+  videoScript    String?
+  videoPrompt    String?
+  status         PostStatus     @default(DRAFT)
+  scheduledFor   DateTime?
+  publishedAt    DateTime?
+  aiPrompt       String?
+  targetPersona  String?
+  marketingAngle String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  metadata       Json?
+}
+
+model DailyPlan {
+  id            String      @id @default(cuid())
+  date          DateTime    @unique
+  createdAt     DateTime    @default(now())
+  pomelliPrompt String?
+  slots         DailySlot[]
+
+  @@index([date])
+}
+
+model DailySlot {
+  id              String    @id @default(cuid())
+  planId          String
+  hour            Int
+  contentType     String
+  topic           String
+  strategy        String?
+  imagePrompt     String?
+  videoPrompt     String?
+  newsUrl         String?
+  newsTitle       String?
+  newsExcerpt     String?
+  captionTiktok   String?
+  captionIg       String?
+  captionFb       String?
+  captionX        String?
+  captionThreads  String?
+  captionKwai     String?
+  linkTipTiktok   String?
+  linkTipIg       String?
+  linkTipFb       String?
+  linkTipX        String?
+  linkTipThreads  String?
+  linkTipKwai     String?
+  doneTiktok      Boolean   @default(false)
+  doneIg          Boolean   @default(false)
+  doneFb          Boolean   @default(false)
+  doneX           Boolean   @default(false)
+  doneThreads     Boolean   @default(false)
+  doneKwai        Boolean   @default(false)
+  captionMeta     String?
+  captionYoutube  String?
+  doneMeta        Boolean   @default(false)
+  doneYoutube     Boolean   @default(false)
+  linkTipMeta     String?
+  linkTipYoutube  String?
+  pomelliPrompt   String?
+  generatedImages String[]  @default([])
+  linkComment     String?
+  plan            DailyPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  @@index([planId])
+  @@index([hour])
+}
+
+model WeeklyPlan {
+  id        String      @id @default(cuid())
+  startDate DateTime    @unique
+  createdAt DateTime    @default(now())
+  days      WeeklyDay[]
+
+  @@index([startDate])
+}
+
+model WeeklyDay {
+  id           String       @id @default(cuid())
+  weeklyPlanId String
+  date         DateTime
+  dayIndex     Int
+  plan         WeeklyPlan   @relation(fields: [weeklyPlanId], references: [id], onDelete: Cascade)
+  slots        WeeklySlot[]
+
+  @@index([weeklyPlanId])
+  @@index([date])
+}
+
+model WeeklySlot {
+  id                     String    @id @default(cuid())
+  weeklyDayId            String
+  hour                   Int
+  type                   String
+  contentType            String
+  topic                  String
+  strategy               String?
+  imagePrompt            String?
+  videoPrompt            String?
+  pomelliPrompt          String?
+  captionTiktok          String?
+  captionIg              String?
+  captionFb              String?
+  captionX               String?
+  captionThreads         String?
+  captionKwai            String?
+  captionYoutube         String?
+  captionMeta            String?
+  linkComment            String?
+  doneTiktok             Boolean   @default(false)
+  doneIg                 Boolean   @default(false)
+  doneFb                 Boolean   @default(false)
+  doneX                  Boolean   @default(false)
+  doneThreads            Boolean   @default(false)
+  doneKwai               Boolean   @default(false)
+  doneYoutube            Boolean   @default(false)
+  doneMeta               Boolean   @default(false)
+  generatedImages        String[]  @default([])
+  musicSuggestion        String?
+  screenshotInstructions String?
+  characters             String?
+  createdAt              DateTime  @default(now())
+  day                    WeeklyDay @relation(fields: [weeklyDayId], references: [id], onDelete: Cascade)
+
+  @@index([weeklyDayId])
+  @@index([hour])
+}
+
+enum VehicleStatus {
+  ACTIVE
+  INACTIVE
+  SOLD
+}
+
+enum BusinessType {
+  TALLER
+  CONCESIONARIO
+  CARWASH
+  DESPONCHADORA
+  FINANCIAMIENTO
+  REFACCIONES
+  PINTURA
+  MECANICA
+  ELECTRICO
+  OTRO
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+enum ModerationStatus {
+  PENDING_AI
+  APPROVED
+  REJECTED
+  MANUAL_REVIEW
+}
+
+enum NotificationType {
+  VEHICLE_FAVORITED
+  VEHICLE_VIEWED
+  BUSINESS_VIEWED
+  BUSINESS_SEARCHED
+  PROFILE_VIEWED
+  MESSAGE_RECEIVED
+  APPOINTMENT_SCHEDULED
+}
+
+enum ReportStatus {
+  PENDING
+  REVIEWED
+  DISMISSED
+  ACTION_TAKEN
+}
+
+enum SocialPlatform {
+  FACEBOOK
+  INSTAGRAM
+  TIKTOK
+  TWITTER
+  KWAI
+  THREADS
+  SNAPCHAT
+  GOOGLE_ADS
+  YOUTUBE
+}
+
+enum PostStatus {
+  DRAFT
+  APPROVED
+  SCHEDULED
+  PUBLISHED
+  FAILED
+  PREVIEW
+}
+
+model LocationLog {
+  id             String       @id @default(cuid())
+  userId         String
+  appointmentId  String?
+  sosAlertId     String?
+  latitude       Float
+  longitude      Float
+  batteryLevel   Float?
+  recordedAt     DateTime     @default(now())
+
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  appointment    Appointment? @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+  sosAlert       SOSAlert?    @relation(fields: [sosAlertId], references: [id], onDelete: Cascade)
+  
+  @@index([userId, recordedAt])
+  @@index([sosAlertId])
+  @@index([appointmentId])
+}
+
+model BetaSession {
+  id             String   @id @default(cuid())
+  userId         String
+  date           String   // "2026-04-21"
+  sessionStart   DateTime @default(now())
+  lastPing       DateTime @default(now())
+  maxDuration    Int      @default(0)    // segundos, sesión continua actual
+  completedToday Boolean  @default(false) // true cuando llega a 240s continuos
+  deviceOS       String   @default("Unknown")
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+  @@index([userId])
+  @@index([date])
+}
