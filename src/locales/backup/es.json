@@ -139,6 +139,7 @@
         "share": "Compartir"
     },
     "image_upload": {
+        "no_photos_yet": "Aún no has agregado fotos",
         "error_upload": "Error al subir imagen",
         "max_limit": "Solo puedes subir máximo {max} imágenes",
         "error_retry": "Error al subir imágenes. Intenta de nuevo.",
@@ -176,8 +177,8 @@
         "expand_btn": "Expandir Búsqueda",
         "like_btn": "Me Gusta",
         "nope_btn": "Pasar",
-        "overlay_like": "ME GUSTA",
-        "overlay_nope": "NO ME GUSTA"
+        "overlay_like": "LIKE",
+        "overlay_nope": "NOPE"
     },
     "market": {
         "filters_label": "Filtros",
@@ -198,6 +199,7 @@
         "searching": "Buscando vehículos...",
         "view_more": "Ver más",
         "load_next": "Cargar siguientes",
+        "loading_more": "Cargando más vehículos...",
         "expand_search": "Expandir búsqueda",
         "expand_search_desc": "Busca el siguiente auto disponible",
         "restart_search": "Volver a empezar",
@@ -220,6 +222,7 @@
             "title": "Busca tu vehículo ideal",
             "clear": "Limpiar Filtros",
             "clear_all": "Limpiar todo",
+            "ia": "Asesor Inteligente",
             "show_filters": "Mostrar Filtros",
             "hide_filters": "Ocultar Filtros",
             "show_more": "Más Filtros Avanzados (Color, Transmisión, Motor...)",
@@ -283,7 +286,7 @@
         "app_store": "App Store",
         "google_play": "Google Play",
         "carmatch_title": "CarMatch Social",
-        "carmatch_subtitle": "Deslizar",
+        "carmatch_subtitle": "Swipe",
         "carmatch_desc": "Desliza y guarda. Encuentra tu auto ideal de forma adictiva, dando LIKE a lo que te gusta.",
         "marketcar_title": "MarketCar",
         "marketcar_subtitle": "Búsqueda Avanzada",
@@ -302,22 +305,10 @@
     },
     "publish": {
         "steps": {
-            "vehicle_type": "Tipo de Vehículo",
-            "basic_info": "Información Básica",
-            "technical_details": "Detalles Técnicos",
-            "features": "Equipamiento",
-            "location": "Ubicación",
-            "review": "Revisión y Publicar",
             "images": "Imágenes",
             "identity_price": "Identidad y Valor",
             "specs_features": "Alma y Equipo",
-            "location_review": "Ubicación y Lanzamiento",
-            "validation": {
-                "title": "Fotos no verificadas",
-                "description": "El sistema no pudo verificar automáticamente todos los detalles del vehículo a partir de las fotos. ¿Deseas continuar manualmente?",
-                "continue": "Continuar",
-                "review": "Revisar"
-            }
+            "location_review": "Ubicación y Lanzamiento"
         },
         "titles": {
             "what_type": "¿Qué tipo de vehículo vas a publicar?",
@@ -881,7 +872,6 @@
             "frenos": "Taller de Frenos",
             "electrico": "Taller Eléctrico",
             "hojalateria": "Hojalatería y Pintura",
-            "llantas": "Llantas",
             "llantera": "Llantera / Vulcanizadora",
             "estetica": "Autolavado / Estética",
             "detallado": "Detallado Prof. / Cerámico",
@@ -913,7 +903,12 @@
             "electrolinera": "Cargador Eléctrico",
             "taller_ev": "Taller Eléctrico e Híbrido",
             "lubricantes": "Cambio de Aceite y Filtros",
-            "boutique": "Auto Boutique / Accesorios"
+            "boutique": "Auto Boutique / Accesorios",
+            "caseta": "Casetas de Peaje",
+            "hospital": "Hospitales / Clínicas",
+            "policia": "Estación de Policía",
+            "aeropuerto": "Aeropuertos",
+            "estacion_tren": "Estación de Tren"
         },
         "tips": {
             "title": "Consejos para tu publicación",
@@ -955,7 +950,8 @@
         "features": {
             "24_hours": "24 Horas",
             "emergency": "Emergencia",
-            "home_service": "Servicio a Domicilio"
+            "home_service": "Servicio a Domicilio",
+            "safe_meeting_point": "Punto de Encuentro Seguro"
         }
     },
     "map_locator": {
@@ -997,54 +993,7 @@
         "upload_first": "¡Sube tu primera foto!",
         "change_photo": "Cambiar Foto",
         "current_profile_desc": "Así se ve tu perfil actualmente (sin foto personalizada)",
-        "recommendation_full": "CarMatch Social es una comunidad automotriz. ¡Sube una foto de tu nave, auto favorito, o el vehículo que vendes para destacar!",
-        "labels": {
-            "title": "Título del anuncio",
-            "description": "Descripción",
-            "brand": "Marca",
-            "model": "Modelo",
-            "year": "Año",
-            "price": "Precio",
-            "transmission": "Transmisión",
-            "fuel": "Combustible",
-            "condition": "Condición",
-            "color": "Color",
-            "mileage": "Kilometraje",
-            "km": "Kilómetros",
-            "mi": "Millas",
-            "doors": "Puertas",
-            "engine": "Motor",
-            "displacement": "Cilindrada (cc)",
-            "operating_hours": "Horas de operación",
-            "cargo_capacity": "Capacidad de carga (toneladas)",
-            "engine_info": "Información de Motor y Carga",
-            "engine_displacement": "Motor / Cilindrada",
-            "features_title": "Equipamiento y Características",
-            "features_subtitle": "Selecciona el equipamiento destacado de tu {brand}.",
-            "vehicle_photos": "Fotos del Vehículo",
-            "location_not_selected": "Ubicación no seleccionada",
-            "country": "País",
-            "state": "Estado o Región",
-            "city": "Ciudad"
-        },
-        "validation": {
-            "review_required": "Revisión requerida:",
-            "missing_brand": "Falta la marca",
-            "missing_model": "Falta el modelo",
-            "missing_year": "Falta el año",
-            "invalid_price": "Precio no válido",
-            "missing_images": "Se requiere al menos una imagen",
-            "missing_city": "Ciudad no seleccionada"
-        },
-        "tips": {
-            "title": "Consejos para tu publicación",
-            "honest_title": "Sé honesto y detallado:",
-            "honest_desc": "Menciona el estado real de la factura, tenencias y si el vehículo ha tenido incidentes o fallos mecánicos. Esto genera confianza.",
-            "safety_title": "Punto de encuentro:",
-            "safety_desc": "Te recomendamos acordar la revisión de documentos y del vehículo en un lugar público y seguro.",
-            "transparency_title": "Transparencia:",
-            "transparency_desc": "Una descripción clara sobre los mantenimientos realizados ayuda a vender más rápido."
-        }
+        "recommendation_full": "CarMatch Social es una comunidad automotriz. ¡Sube una foto de tu nave, auto favorito, o el vehículo que vendes para destacar!"
     },
     "taxonomy": {
         "categories": {
@@ -1314,7 +1263,9 @@
         "account_section": "Cuenta",
         "logout": "Cerrar Sesión",
         "logout_desc": "Cerrar sesión de forma segura",
-        "activate": "Activar"
+        "activate": "Activar",
+        "terms_title": "Términos y Condiciones",
+        "terms_desc": "Privacidad, reglas y avisos legales"
     },
     "sos": {
         "banner_title": "Misión Segura Activa",
