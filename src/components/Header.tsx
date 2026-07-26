@@ -229,7 +229,7 @@ export default function Header() {
                                     router.push('/')
                                 }
                             }}
-                            className="hover:opacity-80 transition cursor-pointer overflow-hidden shrink-0"
+                            className="hover:opacity-80 transition cursor-pointer"
                         >
                             <Logo
                                 className="w-10 h-10 md:w-14 md:h-14"
