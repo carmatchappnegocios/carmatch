@@ -1467,5 +1467,5 @@
         "timeout": "Request timed out",
         "save_error": "Error saving subscription",
         "activate_error": "Error enabling notifications"
-    },
+    }
 }
