@@ -75,6 +75,43 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
                 }
             }
 
+            // 3. Detect by country from IP (LocationContext caches this)
+            if (!initialLocale) {
+                try {
+                    const savedLocation = localStorage.getItem('carmatch_last_detected_location')
+                    if (savedLocation) {
+                        const loc = JSON.parse(savedLocation)
+                        const countryCode = loc.countryCode?.toUpperCase()
+                        if (countryCode) {
+                            const countryToLocale: Record<string, Locale> = {
+                                MX: 'es', ES: 'es', AR: 'es', CO: 'es', CL: 'es', PE: 'es', VE: 'es', EC: 'es', GT: 'es', CU: 'es', BO: 'es', DO: 'es', HN: 'es', PY: 'es', SV: 'es', NI: 'es', CR: 'es', PA: 'es', UY: 'es', PR: 'es',
+                                US: 'en', GB: 'en', AU: 'en', CA: 'en', NZ: 'en', IE: 'en',
+                                BR: 'pt', PT: 'pt',
+                                FR: 'fr', BE: 'fr', CH: 'fr',
+                                DE: 'de', AT: 'de', LI: 'de',
+                                IT: 'it',
+                                CN: 'zh', TW: 'zh', HK: 'zh',
+                                JP: 'ja',
+                                RU: 'ru', BY: 'ru',
+                                KR: 'ko',
+                                SA: 'ar', AE: 'ar', EG: 'ar', MA: 'ar', DZ: 'ar', IQ: 'ar', JO: 'ar', LB: 'ar', KW: 'ar', QA: 'ar', BH: 'ar', OM: 'ar', LY: 'ar', TN: 'ar', SD: 'ar', PS: 'ar',
+                                IN: 'hi', PK: 'ur',
+                                TR: 'tr',
+                                NL: 'nl',
+                                PL: 'pl',
+                                SE: 'sv', NO: 'sv', DK: 'sv', FI: 'sv',
+                                ID: 'id', MY: 'id',
+                                TH: 'th',
+                                VN: 'vi',
+                                IL: 'he',
+                            }
+                            const detected = countryToLocale[countryCode]
+                            if (detected) initialLocale = detected
+                        }
+                    }
+                } catch (e) { /* ignore parse errors */ }
+            }
+
             // Fallback
             if (!initialLocale) initialLocale = 'es'
 
@@ -83,6 +120,13 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
         initLanguage()
     }, [loadTranslations])
+
+    // Update HTML lang attribute when locale changes
+    useEffect(() => {
+        if (typeof document !== 'undefined') {
+            document.documentElement.lang = locale
+        }
+    }, [locale])
 
     const setLocale = async (newLocale: Locale) => {
         await loadTranslations(newLocale)

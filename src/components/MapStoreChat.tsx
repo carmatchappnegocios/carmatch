@@ -77,7 +77,7 @@ export const MapStoreChat: React.FC<MapStoreChatProps> = ({
                 messagesToAdd.push({ role: 'assistant', content: data.nextQuestion })
             } else {
                 if (messagesToAdd.length === 0) {
-                    messagesToAdd.push({ role: 'assistant', content: "¡Hecho! He filtrado el mapa para ti. 📍" })
+                messagesToAdd.push({ role: 'assistant', content: t('map_store.filter_success') })
                 }
                 setTurnCount(0)
             }
@@ -116,7 +116,7 @@ export const MapStoreChat: React.FC<MapStoreChatProps> = ({
 
         } catch (error) {
             console.error('Map Chat Error:', error)
-            setMessages(prev => [...prev, { role: 'assistant', content: "Ups, algo salió mal. ¿Podrías decirme de nuevo qué necesitas?" }])
+            setMessages(prev => [...prev, { role: 'assistant', content: t('map_store.fallback_explanation') }])
         } finally {
             setIsTyping(false)
         }
@@ -155,7 +155,7 @@ export const MapStoreChat: React.FC<MapStoreChatProps> = ({
 
                             {/* Sugerencias rápidas (solo 3) */}
                             <div className="flex flex-wrap justify-center gap-1.5">
-                                {['Taller mecánico', 'Grúas 24/7', 'Refacciones'].map((suggestion) => (
+                                {[t('map_store.categories.mecanico'), t('map_store.categories.gruas'), t('map_store.categories.refacciones')].map((suggestion) => (
                                     <button
                                         key={suggestion}
                                         onClick={() => {
@@ -217,7 +217,7 @@ export const MapStoreChat: React.FC<MapStoreChatProps> = ({
                         type="text"
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
-                        placeholder={placeholder || "Cuéntame tu problema..."}
+                        placeholder={placeholder || t('map_store.default_placeholder')}
                         className="flex-1 min-w-0 bg-transparent border-none outline-none px-3 py-2 text-white placeholder-white/30 text-sm font-medium"
                     />
                     <button

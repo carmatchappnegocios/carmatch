@@ -121,7 +121,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="es" className="dark" style={{ colorScheme: 'dark' }}>
+        <html lang="es" className="dark" style={{ colorScheme: 'dark' }} suppressHydrationWarning>
             <head>
                 {/* 🛡️ NUCLEAR MOBILE BLINDAJE: Force viewport at the absolute beginning */}
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover" />

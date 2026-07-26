@@ -304,7 +304,7 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                             <MapPin className="w-10 h-10 text-primary-500" />
                         </div>
                         <h2 className="text-2xl font-black italic text-white uppercase tracking-tighter">
-                            Iniciando Mapa...
+                            {t('map_store.loading')}
                         </h2>
                     </div>
                 </div>
@@ -424,7 +424,7 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                                 {/* 3. LISTA DE CATEGORÍAS SENCILLA */}
                                 <div className="space-y-4">
                                     <h3 className="text-xs font-black uppercase tracking-[0.2em] text-white/40 mb-3">
-                                        Todas las Categorías
+                                        {t('map_store.categories_label')}
                                     </h3>
 
                                     <div className="space-y-1">
@@ -438,7 +438,7 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                                                         <div className="py-3 flex flex-col gap-3">
                                                             <div className="h-[1px] bg-white/5 w-full"></div>
                                                             <h3 className="text-xs font-black uppercase tracking-[0.2em] text-white/40">
-                                                                Servicios Públicos
+                                                                {t('map_store.categories_label')}
                                                             </h3>
                                                         </div>
                                                     )}
@@ -490,7 +490,7 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                                 onClick={() => setShowSidebar(false)}
                                 className="w-full py-4 bg-primary-700 text-white rounded-xl font-black uppercase tracking-[0.2em] shadow-xl hover:bg-primary-600 active:scale-95 transition-all"
                             >
-                                Ver en el Mapa
+                                {t('map_store.view_list')}
                             </button>
                         </div>
                     </div>
