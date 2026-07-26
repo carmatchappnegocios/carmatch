@@ -166,7 +166,7 @@ export default function SOSComponent({ isActive, otherUserId, onEndMeeting, chat
             }
         } catch (e) {
             console.error("🚨 Error crítico al disparar SOS:", e)
-            alert("Error al conectar con el servidor de emergencia. Llama directamente al 911.");
+            alert(t('sos2.connection_error'))
         } finally {
             setLoadingLocation(false)
         }
@@ -186,7 +186,7 @@ export default function SOSComponent({ isActive, otherUserId, onEndMeeting, chat
                     <div>
                         <p className="font-bold text-sm md:text-base flex items-center gap-2">
                             {t('sos.banner_title')}
-                            <span className="text-[10px] bg-green-500/20 text-green-300 px-1.5 py-0.5 rounded border border-green-500/30 animate-pulse">LIVE TRACKING</span>
+                            <span className="text-[10px] bg-green-500/20 text-green-300 px-1.5 py-0.5 rounded border border-green-500/30 animate-pulse">{t('sos2.live_tracking')}</span>
                         </p>
                         <p className="text-xs opacity-90 hidden md:block">{t('sos.banner_desc')}</p>
                     </div>

@@ -1352,6 +1352,120 @@
     },
     "chat": {
         "welcome": "Hello! I am your CarMatch Advisor. 👨‍💻 How can I advise you today?",
-        "title": "CarMatch Advisor"
-    }
+        "title": "CarMatch Advisor",
+        "maintenance": "Sorry, my expert advisory service is currently under maintenance."
+    },
+    "business_card": {
+        "call": "Call",
+        "route": "Route",
+        "web": "Web"
+    },
+    "common2": {
+        "loading_map": "Loading Map...",
+        "loading_3d_map": "Loading 3D map...",
+        "session_expired": "You logged out recently. Would you like to reactivate your account to register your business?",
+        "close": "Close",
+        "accept": "Accept",
+        "no_cancel": "No, cancel",
+        "yes_reactivate": "Yes, reactivate",
+        "understood": "Understood",
+        "error_connection": "Connection error",
+        "error_unexpected": "An unexpected error occurred",
+        "error_server": "Server configuration error",
+        "loading": "Loading...",
+        "searching": "Searching...",
+        "edit": "Edit",
+        "copy": "Copy",
+        "add": "Add",
+        "remove": "Remove",
+        "pause": "Pause",
+        "activate": "Activate",
+        "yes_delete": "Yes, Delete",
+        "verified": "Verified"
+    },
+    "cookies_banner": {
+        "title": "Cookies",
+        "description": "We use essential cookies and Google Analytics to improve your experience.",
+        "privacy": "Privacy",
+        "cookies_link": "Cookies",
+        "terms": "Terms",
+        "accept": "Accept",
+        "essential_only": "Essential only"
+    },
+    "restore_session": {
+        "title": "Sign in again?"
+    },
+    "data_saver": {
+        "mode_activated": "Ultra Lite mode activated",
+        "activate": "Activate Ultra Lite Mode",
+        "no_data": "No Data ✓",
+        "save_data": "Save Data",
+        "no_data_mode": "🟢 No Data Mode",
+        "text_only": "Text only, no images",
+        "data_usage": "~1 MB/session"
+    },
+    "sw_update": {
+        "new_version": "New version available",
+        "update_desc": "CarMatch Social has improvements. Update for the best experience.",
+        "update_now": "Update now",
+        "later": "Later"
+    },
+    "share": {
+        "share_on": "Share on...",
+        "share": "Share",
+        "copied": "Copied",
+        "link_copied": "Link Copied",
+        "copied_tooltip": "✅ Link copied • Paste it in your browser",
+        "enter_phone": "Please enter a phone number",
+        "phone_placeholder": "e.g. 8123456789",
+        "whatsapp_message": "Hi! I'm sharing CarMatch Social with you, the best app to buy and sell vehicles:\n\n{url}\n\nDownload the app and find your ideal car!"
+    },
+    "favorites": {
+        "like": "Like",
+        "remove": "Remove like",
+        "favorited": "Favorited",
+        "compare_mode": "Compare Mode",
+        "cancel_compare": "Cancel Compare",
+        "compare_now": "Compare Now",
+        "remove_favorite": "Remove from favorites"
+    },
+    "contact": {
+        "reactivate_prompt": "Would you like to reactivate your session to send this message? Your account is still linked.",
+        "vehicle_unavailable": "Vehicle Not Available",
+        "message": "Message",
+        "message_label": "💬 Message",
+        "connecting": "Connecting...",
+        "chat_error": "Error creating chat",
+        "connection_error": "Connection error"
+    },
+    "vehicle_card": {
+        "view_details": "View Details"
+    },
+    "market2": {
+        "close_filters": "Close filters"
+    },
+    "sos2": {
+        "connection_error": "Error connecting to the emergency server. Call 911 directly.",
+        "live_tracking": "LIVE TRACKING"
+    },
+    "notifications": {
+        "just_now": "Now",
+        "minutes_ago": "{minutes}m ago",
+        "hours_ago": "{hours}h ago",
+        "days_ago": "{days}d ago",
+        "title": "Notifications",
+        "empty": "No notifications",
+        "empty_desc": "We'll notify you when there's activity",
+        "auto_delete": "Notifications are deleted after 24 hours",
+        "activate_title": "Enable Notifications",
+        "activate_desc": "Get alerts for messages and favorites.",
+        "not_now": "Not now",
+        "activating": "Enabling...",
+        "activate_btn": "Enable",
+        "login_required": "You must sign in to enable notifications",
+        "browser_not_supported": "Your browser doesn't support push notifications",
+        "timeout": "Request timed out",
+        "save_error": "Error saving subscription",
+        "activate_error": "Error enabling notifications"
+    },
 }

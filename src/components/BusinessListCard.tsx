@@ -99,7 +99,7 @@ export default function BusinessListCard({ business, isActive, onClick }: Busine
                             className={`flex-1 flex flex-col items-center gap-1 p-2 rounded-xl border transition ${business.phone ? 'border-primary-500/30 bg-primary-500/5 text-primary-400 hover:bg-primary-500/10' : 'border-surface-highlight opacity-30 cursor-not-allowed'}`}
                         >
                             <Phone size={18} />
-                            <span className="text-[10px] font-black uppercase">Llamar</span>
+                            <span className="text-[10px] font-black uppercase">{t('business_card.call')}</span>
                         </button>
 
                         <button
@@ -107,7 +107,7 @@ export default function BusinessListCard({ business, isActive, onClick }: Busine
                             className="flex-1 flex flex-col items-center gap-1 p-2 rounded-xl border border-primary-500/30 bg-primary-500/5 text-primary-400 hover:bg-primary-500/10 transition"
                         >
                             <Navigation size={18} />
-                            <span className="text-[10px] font-black uppercase">Ruta</span>
+                            <span className="text-[10px] font-black uppercase">{t('business_card.route')}</span>
                         </button>
 
                         <button
@@ -116,7 +116,7 @@ export default function BusinessListCard({ business, isActive, onClick }: Busine
                             className={`flex-1 flex flex-col items-center gap-1 p-2 rounded-xl border transition ${business.website ? 'border-primary-500/30 bg-primary-500/5 text-primary-400 hover:bg-primary-500/10' : 'border-surface-highlight opacity-30 cursor-not-allowed'}`}
                         >
                             <Globe size={18} />
-                            <span className="text-[10px] font-black uppercase">Web</span>
+                            <span className="text-[10px] font-black uppercase">{t('business_card.web')}</span>
                         </button>
                     </div>
                 </div>

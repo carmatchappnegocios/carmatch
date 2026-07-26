@@ -6,10 +6,12 @@
 
 import { useEffect, useState } from 'react'
 import { RefreshCw } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function RegisterSW() {
     const [showUpdatePrompt, setShowUpdatePrompt] = useState(false)
     const [waitingWorker, setWaitingWorker] = useState<ServiceWorker | null>(null)
+    const { t } = useLanguage()
 
     useEffect(() => {
         if ('serviceWorker' in navigator) {
@@ -68,22 +70,22 @@ export default function RegisterSW() {
                     <RefreshCw className="w-6 h-6 animate-spin-slow" />
                 </div>
                 <div className="flex-1">
-                    <h4 className="font-bold text-sm mb-1">Nueva versión disponible</h4>
+                    <h4 className="font-bold text-sm mb-1">{t('sw_update.new_version')}</h4>
                     <p className="text-xs text-white/90 mb-3">
-                        CarMatch Social tiene mejoras. Actualiza para obtener la mejor experiencia.
+                        {t('sw_update.update_desc')}
                     </p>
                     <div className="flex gap-2">
                         <button
                             onClick={handleUpdate}
                             className="flex-1 bg-white text-orange-600 font-semibold text-xs px-3 py-2 rounded-md hover:bg-orange-50 transition"
                         >
-                            Actualizar ahora
+                            {t('sw_update.update_now')}
                         </button>
                         <button
                             onClick={() => setShowUpdatePrompt(false)}
                             className="px-3 py-2 text-xs text-white/80 hover:text-white transition"
                         >
-                            Después
+                            {t('sw_update.later')}
                         </button>
                     </div>
                 </div>

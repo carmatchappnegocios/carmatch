@@ -18,7 +18,7 @@ import { useRestoreSessionModal } from "@/hooks/useRestoreSessionModal"
 
 const MapBoxStoreLocator = dynamic(() => import('@/components/MapBoxStoreLocator'), {
     ssr: false,
-    loading: () => <div className="w-full h-full bg-slate-900 animate-pulse flex items-center justify-center text-white/20 uppercase tracking-widest font-black">Cargando Mapa...</div>
+    loading: () => <div className="w-full h-full bg-slate-900 animate-pulse flex items-center justify-center text-white/20 uppercase tracking-widest font-black">{"Loading 3D map..."}</div>
 })
 
 const BusinessDetailsModal = dynamic(() => import('@/components/BusinessDetailsModal'), { ssr: false })
@@ -373,7 +373,7 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                                         if (user && isSoftLogout) {
                                             e.preventDefault()
                                             openModal(
-                                                "Cerraste sesión hace un momento. ¿Deseas volver a activar tu cuenta para registrar tu negocio?",
+                                                t('common2.session_expired'),
                                                 () => { /* Restauración en modal */ }
                                             )
                                         }

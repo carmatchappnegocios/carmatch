@@ -1352,6 +1352,120 @@
     },
     "chat": {
         "welcome": "¡Hola! Soy tu Asesor CarMatch Social. 👨‍💻 ¿En qué puedo asesorarte hoy?",
-        "title": "Asesor CarMatch Social"
-    }
+        "title": "Asesor CarMatch Social",
+        "maintenance": "Lo siento, mi servicio de asesoría experto está en mantenimiento."
+    },
+    "business_card": {
+        "call": "Llamar",
+        "route": "Ruta",
+        "web": "Web"
+    },
+    "common2": {
+        "loading_map": "Cargando Mapa...",
+        "loading_3d_map": "Loading 3D map...",
+        "session_expired": "Cerraste sesión hace un momento. ¿Deseas volver a activar tu cuenta para registrar tu negocio?",
+        "close": "Cerrar",
+        "accept": "Aceptar",
+        "no_cancel": "No, cancelar",
+        "yes_reactivate": "Sí, reactivar",
+        "understood": "Entendido",
+        "error_connection": "Error de conexión",
+        "error_unexpected": "Ocurrió un error inesperado",
+        "error_server": "Error de configuración del servidor",
+        "loading": "Cargando...",
+        "searching": "Buscando...",
+        "edit": "Editar",
+        "copy": "Copiar",
+        "add": "Agregar",
+        "remove": "Eliminar",
+        "pause": "Pausar",
+        "activate": "Activar",
+        "yes_delete": "Sí, Eliminar",
+        "verified": "Verificado"
+    },
+    "cookies_banner": {
+        "title": "Cookies",
+        "description": "Usamos cookies esenciales y Google Analytics para mejorar tu experiencia.",
+        "privacy": "Privacidad",
+        "cookies_link": "Cookies",
+        "terms": "Términos",
+        "accept": "Aceptar",
+        "essential_only": "Solo esenciales"
+    },
+    "restore_session": {
+        "title": "¿Volver a iniciar sesión?"
+    },
+    "data_saver": {
+        "mode_activated": "Modo Ultra Lite activado",
+        "activate": "Activar Modo Ultra Lite",
+        "no_data": "Sin Datos ✓",
+        "save_data": "Ahorrar Datos",
+        "no_data_mode": "🟢 Modo Sin Datos",
+        "text_only": "Solo texto, sin imágenes",
+        "data_usage": "~1 MB/sesión"
+    },
+    "sw_update": {
+        "new_version": "Nueva versión disponible",
+        "update_desc": "CarMatch Social tiene mejoras. Actualiza para obtener la mejor experiencia.",
+        "update_now": "Actualizar ahora",
+        "later": "Después"
+    },
+    "share": {
+        "share_on": "Compartir en...",
+        "share": "Compartir",
+        "copied": "Copiado",
+        "link_copied": "Link Copiado",
+        "copied_tooltip": "✅ Link copiado • Pégalo en tu navegador",
+        "enter_phone": "Por favor escribe un número de teléfono",
+        "phone_placeholder": "Ej: 8123456789",
+        "whatsapp_message": "¡Hola! Te comparto CarMatch Social, la mejor app para comprar y vender vehículos:\n\n{url}\n\n¡Descarga la app y encuentra tu carro ideal!"
+    },
+    "favorites": {
+        "like": "Me gusta",
+        "remove": "Quitar me gusta",
+        "favorited": "Favorito",
+        "compare_mode": "Modo Comparar",
+        "cancel_compare": "Cancelar Comparación",
+        "compare_now": "Comparar Ahora",
+        "remove_favorite": "Eliminar de favoritos"
+    },
+    "contact": {
+        "reactivate_prompt": "¿Deseas reactivar tu sesión para enviar este mensaje? Tu cuenta sigue vinculada.",
+        "vehicle_unavailable": "Vehículo No Disponible",
+        "message": "Mensaje",
+        "message_label": "💬 Mensaje",
+        "connecting": "Conectando...",
+        "chat_error": "Error al crear chat",
+        "connection_error": "Error de conexión"
+    },
+    "vehicle_card": {
+        "view_details": "Ver Detalles"
+    },
+    "market2": {
+        "close_filters": "Cerrar filtros"
+    },
+    "sos2": {
+        "connection_error": "Error al conectar con el servidor de emergencia. Llama directamente al 911.",
+        "live_tracking": "LIVE TRACKING"
+    },
+    "notifications": {
+        "just_now": "Ahora",
+        "minutes_ago": "Hace {minutes}m",
+        "hours_ago": "Hace {hours}h",
+        "days_ago": "Hace {days}d",
+        "title": "Notificaciones",
+        "empty": "No tienes notificaciones",
+        "empty_desc": "Te avisaremos cuando haya actividad",
+        "auto_delete": "Las notificaciones se eliminan después de 24 horas",
+        "activate_title": "Activar Notificaciones",
+        "activate_desc": "Recibe alertas de mensajes y favoritos.",
+        "not_now": "Ahora no",
+        "activating": "Activando...",
+        "activate_btn": "Activar",
+        "login_required": "Debes iniciar sesión para activar las notificaciones",
+        "browser_not_supported": "Tu navegador no soporta notificaciones push",
+        "timeout": "Tiempo de espera agotado",
+        "save_error": "Error al guardar la suscripción",
+        "activate_error": "Error al activar las notificaciones"
+    },
 }

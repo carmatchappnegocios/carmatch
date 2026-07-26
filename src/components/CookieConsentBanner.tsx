@@ -7,9 +7,11 @@
 import { useEffect, useState } from 'react'
 import { Cookie, X } from 'lucide-react'
 import Link from 'next/link'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function CookieConsentBanner() {
     const [showBanner, setShowBanner] = useState(false)
+    const { t } = useLanguage()
 
     useEffect(() => {
         // Check if user already accepted cookies
@@ -48,13 +50,13 @@ export default function CookieConsentBanner() {
                                 <Cookie className="text-orange-500" size={20} />
                             </div>
                             <h3 className="text-base md:text-xl font-bold text-text-primary">
-                                Cookies
+                                {t('cookies_banner.title')}
                             </h3>
                         </div>
                         <button
                             onClick={acceptCookies}
                             className="p-1.5 hover:bg-surface-highlight rounded-lg transition-colors"
-                            aria-label="Cerrar"
+                            aria-label={t('common2.close')}
                         >
                             <X size={18} className="text-text-secondary" />
                         </button>
@@ -63,8 +65,7 @@ export default function CookieConsentBanner() {
                     {/* Content */}
                     <div className="space-y-3">
                         <p className="text-text-secondary text-xs md:text-sm leading-relaxed">
-                            Usamos <strong className="text-text-primary">cookies esenciales</strong> y{' '}
-                            <strong className="text-text-primary">Google Analytics</strong> para mejorar tu experiencia.
+                            {t('cookies_banner.description')}
                         </p>
 
                         {/* Links */}
@@ -74,21 +75,21 @@ export default function CookieConsentBanner() {
                                 className="text-primary-400 hover:text-primary-300 underline"
                                 onClick={() => setShowBanner(false)}
                             >
-                                Privacidad
+                                {t('cookies_banner.privacy')}
                             </Link>
                             <Link
                                 href="/cookies"
                                 className="text-primary-400 hover:text-primary-300 underline"
                                 onClick={() => setShowBanner(false)}
                             >
-                                Cookies
+                                {t('cookies_banner.cookies_link')}
                             </Link>
                             <Link
                                 href="/terms"
                                 className="text-primary-400 hover:text-primary-300 underline"
                                 onClick={() => setShowBanner(false)}
                             >
-                                Términos
+                                {t('cookies_banner.terms')}
                             </Link>
                         </div>
 
@@ -98,13 +99,13 @@ export default function CookieConsentBanner() {
                                 onClick={acceptCookies}
                                 className="flex-1 px-4 py-2.5 bg-primary-500 hover:bg-primary-600 text-white text-sm font-bold rounded-xl transition-all"
                             >
-                                Aceptar
+                                {t('cookies_banner.accept')}
                             </button>
                             <button
                                 onClick={rejectCookies}
                                 className="flex-1 px-4 py-2.5 bg-surface-highlight hover:bg-surface border border-surface-highlight text-text-secondary hover:text-text-primary text-sm font-medium rounded-xl transition-all"
                             >
-                                Solo esenciales
+                                {t('cookies_banner.essential_only')}
                             </button>
                         </div>
                     </div>

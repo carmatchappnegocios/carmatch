@@ -7,10 +7,12 @@
 import { useRestoreSessionModal } from '@/hooks/useRestoreSessionModal'
 import { ThumbsUp, X } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function RestoreSessionModal() {
     const { isOpen, message, confirm, closeModal } = useRestoreSessionModal()
     const router = useRouter()
+    const { t } = useLanguage()
 
     if (!isOpen) return null
 
@@ -41,7 +43,7 @@ export default function RestoreSessionModal() {
                 <button
                     onClick={handleCancel}
                     className="absolute top-4 right-4 text-text-secondary hover:text-text-primary transition"
-                    aria-label="Cerrar"
+                    aria-label={t('common2.close')}
                 >
                     <X size={20} />
                 </button>
@@ -53,7 +55,7 @@ export default function RestoreSessionModal() {
 
                 {/* Título */}
                 <h3 className="text-2xl font-bold text-text-primary text-center mb-2">
-                    ¿Volver a iniciar sesión?
+                    {t('restore_session.title')}
                 </h3>
 
                 {/* Descripción dinámica */}
@@ -67,13 +69,13 @@ export default function RestoreSessionModal() {
                         onClick={handleCancel}
                         className="flex-1 px-4 py-3 bg-surface-highlight hover:bg-surface-hover text-text-secondary font-medium rounded-lg transition"
                     >
-                        No, cancelar
+                        {t('common2.no_cancel')}
                     </button>
                     <button
                         onClick={handleConfirm}
                         className="flex-1 px-4 py-3 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-lg transition shadow-lg shadow-primary-500/20"
                     >
-                        Sí, reactivar
+                        {t('common2.yes_reactivate')}
                     </button>
                 </div>
             </div>

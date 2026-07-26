@@ -7,6 +7,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { MessageCircle, ThumbsUp, Star, Search, Eye, CheckCircle, Handshake, Calendar, RefreshCw, X, Bell } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface Notification {
     id: string
@@ -30,6 +31,7 @@ export default function NotificationsDropdown({ isOpen, onClose }: Notifications
     const router = useRouter()
     const [notifications, setNotifications] = useState<Notification[]>([])
     const [loading, setLoading] = useState(true)
+    const { t } = useLanguage()
 
     useEffect(() => {
         if (isOpen) {
@@ -110,12 +112,12 @@ export default function NotificationsDropdown({ isOpen, onClose }: Notifications
         const minutes = Math.floor(diff / (1000 * 60))
 
         if (hours === 0) {
-            if (minutes === 0) return 'Ahora'
-            return `Hace ${minutes}m`
+            if (minutes === 0) return t('notifications.just_now')
+            return t('notifications.minutes_ago', { minutes })
         }
-        if (hours < 24) return `Hace ${hours}h`
+        if (hours < 24) return t('notifications.hours_ago', { hours })
         const days = Math.floor(hours / 24)
-        return `Hace ${days}d`
+        return t('notifications.days_ago', { days })
     }
 
     if (!isOpen) return null
@@ -132,7 +134,7 @@ export default function NotificationsDropdown({ isOpen, onClose }: Notifications
             <div className="fixed top-20 sm:top-auto sm:absolute left-4 right-4 sm:left-auto sm:right-0 mt-2 sm:w-96 bg-surface rounded-xl shadow-2xl border border-surface-highlight overflow-hidden z-50 max-h-[calc(100vh-120px)] sm:max-h-[600px] flex flex-col">
                 {/* Header */}
                 <div className="sticky top-0 bg-surface border-b border-surface-highlight px-4 py-3 flex items-center justify-between">
-                    <h3 className="text-lg font-bold text-text-primary">Notificaciones</h3>
+                    <h3 className="text-lg font-bold text-text-primary">{t('notifications.title')}</h3>
                     <button
                         onClick={onClose}
                         className="w-8 h-8 rounded-full hover:bg-surface-highlight transition flex items-center justify-center"
@@ -148,7 +150,7 @@ export default function NotificationsDropdown({ isOpen, onClose }: Notifications
                     {loading ? (
                         <div className="p-8 text-center">
                             <div className="animate-spin h-8 w-8 border-4 border-primary-600 border-t-transparent rounded-full mx-auto"></div>
-                            <p className="text-sm text-text-secondary mt-3">Cargando...</p>
+                            <p className="text-sm text-text-secondary mt-3">{t('common2.loading')}</p>
                         </div>
                     ) : notifications.length === 0 ? (
                         <div className="p-12 text-center">
@@ -157,8 +159,8 @@ export default function NotificationsDropdown({ isOpen, onClose }: Notifications
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                                 </svg>
                             </div>
-                            <p className="font-bold text-text-primary mb-1">No tienes notificaciones</p>
-                            <p className="text-sm text-text-secondary">Te avisaremos cuando haya actividad</p>
+                            <p className="font-bold text-text-primary mb-1">{t('notifications.empty')}</p>
+                            <p className="text-sm text-text-secondary">{t('notifications.empty_desc')}</p>
                         </div>
                     ) : (
                         <div className="divide-y divide-surface-highlight">
@@ -199,7 +201,7 @@ export default function NotificationsDropdown({ isOpen, onClose }: Notifications
                 {notifications.length > 0 && (
                     <div className="sticky bottom-0 bg-surface-highlight/50 backdrop-blur-sm border-t border-surface-highlight px-4 py-2">
                         <p className="text-xs text-text-secondary text-center">
-                            Las notificaciones se eliminan después de 24 horas
+                            {t('notifications.auto_delete')}
                         </p>
                     </div>
                 )}

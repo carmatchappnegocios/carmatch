@@ -299,7 +299,7 @@ export default function MarketFiltersAdvanced({
                     type="button"
                     onClick={onClose}
                     className="absolute top-4 right-4 p-2 text-text-secondary hover:text-text-primary transition-colors active:scale-95"
-                    aria-label="Cerrar filtros"
+                    aria-label={t('market2.close_filters')}
                 >
                     <X size={20} />
                 </button>

@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { useRestoreSessionModal } from '@/hooks/useRestoreSessionModal'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface FavoriteButtonProps {
 
@@ -39,6 +40,7 @@ export default function FavoriteButton({
     const router = useRouter()
     const { data: session } = useSession()
     const { openModal } = useRestoreSessionModal()
+    const { t } = useLanguage()
 
     // Sincronizar con cambios en props (importante para refrescos de servidor)
     useEffect(() => {
@@ -164,7 +166,7 @@ export default function FavoriteButton({
                 ${!showText ? iconOnlyClasses[size] : ''}
                 ${className}
             `}
-            aria-label={isFavorited ? "Quitar me gusta" : "Me gusta"}
+            aria-label={isFavorited ? t('favorites.remove') : t('favorites.like')}
         >
             <svg
                 className={`${iconSizes[size]} transition-transform duration-200 ${animate ? 'scale-110' : 'scale-100'}`}
@@ -181,7 +183,7 @@ export default function FavoriteButton({
             </svg>
             {showText && (
                 <span className="font-bold text-sm uppercase">
-                    {isFavorited ? "Favorito" : "Me gusta"}
+                    {isFavorited ? t('favorites.favorited') : t('favorites.like')}
                 </span>
             )}
         </button>

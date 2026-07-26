@@ -94,7 +94,7 @@ export default function AIChatbot() {
             console.error('Chatbot Error:', error)
             setMessages(prev => [...prev, {
                 id: Date.now().toString(),
-                text: "Lo siento, mi servicio de asesoría experto está en mantenimiento.",
+                text: t('chat.maintenance'),
                 sender: 'bot',
                 timestamp: new Date()
             }])

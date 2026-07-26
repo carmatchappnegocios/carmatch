@@ -7,6 +7,7 @@
 import { useState, useEffect } from 'react'
 import { Bell, X } from 'lucide-react'
 import { useSession } from 'next-auth/react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 // Función auxiliar para convertir VAPID key
 function urlBase64ToUint8Array(base64String: string) {
@@ -27,6 +28,7 @@ export default function PushNotificationRequest() {
     const { data: session, status } = useSession()
     const [showPrompt, setShowPrompt] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const { t } = useLanguage()
 
     useEffect(() => {
         if (status !== 'authenticated') return
@@ -60,7 +62,7 @@ export default function PushNotificationRequest() {
 
     const subscribeUser = async () => {
         if (!session?.user?.id) {
-            alert('Debes iniciar sesión para activar las notificaciones')
+            alert(t('notifications.login_required'))
             return
         }
 
@@ -71,21 +73,21 @@ export default function PushNotificationRequest() {
         try {
             // Verificar soporte de Service Worker
             if (!('serviceWorker' in navigator)) {
-                throw new Error('Tu navegador no soporta notificaciones push')
+                throw new Error(t('notifications.browser_not_supported'))
             }
 
             // Esperar a que el Service Worker esté listo
             const registration = await Promise.race([
                 navigator.serviceWorker.ready,
                 new Promise<never>((_, reject) =>
-                    setTimeout(() => reject(new Error('Tiempo de espera agotado')), 5000)
+                    setTimeout(() => reject(new Error(t('notifications.timeout'))), 5000)
                 )
             ]) as ServiceWorkerRegistration
 
             // Verificar VAPID Key
             const vapidKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY
             if (!vapidKey) {
-                throw new Error('Error de configuración del servidor')
+                throw new Error(t('common2.error_server'))
             }
 
             // Solicitar permiso
@@ -113,13 +115,13 @@ export default function PushNotificationRequest() {
             })
 
             if (!response.ok) {
-                throw new Error('Error al guardar la suscripción')
+                throw new Error(t('notifications.save_error'))
             }
 
 
         } catch (error: any) {
             console.error('Push Error:', error)
-            alert(error.message || 'Error al activar las notificaciones')
+            alert(error.message || t('notifications.activate_error'))
             // No es necesario cerrar el modal aquí, ya se cerró al inicio
         } finally {
             setIsLoading(false)
@@ -148,7 +150,7 @@ export default function PushNotificationRequest() {
                 <button
                     onClick={handleDismiss}
                     className="absolute top-2 right-2 text-text-secondary hover:text-text-primary transition"
-                    aria-label="Cerrar"
+                    aria-label={t('common2.close')}
                 >
                     <X size={18} />
                 </button>
@@ -160,9 +162,9 @@ export default function PushNotificationRequest() {
                     </div>
                     {/* Contenido */}
                     <div className="flex-1 pr-6">
-                        <h4 className="font-bold text-text-primary mb-1">Activar Notificaciones</h4>
+                        <h4 className="font-bold text-text-primary mb-1">{t('notifications.activate_title')}</h4>
                         <p className="text-sm text-text-secondary mb-4">
-                            Recibe alertas de mensajes y favoritos.
+                            {t('notifications.activate_desc')}
                         </p>
 
                         {/* Botones */}
@@ -171,14 +173,14 @@ export default function PushNotificationRequest() {
                                 onClick={handleDismiss}
                                 className="px-3 py-1.5 text-sm text-text-secondary hover:text-text-primary transition"
                             >
-                                Ahora no
+                                {t('notifications.not_now')}
                             </button>
                             <button
                                 onClick={subscribeUser}
                                 disabled={isLoading}
                                 className="px-4 py-1.5 bg-primary-600 hover:bg-primary-700 disabled:opacity-50 text-white text-sm font-bold rounded-lg transition shadow-lg shadow-primary-500/20"
                             >
-                                {isLoading ? 'Activando...' : 'Activar'}
+                                {isLoading ? t('notifications.activating') : t('notifications.activate_btn')}
                             </button>
                         </div>
                     </div>

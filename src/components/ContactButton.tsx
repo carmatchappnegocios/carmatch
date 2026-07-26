@@ -40,7 +40,7 @@ export default function ContactButton({
         const isSoftLogout = document.cookie.includes('soft_logout=true') || localStorage.getItem('soft_logout') === 'true'
         if (session && isSoftLogout) {
             openModal(
-                "¿Deseas reactivar tu sesión para enviar este mensaje? Tu cuenta sigue vinculada.",
+                t('contact.reactivate_prompt'),
                 () => executeContact()
             )
             return
@@ -82,11 +82,11 @@ export default function ContactButton({
                     console.error('Error parseando JSON de error:', jsonError)
                     errorMessage = 'Error desconocido del servidor (' + res.status + ')'
                 }
-                alert('Error al crear chat: ' + (errorMessage || t('common.errors.chat_creation')))
+                alert(t('contact.chat_error') + ': ' + (errorMessage || t('common.errors.chat_creation')))
             }
         } catch (error: any) {
             console.error('Error al contactar:', error)
-            alert('Error de conexión: ' + (error.message || t('common.errors.connection')))
+            alert(t('contact.connection_error') + ': ' + (error.message || t('common.errors.connection')))
         } finally {
             setLoading(false)
         }
@@ -108,7 +108,7 @@ export default function ContactButton({
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
                 </svg>
-                Vehículo No Disponible
+                {t('contact.vehicle_unavailable')}
             </button>
         )
     }
@@ -118,7 +118,7 @@ export default function ContactButton({
             <button
                 onClick={handleContact}
                 disabled={loading}
-                title="Mensaje"
+                title={t('contact.message')}
                 className={`p-2 bg-primary-700/10 text-primary-700 rounded-lg hover:bg-primary-700/20 transition disabled:opacity-50 ${className}`}
             >
                 {loading ? (
@@ -142,7 +142,7 @@ export default function ContactButton({
                 disabled={loading}
                 className={`flex items-center gap-2 text-primary-500 font-bold hover:text-primary-400 transition text-sm ${className}`}
             >
-                {loading ? '⌛' : '💬 Mensaje'}
+                    {loading ? '⌛' : t('contact.message_label')}
             </button>
         )
     }
@@ -159,7 +159,7 @@ export default function ContactButton({
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                     </svg>
-                    Conectando...
+                    {t('contact.connecting')}
                 </>
             ) : (
                 <>
