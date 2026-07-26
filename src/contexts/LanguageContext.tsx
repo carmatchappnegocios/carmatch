@@ -53,29 +53,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
             // 1. Check LocalStorage (User Preference)
             let initialLocale = localStorage.getItem('carmatch-locale') as Locale
 
-            if (!initialLocale) {
-                // 2. Check Browser Languages
-                const browserLangs = navigator.languages ? navigator.languages : [navigator.language]
-                const supportedLocales: Locale[] = ['es', 'en', 'pt', 'fr', 'de', 'it', 'zh', 'ja', 'ru', 'ko', 'ar', 'hi', 'tr', 'nl', 'pl', 'sv', 'id', 'th', 'vi', 'ur', 'he']
-
-                for (const lang of browserLangs) {
-                    if (!lang) continue
-                    const code = lang.toLowerCase()
-
-                    if (code.startsWith('es')) {
-                        initialLocale = 'es'
-                        break
-                    }
-
-                    const found = supportedLocales.find(key => code === key || code.startsWith(key + '-'))
-                    if (found) {
-                        initialLocale = found
-                        break
-                    }
-                }
-            }
-
-            // 3. Detect by country from IP (LocationContext caches this)
+            // 2. Detect by country from IP (PRIORITIZE over browser language)
             if (!initialLocale) {
                 try {
                     const savedLocation = localStorage.getItem('carmatch_last_detected_location')
@@ -110,6 +88,28 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
                         }
                     }
                 } catch (e) { /* ignore parse errors */ }
+            }
+
+            // 3. Check Browser Languages (only if country detection didn't find a match)
+            if (!initialLocale) {
+                const browserLangs = navigator.languages ? navigator.languages : [navigator.language]
+                const supportedLocales: Locale[] = ['es', 'en', 'pt', 'fr', 'de', 'it', 'zh', 'ja', 'ru', 'ko', 'ar', 'hi', 'tr', 'nl', 'pl', 'sv', 'id', 'th', 'vi', 'ur', 'he']
+
+                for (const lang of browserLangs) {
+                    if (!lang) continue
+                    const code = lang.toLowerCase()
+
+                    if (code.startsWith('es')) {
+                        initialLocale = 'es'
+                        break
+                    }
+
+                    const found = supportedLocales.find(key => code === key || code.startsWith(key + '-'))
+                    if (found) {
+                        initialLocale = found
+                        break
+                    }
+                }
             }
 
             // Fallback
