@@ -46,7 +46,7 @@ export default function PWAInstallModal({ isOpen, onClose, platform = 'auto' }: 
                 <div className="sticky top-0 bg-surface border-b border-surface-highlight p-6 flex items-center justify-between">
                     <h2 className="text-2xl font-bold text-text-primary flex items-center gap-2">
                         <Smartphone size={28} className="text-primary-500" />
-                        Instalar CarMatch Social
+                        {t('pwa.install_title')}
                     </h2>
                     <button
                         onClick={onClose}
@@ -66,36 +66,36 @@ export default function PWAInstallModal({ isOpen, onClose, platform = 'auto' }: 
                             <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/30 rounded-xl p-4">
                                 <p className="text-sm font-bold text-primary-400 mb-2 flex items-center gap-2">
                                     <Smartphone size={16} />
-                                    Detectamos que usas iPhone/iPad
+                                    {t('pwa.ios_detected')}
                                 </p>
                                 <p className="text-xs text-text-secondary">
-                                    Apple no permite la instalación automática. Sigue estos pasos manuales:
+                                    {t('pwa.ios_automatic_disabled')}
                                 </p>
                             </div>
 
                             <div className="space-y-4">
                                 <StepCard
                                     number={1}
-                                    title="Abre Safari"
-                                    description="Debes usar el navegador Safari (no Chrome ni otros)"
+                                    title={t('pwa.ios_step1_title')}
+                                    description={t('pwa.ios_step1_desc')}
                                     icon={<Compass size={20} className="text-primary-400" />}
                                 />
                                 <StepCard
                                     number={2}
-                                    title="Toca el botón Compartir"
-                                    description="Es el ícono de compartir en la parte inferior de la pantalla"
+                                    title={t('pwa.ios_step2_title')}
+                                    description={t('pwa.ios_step2_desc')}
                                     icon={<Upload size={20} className="text-primary-400" />}
                                 />
                                 <StepCard
                                     number={3}
-                                    title="Desplázate y busca"
-                                    description='"Agregar a pantalla de inicio" o "Add to Home Screen"'
+                                    title={t('pwa.ios_step3_title')}
+                                    description={t('pwa.ios_step3_desc')}
                                     icon={<Plus size={20} className="text-primary-400" />}
                                 />
                                 <StepCard
                                     number={4}
-                                    title="Confirma"
-                                    description="Toca 'Agregar' en la esquina superior derecha"
+                                    title={t('pwa.ios_step4_title')}
+                                    description={t('pwa.ios_step4_desc')}
                                     icon={<CheckCircle size={20} className="text-green-400" />}
                                 />
                             </div>
@@ -103,10 +103,10 @@ export default function PWAInstallModal({ isOpen, onClose, platform = 'auto' }: 
                             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
                                 <p className="text-sm font-bold text-green-400 mb-1 flex items-center gap-2">
                                     <Sparkles size={16} />
-                                    ¡Listo!
+                                    {t('pwa.all_done')}
                                 </p>
                                 <p className="text-xs text-text-secondary">
-                                    CarMatch Social aparecerá en tu pantalla de inicio como cualquier otra app
+                                    {t('pwa.ios_success')}
                                 </p>
                             </div>
                         </div>
@@ -118,30 +118,30 @@ export default function PWAInstallModal({ isOpen, onClose, platform = 'auto' }: 
                             <div className="bg-gradient-to-r from-green-500/10 to-teal-500/10 border border-green-500/30 rounded-xl p-4">
                                 <p className="text-sm font-bold text-primary-400 mb-2 flex items-center gap-2">
                                     <Smartphone size={16} />
-                                    Android: Instalación Directa
+                                    {t('pwa.android_direct_install')}
                                 </p>
                                 <p className="text-xs text-text-secondary">
-                                    Si el botón de instalación automática no aparece (común si desinstalaste recientemente), usa este método manual:
+                                    {t('pwa.android_manual_hint')}
                                 </p>
                             </div>
 
                             <div className="space-y-4">
                                 <StepCard
                                     number={1}
-                                    title="Toca los tres puntos (⋮)"
-                                    description="Están en la esquina superior derecha de tu navegador Chrome o Samsung Internet."
+                                    title={t('pwa.android_step1_title')}
+                                    description={t('pwa.android_step1_desc')}
                                     icon={<Smartphone size={20} className="text-primary-400" />}
                                 />
                                 <StepCard
                                     number={2}
-                                    title="Busca la opción de instalar"
-                                    description='Toca en "Instalar aplicación" o "Agregar a pantalla de inicio".'
+                                    title={t('pwa.android_step2_title')}
+                                    description={t('pwa.android_step2_desc')}
                                     icon={<Smartphone size={20} className="text-primary-400" />}
                                 />
                                 <StepCard
                                     number={3}
-                                    title="Confirma la instalación"
-                                    description="Toca 'Instalar' en la ventana emergente y ¡listo!"
+                                    title={t('pwa.android_step3_title')}
+                                    description={t('pwa.android_step3_desc')}
                                     icon={<CheckCircle size={20} className="text-green-400" />}
                                 />
                             </div>
@@ -149,17 +149,17 @@ export default function PWAInstallModal({ isOpen, onClose, platform = 'auto' }: 
                             <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
                                 <p className="text-xs font-bold text-amber-400 mb-1 flex items-center gap-2">
                                     <Lightbulb size={14} />
-                                    ¿Por qué no veo el aviso automático?
+                                    {t('pwa.android_tip_title')}
                                 </p>
                                 <p className="text-[11px] text-text-secondary">
-                                    Chrome bloquea por unos días el aviso automático si desinstalaste la app hoy. <b>Hacerlo manual (pasos 1 y 2) funciona SIEMPRE.</b>
+                                    {t('pwa.android_tip_desc')}
                                 </p>
                             </div>
 
                             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 text-center">
                                 <p className="text-sm font-bold text-green-400 flex items-center gap-2 justify-center">
                                     <Rocket size={18} />
-                                    CarMatch Social estará ahora en tu menú de aplicaciones
+                                    {t('pwa.android_success')}
                                 </p>
                             </div>
                         </div>
@@ -171,21 +171,21 @@ export default function PWAInstallModal({ isOpen, onClose, platform = 'auto' }: 
                             <div className="bg-orange-500/10 border border-orange-500/30 rounded-xl p-6 text-center">
                                 <Monitor size={48} className="mx-auto mb-3 text-primary-400" />
                                 <p className="text-sm font-bold text-primary-400 mb-2">
-                                    Estás usando una computadora
+                                    {t('pwa.desktop_detected')}
                                 </p>
                                 <p className="text-xs text-text-secondary mb-4">
-                                    Para instalar CarMatch Social como aplicación móvil, escanea este código QR desde tu celular
+                                    {t('pwa.desktop_qr_hint')}
                                 </p>
                                 <div className="bg-white p-4 rounded-xl inline-block">
                                     <p className="text-xs text-gray-600 mb-2">QR Code placeholder</p>
                                     <div className="w-48 h-48 bg-gray-200 rounded flex items-center justify-center">
-                                        <p className="text-sm text-gray-500">Escanear con celular</p>
+                                        <p className="text-sm text-gray-500">{t('pwa.scan_with_phone')}</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="text-center">
-                                <p className="text-xs text-text-secondary mb-3">O abre desde tu celular:</p>
+                                <p className="text-xs text-text-secondary mb-3">{t('pwa.or_open_phone')}</p>
                                 <div className="bg-surface-highlight rounded-lg p-3 font-mono text-sm text-primary-400">
                                     carmatch.com
                                 </div>
@@ -197,14 +197,14 @@ export default function PWAInstallModal({ isOpen, onClose, platform = 'auto' }: 
                     <div className="border-t border-surface-highlight pt-6">
                         <h3 className="text-sm font-bold text-text-primary mb-3 flex items-center gap-2">
                             <Sparkles size={18} className="text-primary-400" />
-                            Beneficios de instalar
+                            {t('pwa.benefits_title')}
                         </h3>
                         <ul className="space-y-2">
-                            <BenefitItem text="Acceso directo desde tu pantalla de inicio" />
-                            <BenefitItem text="Notificaciones de nuevos mensajes y favoritos" />
-                            <BenefitItem text="Funciona sin internet (modo offline)" />
-                            <BenefitItem text="Experiencia más rápida y fluida" />
-                            <BenefitItem text="No ocupa espacio como apps de tiendas" />
+                            <BenefitItem text={t('pwa.benefit_home_screen')} />
+                            <BenefitItem text={t('pwa.benefit_notifications')} />
+                            <BenefitItem text={t('pwa.benefit_offline')} />
+                            <BenefitItem text={t('pwa.benefit_fast')} />
+                            <BenefitItem text={t('pwa.benefit_no_store')} />
                         </ul>
                     </div>
                 </div>
@@ -215,7 +215,7 @@ export default function PWAInstallModal({ isOpen, onClose, platform = 'auto' }: 
                         onClick={onClose}
                         className="w-full py-3 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-xl transition"
                     >
-                        Entendido
+                        {t('common.understood')}
                     </button>
                 </div>
             </div>

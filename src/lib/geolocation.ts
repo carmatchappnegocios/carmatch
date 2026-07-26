@@ -271,7 +271,7 @@ export function normalizeCountryCode(country?: string | null): string {
     // Limpiar caracteres no alfanuméricos (evita corruptos como M\0 o M%0)
     const clean = upper.replace(/[^A-Z]/g, '')
 
-    if (clean === 'MX' || clean.includes('MEX') || clean.includes('M')) return 'MX'
+    if (clean === 'MX' || clean.includes('MEX')) return 'MX'
     if (clean === 'US' || clean === 'USA' || clean.includes('UNIT') || clean.includes('ESTAD') || clean.includes('EEUU')) return 'US'
     if (clean === 'CA' || clean === 'CAN' || clean.includes('CANADA')) return 'CA'
     if (clean === 'CO' || clean === 'COL' || clean.includes('COLOMBIA')) return 'CO'

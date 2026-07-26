@@ -452,6 +452,7 @@ export default function MarketClient({
                     })
                     // 🌍 FRONTERA DIGITAL: Filtrar estrictamente por país normalizado
                     .filter(item => {
+                        if (!userCountry) return true
                         const itemCountry = normalizeCountryCode(item.country)
                         return itemCountry === userCountry
                     })
@@ -551,8 +552,8 @@ export default function MarketClient({
                         </span>
                         <span className="font-bold">
                             {newVehiclesCount === 1
-                                ? '🚗 ¡Hay 1 vehículo nuevo en tu zona!'
-                                : `🚗 ¡Hay ${newVehiclesCount} vehículos nuevos en tu zona!`}
+                                ? t('market.new_vehicle_single')
+                                : t('market.new_vehicles_count').replace('{count}', String(newVehiclesCount))}
                         </span>
                         <RefreshCw className="w-4 h-4 ml-1" />
                     </button>
@@ -596,7 +597,7 @@ export default function MarketClient({
                     )
                 }
                 <div className="flex-1 pointer-events-auto">
-                    {((isFiltering || locationLoading) && items.length === 0) ? (
+                    {((isFiltering || locationLoading) && items.length === 0 && initialItems.length === 0) ? (
                         <div className="flex items-center justify-center py-20">
                             <div className="text-center">
                                 <div className="w-12 h-12 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
@@ -809,9 +810,9 @@ export default function MarketClient({
                                             {/* Card 2: Promo Vende Tu Auto */}
                                             <div className="bg-gradient-to-br from-primary-900/20 to-indigo-900/20 border-2 border-primary-500/30 hover:border-primary-500/50 rounded-2xl flex flex-col items-center justify-center p-6 text-center transition group min-h-[250px] relative">
                                                 <div className="flex flex-col items-center w-full">
-                                                    <p className="text-sm text-primary-200 font-bold uppercase tracking-wider mb-2">Mientras buscas</p>
+                                                    <p className="text-sm text-primary-200 font-bold uppercase tracking-wider mb-2">{t('market.while_searching')}</p>
                                                     <h3 className="text-xl font-black text-white leading-tight mb-6">
-                                                        ¡GENERA DINERO<br />CON EL TUYO!
+                                                        {t('market.generate_money_title')}
                                                     </h3>
 
                                                     <Link
@@ -819,7 +820,7 @@ export default function MarketClient({
                                                         className="inline-flex items-center gap-2 px-6 py-3 bg-white text-primary-900 rounded-xl hover:bg-white/90 transition font-black uppercase tracking-wide shadow-lg text-sm group-hover:scale-105 transform duration-200"
                                                     >
                                                         <Plus size={18} strokeWidth={3} />
-                                                        Convierte tu auto en dinero
+                                                        {t('market.convert_to_money')}
                                                     </Link>
                                                 </div>
                                             </div>
@@ -861,7 +862,7 @@ export default function MarketClient({
                                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                             </svg>
-                                            {tierIndex === RADIUS_TIERS.length - 1 ? "Volver a empezar" : "Expandir búsqueda"}
+                                            {tierIndex === RADIUS_TIERS.length - 1 ? t('market.restart_search') : t('market.expand_search')}
                                         </button>
 
                                         {/* New: Change Location Button */}
@@ -903,7 +904,7 @@ export default function MarketClient({
                                     ✕
                                 </button>
 
-                                <h3 className="text-xl font-bold text-text-primary mb-4">Cambiar Ubicación</h3>
+                                <h3 className="text-xl font-bold text-text-primary mb-4">{t('market.change_location')}</h3>
                                 <p className="text-text-secondary text-sm mb-6">
                                     {t('market.change_location_desc')}
                                 </p>
@@ -926,7 +927,7 @@ export default function MarketClient({
                                     {showCandidates && locationCandidates.length > 0 && (
                                         <div className="bg-background border border-surface-highlight rounded-lg overflow-hidden max-h-48 overflow-y-auto animate-in slide-in-from-top-2">
                                             <p className="px-3 py-2 text-xs text-text-secondary bg-surface-highlight/30 font-bold uppercase tracking-wider">
-                                                ¿A cuál te refieres?
+                                                {t('market.which_one')}
                                             </p>
                                             {locationCandidates.map((cand, idx) => (
                                                 <button
@@ -979,7 +980,7 @@ export default function MarketClient({
                                             {isSearchingLocation ? (
                                                 <>
                                                     <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                                    <span>Buscando...</span>
+                                                    <span>{t('common.searching')}</span>
                                                 </>
                                             ) : (
                                                 t('market.search_zone')
