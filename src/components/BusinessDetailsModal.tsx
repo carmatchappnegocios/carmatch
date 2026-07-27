@@ -91,7 +91,7 @@ export default function BusinessDetailsModal({ business, onClose, categoryColor 
                 {/* ❌ Close Button */}
                 <button
                     onClick={onClose}
-                    className="absolute top-4 right-4 z-50 w-10 h-10 bg-black/50 text-white rounded-full flex items-center justify-center hover:bg-black/80 transition backdrop-blur-md"
+                    className="sticky top-4 z-50 w-10 h-10 bg-black/60 text-white rounded-full flex items-center justify-center hover:bg-black/80 transition backdrop-blur-md shadow-lg ml-auto mr-4 mt-4"
                 >
                     ✕
                 </button>
