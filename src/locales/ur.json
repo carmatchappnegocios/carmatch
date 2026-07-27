@@ -910,7 +910,12 @@
             "polarizado": "ونڈو ٹنٹنگ",
             "rotulacion": "بورڈ / ریپنگ",
             "taller_ev": "الیکٹرک گاڑی کی مرمت",
-            "llantera": "ٹائر کی دکان"
+            "llantera": "ٹائر کی دکان",
+            "caseta": "ٹول بوتھ",
+            "hospital": "ہسپتال / ہنگامی",
+            "policia": "پولیس / ٹریفک",
+            "aeropuerto": "ہوائی اڈا",
+            "estacion_tren": "ریلوے اسٹیشن"
         },
         "tips": {
             "title": "فروخت کے مشورے",

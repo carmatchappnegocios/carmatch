@@ -910,7 +910,12 @@
             "polarizado": "Cam Filmi",
             "rotulacion": "Tabela / Kaplama",
             "taller_ev": "EV Tamircisi",
-            "llantera": "Lastikçi"
+            "llantera": "Lastikçi",
+            "caseta": "Gişe / HGS",
+            "hospital": "Hastane / Acil",
+            "policia": "Polis / Trafik",
+            "aeropuerto": "Havalimanı",
+            "estacion_tren": "Tren İstasyonu"
         },
         "tips": {
             "title": "Satış İpuçları",

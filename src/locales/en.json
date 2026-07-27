@@ -962,7 +962,12 @@
             "polarizado": "Window Tinting",
             "rotulacion": "Signage / Wrapping",
             "taller_ev": "EV Repair Shop",
-            "llantera": "Tire Shop"
+            "llantera": "Tire Shop",
+            "caseta": "Toll Booth",
+            "hospital": "Hospital / Emergency",
+            "policia": "Police / Traffic",
+            "aeropuerto": "Airport",
+            "estacion_tren": "Train Station"
         },
         "tips": {
             "title": "Tips for your post",

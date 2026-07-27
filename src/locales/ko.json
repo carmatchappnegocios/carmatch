@@ -910,7 +910,12 @@
             "polarizado": "윈도우 틴팅",
             "rotulacion": "간판 / 랩핑",
             "taller_ev": "EV 정비소",
-            "llantera": "타이어샵"
+            "llantera": "타이어샵",
+            "caseta": "요금소",
+            "hospital": "병원 / 응급",
+            "policia": "경찰 / 교통",
+            "aeropuerto": "공항",
+            "estacion_tren": "기차역"
         },
         "tips": {
             "title": "판매를 위한 팁",

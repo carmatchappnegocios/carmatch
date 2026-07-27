@@ -910,7 +910,12 @@
             "suspension": "Suspensi",
             "aire_acondicionado": "AC Mobil",
             "importadoras": "Importir",
-            "llantera": "Toko Ban"
+            "llantera": "Toko Ban",
+            "caseta": "Gerbang Tol",
+            "hospital": "Rumah Sakit / IGD",
+            "policia": "Polisi / Lalu Lintas",
+            "aeropuerto": "Bandara",
+            "estacion_tren": "Stasiun Kereta"
         },
         "tips": {
             "title": "Tips Menjual",

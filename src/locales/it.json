@@ -910,7 +910,12 @@
             "polarizado": "Vetri oscurati",
             "rotulacion": "Insegne / Wrapping",
             "taller_ev": "Officina VE",
-            "llantera": "Gommista"
+            "llantera": "Gommista",
+            "caseta": "Casello Autostradale",
+            "hospital": "Ospedale / Pronto Soccorso",
+            "policia": "Polizia / Circstrazione",
+            "aeropuerto": "Aeroporto",
+            "estacion_tren": "Stazione Ferroviaria"
         },
         "tips": {
             "title": "Consigli per il tuo annuncio",

@@ -910,7 +910,12 @@
             "polarizado": "Fönsterfilmer",
             "rotulacion": "Skyltning / Foliering",
             "taller_ev": "EV-verkstad",
-            "llantera": "Däckfirma"
+            "llantera": "Däckfirma",
+            "caseta": "Betalstation",
+            "hospital": "Sjukhus / Akutmottagning",
+            "policia": "Polis / Trafik",
+            "aeropuerto": "Flygplats",
+            "estacion_tren": "Tågstation"
         },
         "tips": {
             "title": "Säljtips",

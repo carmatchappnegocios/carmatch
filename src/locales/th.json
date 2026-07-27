@@ -910,7 +910,12 @@
             "suspension": "ระบบกันสะเทือน",
             "aire_acondicionado": "เครื่องปรับอากาศ",
             "importadoras": "ผู้นำเข้า",
-            "llantera": "ร้านยางรถยนต์"
+            "llantera": "ร้านยางรถยนต์",
+            "caseta": "ด่านเก็บเงิน",
+            "hospital": "โรงพยาบาล / ฉุกเฉิน",
+            "policia": "ตำรวจ / จราจร",
+            "aeropuerto": "สนามบิน",
+            "estacion_tren": "สถานีรถไฟ"
         },
         "tips": {
             "title": "เคล็ดลับการขาย",

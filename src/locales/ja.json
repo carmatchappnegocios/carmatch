@@ -910,7 +910,12 @@
             "polarizado": "ウィンドウフィルム",
             "rotulacion": "看板 / ラッピング",
             "taller_ev": "EV修理店",
-            "llantera": "タイヤショップ"
+            "llantera": "タイヤショップ",
+            "caseta": "料金所",
+            "hospital": "病院 / 救急",
+            "policia": "警察 / 交通",
+            "aeropuerto": "空港",
+            "estacion_tren": "駅"
         },
         "tips": {
             "title": "出品のコツ",

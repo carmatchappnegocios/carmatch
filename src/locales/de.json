@@ -910,7 +910,12 @@
             "polarizado": "Fensterfolie",
             "rotulacion": "Beschriftung / Folierung",
             "taller_ev": "E-Auto Werkstatt",
-            "llantera": "Reifenhändler"
+            "llantera": "Reifenhändler",
+            "caseta": "Mautstation",
+            "hospital": "Krankenhaus / Notaufnahme",
+            "policia": "Polizei / Verkehr",
+            "aeropuerto": "Flughafen",
+            "estacion_tren": "Bahnhof"
         },
         "tips": {
             "title": "Tipps für Ihre Anzeige",

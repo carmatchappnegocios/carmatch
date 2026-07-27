@@ -910,7 +910,12 @@
             "polarizado": "ציפוי חלונות",
             "rotulacion": "שילוט / עטיפה",
             "taller_ev": "מוסך רכב חשמלי",
-            "llantera": "חנות צמיגים"
+            "llantera": "חנות צמיגים",
+            "caseta": "תחנת אגרה",
+            "hospital": "בית חולים / חדר מיון",
+            "policia": "משטרה / תנועה",
+            "aeropuerto": "נמל תעופה",
+            "estacion_tren": "תחנת רכבת"
         },
         "tips": {
             "title": "טיפים למכירה",

@@ -910,7 +910,12 @@
             "polarizado": "تظليل النوافذ",
             "rotulacion": "لافتات / تغليف",
             "taller_ev": "ورشة سيارات كهربائية",
-            "llantera": "متجر إطارات"
+            "llantera": "متجر إطارات",
+            "caseta": "كشك رسوم",
+            "hospital": "مستشفى / طوارئ",
+            "policia": "شرطة / مرور",
+            "aeropuerto": "مطار",
+            "estacion_tren": "محطة قطار"
         },
         "tips": {
             "title": "نصائح للبيع",

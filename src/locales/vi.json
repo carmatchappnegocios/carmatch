@@ -910,7 +910,12 @@
             "suspension": "Hệ thống treo",
             "aire_acondicionado": "Điều hòa không khí",
             "importadoras": "Nhà nhập khẩu",
-            "llantera": "Tiệm lốp xe"
+            "llantera": "Tiệm lốp xe",
+            "caseta": "Trạm Thu Phí",
+            "hospital": "Bệnh Viện / Cấp Cứu",
+            "policia": "Cảnh Sát / Giao Thông",
+            "aeropuerto": "Sân Bay",
+            "estacion_tren": "Nhà Ga"
         },
         "tips": {
             "title": "Mẹo bán hàng",

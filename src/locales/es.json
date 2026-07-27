@@ -994,7 +994,12 @@
             "electrolinera": "Cargador Eléctrico",
             "taller_ev": "Taller Eléctrico e Híbrido",
             "lubricantes": "Cambio de Aceite y Filtros",
-            "boutique": "Auto Boutique / Accesorios"
+            "boutique": "Auto Boutique / Accesorios",
+            "caseta": "Caseta de Peaje",
+            "hospital": "Hospital / Urgencias",
+            "policia": "Policía / Tránsito",
+            "aeropuerto": "Aeropuerto",
+            "estacion_tren": "Estación de Tren"
         },
         "tips": {
             "title": "Consejos para tu publicación",

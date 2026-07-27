@@ -910,7 +910,12 @@
             "polarizado": "Przyciemnianie szyb",
             "rotulacion": "Szyldy / Oklejanie",
             "taller_ev": "Warsztat EV",
-            "llantera": "Wulkanizacja"
+            "llantera": "Wulkanizacja",
+            "caseta": "Punkt Poboru Opłat",
+            "hospital": "Szpital / Oddział Ratunkowy",
+            "policia": "Policja / Ruch Drogowy",
+            "aeropuerto": "Lotnisko",
+            "estacion_tren": "Stacja Kolejowa"
         },
         "tips": {
             "title": "Porady sprzedażowe",

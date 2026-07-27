@@ -910,7 +910,12 @@
             "polarizado": "Vitres teintées",
             "rotulacion": "Enseigne / Wrapping",
             "taller_ev": "Atelier VE",
-            "llantera": "Pneus"
+            "llantera": "Pneus",
+            "caseta": "Péage",
+            "hospital": "Hôpital / Urgences",
+            "policia": "Police / Circulation",
+            "aeropuerto": "Aéroport",
+            "estacion_tren": "Gare"
         },
         "tips": {
             "title": "Conseils pour votre annonce",

@@ -910,7 +910,12 @@
             "polarizado": "车窗贴膜",
             "rotulacion": "标牌 / 车身贴膜",
             "taller_ev": "电动车维修店",
-            "llantera": "轮胎店"
+            "llantera": "轮胎店",
+            "caseta": "收费站",
+            "hospital": "医院 / 急诊",
+            "policia": "警察 / 交通",
+            "aeropuerto": "机场",
+            "estacion_tren": "火车站"
         },
         "tips": {
             "title": "发布技巧",

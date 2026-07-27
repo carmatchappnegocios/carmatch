@@ -910,7 +910,12 @@
             "polarizado": "Raamfolie",
             "rotulacion": "Bekleding / Wrapping",
             "taller_ev": "EV-garage",
-            "llantera": "Bandencentrum"
+            "llantera": "Bandencentrum",
+            "caseta": "Tolhuis",
+            "hospital": "Ziekenhuis / Spoedeisende Hulp",
+            "policia": "Politie / Verkeer",
+            "aeropuerto": "Luchthaven",
+            "estacion_tren": "Treinstation"
         },
         "tips": {
             "title": "Verkooptips",

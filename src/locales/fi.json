@@ -910,7 +910,12 @@
             "polarizado": "Ikkunoiden sävytys",
             "rotulacion": "Kyltit / Teippaus",
             "taller_ev": "Sähköautokorjaamo",
-            "llantera": "Rengasliike"
+            "llantera": "Rengasliike",
+            "caseta": "Tulliasema",
+            "hospital": "Sairaala / Ensiapu",
+            "policia": "Poliisi / Liikenne",
+            "aeropuerto": "Lentokenttä",
+            "estacion_tren": "Juna-asema"
         },
         "tips": {
             "title": "Myyntivinkit",

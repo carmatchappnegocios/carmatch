@@ -910,7 +910,12 @@
             "polarizado": "Insulfilm",
             "rotulacion": "Rotulação / Envelopamento",
             "taller_ev": "Oficina VE",
-            "llantera": "Borracheiro"
+            "llantera": "Borracheiro",
+            "caseta": "Pedágio",
+            "hospital": "Hospital / Emergência",
+            "policia": "Polícia / Trânsito",
+            "aeropuerto": "Aeroporto",
+            "estacion_tren": "Estação de Trem"
         },
         "tips": {
             "title": "Dicas para sua publicação",
