@@ -191,8 +191,7 @@ export async function POST(request: NextRequest) {
             isFreePublication = true
         }
         else if (lifetimeCount < 25) {
-            // 🛡️ ESTRATEGIA DE APROBACIÓN: 30 días para evitar muros de pago en el test de Google
-            expiresAt.setDate(now.getDate() + 30)
+            expiresAt.setDate(now.getDate() + 7)
             isFreePublication = true
         }
         else {
