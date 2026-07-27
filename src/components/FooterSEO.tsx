@@ -1,23 +1,60 @@
 import Link from "next/link";
 
 const SEOCities = [
-    { name: 'Monterrey', path: 'monterrey' },
-    { name: 'Guadalajara', path: 'guadalajara' },
-    { name: 'Ciudad de México', path: 'cdmx' },
-    { name: 'Tijuana', path: 'tijuana' },
-    { name: 'Puebla', path: 'puebla' },
-    { name: 'Querétaro', path: 'queretaro' },
-    { name: 'Mérida', path: 'merida' },
-    { name: 'León', path: 'leon' },
+    // Mexico
+    { name: 'Monterrey', slug: 'monterrey', country: 'MX' },
+    { name: 'Guadalajara', slug: 'guadalajara', country: 'MX' },
+    { name: 'Ciudad de México', slug: 'ciudad-de-mexico', country: 'MX' },
+    { name: 'Tijuana', slug: 'tijuana', country: 'MX' },
+    { name: 'Querétaro', slug: 'queretaro', country: 'MX' },
+    { name: 'Mérida', slug: 'merida', country: 'MX' },
+    { name: 'León', slug: 'leon', country: 'MX' },
+    { name: 'Puebla', slug: 'puebla', country: 'MX' },
+    // USA
+    { name: 'Miami', slug: 'miami', country: 'US' },
+    { name: 'Los Angeles', slug: 'los-angeles', country: 'US' },
+    { name: 'Houston', slug: 'houston', country: 'US' },
+    { name: 'Dallas', slug: 'dallas', country: 'US' },
+    { name: 'Chicago', slug: 'chicago', country: 'US' },
+    { name: 'New York', slug: 'new-york', country: 'US' },
+    // Colombia
+    { name: 'Bogotá', slug: 'bogota', country: 'CO' },
+    { name: 'Medellín', slug: 'medellin', country: 'CO' },
+    // Argentina
+    { name: 'Buenos Aires', slug: 'buenos-aires', country: 'AR' },
+    // España
+    { name: 'Madrid', slug: 'madrid', country: 'ES' },
+    { name: 'Barcelona', slug: 'barcelona', country: 'ES' },
+    // Chile
+    { name: 'Santiago', slug: 'santiago', country: 'CL' },
+    // Perú
+    { name: 'Lima', slug: 'lima', country: 'PE' },
 ];
 
 const SEOCategories = [
-    { name: 'Taller Mecánico', slug: 'mecanico' },
-    { name: 'Desponchadoras', slug: 'llantera' },
-    { name: 'Grúas 24 Hrs', slug: 'gruas' },
-    { name: 'Autolavados', slug: 'estetica' },
-    { name: 'Refaccionarias', slug: 'refacciones' },
-    { name: 'Cerrajería', slug: 'cerrajeria' },
+    { name: 'Taller Mecánico', slug: 'mecanico', emoji: '🔧' },
+    { name: 'Desponchadoras', slug: 'llantera', emoji: '🛞' },
+    { name: 'Grúas 24 Hrs', slug: 'gruas', emoji: '🚛' },
+    { name: 'Autolavados', slug: 'estetica', emoji: '🧼' },
+    { name: 'Refaccionarias', slug: 'refacciones', emoji: '⚙️' },
+    { name: 'Cerrajería Automotriz', slug: 'cerrajeria', emoji: '🔑' },
+    { name: 'Taller de Frenos', slug: 'frenos', emoji: '🛑' },
+    { name: 'Taller Eléctrico', slug: 'electrico', emoji: '⚡' },
+    { name: 'Audio y Alarmas', slug: 'audio', emoji: '🔊' },
+    { name: 'Servicio de GPL/GNV', slug: 'gasolinera', emoji: '⛽' },
+    { name: 'Taller Diesel', slug: 'diesel', emoji: '🛢️' },
+    { name: 'Taller de Transmisiones', slug: 'transmisiones', emoji: '⚙️' },
+];
+
+const VehicleTypes = [
+    { name: 'Sedán', slug: 'sedan' },
+    { name: 'SUV', slug: 'suv' },
+    { name: 'Pickup', slug: 'pickup' },
+    { name: 'Motocicleta', slug: 'motocicleta' },
+    { name: 'Camión', slug: 'camion' },
+    { name: 'Maquinaria', slug: 'maquinaria' },
+    { name: 'Comercial', slug: 'comercial' },
+    { name: 'Eléctrico', slug: 'electrico' },
 ];
 
 export default function FooterSEO() {
@@ -27,7 +64,7 @@ export default function FooterSEO() {
                 <details className="group bg-slate-900/50 rounded-2xl border border-white/5 p-4 transition-all duration-300">
                     <summary className="cursor-pointer text-slate-400 hover:text-white text-sm sm:text-base font-bold flex items-center justify-between outline-none list-none marker:hidden">
                         <div className="flex items-center gap-2">
-                            <svg className="w-5 h-5 text-primary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>
+                            <svg className="w-5 h-5 text-primary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>
                             Directorio Global de Exploración
                         </div>
                         <span className="transition duration-300 group-open:rotate-180 bg-surface-highlight/50 p-1.5 rounded-full">
@@ -35,14 +72,14 @@ export default function FooterSEO() {
                         </span>
                     </summary>
                     <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-4">
-                        {/* Columna 1: Autos por Ciudades Top */}
+                        {/* Columna 1: Autos por Ciudades */}
                         <div>
                             <h3 className="text-white font-bold mb-4 text-sm uppercase tracking-wider">Top Ubicaciones</h3>
                             <ul className="space-y-2">
                                 {SEOCities.map((city) => (
-                                    <li key={`auto-${city.path}`}>
-                                        <Link 
-                                            href={`/autos-en/${city.path}`} 
+                                    <li key={`auto-${city.slug}`}>
+                                        <Link
+                                            href={`/autos-en/${city.slug}`}
                                             className="text-slate-400 hover:text-primary-400 transition-colors text-xs"
                                         >
                                             Autos usados en {city.name}
@@ -52,14 +89,14 @@ export default function FooterSEO() {
                             </ul>
                         </div>
 
-                        {/* Columna 2: Negocios MapStore por Categoria */}
+                        {/* Columna 2: Servicios Automotrices */}
                         <div>
                             <h3 className="text-white font-bold mb-4 text-sm uppercase tracking-wider">Servicios</h3>
                             <ul className="space-y-2">
                                 {SEOCategories.map((cat) => (
                                     <li key={`map-${cat.slug}`}>
-                                        <Link 
-                                            href={`/map-store?category=${cat.slug}`} 
+                                        <Link
+                                            href={`/map?category=${cat.slug}`}
                                             className="text-slate-400 hover:text-primary-400 transition-colors text-xs"
                                         >
                                             {cat.name} cerca de mí
@@ -73,25 +110,25 @@ export default function FooterSEO() {
                         <div>
                             <h3 className="text-white font-bold mb-4 text-sm uppercase tracking-wider">Vehículos</h3>
                             <ul className="space-y-2">
-                                {['Sedán', 'SUV', 'Pickup', 'Motocicleta', 'Camión Diésel', 'Maquinaria'].map((type) => (
-                                    <li key={`type-${type}`}>
-                                        <Link 
-                                            href={`/market?query=${type}`} 
+                                {VehicleTypes.map((type) => (
+                                    <li key={`type-${type.slug}`}>
+                                        <Link
+                                            href={`/market?query=${type.name}`}
                                             className="text-slate-400 hover:text-primary-400 transition-colors text-xs"
                                         >
-                                            Venta de {type}
+                                            Venta de {type.name}
                                         </Link>
                                     </li>
                                 ))}
                             </ul>
                         </div>
 
-                        {/* Columna 4: Enlaces Importantes */}
+                        {/* Columna 4: Accesos Rápidos */}
                         <div>
                             <h3 className="text-white font-bold mb-4 text-sm uppercase tracking-wider">Accesos Rápidos</h3>
                             <ul className="space-y-2">
                                 <li><Link href="/market" className="text-slate-400 hover:text-white text-xs block bg-white/5 px-3 py-1.5 rounded-lg hover:bg-white/10 transition w-fit">Marketplace Global</Link></li>
-                                <li><Link href="/map-store" className="text-slate-400 hover:text-white text-xs block bg-white/5 px-3 py-1.5 rounded-lg hover:bg-white/10 transition w-fit mt-1">MapStore 24/7</Link></li>
+                                <li><Link href="/map" className="text-slate-400 hover:text-white text-xs block bg-white/5 px-3 py-1.5 rounded-lg hover:bg-white/10 transition w-fit mt-1">MapStore 24/7</Link></li>
                                 <li><Link href="/swipe" className="text-slate-400 hover:text-white text-xs block bg-primary-600/20 text-primary-400 px-3 py-1.5 rounded-lg hover:bg-primary-600/30 transition w-fit mt-1 border border-primary-500/20">CarMatch Swipe</Link></li>
                             </ul>
                         </div>
