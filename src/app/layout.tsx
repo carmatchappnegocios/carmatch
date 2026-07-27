@@ -165,7 +165,7 @@ export default function RootLayout({
                         <Header />
 
                         {/* MainContent Area: Natural body scroll, no clipping */}
-                        <main className="flex-1 flex flex-col pb-[80px] md:pb-0 relative z-10 bg-background">
+                        <main className="flex-1 flex flex-col pb-[80px] md:pb-0 relative z-10 bg-background overflow-x-hidden">
                             {children}
                             <div className="px-4">
                                 <FooterSEO />

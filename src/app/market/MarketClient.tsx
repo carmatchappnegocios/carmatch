@@ -829,7 +829,7 @@ export default function MarketClient({
                                     )}
                                 </div>
                             ) : (
-                                <div className="mt-12 p-8 bg-surface border border-surface-highlight rounded-2xl text-center flex flex-col items-center mb-8 shadow-xl animate-in zoom-in duration-300">
+                                <div className="mt-12 p-4 sm:p-8 bg-surface border border-surface-highlight rounded-2xl text-center flex flex-col items-center mb-8 shadow-xl animate-in zoom-in duration-300 overflow-hidden">
 
                                     {/* 📍 Radio Badge movido aquí por petición del usuario */}
                                     <button
@@ -837,7 +837,7 @@ export default function MarketClient({
                                         className="mb-8 px-4 py-2 bg-primary-700/10 hover:bg-primary-700/20 active:scale-95 transition-all text-white text-xs rounded-full border border-primary-500/20 shadow-sm flex items-center gap-2 cursor-pointer group"
                                     >
                                         <MapPin className="w-3 h-3 text-primary-400" />
-                                        <span className="font-bold text-primary-300">
+                                        <span className="font-bold text-primary-300 max-w-[200px] truncate block">
                                             {t('market.radius_label').replace('{radius}', searchRadius.toString())} | {displayCity}
                                         </span>
                                         <Search className="w-3 h-3 text-primary-400 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -853,11 +853,11 @@ export default function MarketClient({
                                     </div>
 
                                     {/* Action Buttons for Empty List */}
-                                    <div className="flex flex-col md:flex-row gap-3">
+                                    <div className="flex flex-col sm:flex-row flex-wrap gap-3 justify-center">
                                         {/* Always show Expand/Restart button here */}
                                         <button
                                             onClick={handleExpandSearch}
-                                            className="inline-flex items-center gap-2 px-8 py-4 bg-primary-700 text-text-primary rounded-xl hover:bg-primary-600 transition font-bold shadow-lg justify-center whitespace-nowrap"
+                                            className="inline-flex items-center gap-2 px-5 sm:px-8 py-3 sm:py-4 bg-primary-700 text-text-primary rounded-xl hover:bg-primary-600 transition font-bold shadow-lg justify-center text-sm sm:text-base"
                                         >
                                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -868,7 +868,7 @@ export default function MarketClient({
                                         {/* New: Change Location Button */}
                                         <button
                                             onClick={() => setShowLocationModal(true)}
-                                            className="inline-flex items-center gap-2 px-8 py-4 bg-surface-highlight/50 text-text-primary rounded-xl hover:bg-surface-highlight transition font-medium justify-center whitespace-nowrap"
+                                            className="inline-flex items-center gap-2 px-5 sm:px-8 py-3 sm:py-4 bg-surface-highlight/50 text-text-primary rounded-xl hover:bg-surface-highlight transition font-medium justify-center text-sm sm:text-base"
                                         >
                                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -880,7 +880,7 @@ export default function MarketClient({
                                         {/* Botón de publicar vehículo en estado vacío */}
                                         <Link
                                             href="/publish"
-                                            className="inline-flex items-center gap-2 px-8 py-4 bg-white text-primary-900 rounded-xl hover:bg-white/90 transition font-bold shadow-lg justify-center whitespace-nowrap"
+                                            className="inline-flex items-center gap-2 px-5 sm:px-8 py-3 sm:py-4 bg-white text-primary-900 rounded-xl hover:bg-white/90 transition font-bold shadow-lg justify-center text-sm sm:text-base"
                                         >
                                             <Plus size={20} />
                                             {t('market.publish_cta')}

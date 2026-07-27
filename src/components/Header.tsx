@@ -381,7 +381,7 @@ export default function Header() {
                             </div>
                         ) : (
                             /* PROMINENT BUTTON STYLE: For Guests (More Space) */
-                            <div className={`flex flex-col xl:flex-row items-end xl:items-center gap-1 xl:gap-3 justify-end overflow-visible ${isStandalone ? 'flex-1' : ''}`}>
+                            <div className={`flex flex-col xl:flex-row items-end xl:items-center gap-1 xl:gap-3 justify-end overflow-hidden ${isStandalone ? 'flex-1' : ''}`}>
                                 <AnimatePresence mode="wait">
                                     {(ctas[ctaIndex] || "").includes(' | ') && (
                                             <motion.div
@@ -389,7 +389,7 @@ export default function Header() {
                                                 initial={{ opacity: 0, x: -5 }}
                                                 animate={{ opacity: 1, x: 0 }}
                                                 exit={{ opacity: 0, x: 5 }}
-                                                className={`block text-white/90 font-bold text-[9px] md:text-[10px] uppercase tracking-wide leading-tight text-right max-w-[120px] md:max-w-none mb-0.5 ${pathname === '/swipe' ? 'hidden sm:block' : ''}`}
+                                                className={`block text-white/90 font-bold text-[9px] md:text-[10px] uppercase tracking-wide leading-tight text-right max-w-[120px] md:max-w-[250px] mb-0.5 ${pathname === '/swipe' ? 'hidden sm:block' : ''}`}
                                             >
                                                 {(ctas[ctaIndex] || "").split(' | ')[0]}
                                             </motion.div>
