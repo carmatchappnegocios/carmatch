@@ -84,17 +84,17 @@ export default function BusinessDetailsModal({ business, onClose, categoryColor 
 
     return (
         <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-fade-in" onClick={onClose}>
+            {/* ❌ Close Button (OUTSIDE scrollable area) */}
+            <button
+                onClick={onClose}
+                className="fixed top-4 right-4 z-[10001] w-10 h-10 bg-black/70 text-white rounded-full flex items-center justify-center hover:bg-black transition backdrop-blur-md shadow-lg"
+            >
+                ✕
+            </button>
             <div
                 className="bg-surface border border-surface-highlight rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto relative shadow-2xl animate-scale-up"
                 onClick={(e) => e.stopPropagation()}
             >
-                {/* ❌ Close Button */}
-                <button
-                    onClick={onClose}
-                    className="sticky top-4 z-50 w-10 h-10 bg-black/60 text-white rounded-full flex items-center justify-center hover:bg-black/80 transition backdrop-blur-md shadow-lg ml-auto mr-4 mt-4"
-                >
-                    ✕
-                </button>
 
                 {/* 🖼️ Image Gallery */}
                 <div className="relative w-full h-72 sm:h-96 group bg-gray-900 overflow-hidden">
