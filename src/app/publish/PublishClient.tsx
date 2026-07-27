@@ -16,6 +16,7 @@ import ConfirmationModal from '@/components/ConfirmationModal'
 import VehicleTypeSelector from '@/components/VehicleTypeSelector'
 import SearchableSelect from '@/components/SearchableSelect'
 import { Settings2, BatteryCharging, Truck, X } from 'lucide-react'
+import type { VehicleCategory } from '@/lib/vehicleTaxonomy'
 import {
     VEHICLE_CATEGORIES,
     BRANDS,
@@ -26,7 +27,6 @@ import {
     COLORS,
     CONDITIONS,
     POPULAR_MODELS,
-    VehicleCategory,
     CURRENCIES,
     COUNTRY_CURRENCY_MAP,
     COUNTRY_DISTANCE_UNIT_MAP,
@@ -818,10 +818,15 @@ export default function PublishClient() {
         }
     }
 
-    // 🎯 Efecto para re-intentar publicación cuando se activa el crédito
+    // 🎯 Ref para evitar stale closure en useEffect
+    const handlePublishRef = useRef(handlePublish)
+    useEffect(() => {
+        handlePublishRef.current = handlePublish
+    })
+
     useEffect(() => {
         if (useCredit === true) {
-            handlePublish();
+            handlePublishRef.current();
         }
     }, [useCredit])
 
