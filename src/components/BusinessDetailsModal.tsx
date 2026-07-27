@@ -83,16 +83,16 @@ export default function BusinessDetailsModal({ business, onClose, categoryColor 
     ].filter(Boolean).join(', ') || business.address
 
     return (
-        <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-fade-in" onClick={onClose}>
-            {/* ❌ Close Button (OUTSIDE scrollable area) */}
+        <div className="fixed left-0 right-0 bottom-0 top-[68px] z-[10000] flex flex-col items-center bg-black/80 backdrop-blur-sm p-4 animate-fade-in overflow-y-auto" onClick={onClose}>
+            {/* ❌ Close Button */}
             <button
                 onClick={onClose}
-                className="fixed top-4 right-4 z-[10001] w-10 h-10 bg-black/70 text-white rounded-full flex items-center justify-center hover:bg-black transition backdrop-blur-md shadow-lg"
+                className="sticky top-0 ml-auto z-10 w-10 h-10 bg-black/70 text-white rounded-full flex items-center justify-center hover:bg-black transition backdrop-blur-md shadow-lg mb-2 shrink-0"
             >
                 ✕
             </button>
             <div
-                className="bg-surface border border-surface-highlight rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto relative shadow-2xl animate-scale-up"
+                className="bg-surface border border-surface-highlight rounded-2xl w-full max-w-3xl overflow-y-auto relative shadow-2xl animate-scale-up shrink"
                 onClick={(e) => e.stopPropagation()}
             >
 
