@@ -1,9 +1,6 @@
-// 🛡️ PROHIBIDO MODIFICAR SIN ORDEN EXPLÍCITA DEL USUARIO (Ver PROJECT_RULES.md)
-// ⚠️ CRITICAL WARNING: FILE PROTECTED BY PROJECT RULES.
-// DO NOT MODIFY THIS FILE WITHOUT EXPLICIT USER INSTRUCTION.
-
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/db"
+import { validateAndNormalizeEmail } from "@/lib/email-validation"
 
 export async function POST(request: Request) {
     try {
@@ -16,17 +13,21 @@ export async function POST(request: Request) {
             )
         }
 
+        const validation = validateAndNormalizeEmail(email)
+        if (!validation.valid) {
+            // Always return the same response to prevent enumeration
+            return NextResponse.json({ exists: false })
+        }
+
         const user = await prisma.user.findUnique({
-            where: { email },
+            where: { email: validation.normalized },
             select: { id: true },
         })
 
         return NextResponse.json({ exists: !!user })
     } catch (error) {
         console.error("Error checking user:", error)
-        return NextResponse.json(
-            { error: "Error al verificar usuario" },
-            { status: 500 }
-        )
+        // Always return the same response to prevent enumeration
+        return NextResponse.json({ exists: false })
     }
 }

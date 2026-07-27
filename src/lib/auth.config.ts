@@ -1,11 +1,7 @@
-// 🛡️ PROHIBIDO MODIFICAR SIN ORDEN EXPLÍCITA DEL USUARIO (Ver PROJECT_RULES.md)
-// ⚠️ CRITICAL WARNING: FILE PROTECTED BY PROJECT RULES.
-// DO NOT MODIFY THIS FILE WITHOUT EXPLICIT USER INSTRUCTION.
-
 import Google from "next-auth/providers/google"
 import type { NextAuthConfig } from "next-auth"
 
-// ⚙️ Configuración base compatible con Edge (Middleware)
+// Edge-compatible config (used only by middleware)
 export const authConfig: NextAuthConfig = {
     providers: [
         Google({
@@ -19,15 +15,13 @@ export const authConfig: NextAuthConfig = {
     },
     session: {
         strategy: "jwt",
-        maxAge: 30 * 24 * 60 * 60, // 30 días (sesión normal)
+        maxAge: 30 * 24 * 60 * 60,
     },
-
     callbacks: {
         async authorized({ auth, request: { nextUrl } }) {
             const isLoggedIn = !!auth
             const pathname = nextUrl.pathname
 
-            // 🔓 RUTAS PÚBLICAS (Wikipedia Mode): Accesibles para Google y Guests
             const publicPaths = [
                 '/',
                 '/market',
@@ -52,10 +46,7 @@ export const authConfig: NextAuthConfig = {
                 pathname === path || pathname.startsWith(path)
             )
 
-            // Si es ruta pública, permitimos siempre (para SEO)
             if (isPublicPath) return true
-
-            // Si no es pública, requerimos login
             return isLoggedIn
         },
         async signIn() {
@@ -91,9 +82,7 @@ export const authConfig: NextAuthConfig = {
             return token
         },
         async redirect({ url, baseUrl }) {
-            // Allows relative callback URLs
             if (url.startsWith("/")) return `${baseUrl}${url}`
-            // Allows callback URLs on the same origin
             else if (new URL(url).origin === baseUrl) return url
             return baseUrl
         },

@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { signIn } from "next-auth/react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Mail, Lock, User, AlertCircle, ArrowRight, X, Eye, EyeOff } from "lucide-react"
+import { Mail, Lock, User, AlertCircle, ArrowRight, X, Eye, EyeOff, CheckCircle, Send } from "lucide-react"
 
 export default function CredentialsForm({ linkedEmail, forceOnlyLinked }: { linkedEmail?: string | null, forceOnlyLinked?: boolean }) {
     const [isExpanded, setIsExpanded] = useState(false)
@@ -11,12 +11,33 @@ export default function CredentialsForm({ linkedEmail, forceOnlyLinked }: { link
     const [isLogin, setIsLogin] = useState(true)
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
+    const [needsVerification, setNeedsVerification] = useState(false)
+    const [registeredEmail, setRegisteredEmail] = useState("")
+    const [isResending, setIsResending] = useState(false)
 
     const [form, setForm] = useState({
         name: "",
         email: linkedEmail || "",
         password: ""
     })
+
+    const sendVerificationEmail = async (email: string) => {
+        try {
+            await fetch("/api/auth/verify-email", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email })
+            })
+        } catch (err) {
+            console.error("Error sending verification:", err)
+        }
+    }
+
+    const handleResendVerification = async () => {
+        setIsResending(true)
+        await sendVerificationEmail(registeredEmail)
+        setIsResending(false)
+    }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -55,12 +76,11 @@ export default function CredentialsForm({ linkedEmail, forceOnlyLinked }: { link
                     setError(data.error || "Ocurrió un error al registrarse")
                     setIsLoading(false)
                 } else {
-                    // Registration successful, log in automatically
-                    await signIn("credentials", {
-                        email: form.email,
-                        password: form.password,
-                        callbackUrl: "/"
-                    })
+                    // Send verification email
+                    setRegisteredEmail(form.email)
+                    await sendVerificationEmail(form.email)
+                    setNeedsVerification(true)
+                    setIsLoading(false)
                 }
             }
         } catch (err) {
@@ -71,6 +91,52 @@ export default function CredentialsForm({ linkedEmail, forceOnlyLinked }: { link
 
     if (forceOnlyLinked && !isExpanded) {
         return null;
+    }
+
+    // Show verification pending screen
+    if (needsVerification) {
+        return (
+            <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-4 bg-[#151D2C] rounded-2xl border border-surface-highlight p-6 relative shadow-xl"
+            >
+                <div className="text-center">
+                    <div className="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <CheckCircle className="w-10 h-10 text-green-500" />
+                    </div>
+                    <h3 className="text-xl font-bold text-white mb-2">Revisa tu correo</h3>
+                    <p className="text-text-secondary text-sm mb-4">
+                        Te enviamos un enlace de verificación a<br />
+                        <span className="text-white font-medium">{registeredEmail}</span>
+                    </p>
+                    <p className="text-text-secondary text-xs mb-6">
+                        Haz clic en el enlace del correo para activar tu cuenta.
+                    </p>
+
+                    <button
+                        onClick={handleResendVerification}
+                        disabled={isResending}
+                        className="text-primary-400 hover:text-white transition-colors text-sm font-medium flex items-center justify-center gap-2 mx-auto"
+                    >
+                        <Send className="w-4 h-4" />
+                        {isResending ? "Enviando..." : "Reenviar correo de verificación"}
+                    </button>
+
+                    <div className="mt-6 pt-4 border-t border-surface-highlight">
+                        <button
+                            onClick={() => {
+                                setNeedsVerification(false)
+                                setIsLogin(true)
+                            }}
+                            className="text-text-secondary hover:text-white transition-colors text-sm"
+                        >
+                            Volver al login
+                        </button>
+                    </div>
+                </div>
+            </motion.div>
+        )
     }
 
     if (!isExpanded) {
@@ -171,7 +237,7 @@ export default function CredentialsForm({ linkedEmail, forceOnlyLinked }: { link
                         placeholder="Contraseña"
                         value={form.password}
                         onChange={e => setForm({ ...form, password: e.target.value })}
-                        minLength={4}
+                        minLength={6}
                         className="w-full bg-transparent border-none text-white focus:ring-0 pl-3 pr-10 py-3.5 text-sm outline-none placeholder:text-gray-500"
                     />
                     <button

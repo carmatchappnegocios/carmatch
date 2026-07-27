@@ -1,13 +1,24 @@
-// 🛡️ PROHIBIDO MODIFICAR SIN ORDEN EXPLÍCITA DEL USUARIO (Ver PROJECT_RULES.md)
-// ⚠️ CRITICAL WARNING: FILE PROTECTED BY PROJECT RULES.
-// DO NOT MODIFY THIS FILE WITHOUT EXPLICIT USER INSTRUCTION.
-
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/db"
 import { hashPassword } from "@/lib/password"
+import { validateAndNormalizeEmail } from "@/lib/email-validation"
+import { checkRateLimit, RATE_LIMITS } from "@/lib/rate-limit"
+
+function getIpFromHeaders(request: Request): string {
+    return request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
+}
 
 export async function POST(request: Request) {
     try {
+        const ip = getIpFromHeaders(request)
+        const rateLimit = checkRateLimit(`register:${ip}`, RATE_LIMITS.register)
+        if (!rateLimit.allowed) {
+            return NextResponse.json(
+                { error: "Demasiados registros. Intenta más tarde." },
+                { status: 429 }
+            )
+        }
+
         const { email, password, name } = await request.json()
 
         if (!email || !password) {
@@ -17,9 +28,28 @@ export async function POST(request: Request) {
             )
         }
 
-        // Verificar si el usuario ya existe
+        // Server-side email validation + normalization
+        const validation = validateAndNormalizeEmail(email)
+        if (!validation.valid) {
+            return NextResponse.json(
+                { error: validation.error },
+                { status: 400 }
+            )
+        }
+
+        const normalizedEmail = validation.normalized
+
+        // Password strength check
+        if (password.length < 6) {
+            return NextResponse.json(
+                { error: "La contraseña debe tener al menos 6 caracteres" },
+                { status: 400 }
+            )
+        }
+
+        // Check if user already exists (with normalized email)
         const existingUser = await prisma.user.findUnique({
-            where: { email },
+            where: { email: normalizedEmail },
         })
 
         if (existingUser) {
@@ -29,15 +59,15 @@ export async function POST(request: Request) {
             )
         }
 
-        // Hashear contraseña
+        // Hash password
         const hashedPassword = await hashPassword(password)
 
-        // Crear usuario
+        // Create user with normalized email
         const user = await prisma.user.create({
             data: {
-                email,
+                email: normalizedEmail,
                 password: hashedPassword,
-                name: name || email.split("@")[0],
+                name: name?.trim() || normalizedEmail.split("@")[0],
             },
         })
 
