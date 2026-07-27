@@ -26,8 +26,8 @@ export async function POST(request: NextRequest) {
         const { country, quantity } = await request.json()
 
         // --- LÓGICA DE PRECIOS ---
-        const BASE_PRICE_MXN = 20.00
-        const PREMIUM_PRICE_MXN = 40.00
+        const BASE_PRICE_MXN = 20.00       // Emergentes: $20 MXN
+        const PREMIUM_PRICE_USD = 4.99     // Desarrollados: $4.99 USD fijo
 
         const emergingMarkets = [
             'CO', 'AR', 'PE', 'CL', 'EC', 'GT', 'CR', 'BR', 'MX',
@@ -38,10 +38,12 @@ export async function POST(request: NextRequest) {
         let currency = 'mxn'
 
         if (country === 'MX') {
+            // México: cobrar en MXN
             const totalMxn = BASE_PRICE_MXN * quantity
             amountInCents = Math.round(totalMxn * 100)
             currency = 'mxn'
-        } else {
+        } else if (emergingMarkets.includes(country)) {
+            // Emergentes: convertir $20 MXN a USD
             let usdToMxnRate = 16.50
             try {
                 const response = await fetch(EXCHANGE_API, { next: { revalidate: 3600 } })
@@ -52,12 +54,13 @@ export async function POST(request: NextRequest) {
             } catch (e) {
                 console.warn('Error fetching rate', e)
             }
-
-            let priceMxn = emergingMarkets.includes(country) ? BASE_PRICE_MXN : PREMIUM_PRICE_MXN
-            let priceUsd = priceMxn / usdToMxnRate
-            if (priceUsd < 0.50) priceUsd = 0.50
-
-            const totalUsd = priceUsd * quantity
+            const priceUsd = BASE_PRICE_MXN / usdToMxnRate
+            const totalUsd = Math.max(priceUsd, 1.00) * quantity
+            amountInCents = Math.round(totalUsd * 100)
+            currency = 'usd'
+        } else {
+            // Desarrollados: $4.99 USD fijo
+            const totalUsd = PREMIUM_PRICE_USD * quantity
             amountInCents = Math.round(totalUsd * 100)
             currency = 'usd'
         }

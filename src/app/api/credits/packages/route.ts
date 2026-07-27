@@ -12,13 +12,13 @@ export async function GET(request: NextRequest) {
         const { searchParams } = new URL(request.url)
         const country = searchParams.get('country') || 'MX'
 
-        // PRECIOS BASE EN PESOS MEXICANOS (FIJOS)
-        const BASE_PRICE_MXN = 20.00      // Para emergentes (LATAM, Asia, África)
-        const PREMIUM_PRICE_MXN = 40.00   // Para desarrollados (USA, Europa, Japón)
+        // PRECIOS BASE
+        const BASE_PRICE_MXN = 20.00      // Para emergentes (LATAM, Asia, África) - en MXN
+        const PREMIUM_PRICE_USD = 4.99    // Para desarrollados (USA, Europa, Japón) - en USD fijo
 
         // PISOS MÍNIMOS EN USD (NO BAJAR DE AQUÍ)
         const MIN_PRICE_EMERGING = 1.00   // Mínimo $1.00 USD
-        const MIN_PRICE_PREMIUM = 2.00    // Mínimo $2.00 USD
+        const MIN_PRICE_PREMIUM = 4.99    // Precio fijo para países desarrollados
 
         // Lista de países emergentes
         const emergingMarkets = [
@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
         let currency = 'USD'
         let price = MIN_PRICE_PREMIUM
         let tierName = 'premium'
-        let priceInMXN = PREMIUM_PRICE_MXN
+        let priceInMXN = 0
 
         if (country === 'MX') {
             // México: siempre en MXN
@@ -37,39 +37,32 @@ export async function GET(request: NextRequest) {
             price = BASE_PRICE_MXN
             tierName = 'mexico'
             priceInMXN = BASE_PRICE_MXN
-        } else {
-            // Obtener tipo de cambio en tiempo real
-            let usdToMxnRate = 16.50 // Fallback por si falla la API
-
+        } else if (emergingMarkets.includes(country)) {
+            // Emergentes: $20 MXN convertido a USD
+            let usdToMxnRate = 16.50
             try {
                 const response = await fetch(EXCHANGE_API, {
-                    next: { revalidate: 3600 } // Cache por 1 hora
+                    next: { revalidate: 3600 }
                 })
                 if (response.ok) {
                     const data = await response.json()
-                    usdToMxnRate = 1 / data.rates.USD // MXN -> USD
+                    usdToMxnRate = 1 / data.rates.USD
                 }
             } catch (error) {
                 console.warn('Error fetching exchange rate, using fallback:', error)
             }
-
-            // Calcular precio en USD
-            if (emergingMarkets.includes(country)) {
-                // Emergentes: $20 MXN convertido
-                const calculatedPrice = BASE_PRICE_MXN / usdToMxnRate
-                price = Math.max(calculatedPrice, MIN_PRICE_EMERGING)
-                tierName = 'standard'
-                priceInMXN = BASE_PRICE_MXN
-            } else {
-                // Desarrollados: $40 MXN convertido
-                const calculatedPrice = PREMIUM_PRICE_MXN / usdToMxnRate
-                price = Math.max(calculatedPrice, MIN_PRICE_PREMIUM)
-                tierName = 'premium'
-                priceInMXN = PREMIUM_PRICE_MXN
-            }
-
+            const calculatedPrice = BASE_PRICE_MXN / usdToMxnRate
+            price = Math.max(calculatedPrice, MIN_PRICE_EMERGING)
+            price = Math.round(price * 100) / 100
+            tierName = 'standard'
+            priceInMXN = BASE_PRICE_MXN
             currency = 'USD'
-            price = Math.round(price * 100) / 100 // 2 decimales
+        } else {
+            // Desarrollados: $4.99 USD fijo
+            price = PREMIUM_PRICE_USD
+            tierName = 'premium'
+            priceInMXN = 0 // Precio directo en USD
+            currency = 'USD'
         }
 
         const packages = [

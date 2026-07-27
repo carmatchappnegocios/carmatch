@@ -24,10 +24,8 @@ export async function POST(request: NextRequest) {
 
         // █▓▒░ PROHIBIDO MODIFICAR ESTOS PRECIOS SIN CONSULTA PREVIA ░▒▓█
         // ----------------------------------------------------------------
-        // Esta lógica define tus ingresos reales (20/40 MXN). 
-        // Si se cambia sin precaución, el modelo de negocio puede colapsar.
-        const BASE_PRICE_MXN = 20.00
-        const PREMIUM_PRICE_MXN = 40.00
+        const BASE_PRICE_MXN = 20.00       // Emergentes: $20 MXN
+        const PREMIUM_PRICE_USD = 4.99     // Desarrollados: $4.99 USD fijo
         // ----------------------------------------------------------------
 
         const emergingMarkets = [
@@ -35,9 +33,22 @@ export async function POST(request: NextRequest) {
             'IN', 'CN', 'VN', 'TH', 'ID', 'PH', 'EG', 'NG'
         ]
 
-        const priceMxn = emergingMarkets.includes(country) ? BASE_PRICE_MXN : PREMIUM_PRICE_MXN
-        const unitPriceInCents = Math.round(priceMxn * 100)
-        const currency = 'mxn'
+        let priceInCents: number
+        let currency: string
+
+        if (country === 'MX') {
+            // México: cobrar en MXN
+            priceInCents = Math.round(BASE_PRICE_MXN * quantity * 100)
+            currency = 'mxn'
+        } else if (emergingMarkets.includes(country)) {
+            // Emergentes: cobrar en MXN (convertido a USD en Stripe)
+            priceInCents = Math.round(BASE_PRICE_MXN * quantity * 100)
+            currency = 'mxn'
+        } else {
+            // Desarrollados: cobrar $4.99 USD fijo
+            priceInCents = Math.round(PREMIUM_PRICE_USD * quantity * 100)
+            currency = 'usd'
+        }
 
         // --- PREPARAR CLIENTE STRIPE (Requerido para SPEI) ---
         let stripeCustomer;
@@ -72,7 +83,7 @@ export async function POST(request: NextRequest) {
                             description: `Créditos para publicar vehículos en CarMatch`,
                             images: ['https://carmatch.mx/logo.png'],
                         },
-                        unit_amount: unitPriceInCents,
+                        unit_amount: priceInCents,
                     },
                     quantity: quantity,
                 },

@@ -1,13 +1,13 @@
 // Geo-pricing utilities for dynamic credit pricing
 
 interface PricingConfig {
-    pricePerCredit: number // In MXN
+    pricePerCredit: number // In MXN for Mexico, USD for international
     currency: string
     region: 'developed' | 'developing'
 }
 
 // Lista completa de países de alto ingreso según Banco Mundial, OCDE y FMI
-// Estos países cobran $40 MXN por crédito
+// Estos países cobran $4.99 USD por crédito
 const DEVELOPED_COUNTRIES = [
     // América del Norte
     'US', 'CA',
@@ -38,17 +38,11 @@ const DEVELOPED_COUNTRIES = [
 export function getPricingForCountry(countryCode: string): PricingConfig {
     const isDeveloped = DEVELOPED_COUNTRIES.includes(countryCode.toUpperCase())
 
-    // █▓▒░ BLOQUE DE COBRO CRÍTICO (20/40 MXN) ░▒▓█
-    // ------------------------------------------------------------
-    // ⚠️ CRITICAL: DO NOT MODIFY. PRODUCTION SETTING.
-    // PROHIBIDO MODIFICAR SIN AUTORIZACIÓN. 
-    // Define el precio real basado en el desarrollo del país.
     return {
-        pricePerCredit: isDeveloped ? 40 : 20,
-        currency: 'MXN',
+        pricePerCredit: isDeveloped ? 4.99 : 20,
+        currency: isDeveloped ? 'USD' : 'MXN',
         region: isDeveloped ? 'developed' : 'developing'
     }
-    // ------------------------------------------------------------
 }
 
 export async function detectCountryFromIP(ip?: string): Promise<string> {
