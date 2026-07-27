@@ -322,7 +322,7 @@ export default function MapBoxStoreLocator({
                 }
 
                 const popupHTML = `
-                    <div class="p-3 min-w-[280px] max-w-[320px]">
+                    <div class="p-3 w-[min(280px,85vw)] max-w-[320px]">
                         ${props.image ?
                         `<div class="w-full h-36 relative mb-3 rounded-xl overflow-hidden bg-gray-900">
                                 <div class="absolute inset-0 bg-cover bg-center blur-sm opacity-50" style="background-image: url('${props.image}')"></div>

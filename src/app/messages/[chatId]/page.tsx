@@ -328,7 +328,7 @@ export default function ChatPage({
         <>
             <div className={`flex bg-background overflow-hidden md:h-[calc(100vh-64px)] transition-all duration-300 ${isInputFocused
                 ? 'h-[calc(100dvh-64px)]'
-                : 'h-[calc(100dvh-64px-4rem)] md:h-[calc(100vh-64px)]'
+                : 'h-[calc(100dvh-64px-80px)] md:h-[calc(100vh-64px)]'
                 }`}>
                 <div className="flex-1 flex flex-col relative w-full overflow-hidden">
                     <SOSComponent
