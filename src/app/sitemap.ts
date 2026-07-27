@@ -9,11 +9,42 @@ export const dynamic = 'force-dynamic'
 import { prisma } from '@/lib/db'
 import { generateVehicleSlug, generateBusinessSlug } from '@/lib/slug'
 
-// URL Base del sitio (ajustar a dominio real en producción)
+// URL Base del sitio
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://carmatchapp.net'
 
+// 🌎 Ciudades globales para SEO (pre-rendered URLs aunque no haya vehículos aún)
+const GLOBAL_CITY_SLUGS = [
+    'monterrey', 'guadalajara', 'ciudad-de-mexico', 'tijuana', 'queretaro', 'merida', 'leon', 'puebla',
+    'cancun', 'acapulco', 'chihuahua', 'saltillo', 'aguascalientes', 'morelia', 'veracruz', 'toluca',
+    'cuernavaca', 'pachuca', 'reynosa', 'matamoros', 'nuevo-laredo', 'juarez', 'ciudad-juarez',
+    'miami', 'los-angeles', 'houston', 'dallas', 'chicago', 'new-york', 'san-antonio', 'phoenix',
+    'san-diego', 'las-vegas', 'atlanta', 'orlando', 'tampa', 'austin', 'denver',
+    'bogota', 'medellin', 'cali', 'barranquilla',
+    'buenos-aires', 'cordoba', 'rosario',
+    'madrid', 'barcelona', 'valencia', 'sevilla', 'malaga',
+    'santiago', 'valparaiso',
+    'lima',
+    'guayaquil', 'quito',
+    'santo-domingo',
+    'guatemala',
+    'san-jose',
+    'panama',
+    'montevideo',
+]
+
+// 🔧 Categorías de servicios para SEO
+const SERVICE_CATEGORY_SLUGS = [
+    'mecanico', 'llantera', 'gruas', 'estetica', 'refacciones', 'cerrajeria',
+    'frenos', 'electrico', 'audio', 'gasolinera', 'diesel', 'transmisiones',
+    'cristales', 'tapiceria', 'hojalateria', 'performance', 'mofles', 'radiadores',
+    'rectificadora', 'blindaje', 'offroad', 'suspension', 'aire_acondicionado',
+    'importadoras', 'iluminacion', 'rotulacion', 'inyectores', 'electrolinera',
+    'taller_ev', 'lubricantes', 'boutique', 'caseta', 'hospital', 'policia',
+    'aeropuerto', 'estacion_tren',
+]
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    // 1. Obtener Vehículos Activos (Limitado a 5000 para no saturar memoria en Vercel)
+    // 1. Obtener Vehículos Activos (Limitado a 5000)
     const vehicles = await prisma.vehicle.findMany({
         where: { status: 'ACTIVE' },
         select: { id: true, updatedAt: true, brand: true, model: true, year: true, city: true },
@@ -48,7 +79,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }
     })
 
-    // 2.2 Generar rutas de Ciudad de Vehículos (/autos-en/[ciudad])
+    // 2.2 Ciudades de vehículos (dinámico desde DB)
     const cityVehicleUrls: any[] = []
     const processedCities = new Set<string>()
 
@@ -72,7 +103,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }
     })
 
-    // 3. Mapear Vehículos (Ultimate SEO Semantic URLs)
+    // 2.3 Ciudades globales predefinidas (SEO proactive — incluso si no hay vehículos aún)
+    const globalCityUrls = GLOBAL_CITY_SLUGS
+        .filter(slug => !processedCities.has(slug.replace(/-/g, ' ')))
+        .map(slug => ({
+            url: `${BASE_URL}/autos-en/${slug}`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly' as const,
+            priority: 0.85,
+        }))
+
+    // 2.4 Categorías de servicios MapStore
+    const serviceCategoryUrls = SERVICE_CATEGORY_SLUGS.map(slug => ({
+        url: `${BASE_URL}/map?category=${slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.8,
+    }))
+
+    // 3. Mapear Vehículos
     const vehicleUrls = vehicles.map((vehicle) => {
         const slug = generateVehicleSlug(vehicle.brand || '', vehicle.model || '', vehicle.year || 0, vehicle.city)
         return {
@@ -83,7 +132,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }
     })
 
-    // 4. Mapear Negocios (SEO Dinámico)
+    // 4. Mapear Negocios
     const businessUrls = businesses.map((business) => {
         const slug = generateBusinessSlug(business.name, business.city || '')
         return {
@@ -94,23 +143,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }
     })
 
-    // 5. Rutas Estáticas y de Alta Frecuencia SEO/GEO
+    // 5. Rutas Estáticas
     const staticRoutes = [
         '',
         '/market',
+        '/map',
         '/map-store',
         '/swipe',
-        // 🚗 High-Volume Categories para IAs y Buscadores (SEO Master Entry Points)
+        '/terms',
+        '/privacy',
+        '/publishing-rules',
+        '/auth',
         '/market?category=Automóvil',
         '/market?category=Motocicleta',
         '/market?category=Camión',
         '/market?category=Maquinaria',
         '/market?category=Especial',
-        // 💎 Niche High-Value Subtypes (Océanos Azules para IA)
         '/market?category=Motocicleta&subType=Cuatrimoto%20(ATV)',
         '/market?category=Especial&subType=UTV%20(RZR%20/%20Maverick%20/%20Side-by-Side)',
         '/market?category=Maquinaria&subType=Tractor%20Agrícola',
-        // 🔑 Top Brands (Deep crawling points)
         '/autos/Ford',
         '/autos/Chevrolet',
         '/autos/Toyota',
@@ -119,7 +170,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         '/autos/Volkswagen',
         '/autos/Jeep',
         '/autos/BMW',
-        '/autos/Mercedes-Benz'
+        '/autos/Mercedes-Benz',
     ].map((route) => ({
         url: `${BASE_URL}${route}`,
         lastModified: new Date(),
@@ -127,5 +178,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 1.0,
     }))
 
-    return [...staticRoutes, ...directoryUrls, ...cityVehicleUrls, ...vehicleUrls, ...businessUrls]
+    return [
+        ...staticRoutes,
+        ...globalCityUrls,
+        ...serviceCategoryUrls,
+        ...directoryUrls,
+        ...cityVehicleUrls,
+        ...vehicleUrls,
+        ...businessUrls,
+    ]
 }
