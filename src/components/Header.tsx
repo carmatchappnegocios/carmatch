@@ -92,6 +92,19 @@ export default function Header() {
     const { triggerInstall, isInstallable, isStandalone } = usePWAInstall()
     const { isSubscribed, subscribe, permission } = usePushNotifications()
 
+    // 📱 Platform detection
+    const [userPlatform, setUserPlatform] = useState<'ios' | 'android' | 'desktop'>('desktop')
+    useEffect(() => {
+        const ua = navigator.userAgent || ''
+        if (/iPad|iPod|iPhone/.test(ua)) {
+            setUserPlatform('ios')
+        } else if (/Android/.test(ua)) {
+            setUserPlatform('android')
+        } else {
+            setUserPlatform('desktop')
+        }
+    }, [])
+
     const handleIOSClick = () => {
         setSelectedPlatform('ios')
         setShowInstallModal(true)
@@ -238,11 +251,26 @@ export default function Header() {
                             />
                         </div>
 
-                        {/* Download Buttons - ONLY on WEB (Not in Standalone/App) */}
+                        {/* Download Buttons - Platform Specific */}
                         {!isStandalone && (
                             <div className="flex items-center gap-1.5 animate-in fade-in duration-700">
-                                {/* Desktop/Tablet Buttons (Explicit iOS/Android) */}
-                                <div className="hidden lg:flex items-center gap-1.5">
+                                {/* Desktop: Show "Descargar" button */}
+                                {userPlatform === 'desktop' && (
+                                    <button
+                                        onClick={() => { setSelectedPlatform('auto'); setShowInstallModal(true) }}
+                                        className="flex items-center gap-1.5 px-3 py-1.5 bg-black/40 border border-white/10 text-white rounded-full text-[10px] font-bold hover:bg-gray-800 transition active:scale-95 backdrop-blur-sm"
+                                    >
+                                        <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                                            <line x1="8" y1="21" x2="16" y2="21" />
+                                            <line x1="12" y1="17" x2="12" y2="21" />
+                                        </svg>
+                                        <span>{t('header.install_desktop') || 'Descargar App'}</span>
+                                    </button>
+                                )}
+
+                                {/* iOS: Show only iOS button */}
+                                {userPlatform === 'ios' && (
                                     <button
                                         onClick={handleIOSClick}
                                         className="flex items-center gap-1 px-2 py-1 bg-black/40 border border-white/10 text-white rounded-lg text-[10px] font-bold hover:bg-gray-800 transition active:scale-95"
@@ -253,6 +281,10 @@ export default function Header() {
                                         </svg>
                                         <span>{t('common.ios')}</span>
                                     </button>
+                                )}
+
+                                {/* Android: Show only Android button */}
+                                {userPlatform === 'android' && (
                                     <button
                                         onClick={handleAndroidClick}
                                         className="flex items-center gap-1 px-2 py-1 bg-black/40 border border-white/10 text-white rounded-lg text-[10px] font-bold hover:bg-gray-800 transition active:scale-95"
@@ -263,16 +295,7 @@ export default function Header() {
                                         </svg>
                                         <span>{t('common.android')}</span>
                                     </button>
-                                </div>
-
-                                {/* Mobile Button (Generic "Descargar App") - Hidden on Swipe */}
-                                <button
-                                    onClick={handleAndroidClick}
-                                    className={`lg:hidden flex items-center gap-1.5 px-3 py-1.5 bg-white/10 border border-white/20 text-white rounded-full text-[10px] font-bold backdrop-blur-sm active:bg-white/20 transition-all shine-effect ${pathname === '/swipe' ? 'hidden' : ''}`}
-                                >
-                                    <Smartphone className="w-3.5 h-3.5 text-primary-400" />
-                                    <span>{t('nav.download_app')}</span>
-                                </button>
+                                )}
                             </div>
                         )}
                     </div>
