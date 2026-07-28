@@ -24,32 +24,32 @@ export default function InstallReasonsBento({ onClose, showCloseButton = false }
         {
             id: 'sos',
             icon: <ShieldAlert className="w-8 h-8 text-red-500" />,
-            title: "Nunca te quedes tirado",
-            desc: "Botón SOS con grúas y talleres en tiempo real 24/7.",
+            title: t('install.sos_title'),
+            desc: t('install.sos_desc'),
             color: "bg-red-500/10 border-red-500/20",
             delay: 0.1
         },
         {
             id: 'money',
             icon: <Banknote className="w-8 h-8 text-green-500" />,
-            title: "Tu dinero intacto",
-            desc: "0% comisiones. Vende directo por WhatsApp.",
+            title: t('install.money_title'),
+            desc: t('install.money_desc'),
             color: "bg-green-500/10 border-green-500/20",
             delay: 0.2
         },
         {
             id: 'swipe',
             icon: <Flame className="w-8 h-8 text-orange-500" />,
-            title: "Adicción Automotriz",
-            desc: "Desliza y encuentra autos increíbles cerca de ti.",
+            title: t('install.swipe_title'),
+            desc: t('install.swipe_desc'),
             color: "bg-orange-500/10 border-orange-500/20",
             delay: 0.3
         },
         {
             id: 'business',
             icon: <Wrench className="w-8 h-8 text-blue-500" />,
-            title: "Radar de Negocios",
-            desc: "Aparece en el mapa y consigue clientes en apuros.",
+            title: t('install.business_title'),
+            desc: t('install.business_desc'),
             color: "bg-blue-500/10 border-blue-500/20",
             delay: 0.4
         }
@@ -79,11 +79,11 @@ export default function InstallReasonsBento({ onClose, showCloseButton = false }
                     animate={{ opacity: 1, y: 0 }}
                     className="text-center mb-8"
                 >
-                    <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-3">
-                        Tu Copiloto de Vida
-                    </h2>
-                    <p className="text-text-secondary md:text-lg max-w-xl mx-auto font-medium">
-                        CarMatch no es solo para cambiar de auto. Es una herramienta de supervivencia obligatoria en tu celular.
+                     <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-3">
+                         {t('install.title')}
+                     </h2>
+                     <p className="text-text-secondary md:text-lg max-w-xl mx-auto font-medium">
+                         {t('install.subtitle')}
                     </p>
                 </motion.div>
 
@@ -120,10 +120,10 @@ export default function InstallReasonsBento({ onClose, showCloseButton = false }
                         className="w-full sm:w-auto px-8 py-4 bg-primary-600 hover:bg-primary-500 text-white font-black rounded-xl shadow-[0_0_20px_rgba(239,68,68,0.4)] transition-all flex items-center justify-center gap-2 group"
                     >
                         <Download className="w-5 h-5 group-hover:-translate-y-1 transition-transform" />
-                        INSTALAR APP GRATIS
+                         {t('install.cta')}
                     </button>
-                    <p className="text-xs text-text-secondary font-bold uppercase tracking-widest">
-                        Zero Comisiones • SOS 24/7
+                     <p className="text-xs text-text-secondary font-bold uppercase tracking-widest">
+                         {t('install.tagline')}
                     </p>
                 </motion.div>
             </div>

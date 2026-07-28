@@ -120,7 +120,7 @@ export default function SettingsPage() {
                                             </span>
                                         </p>
                                         <p className="text-xs text-text-secondary">
-                                            Selecciona tu idioma preferido
+                                            {t('settings.language_subtitle')}
                                         </p>
                                     </div>
                                 </div>
@@ -243,27 +243,27 @@ export default function SettingsPage() {
                                             : gpsPermission === 'denied' ? 'text-red-400'
                                             : 'text-text-primary'
                                         }`}>
-                                            Ubicación en Tiempo Real
+                                            {t('settings.gps_realtime')}
                                             {/* Badge de estado */}
                                             {preciseLocationEnabled && gpsPermission === 'granted' && (
                                                 <span className="text-[9px] font-black uppercase tracking-widest bg-green-500/20 text-green-400 border border-green-500/30 px-2 py-0.5 rounded-full">
-                                                    GPS Activo
-                                                </span>
+                                                     {t('settings.gps_active_badge')}
+                                                 </span>
                                             )}
                                             {gpsPermission === 'denied' && (
                                                 <span className="text-[9px] font-black uppercase tracking-widest bg-red-500/10 text-red-400 border border-red-500/20 px-2 py-0.5 rounded-full">
-                                                    Bloqueado
-                                                </span>
+                                                     {t('settings.gps_blocked_badge')}
+                                                 </span>
                                             )}
                                         </p>
                                         <p className="text-xs text-text-secondary">
                                             {preciseLocationEnabled && gpsPermission === 'granted'
-                                                ? 'GPS activo · Resultados más precisos para ti'
+                                                ? t('settings.gps_active_desc')
                                                 : gpsPermission === 'denied'
-                                                ? 'GPS bloqueado en el navegador · Usando IP'
+                                                ? t('settings.gps_blocked_desc')
                                                 : gpsPermission === 'granted'
-                                                ? 'Activa para usar GPS en vez de IP'
-                                                : 'Desactivado · Usamos tu IP como referencia'
+                                                ? t('settings.gps_activate_desc')
+                                                : t('settings.gps_off_desc')
                                             }
                                         </p>
                                     </div>
@@ -271,7 +271,7 @@ export default function SettingsPage() {
                                 {/* Toggle Switch */}
                                 <button
                                     id="precise-location-toggle"
-                                    aria-label="Toggle ubicación precisa"
+                                    aria-label={t('settings.gps_realtime')}
                                     onClick={() => setPreciseLocationEnabled(!preciseLocationEnabled)}
                                     disabled={gpsPermission === 'denied'}
                                     className={`relative w-12 h-6 rounded-full transition-colors duration-300 flex-shrink-0 ${
@@ -296,8 +296,8 @@ export default function SettingsPage() {
                                     <div className="bg-red-500/5 border border-red-500/15 rounded-xl px-4 py-3 flex items-start gap-3">
                                         <MapPin size={14} className="text-red-400 mt-0.5 flex-shrink-0" />
                                         <p className="text-[11px] text-red-300/80 leading-relaxed">
-                                            El GPS está bloqueado en tu navegador. Para activarlo, ve a la configuración de tu navegador y permite el acceso a la ubicación para este sitio.
-                                        </p>
+                                             {t('settings.gps_blocked_help')}
+                                         </p>
                                     </div>
                                 </div>
                             )}
@@ -321,7 +321,7 @@ export default function SettingsPage() {
                         </div>
                         <div className="text-left">
                             <p className="font-bold">{t('common.logout')}</p>
-                            <p className="text-xs opacity-60">Cerrar sesión de forma segura</p>
+                            <p className="text-xs opacity-60">{t('settings.logout_subtitle')}</p>
                         </div>
                     </button>
                 </section>
@@ -329,7 +329,7 @@ export default function SettingsPage() {
                 {/* Footer Info */}
                 <div className="text-center pt-8 space-y-2">
                     <p className="text-[10px] font-black uppercase tracking-widest text-text-secondary opacity-40">CarMatch v0.1.2</p>
-                    <p className="text-[10px] text-text-secondary opacity-40">© 2026 Todos los derechos reservados</p>
+                    <p className="text-[10px] text-text-secondary opacity-40">{t('settings.copyright')}</p>
                 </div>
             </main>
         </div>

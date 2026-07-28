@@ -8,8 +8,10 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { Sparkles, X, Smartphone, Globe } from 'lucide-react'
 import { usePWAInstall } from '@/hooks/usePWAInstall'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function InstallInvasiveBanner() {
+    const { t } = useLanguage()
     const { isInstallable, isStandalone, triggerInstall } = usePWAInstall()
     const [isVisible, setIsVisible] = useState(false)
     const [isAndroid, setIsAndroid] = useState(false)
@@ -72,10 +74,10 @@ export default function InstallInvasiveBanner() {
                         </div>
                         <div className="min-w-0">
                             <h4 className="font-black text-white text-sm sm:text-base uppercase tracking-tight leading-none mb-1 truncate">
-                                🔥 CarMatch Social App Oficial
+                                {t('install.banner_title')}
                             </h4>
                             <p className="text-[10px] sm:text-xs text-slate-400 font-medium leading-tight truncate">
-                                Instala la experiencia nativa para vender 10x más rápido
+                                {t('install.banner_desc')}
                             </p>
                         </div>
                     </div>
@@ -85,14 +87,14 @@ export default function InstallInvasiveBanner() {
                             onClick={handleDismiss}
                             className="hidden sm:block text-slate-500 hover:text-white px-3 py-2 text-xs font-bold transition"
                         >
-                            Ahora no
+                            {t('install.banner_dismiss')}
                         </button>
                         <button
                             onClick={handleInstall}
                             className="flex items-center gap-2 px-4 py-2.5 bg-accent-600 hover:bg-accent-500 text-white rounded-xl text-xs font-black uppercase tracking-wider transition-all active:scale-95 shadow-lg shadow-accent-600/20 ring-1 ring-white/20"
                         >
                             <Smartphone size={14} />
-                            Instalar
+                            {t('install.banner_install')}
                         </button>
                         <button
                             onClick={handleDismiss}

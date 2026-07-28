@@ -6,6 +6,7 @@
 
 import { useState, useRef } from 'react'
 import { uploadMultipleToCloudinary } from '@/lib/cloudinary'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface ImageUploadStepProps {
     coverImage: string | null
@@ -24,6 +25,7 @@ export default function ImageUploadStep({
     invalidImageUrls, 
     invalidReasons 
 }: ImageUploadStepProps) {
+    const { t } = useLanguage()
     const [uploading, setUploading] = useState(false)
     const [uploadingGallery, setUploadingGallery] = useState(false)
     const [error, setError] = useState<string | null>(null)
@@ -47,11 +49,11 @@ export default function ImageUploadStep({
             onCoverChange(urls[0])
         } catch (err: any) {
             console.error('Error subiendo portada:', err)
-            const msg = err.message || 'Error desconocido'
+            const msg = err.message || t('images.error_unknown')
             if (msg.includes('fetch')) {
-                setError('⚠️ Error de conexión. Revisa tu internet e intenta de nuevo.')
+                setError(t('images.error_connection'))
             } else {
-                setError(`❌ Error al subir: ${msg}`)
+                setError(`${t('images.error_upload').replace('{msg}', msg)}`)
             }
         } finally {
             setUploading(false)
@@ -68,7 +70,7 @@ export default function ImageUploadStep({
         const slotsRemaining = 9 - galleryImages.length
 
         if (slotsRemaining <= 0) {
-            setError('Tu galería ya está llena (máximo 9 fotos).')
+            setError(t('images.gallery_full'))
             return
         }
 
@@ -84,11 +86,11 @@ export default function ImageUploadStep({
             onGalleryChange([...galleryImages, ...urls])
         } catch (err: any) {
             console.error('Error subiendo galería:', err)
-            const msg = err.message || 'Error desconocido'
+            const msg = err.message || t('images.error_unknown')
             if (msg.includes('fetch')) {
-                setError('⚠️ Error de conexión en galería. Intenta de nuevo.')
+                setError(t('images.error_gallery_connection'))
             } else {
-                setError(`❌ Error en galería: ${msg}`)
+                setError(`${t('images.error_gallery').replace('{msg}', msg)}`)
             }
         } finally {
             setUploadingGallery(false)
@@ -111,9 +113,9 @@ export default function ImageUploadStep({
         <div className="space-y-8">
             {/* Título */}
             <div>
-                <h2 className="text-2xl font-bold text-text-primary mb-2">Fotos de tu vehículo</h2>
+                <h2 className="text-2xl font-bold text-text-primary mb-2">{t('images.title')}</h2>
                 <p className="text-text-secondary">
-                    Sube una foto de portada y opcionalmente hasta 9 fotos adicionales
+                    {t('images.subtitle')}
                 </p>
             </div>
 
@@ -124,8 +126,8 @@ export default function ImageUploadStep({
                         1
                     </div>
                     <div>
-                        <h3 className="text-lg font-bold text-text-primary">Foto de Portada</h3>
-                        <p className="text-sm text-text-secondary">Esta será la imagen principal de tu vehículo (obligatoria)</p>
+                        <h3 className="text-lg font-bold text-text-primary">{t('images.cover_title')}</h3>
+                        <p className="text-sm text-text-secondary">{t('images.cover_desc')}</p>
                     </div>
                 </div>
 
@@ -160,7 +162,7 @@ export default function ImageUploadStep({
                             {uploading ? (
                                 <>
                                     <div className="w-12 h-12 border-4 border-primary-700 border-t-transparent rounded-full animate-spin mb-3"></div>
-                                    <p className="text-text-primary font-medium">Subiendo portada...</p>
+                                    <p className="text-text-primary font-medium">{t('images.uploading_cover')}</p>
                                 </>
                             ) : (
                                 <>
@@ -173,7 +175,7 @@ export default function ImageUploadStep({
                                             <svg className="w-8 h-8 text-primary-400 group-hover:text-primary-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                             </svg>
-                                            <span className="text-xs font-bold text-text-primary uppercase">Galería</span>
+                                             <span className="text-xs font-bold text-text-primary uppercase">{t('images.gallery_label')}</span>
                                         </button>
                                         <button
                                             type="button"
@@ -184,14 +186,14 @@ export default function ImageUploadStep({
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                                             </svg>
-                                            <span className="text-xs font-bold text-primary-400 uppercase">Cámara</span>
+                                             <span className="text-xs font-bold text-primary-400 uppercase">{t('images.camera')}</span>
                                         </button>
                                     </div>
-                                    <p className="text-text-primary font-bold mb-1">
-                                        Selecciona tu foto de portada
-                                    </p>
-                                    <p className="text-text-secondary text-sm">
-                                        Sube una foto existente o toma una nueva
+                                     <p className="text-text-primary font-bold mb-1">
+                                         {t('images.select_cover')}
+                                     </p>
+                                     <p className="text-text-secondary text-sm">
+                                         {t('images.select_cover_desc')}
                                     </p>
                                 </>
                             )}
@@ -215,7 +217,7 @@ export default function ImageUploadStep({
                                 <svg className="w-8 h-8 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
-                                <span className="font-bold text-sm bg-red-600 px-2 py-1 rounded mb-1">IMAGEN INVÁLIDA</span>
+                                 <span className="font-bold text-sm bg-red-600 px-2 py-1 rounded mb-1">{t('images.invalid_image')}</span>
                                 {invalidReasons?.[coverImage] && (
                                     <p className="text-xs font-medium text-white shadow-sm mt-1 bg-black/50 px-2 py-1 rounded">
                                         {invalidReasons[coverImage]}
@@ -226,7 +228,7 @@ export default function ImageUploadStep({
 
                         {/* Badge */}
                         <div className="absolute top-3 left-3 px-3 py-1.5 bg-primary-700 text-text-primary text-sm font-bold rounded-lg z-20">
-                            ⭐ PORTADA
+                             {t('images.cover_badge')}
                         </div>
 
                         {/* Botón eliminar */}
@@ -245,7 +247,7 @@ export default function ImageUploadStep({
                             onClick={() => coverInputRef.current?.click()}
                             className="absolute bottom-3 right-3 px-4 py-2 bg-white/90 hover:bg-white rounded-lg transition font-medium text-sm text-gray-900 z-20"
                         >
-                            Cambiar foto
+                             {t('images.change_photo')}
                         </button>
                     </div>
                 )}
@@ -256,7 +258,7 @@ export default function ImageUploadStep({
                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                         </svg>
-                        <span>La foto de portada es obligatoria</span>
+                         <span>{t('images.cover_required')}</span>
                     </div>
                 )}
             </div>
@@ -268,8 +270,8 @@ export default function ImageUploadStep({
                         2
                     </div>
                     <div>
-                        <h3 className="text-lg font-bold text-text-primary">Galería Adicional</h3>
-                        <p className="text-sm text-text-secondary">Sube hasta 9 fotos más para mostrar detalles (opcional)</p>
+                         <h3 className="text-lg font-bold text-text-primary">{t('images.gallery_title')}</h3>
+                         <p className="text-sm text-text-secondary">{t('images.gallery_desc')}</p>
                     </div>
                 </div>
 
@@ -301,7 +303,7 @@ export default function ImageUploadStep({
                         {uploadingGallery ? (
                             <>
                                 <div className="w-10 h-10 border-4 border-primary-700 border-t-transparent rounded-full animate-spin mb-2"></div>
-                                <p className="text-text-primary text-sm">Subiendo fotos...</p>
+                                 <p className="text-text-primary text-sm">{t('images.uploading_gallery')}</p>
                             </>
                         ) : (
                             <>
@@ -314,7 +316,7 @@ export default function ImageUploadStep({
                                         <svg className="w-5 h-5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                         </svg>
-                                        <span className="text-xs font-bold text-text-primary">GALERÍA</span>
+                                         <span className="text-xs font-bold text-text-primary">{t('images.gallery_button')}</span>
                                     </button>
                                     <button
                                         type="button"
@@ -325,14 +327,14 @@ export default function ImageUploadStep({
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                                         </svg>
-                                        <span className="text-xs font-bold text-primary-400">CÁMARA</span>
+                                         <span className="text-xs font-bold text-primary-400">{t('images.camera_button')}</span>
                                     </button>
                                 </div>
-                                <p className="text-text-primary text-sm font-medium">
-                                    Agregar fotos adicionales
-                                </p>
-                                <p className="text-text-secondary text-xs mt-1">
-                                    {galleryImages.length}/9 fotos • Puedes agregar {9 - galleryImages.length} más
+                                 <p className="text-text-primary text-sm font-medium">
+                                     {t('images.add_photos')}
+                                 </p>
+                                 <p className="text-text-secondary text-xs mt-1">
+                                     {t('images.gallery_count').replace('{count}', String(galleryImages.length)).replace('{remaining}', String(9 - galleryImages.length))}
                                 </p>
                             </>
                         )}
@@ -354,7 +356,7 @@ export default function ImageUploadStep({
                                 >
                                     <img
                                         src={url}
-                                        alt={`Galería ${index + 1}`}
+                                         alt={t('images.gallery_item').replace('{index}', String(index + 1))}
                                         className="w-full h-full object-cover"
                                     />
 
