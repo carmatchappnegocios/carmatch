@@ -811,7 +811,10 @@ export default function PublishClient() {
             router.refresh()
             router.push('/profile?published=true')
         } catch (error) {
-            console.error('Error:', error)
+            console.error('Publish error:', error)
+            if (error instanceof Error) {
+                console.error('Stack trace:', error.stack)
+            }
             setAiError(error instanceof Error ? error.message : 'Error al publicar.')
         } finally {
             setLoading(false)
