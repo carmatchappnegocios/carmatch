@@ -1401,6 +1401,7 @@
         "logout": "Cerrar Sesión",
         "logout_desc": "Cerrar sesión de forma segura",
         "activate": "Activar",
+        "deactivate": "Desactivar",
         "terms_title": "Términos y Condiciones",
         "terms_desc": "Lee nuestros términos de uso y política de privacidad",
         "language_subtitle": "Selecciona tu idioma preferido",

@@ -1402,6 +1402,7 @@
         "logout": "Log Out",
         "logout_desc": "Log out safely",
         "activate": "Activate",
+        "deactivate": "Deactivate",
         "terms_title": "Terms & Conditions",
         "terms_desc": "Read our terms of use and privacy policy",
         "language_subtitle": "Select your preferred language",

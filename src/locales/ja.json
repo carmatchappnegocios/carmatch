@@ -1,4 +1,4 @@
-{
+﻿{
     "common": {
         "login": "ログイン",
         "logout": "ログアウト",
@@ -1433,3 +1433,4 @@
         "publishing_rules": "Publishing Rules"
     }
 }
+

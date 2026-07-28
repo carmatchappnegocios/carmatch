@@ -31,7 +31,7 @@ export default function SettingsPage() {
     const { data: session, status } = useSession()
     const router = useRouter()
     const { locale, setLocale, t } = useLanguage()
-    const { isSubscribed, subscribe, permission } = usePushNotifications()
+    const { isSubscribed, subscribe, unsubscribe, permission } = usePushNotifications()
     const { preciseLocationEnabled, setPreciseLocationEnabled, gpsPermission } = useLocation()
     const [showLanguages, setShowLanguages] = useState(false)
 
@@ -163,8 +163,8 @@ export default function SettingsPage() {
                         </div>
 
                         <button
-                            onClick={() => subscribe()}
-                            disabled={isSubscribed || permission === 'denied'}
+                            onClick={() => isSubscribed ? unsubscribe() : subscribe()}
+                            disabled={permission === 'denied'}
                             className={`w-full flex items-center justify-between p-5 rounded-2xl border transition-all ${isSubscribed
                                 ? 'bg-green-900/10 border-green-500/30 text-green-400'
                                 : 'bg-surface border-surface-highlight text-text-primary hover:border-text-secondary/30'
@@ -183,6 +183,9 @@ export default function SettingsPage() {
                             </div>
                             {!isSubscribed && permission !== 'denied' && (
                                 <span className="text-xs font-black uppercase tracking-tighter bg-primary-600 text-white px-3 py-1 rounded-full">{t('settings.activate')}</span>
+                            )}
+                            {isSubscribed && (
+                                <span className="text-xs font-black uppercase tracking-tighter bg-red-600 text-white px-3 py-1 rounded-full">{t('settings.deactivate')}</span>
                             )}
                         </button>
 

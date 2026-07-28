@@ -1,4 +1,4 @@
-{
+﻿{
     "common": {
         "login": "Kirjaudu sisään",
         "logout": "Kirjaudu ulos",
@@ -1433,3 +1433,4 @@
         "publishing_rules": "Publishing Rules"
     }
 }
+

@@ -95,5 +95,35 @@ export function usePushNotifications() {
         }
     }
 
-    return { isSubscribed, subscribe, permission }
+    const unsubscribe = async () => {
+        if (!('serviceWorker' in navigator)) return
+
+        try {
+            const registration = await navigator.serviceWorker.ready
+            const sub = await registration.pushManager.getSubscription()
+
+            if (sub) {
+                await sub.unsubscribe()
+                console.log('[PUSH] Unsubscribed from push')
+
+                // Eliminar del backend
+                await fetch('/api/push/unsubscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ endpoint: sub.endpoint })
+                })
+            }
+
+            setIsSubscribed(false)
+            setSubscription(null)
+            setPermission('default')
+            alert('Notificaciones desactivadas')
+
+        } catch (error) {
+            console.error('[PUSH] Error desuscribiendo:', error)
+            alert('Error desactivando notificaciones.')
+        }
+    }
+
+    return { isSubscribed, subscribe, unsubscribe, permission }
 }
