@@ -39,7 +39,8 @@ export const authConfig: NextAuthConfig = {
                 '/business/',
                 '/auth',
                 '/privacy',
-                '/terms'
+                '/terms',
+                '/api/auth',
             ]
 
             const isPublicPath = publicPaths.some(path =>
