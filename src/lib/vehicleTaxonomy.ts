@@ -21,7 +21,7 @@ export const getYears = () => {
 }
 
 // 🚗 Categories and Subtypes
-export const VEHICLE_CATEGORIES: Record<VehicleCategory, string[]> = {
+export var VEHICLE_CATEGORIES: Record<VehicleCategory, string[]> = {
     'Automóvil': ['Sedán', 'SUV', 'Pickup', 'Deportivo', 'Convertible', 'Coupe', 'Hatchback', 'Minivan', 'Wagon', 'Crossover', 'Limusina', 'Microcar', 'Roadster', 'Moke', 'Targa', 'Shooting Brake'],
     'Motocicleta': ['Deportiva', 'Cruiser', 'Touring', 'Off-road', 'Scooter', 'Chopper', 'Naked', 'Dual-Sport', 'Adventure', 'Cafe Racer', 'Scrambler', 'Enduro', 'Motocross', 'Trial', 'Triciclo (Spyder/Ryker)', 'Cuatrimoto (ATV)', 'Moped', 'Pocket Bike', 'Supermoto'],
     'Camión': ['Tractocamión (Trailer)', 'Torton', 'Rabon', 'Pickup Heavy Duty', 'Volteo', 'Cisterna (Pipa)', 'Refrigerado', 'Plataforma', 'Caja Seca', 'Grúa', 'Hormigonera (Olla)', 'Portacoches (Madrina)', 'Basurero', 'Chasis Cabina', 'Bomberos (Camión)', 'Blindado (Valores)', 'Compactador', 'Madre (Nodriza)'],
@@ -31,15 +31,15 @@ export const VEHICLE_CATEGORIES: Record<VehicleCategory, string[]> = {
 }
 
 // ⚙️ Technical Specs Options
-export const TRANSMISSIONS = ['Manual', 'Automática', 'CVT', 'Dual Clutch (DCT)', 'Tiptronic', 'Secuencial', 'Semi-automática']
-export const FUELS = ['Gasolina', 'Diésel', 'Híbrido (HEV)', 'Híbrido Enchufable (PHEV)', 'Eléctrico (BEV)', 'Gas LP', 'Gas Natural (GNC)', 'Hidrógeno (FCEV)', 'Etanol']
-export const TRACTIONS = ['Delantera (FWD)', 'Trasera (RWD)', '4x4 (4WD)', 'Integral (AWD)', '6x4', '6x6', '8x4', '8x8']
-export const COLORS = ['Blanco', 'Negro', 'Gris', 'Plata', 'Rojo', 'Azul', 'Verde', 'Amarillo', 'Naranja', 'Café', 'Beige', 'Oro', 'Bronce', 'Morado', 'Rosa', 'Bicolor', 'Mate', 'Otro']
-export const CONDITIONS = ['Nuevo', 'Seminuevo (Casi Nuevo)', 'Usado', 'Para Restaurar', 'Para Piezas']
+export var TRANSMISSIONS = ['Manual', 'Automática', 'CVT', 'Dual Clutch (DCT)', 'Tiptronic', 'Secuencial', 'Semi-automática']
+export var FUELS = ['Gasolina', 'Diésel', 'Híbrido (HEV)', 'Híbrido Enchufable (PHEV)', 'Eléctrico (BEV)', 'Gas LP', 'Gas Natural (GNC)', 'Hidrógeno (FCEV)', 'Etanol']
+export var TRACTIONS = ['Delantera (FWD)', 'Trasera (RWD)', '4x4 (4WD)', 'Integral (AWD)', '6x4', '6x6', '8x4', '8x8']
+export var COLORS = ['Blanco', 'Negro', 'Gris', 'Plata', 'Rojo', 'Azul', 'Verde', 'Amarillo', 'Naranja', 'Café', 'Beige', 'Oro', 'Bronce', 'Morado', 'Rosa', 'Bicolor', 'Mate', 'Otro']
+export var CONDITIONS = ['Nuevo', 'Seminuevo (Casi Nuevo)', 'Usado', 'Para Restaurar', 'Para Piezas']
 
 // 🌍 DICCIONARIO GLOBAL DE SINÓNIMOS (Base de Conocimiento para Inteligencia Artificial)
 // Mapea términos coloquiales e internacionales a la taxonomía oficial de la BD
-export const GLOBAL_SYNONYMS: Record<string, string> = {
+export var GLOBAL_SYNONYMS: Record<string, string> = {
     // Categorías
     'Carro': 'Automóvil', 'Coche': 'Automóvil', 'Auto': 'Automóvil', 'Nave': 'Automóvil', 'Fierro': 'Automóvil',
     'Voiture': 'Automóvil', 'Car': 'Automóvil', 'Vehicle': 'Automóvil',
@@ -125,7 +125,7 @@ export const getFeaturesByCategory = (category: VehicleCategory) => {
     }
 }
 // 💰 Global Currency Support
-export const CURRENCIES = [
+export var CURRENCIES = [
     { code: 'AED', name: 'Dirham (EAU)' },
     { code: 'AFN', name: 'Afgani' },
     { code: 'ALL', name: 'Lek' },
@@ -284,11 +284,11 @@ export const CURRENCIES = [
     { code: 'ZWL', name: 'Dólar (ZW)' }
 ]
 
-export const COUNTRY_CURRENCY_MAP: Record<string, string> = {
+export var COUNTRY_CURRENCY_MAP: Record<string, string> = {
     'CN': 'CNY', 'JP': 'JPY', 'KR': 'KRW', 'IN': 'INR', 'RU': 'RUB', 'UA': 'UAH', 'AU': 'AUD'
 }
 
-export const COUNTRY_DISTANCE_UNIT_MAP: Record<string, 'km' | 'mi'> = {
+export var COUNTRY_DISTANCE_UNIT_MAP: Record<string, 'km' | 'mi'> = {
     'US': 'mi',
     'GB': 'mi',
     'LR': 'mi',
