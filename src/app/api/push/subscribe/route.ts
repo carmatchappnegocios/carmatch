@@ -14,6 +14,12 @@ export async function POST(req: NextRequest) {
 
     try {
         const subscription = await req.json()
+
+        // Validar que la suscripción tenga la estructura correcta
+        if (!subscription?.endpoint || !subscription?.keys?.p256dh || !subscription?.keys?.auth) {
+            return NextResponse.json({ error: 'Invalid subscription format' }, { status: 400 })
+        }
+
         console.log('[API] Push Subscription Request:', {
             userId: session.user.id,
             endpoint: subscription.endpoint ? 'Present' : 'Missing'

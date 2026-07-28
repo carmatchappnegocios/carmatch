@@ -36,7 +36,7 @@ export async function sendPushNotification(subscription: any, payload: PushPaylo
         return true
     } catch (error) {
         // 🛡️ Si la suscripción ha expirado o es inválida (Error 410 Gone o 404), la eliminamos de la base de datos
-        if (error instanceof Error && (error as any).statusCode === 410 || (error as any).statusCode === 404) {
+        if (error instanceof Error && ((error as any).statusCode === 410 || (error as any).statusCode === 404)) {
             console.log(`[PUSH] Subscripción expirada (${(error as any).statusCode}), eliminando endpoint: ${subscription.endpoint}`)
             try {
                 await prisma.pushSubscription.deleteMany({
