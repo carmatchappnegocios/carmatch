@@ -30,14 +30,25 @@ export function usePushNotifications() {
 
     useEffect(() => {
         if ('serviceWorker' in navigator && 'PushManager' in window) {
-            setPermission(Notification.permission)
+            const perm = Notification.permission
+            console.log('[PUSH] Current permission:', perm)
+            setPermission(perm)
+
+            if (perm !== 'granted') return
+
             navigator.serviceWorker.ready.then(registration => {
+                console.log('[PUSH] SW ready, checking subscription...')
                 registration.pushManager.getSubscription().then(sub => {
+                    console.log('[PUSH] Existing subscription:', sub ? 'FOUND' : 'NOT FOUND')
                     if (sub) {
                         setIsSubscribed(true)
                         setSubscription(sub)
                     }
+                }).catch(err => {
+                    console.error('[PUSH] Error checking subscription:', err)
                 })
+            }).catch(err => {
+                console.error('[PUSH] SW not ready:', err)
             })
         }
     }, [])
