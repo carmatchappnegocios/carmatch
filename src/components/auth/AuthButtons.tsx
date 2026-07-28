@@ -13,7 +13,8 @@ export default function AuthButtons() {
 
     const handleSignIn = async (provider: string) => {
         try {
-            window.location.href = `/api/auth/signin/${provider}?callbackUrl=/&prompt=select_account`
+            const options: any = { callbackUrl: "/" }
+            await signIn(provider, options)
         } catch (error) {
             console.error("Error signing in:", error)
             window.location.href = `/api/auth/signin/${provider}?callbackUrl=/`
