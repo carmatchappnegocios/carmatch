@@ -202,6 +202,20 @@ export async function POST(request: NextRequest) {
             initialStatus = 'ACTIVE'
         }
 
+        // 🛡️ [ZENITH AUDIT] SEGURIDAD: Moderación IA Activada
+        const { orchestrator } = await import('@/lib/ai/orchestrator')
+        const moderationResult = await orchestrator.execute(
+            `Título: ${finalTitle}. Descripción: ${description}`,
+            { role: 'MODERATOR', efficiency: 'FLASH_ONLY' }
+        )
+
+        let moderationStatus: 'PENDING' | 'APPROVED' | 'REJECTED' = 'APPROVED'
+        if (moderationResult.data && moderationResult.data.isApproved === false) {
+            console.log(`🚫 Moderación AI: Rechazado por "${moderationResult.data.reason}"`)
+            moderationStatus = 'REJECTED'
+            initialStatus = 'INACTIVE'
+        }
+
         // 🛡️ EJECUCIÓN ATÓMICA (Crédito + Registro + Contador)
         const vehicle = await prisma.$transaction(async (tx) => {
             // 1. Cobrar crédito si corresponde (Ignorar si es Admin)
@@ -337,20 +351,6 @@ export async function POST(request: NextRequest) {
                     console.error('Error detectando país del vehículo:', err)
                 }
             })()
-        }
-
-        // 🛡️ [ZENITH AUDIT] SEGURIDAD: Moderación IA Activada
-        const { orchestrator } = await import('@/lib/ai/orchestrator')
-        const moderationResult = await orchestrator.execute(
-            `Título: ${finalTitle}. Descripción: ${description}`,
-            { role: 'MODERATOR', efficiency: 'FLASH_ONLY' }
-        )
-
-        let moderationStatus: 'PENDING' | 'APPROVED' | 'REJECTED' = 'APPROVED'
-        if (moderationResult.data && moderationResult.data.isApproved === false) {
-            console.log(`🚫 Moderación AI: Rechazado por "${moderationResult.data.reason}"`)
-            moderationStatus = 'REJECTED'
-            initialStatus = 'INACTIVE'
         }
 
         // 🔔 REAL-TIME SOCKET EMISSION: Avisar al feed global / market
