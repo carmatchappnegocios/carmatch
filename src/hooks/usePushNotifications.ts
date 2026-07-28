@@ -43,29 +43,54 @@ export function usePushNotifications() {
     }, [])
 
     const subscribe = async () => {
-        if (!('serviceWorker' in navigator)) return
+        if (!('serviceWorker' in navigator)) {
+            console.warn('[PUSH] Service Worker not supported')
+            alert('Tu navegador no soporta notificaciones push.')
+            return
+        }
+
+        if (!PUBLIC_KEY) {
+            console.error('[PUSH] VAPID public key not configured')
+            alert('Error de configuración. Las notificaciones no están disponibles.')
+            return
+        }
 
         try {
+            console.log('[PUSH] Requesting notification permission...')
+            const permission = await Notification.requestPermission()
+            if (permission !== 'granted') {
+                alert('Permiso de notificaciones denegado.')
+                return
+            }
+
+            console.log('[PUSH] Waiting for service worker ready...')
             const registration = await navigator.serviceWorker.ready
+            console.log('[PUSH] Service worker ready, subscribing...')
+
             const sub = await registration.pushManager.subscribe({
                 userVisibleOnly: true,
-                applicationServerKey: urlBase64ToUint8Array(PUBLIC_KEY!)
+                applicationServerKey: urlBase64ToUint8Array(PUBLIC_KEY)
             })
 
-            // Guardar en backend
-            await fetch('/api/push/subscribe', {
+            console.log('[PUSH] Subscribed, saving to backend...')
+            const res = await fetch('/api/push/subscribe', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(sub)
             })
 
+            if (!res.ok) {
+                throw new Error(`Backend error: ${res.status}`)
+            }
+
+            console.log('[PUSH] Subscription saved successfully')
             setIsSubscribed(true)
             setSubscription(sub)
             setPermission('granted')
             alert('¡Notificaciones Activadas!')
 
         } catch (error) {
-            console.error('Error suscribiendo a push:', error)
+            console.error('[PUSH] Error suscribiendo a push:', error)
             alert('Error activando notificaciones. Revisa permisos.')
         }
     }

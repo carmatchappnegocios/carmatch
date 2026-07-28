@@ -19,7 +19,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
             <SessionProvider refetchOnWindowFocus={false}>
                 <LanguageProvider>
                     <LocationProvider>
-                        {/* <RegisterSW /> */}
+                        <RegisterSW />
                         {/* <PushNotificationRequest /> */}
                         {/* <HistoryShield /> */}
                         {children}
