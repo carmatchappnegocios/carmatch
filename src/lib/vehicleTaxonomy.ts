@@ -11,7 +11,7 @@ export { BRANDS, POPULAR_MODELS } from './vehicleTaxonomyData'
 export type VehicleCategory = 'Automóvil' | 'Motocicleta' | 'Camión' | 'Autobús' | 'Maquinaria' | 'Especial'
 
 // 📅 Dynamic Year Generator (Current + 1)
-export const getYears = () => {
+export function getYears() {
     const currentYear = new Date().getFullYear() + 1
     const years = []
     for (let i = currentYear; i >= 1950; i--) {
@@ -72,7 +72,7 @@ export var GLOBAL_SYNONYMS: Record<string, string> = {
 }
 
 // 🧠 Helper to get features by category
-export const getFeaturesByCategory = (category: VehicleCategory) => {
+export function getFeaturesByCategory(category: VehicleCategory) {
     const common = ['Alarma', 'GPS', 'Luces LED', 'Frenos ABS', 'Bluetooth', 'USB', 'Pantalla Touch']
 
     switch (category) {
@@ -298,7 +298,7 @@ export var COUNTRY_DISTANCE_UNIT_MAP: Record<string, 'km' | 'mi'> = {
 /**
  * 🗺️ Map CarMatch internal locales to BCP-47 tags
  */
-export const getIntlLocale = (locale: string): string => {
+export function getIntlLocale(locale: string): string {
     const maps: Record<string, string> = {
         es: 'es-MX', en: 'en-US', pt: 'pt-BR', fr: 'fr-FR', de: 'de-DE',
         it: 'it-IT', zh: 'zh-CN', ja: 'ja-JP', ru: 'ru-RU', ko: 'ko-KR',
@@ -311,7 +311,7 @@ export const getIntlLocale = (locale: string): string => {
 /**
  * 🔢 Formatea un número según el locale
  */
-export const formatNumber = (num: any, locale: string = 'es') => {
+export function formatNumber(num: any, locale: string = 'es') {
     try {
         const val = typeof num === 'string' ? parseFloat(num) : num;
         if (isNaN(val)) return '0';
@@ -324,7 +324,7 @@ export const formatNumber = (num: any, locale: string = 'es') => {
 /**
  * 💰 Formatea el precio con separadores de miles y moneda
  */
-export const formatPrice = (price: any, currency: string = 'MXN', locale: string = 'es') => {
+export function formatPrice(price: any, currency: string = 'MXN', locale: string = 'es') {
     try {
         const val = typeof price === 'string' ? parseFloat(price) : price;
         if (isNaN(val)) return `${currency} 0`;

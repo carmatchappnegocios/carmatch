@@ -257,7 +257,7 @@ export async function searchCities(query: string): Promise<LocationData[]> {
     }
 }
 
-export const EXPANSION_TIERS = [25, 50, 100, 250, 500, 1000, 5000, 10000]
+export var EXPANSION_TIERS = [25, 50, 100, 250, 500, 1000, 5000, 10000]
 
 /**
  * Normaliza el código de país a formato ISO de 2 letras (MX, US, etc)
