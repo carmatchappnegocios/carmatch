@@ -88,6 +88,7 @@ export function usePushNotifications() {
             setSubscription(sub)
             setPermission('granted')
             alert('¡Notificaciones Activadas!')
+            window.location.reload()
 
         } catch (error) {
             console.error('[PUSH] Error suscribiendo a push:', error)
