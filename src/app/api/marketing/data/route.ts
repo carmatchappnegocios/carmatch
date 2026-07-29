@@ -77,6 +77,22 @@ export async function GET(req: NextRequest) {
                 return NextResponse.json({
                     brand: 'CarMatch Social',
                     platform: 'carmatchapp.net',
+                    description: 'La red social automotriz #1 de México. Marketplace para comprar y vender autos gratis, directorio de talleres y servicios automotrices 24/7, y comunidad de entusiastas.',
+                    features: [
+                        'Marketplace de vehículos nuevos y usados',
+                        'Directorio de talleres mecánicos y servicios automotrices',
+                        'CarMatch Swipe - descubre autos deslizando',
+                        'MapStore - mapa interactivo de negocios 24/7',
+                        'Chat en tiempo real entre compradores y vendedores',
+                        'Citas seguras con GPS y botón SOS',
+                        'Publicación gratuita sin comisiones',
+                        'Sistema de verificación con IA',
+                        'Notificaciones push en tiempo real',
+                        'Multiidioma (22 idiomas)',
+                        'Disponible como app web progresiva (PWA)'
+                    ],
+                    targetAudience: 'Personas que compran/venden autos, mecánicos, talleres, negocios automotrices',
+                    countries: 'México, USA, Latinoamérica, España',
                     stats: {
                         totalVehicles: vehicleCount,
                         totalBusinesses: businessCount,
