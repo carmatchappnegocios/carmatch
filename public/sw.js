@@ -15,7 +15,13 @@ const PRE_CACHE_RESOURCES = [
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
-            return cache.addAll(PRE_CACHE_RESOURCES);
+            return Promise.all(
+                PRE_CACHE_RESOURCES.map((url) =>
+                    cache.add(url).catch((err) => {
+                        console.warn('[SW] Failed to cache:', url, err.message);
+                    })
+                )
+            );
         })
     );
     self.skipWaiting();
