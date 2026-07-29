@@ -127,31 +127,33 @@ FORMATO JSON:
             : "No se encontraron resultados exactos en este momento."
 
         const prompt = `Actúa como el equipo de soporte y asesoría de CarMatch.
-Eres un experto que ayuda con: búsqueda de vehículos, servicios automotrices, consejos de mecánica, y RESOLUCIÓN DE PROBLEMAS.
+Eres un experto en vehículos, mecánica, compraventa, y resolver problemas de usuarios.
 
-**RESULTADOS REALES ENCONTRADOS:**
+**RESULTADOS DE BÚSQUEDA (si los hay):**
 ${resultsSummary}
 
 **INTENCIÓN DETECTADA:**
 ${JSON.stringify(intent)}
 
 **REGLAS:**
-1. Si el usuario busca vehículos o servicios, muéstrale resultados.
-2. Si tiene un problema técnico, da consejos útiles.
-3. Si quiere REPORTAR un perfil malicioso, guíalo para crear el reporte.
-4. Sé breve, profesional y útil.
+1. Si busca vehículos o servicios, muéstrale resultados y da consejos.
+2. Si pregunta sobre mecánica, mantenimiento, compraventa, seguro, etc., da CONSEJOS ÚTILES y ESPECÍFICOS.
+3. Si tiene un problema técnico con la app, ayúdalo paso a paso.
+4. Si quiere REPORTAR un perfil malicioso, guíalo para crear el reporte.
+5. Puedes dar tips de: cómo vender más rápido, cómo cuidar tu auto, qué revisar al comprar, estimados de precio, etc.
+6. Sé breve, profesional y útil. Usa emojis con moderación.
 
 **HISTORIAL:**
 ${history?.map((h: any) => `${h.sender === 'user' ? 'Usuario' : 'Soporte'}: ${h.text}`).join('\n')}
 
-**MENSAJE:**
+**MENSAJE DEL USUARIO:**
 "${message}"
 
 **FORMATO JSON:**
 {
-  "response": "Tu respuesta aquí",
+  "response": "Tu respuesta aquí con consejos, tips o resultados",
   "command": { "type": "MARKET_FILTER" | "MAP_SEARCH" | "NONE", "params": {} },
-  "actionLink": "/path" (opcional)
+  "actionLink": "/path" (opcional, ej: /market, /map)
 }`
 
         const { geminiFlashConversational } = await import('@/lib/ai/geminiClient')
@@ -162,7 +164,7 @@ ${history?.map((h: any) => `${h.sender === 'user' ? 'Usuario' : 'Soporte'}: ${h.
 
         if (!aiResponse) {
             return NextResponse.json({
-                response: "Estoy analizando tu solicitud. ¿Podrías darme más detalles?\n\nPuedo ayudarte con:\n🔍 Búsqueda de vehículos\n🔧 Consejos de mecánica\n📋 Reportar un perfil sospechoso\n📍 Encontrar talleres cercanos",
+                response: "¡Hola! Soy tu asistente de CarMatch 🚗\n\nPuedo ayudarte con:\n🔍 **Buscar vehículos** — dime marca, modelo, precio\n🔧 **Consejos de mecánica** — qué revisar, cuándo cambiar aceite\n💰 **Tips para vender** — cómo publicar mejor y vender rápido\n📍 **Encontrar talleres** — busca en el mapa de servicios\n📋 **Reportar perfiles** — si ves algo sospechoso\n\n¿En qué te ayudo?",
                 command: { type: "NONE" }
             })
         }
