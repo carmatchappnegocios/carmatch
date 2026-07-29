@@ -103,11 +103,21 @@ export function LocationProvider({
             if (typeof window !== 'undefined') {
                 localStorage.setItem('carmatch_last_detected_location', JSON.stringify(locationData))
             }
+
+            // 🚀 SYNC TO SERVER: Guardar ubicación en el servidor
+            try {
+                await fetch('/api/user/location', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ latitude: coords.latitude, longitude: coords.longitude })
+                })
+            } catch (e) {
+                console.warn('[LOCATION] Failed to sync to server:', e)
+            }
+
             setError(null)
         } catch (err) {
             console.warn('GPS no disponible:', err)
-            // 🔥 NO bloqueamos la UI si falla el GPS - la IP ya provee ubicación
-            // Solo guardamos el error para informar al usuario si quiere
             setError(err instanceof Error ? err.message : 'Error de ubicación GPS')
         } finally {
             setLoading(false)
@@ -206,6 +216,33 @@ export function LocationProvider({
     // 🔥 BUCLE PREVENIDO: Solo se ejecuta al montar (fetchLocation es estable con useCallback)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fetchLocation])
+
+    // 🔄 PERIODIC LOCATION UPDATE: Cada 5 minutos cuando GPS está activo
+    useEffect(() => {
+        if (!preciseLocationEnabled) return
+        const interval = setInterval(() => {
+            navigator.geolocation?.getCurrentPosition(
+                async (position) => {
+                    try {
+                        await fetch('/api/user/location', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                latitude: position.coords.latitude,
+                                longitude: position.coords.longitude
+                            })
+                        })
+                        console.log('[LOCATION] Periodic sync to server OK')
+                    } catch (e) {
+                        console.warn('[LOCATION] Periodic sync failed:', e)
+                    }
+                },
+                () => {},
+                { enableHighAccuracy: true, timeout: 10000 }
+            )
+        }, 5 * 60 * 1000) // 5 minutos
+        return () => clearInterval(interval)
+    }, [preciseLocationEnabled])
 
     // Si el usuario selecciona manualmente una ciudad, usar esa
     const effectiveLocation = manualLocation || location
