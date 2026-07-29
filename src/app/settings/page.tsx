@@ -67,10 +67,15 @@ export default function SettingsPage() {
         if (perm !== 'granted') return
         ;(async () => {
             try {
-                const reg = await navigator.serviceWorker.ready
+                const reg = await Promise.race([
+                    navigator.serviceWorker.ready,
+                    new Promise<never>((_, rej) => setTimeout(() => rej(new Error('SW ready timeout')), 5000))
+                ])
                 const sub = await reg.pushManager.getSubscription()
                 if (sub) setIsSubscribed(true)
-            } catch {}
+            } catch (e) {
+                console.warn('[PUSH] Could not detect existing subscription:', e)
+            }
         })()
     }, [])
 
@@ -93,17 +98,36 @@ export default function SettingsPage() {
             if (!reg) {
                 reg = await navigator.serviceWorker.register('/sw.js')
             }
-            // Esperar a que el SW esté activo
-            await navigator.serviceWorker.ready
+            // Esperar a que el SW esté activo con timeout
+            try {
+                await Promise.race([
+                    navigator.serviceWorker.ready,
+                    new Promise<never>((_, rej) => setTimeout(() => rej(new Error('SW ready timeout')), 5000))
+                ])
+            } catch (readyErr) {
+                console.warn('[PUSH] SW ready timeout, proceeding anyway:', readyErr)
+            }
 
             // Verificar si ya existe una suscripción
             let sub = await reg.pushManager.getSubscription()
-            if (!sub) {
-                sub = await reg.pushManager.subscribe({
-                    userVisibleOnly: true,
-                    applicationServerKey: urlBase64ToUint8Array(VAPID_KEY)
-                })
+            if (sub) {
+                // Ya existe una suscripción, solo guardar en backend
+                await fetch('/api/push/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(sub)
+                }).catch(() => {})
+                setIsSubscribed(true)
+                setPushPermission('granted')
+                alert('¡Notificaciones Activadas!')
+                return
             }
+
+            // Crear nueva suscripción
+            sub = await reg.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: urlBase64ToUint8Array(VAPID_KEY)
+            })
 
             const res = await fetch('/api/push/subscribe', {
                 method: 'POST',
@@ -114,9 +138,9 @@ export default function SettingsPage() {
             setIsSubscribed(true)
             setPushPermission('granted')
             alert('¡Notificaciones Activadas!')
-        } catch (error) {
+        } catch (error: any) {
             console.error('[PUSH] Error:', error)
-            alert('Error activando notificaciones.')
+            alert(`Error: ${error.message || 'Error activando notificaciones.'}`)
         }
     }, [])
 
