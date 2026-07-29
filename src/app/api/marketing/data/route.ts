@@ -75,6 +75,8 @@ export async function GET(req: NextRequest) {
                     .map(([type, count]) => ({ type, count }))
 
                 return NextResponse.json({
+                    brand: 'CarMatch Social',
+                    platform: 'carmatchapp.net',
                     stats: {
                         totalVehicles: vehicleCount,
                         totalBusinesses: businessCount,
