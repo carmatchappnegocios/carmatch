@@ -66,13 +66,11 @@ export default function SettingsPage() {
         setPushPermission(perm)
         if (perm !== 'granted') return
         ;(async () => {
-            const reg = await getSWRegistration()
-            if (reg) {
-                try {
-                    const sub = await reg.pushManager.getSubscription()
-                    if (sub) setIsSubscribed(true)
-                } catch {}
-            }
+            try {
+                const reg = await navigator.serviceWorker.ready
+                const sub = await reg.pushManager.getSubscription()
+                if (sub) setIsSubscribed(true)
+            } catch {}
         })()
     }, [])
 
@@ -95,10 +93,18 @@ export default function SettingsPage() {
             if (!reg) {
                 reg = await navigator.serviceWorker.register('/sw.js')
             }
-            const sub = await reg.pushManager.subscribe({
-                userVisibleOnly: true,
-                applicationServerKey: urlBase64ToUint8Array(VAPID_KEY)
-            })
+            // Esperar a que el SW esté activo
+            await navigator.serviceWorker.ready
+
+            // Verificar si ya existe una suscripción
+            let sub = await reg.pushManager.getSubscription()
+            if (!sub) {
+                sub = await reg.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: urlBase64ToUint8Array(VAPID_KEY)
+                })
+            }
+
             const res = await fetch('/api/push/subscribe', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
