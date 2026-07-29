@@ -39,6 +39,7 @@ interface MapBoxStoreLocatorProps {
     initialLocation?: { latitude: number; longitude: number }
     highlightCategories?: string[]
     onBoundsChange?: (bounds: { minLat: number; maxLat: number; minLng: number; maxLng: number }) => void
+    preciseLocationEnabled?: boolean
 }
 
 export default function MapBoxStoreLocator({
@@ -47,7 +48,8 @@ export default function MapBoxStoreLocator({
     categoryEmojis,
     initialLocation,
     onBoundsChange,
-    highlightCategories = []
+    highlightCategories = [],
+    preciseLocationEnabled = false
 }: MapBoxStoreLocatorProps) {
     const { t } = useLanguage()
     const mapContainer = useRef<HTMLDivElement>(null)
@@ -91,8 +93,8 @@ export default function MapBoxStoreLocator({
 
         const geolocateControl = new mapboxgl.GeolocateControl({
             positionOptions: { enableHighAccuracy: true },
-            trackUserLocation: true,
-            showUserLocation: true,
+            trackUserLocation: preciseLocationEnabled,
+            showUserLocation: preciseLocationEnabled,
             showAccuracyCircle: false
         })
 
@@ -101,7 +103,9 @@ export default function MapBoxStoreLocator({
         newMap.on('load', () => {
             setMapLoaded(true)
             newMap.resize()
-            geolocateControl.trigger()
+            if (preciseLocationEnabled) {
+                geolocateControl.trigger()
+            }
 
             if (newMap.getLayer('poi-label')) {
                 newMap.setLayoutProperty('poi-label', 'visibility', 'none')

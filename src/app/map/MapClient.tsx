@@ -53,7 +53,7 @@ async function searchCity(query: string) {
 export default function MapClient({ businesses, user }: MapClientProps) {
     const { t } = useLanguage()
     // 🔥 USANDO CONTEXTO GLOBAL
-    const { location, loading, initializing, error, refreshLocation, setManualLocation } = useLocation()
+    const { location, loading, initializing, error, refreshLocation, setManualLocation, preciseLocationEnabled } = useLocation()
     const { openModal } = useRestoreSessionModal()
     const searchParams = useSearchParams()
     const [selectedCategories, setSelectedCategories] = useState<string[]>([])
@@ -330,6 +330,7 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                         initialLocation={location ? { latitude: location.latitude, longitude: location.longitude } : undefined}
                         onBoundsChange={handleBoundsChange}
                         highlightCategories={searchSuccess ? selectedCategories : []}
+                        preciseLocationEnabled={preciseLocationEnabled}
                     />
                 </div>
 
