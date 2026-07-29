@@ -67,12 +67,11 @@ export default function SettingsPage() {
         if (perm !== 'granted') return
         ;(async () => {
             try {
-                const reg = await Promise.race([
-                    navigator.serviceWorker.ready,
-                    new Promise<never>((_, rej) => setTimeout(() => rej(new Error('SW ready timeout')), 5000))
-                ])
-                const sub = await reg.pushManager.getSubscription()
-                if (sub) setIsSubscribed(true)
+                const reg = await getSWRegistration()
+                if (reg) {
+                    const sub = await reg.pushManager.getSubscription()
+                    if (sub) setIsSubscribed(true)
+                }
             } catch (e) {
                 console.warn('[PUSH] Could not detect existing subscription:', e)
             }
@@ -97,21 +96,13 @@ export default function SettingsPage() {
             let reg = await getSWRegistration()
             if (!reg) {
                 reg = await navigator.serviceWorker.register('/sw.js')
-            }
-            // Esperar a que el SW esté activo con timeout
-            try {
-                await Promise.race([
-                    navigator.serviceWorker.ready,
-                    new Promise<never>((_, rej) => setTimeout(() => rej(new Error('SW ready timeout')), 5000))
-                ])
-            } catch (readyErr) {
-                console.warn('[PUSH] SW ready timeout, proceeding anyway:', readyErr)
+                // Esperar mínimo 1 segundo para que el SW se active
+                await new Promise(r => setTimeout(r, 1000))
             }
 
             // Verificar si ya existe una suscripción
             let sub = await reg.pushManager.getSubscription()
             if (sub) {
-                // Ya existe una suscripción, solo guardar en backend
                 await fetch('/api/push/subscribe', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
