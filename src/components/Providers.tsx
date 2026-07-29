@@ -24,7 +24,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
                         {/* <HistoryShield /> */}
                         {children}
                         {/* <GlobalLocationGate /> */}
-                        {/* <AIChatbot /> */}
+                        <AIChatbot />
                     </LocationProvider>
                 </LanguageProvider>
             </SessionProvider>
