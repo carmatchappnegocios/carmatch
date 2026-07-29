@@ -47,4 +47,8 @@ export const RATE_LIMITS = {
     register: { windowMs: 15 * 60 * 1000, max: 5 },       // 5 registrations per 15 min per IP
     login: { windowMs: 15 * 60 * 1000, max: 10 },          // 10 login attempts per 15 min per IP
     verifyEmail: { windowMs: 60 * 60 * 1000, max: 3 },     // 3 verification emails per hour per user
+    aiSearch: { windowMs: 60 * 1000, max: 10 },            // 10 AI searches per minute per user
+    aiDeepSearch: { windowMs: 60 * 1000, max: 5 },         // 5 deep searches per minute per user
+    aiAnalyze: { windowMs: 60 * 1000, max: 10 },           // 10 AI analyses per minute per user
+    aiValidate: { windowMs: 60 * 1000, max: 20 },          // 20 image validations per minute per user
 }

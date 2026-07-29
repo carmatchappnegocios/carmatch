@@ -1,9 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import { buildVehicleQuery, buildBusinessQuery } from '@/lib/ai/searchQueryBuilder'
+import { checkRateLimit, RATE_LIMITS } from '@/lib/rate-limit'
 
 export async function POST(req: NextRequest) {
     try {
+        const ip = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown'
+        const rl = checkRateLimit(`ai-deep:${ip}`, RATE_LIMITS.aiDeepSearch)
+        if (!rl.allowed) {
+            return NextResponse.json({ error: 'Rate limit exceeded.' }, { status: 429 })
+        }
+
         const { query, context, filters } = await req.json()
 
         if (!query && !filters) {

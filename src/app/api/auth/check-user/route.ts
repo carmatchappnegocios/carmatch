@@ -15,19 +15,20 @@ export async function POST(request: Request) {
 
         const validation = validateAndNormalizeEmail(email)
         if (!validation.valid) {
-            // Always return the same response to prevent enumeration
-            return NextResponse.json({ exists: false })
+            // Always return success to prevent email enumeration
+            return NextResponse.json({ success: true })
         }
 
-        const user = await prisma.user.findUnique({
+        // Always return success regardless of whether user exists
+        // This prevents attackers from enumerating valid email addresses
+        await prisma.user.findUnique({
             where: { email: validation.normalized },
             select: { id: true },
         })
 
-        return NextResponse.json({ exists: !!user })
+        return NextResponse.json({ success: true })
     } catch (error) {
         console.error("Error checking user:", error)
-        // Always return the same response to prevent enumeration
-        return NextResponse.json({ exists: false })
+        return NextResponse.json({ success: true })
     }
 }

@@ -14,8 +14,8 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url)
     const secret = searchParams.get('secret')
 
-    // Seguridad básica para evitar que cualquiera lo dispare
-    if (secret !== process.env.CRON_SECRET && process.env.NODE_ENV === 'production') {
+    // Seguridad: SIEMPRE requiere el secret, sin importar el entorno
+    if (secret !== process.env.CRON_SECRET) {
         return new NextResponse('Unauthorized', { status: 401 })
     }
 
