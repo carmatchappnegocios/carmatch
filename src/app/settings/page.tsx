@@ -4,12 +4,11 @@
 
 'use client'
 
-import { useState } from 'react' // ✅ Importar useState
+import { useState, useEffect, useCallback } from 'react' // ✅ Importar useState
 import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useLocation } from '@/contexts/LocationContext'
 import { useLanguage } from '@/contexts/LanguageContext'
-import { usePushNotifications } from '@/hooks/usePushNotifications'
 import {
     Settings,
     ChevronLeft,
@@ -27,13 +26,115 @@ import {
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion' // ✅ AnimatePresence
 
+const VAPID_KEY = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY
+
+function urlBase64ToUint8Array(base64String: string) {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4)
+    const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/')
+    const rawData = window.atob(base64)
+    const outputArray = new Uint8Array(rawData.length)
+    for (let i = 0; i < rawData.length; ++i) {
+        outputArray[i] = rawData.charCodeAt(i)
+    }
+    return outputArray
+}
+
+async function getSWRegistration(): Promise<ServiceWorkerRegistration | null> {
+    try {
+        const reg = await navigator.serviceWorker.getRegistration('/')
+        if (reg) return reg
+        const reg2 = await navigator.serviceWorker.getRegistration()
+        if (reg2) return reg2
+    } catch {}
+    return null
+}
+
 export default function SettingsPage() {
     const { data: session, status } = useSession()
     const router = useRouter()
     const { locale, setLocale, t } = useLanguage()
-    const { isSubscribed, subscribe, unsubscribe, permission } = usePushNotifications()
     const { preciseLocationEnabled, setPreciseLocationEnabled, gpsPermission } = useLocation()
     const [showLanguages, setShowLanguages] = useState(false)
+
+    // Push notifications - inline (avoids chunk caching issues)
+    const [isSubscribed, setIsSubscribed] = useState(false)
+    const [pushPermission, setPushPermission] = useState<NotificationPermission>('default')
+
+    useEffect(() => {
+        if (!('serviceWorker' in navigator) || !('PushManager' in window)) return
+        const perm = Notification.permission
+        setPushPermission(perm)
+        if (perm !== 'granted') return
+        ;(async () => {
+            const reg = await getSWRegistration()
+            if (reg) {
+                try {
+                    const sub = await reg.pushManager.getSubscription()
+                    if (sub) setIsSubscribed(true)
+                } catch {}
+            }
+        })()
+    }, [])
+
+    const subscribe = useCallback(async () => {
+        if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+            alert('Tu navegador no soporta notificaciones push.')
+            return
+        }
+        if (!VAPID_KEY) {
+            alert('Error de configuración. Las notificaciones no están disponibles.')
+            return
+        }
+        try {
+            const perm = await Notification.requestPermission()
+            if (perm !== 'granted') {
+                alert('Permiso de notificaciones denegado.')
+                return
+            }
+            let reg = await getSWRegistration()
+            if (!reg) {
+                reg = await navigator.serviceWorker.register('/sw.js')
+            }
+            const sub = await reg.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: urlBase64ToUint8Array(VAPID_KEY)
+            })
+            const res = await fetch('/api/push/subscribe', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(sub)
+            })
+            if (!res.ok) throw new Error(`Backend error: ${res.status}`)
+            setIsSubscribed(true)
+            setPushPermission('granted')
+            alert('¡Notificaciones Activadas!')
+        } catch (error) {
+            console.error('[PUSH] Error:', error)
+            alert('Error activando notificaciones.')
+        }
+    }, [])
+
+    const unsubscribe = useCallback(async () => {
+        try {
+            const reg = await getSWRegistration()
+            if (!reg) return
+            const sub = await reg.pushManager.getSubscription()
+            if (sub) {
+                await sub.unsubscribe()
+                await fetch('/api/push/unsubscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ endpoint: sub.endpoint })
+                }).catch(() => {})
+            }
+            setIsSubscribed(false)
+            setPushPermission('default')
+            alert('Notificaciones desactivadas')
+        } catch (error) {
+            console.error('[PUSH] Error:', error)
+            alert('Error desactivando notificaciones.')
+        }
+    }, [])
 
     if (status === 'unauthenticated') {
         router.push('/auth')
@@ -164,7 +265,7 @@ export default function SettingsPage() {
 
                         <button
                             onClick={() => isSubscribed ? unsubscribe() : subscribe()}
-                            disabled={permission === 'denied'}
+                            disabled={pushPermission === 'denied'}
                             className={`w-full flex items-center justify-between p-5 rounded-2xl border transition-all ${isSubscribed
                                 ? 'bg-green-900/10 border-green-500/30 text-green-400'
                                 : 'bg-surface border-surface-highlight text-text-primary hover:border-text-secondary/30'
@@ -181,7 +282,7 @@ export default function SettingsPage() {
                                     </p>
                                 </div>
                             </div>
-                            {!isSubscribed && permission !== 'denied' && (
+                            {!isSubscribed && pushPermission !== 'denied' && (
                                 <span className="text-xs font-black uppercase tracking-tighter bg-primary-600 text-white px-3 py-1 rounded-full">{t('settings.activate')}</span>
                             )}
                             {isSubscribed && (
