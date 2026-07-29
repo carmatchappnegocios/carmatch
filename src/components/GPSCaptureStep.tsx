@@ -2,7 +2,7 @@
 // ⚠️ CRITICAL WARNING: FILE PROTECTED BY PROJECT RULES.
 // DO NOT MODIFY THIS FILE WITHOUT EXPLICIT USER INSTRUCTION.
 
-﻿"use client"
+"use client"
 
 import { useState, useEffect, useRef } from 'react'
 import { getUserLocation, reverseGeocode } from '@/lib/geolocation'

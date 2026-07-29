@@ -48,10 +48,15 @@ export async function PUT(
         const statusLabel = status === 'ACCEPTED' ? 'aceptado' : status === 'REJECTED' ? 'rechazado' : status === 'CANCELLED' ? 'cancelado' : 'actualizado'
         const statusIcon = status === 'ACCEPTED' ? '✅' : status === 'REJECTED' ? '❌' : '📅'
 
+        // Map status to valid NotificationType
+        const notificationType = status === 'ACCEPTED' ? 'APPOINTMENT_ACCEPTED'
+            : status === 'REJECTED' ? 'APPOINTMENT_REJECTED'
+            : 'APPOINTMENT_MODIFIED'
+
         // 1. Notificación Interna
         await upsertNotification({
             userId: receiverId,
-            type: `APPOINTMENT_${status}` as NotificationType,
+            type: notificationType,
             title: `Cita ${statusLabel}`,
             message: `${session.user.name} ha ${statusLabel} la cita para el vehículo ${appointment.chat.vehicle.title}`,
             link: `/messages/${appointment.chatId}?appointmentId=${id}`,

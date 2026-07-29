@@ -4,7 +4,7 @@ import { prisma } from "@/lib/db";
 
 export async function POST(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth();
@@ -12,7 +12,7 @@ export async function POST(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const { id: appointmentId } = params;
+    const { id: appointmentId } = await params;
 
     // Obtener la cita
     const appointment = await prisma.appointment.findUnique({
@@ -47,7 +47,7 @@ export async function POST(
       updateData.trackingEndTime = endTime;
     }
 
-    const updatedAppointment = await db.appointment.update({
+    const updatedAppointment = await prisma.appointment.update({
       where: { id: appointmentId },
       data: updateData,
     });

@@ -70,15 +70,12 @@ export default function SOSComponent({ isActive, otherUserId, onEndMeeting, chat
                 setCheckInVisible(true)
                 setCheckInCount(prev => prev + 1)
 
-                // Auto-cancel if not answered in 5 minutes (user logic: "si no contesta en la primera... ya se quita")
-                // Let's implement a timeout for the check-in
+                // Auto-dismiss check-in if not answered in 5 minutes
+                // User logic: la mayoría de citas son normales, si no contesta probablemente está ocupado
                 if (autoCancelTimerRef.current) clearTimeout(autoCancelTimerRef.current)
                 autoCancelTimerRef.current = setTimeout(() => {
-                    if (checkInVisible) {
-                        // 🚨 SECURITY FIX: Si no contesta, disparar SOS automático en lugar de cerrar
-                        console.warn('🚨 Check-in fallido: Disparando SOS automático.');
-                        triggerSOS() 
-                    }
+                    setCheckInVisible(false)
+                    console.log('[SOS] Check-in ignorado: cerrado automáticamente (sin SOS)')
                 }, 5 * 60 * 1000)
             }, 20 * 60 * 1000)
         }

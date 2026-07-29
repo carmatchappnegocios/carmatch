@@ -72,7 +72,6 @@ export default function ChatPage({
         }
         fetchMessages()
         fetchChatDetails()
-        fetchChatDetails()
 
         // 🚀 REAL-TIME UPDATES (Socket.IO) - Chat Room
         import('@/lib/socket').then(({ socket }) => {
