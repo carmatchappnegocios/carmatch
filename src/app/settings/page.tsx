@@ -96,8 +96,12 @@ export default function SettingsPage() {
             let reg = await getSWRegistration()
             if (!reg) {
                 reg = await navigator.serviceWorker.register('/sw.js')
-                // Esperar mínimo 1 segundo para que el SW se active
-                await new Promise(r => setTimeout(r, 1000))
+            }
+            // Esperar a que el SW esté activo (requerido para pushManager.subscribe)
+            try {
+                await navigator.serviceWorker.ready
+            } catch {
+                await new Promise(r => setTimeout(r, 2000))
             }
 
             // Verificar si ya existe una suscripción
