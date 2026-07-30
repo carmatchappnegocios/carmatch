@@ -177,8 +177,63 @@ export async function GET(req: NextRequest) {
                 })
             }
 
+            case 'products': {
+                // Vehículos activos en formato compatible con LEONIDAS Marketing
+                const limit = Math.min(parseInt(req.nextUrl.searchParams.get('limit') || '50'), 100)
+                const cityFilter = req.nextUrl.searchParams.get('city')
+
+                const where: any = { status: 'ACTIVE' }
+                if (cityFilter) where.city = cityFilter
+
+                const vehicles = await prisma.vehicle.findMany({
+                    where,
+                    select: {
+                        id: true,
+                        title: true,
+                        brand: true,
+                        model: true,
+                        year: true,
+                        price: true,
+                        currency: true,
+                        city: true,
+                        condition: true,
+                        mileage: true,
+                        images: true,
+                        description: true,
+                        vehicleType: true,
+                        color: true,
+                        createdAt: true
+                    },
+                    orderBy: { createdAt: 'desc' },
+                    take: limit
+                })
+
+                // Formato compatible con LEONIDAS Marketing API
+                const products = vehicles.map(v => ({
+                    nombre: v.title,
+                    precio: v.price,
+                    moneda: v.currency || 'MXN',
+                    descripcion: `${v.brand} ${v.model} ${v.year} - ${v.condition || 'Usado'}. ${v.mileage ? `Kilometraje: ${v.mileage}km` : ''}. Ubicación: ${v.city}.`,
+                    imagen: v.images?.[0] || null,
+                    categoria: v.vehicleType || 'Vehículo',
+                    marca: v.brand,
+                    modelo: v.model,
+                    anio: v.year,
+                    ciudad: v.city,
+                    color: v.color,
+                    url: `https://carmatchapp.net/vehicle/${v.id}`
+                }))
+
+                return NextResponse.json({
+                    brand: 'CarMatch Social',
+                    platform: 'carmatchapp.net',
+                    total: vehicles.length,
+                    productos: products
+                })
+            }
+
             default:
-                return NextResponse.json({ error: 'Unknown type. Use: overview, brands, categories, trending' }, { status: 400 })
+                return NextResponse.json({ error: 'Unknown type. Use: overview, brands, categories, trending, products' }, { status: 400 })
         }
 
     } catch (error) {
