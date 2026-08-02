@@ -5,6 +5,7 @@
 "use client"
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react'
+import esTranslations from '@/locales/es.json'
 
 type Locale = 'es' | 'en' | 'pt' | 'fr' | 'de' | 'it' | 'zh' | 'ja' | 'ru' | 'ko' | 'ar' | 'hi'
     | 'tr' | 'nl' | 'pl' | 'sv' | 'id' | 'th' | 'vi' | 'ur' | 'he'
@@ -19,11 +20,13 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
 
 // Cache for loaded translations to avoid re-fetching
-const translationCache: Partial<Record<Locale, any>> = {}
+const translationCache: Partial<Record<Locale, any>> = {
+    es: esTranslations
+}
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
     const [locale, setLocaleState] = useState<Locale>('es')
-    const [translations, setTranslations] = useState<any>(null)
+    const [translations, setTranslations] = useState<any>(esTranslations)
     const [isLoading, setIsLoading] = useState(true)
 
     const loadTranslations = useCallback(async (targetLocale: Locale) => {
@@ -171,8 +174,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
     return (
         <LanguageContext.Provider value={{ locale, setLocale, t, isLoading }}>
-            {/* 🚀 FIXED: Render children immediately to prevent the fixed inset-0 full screen lock */}
-            {children}
+            {isLoading ? <div className="min-h-screen bg-black" /> : children}
         </LanguageContext.Provider>
     )
 }

@@ -53,12 +53,14 @@ const AdminMobileNav = dynamic<any>(() => import('@/components/admin/AdminMobile
 const CostsTab = dynamic<any>(() => import('@/components/admin/CostsTab'), { ssr: false })
 
 const BetaSessionsTab = dynamic<any>(() => import('@/components/admin/BetaSessionsTab'), { ssr: false })
+const ProtocolAgentTab = dynamic<any>(() => import('@/components/admin/ProtocolAgentTab'), { ssr: false })
+const ContentCalendarTab = dynamic<any>(() => import('@/components/admin/ContentCalendarTab'), { ssr: false })
 import ManageCreditsModal from '@/components/admin/ManageCreditsModal'
 import QRCodeModal from '@/components/QRCodeModal'
 import { testGeminiHealth, AiHealthReport } from '@/app/admin/actions/ai-health-actions'
 import { scoutGlobalStations } from '@/app/admin/actions/scout-actions'
 
-type AdminView = 'overview' | 'users' | 'inventory' | 'map-store' | 'intelligence' | 'reports' | 'logs' | 'ai-hub' | 'costs' | 'more'
+type AdminView = 'overview' | 'users' | 'inventory' | 'map-store' | 'intelligence' | 'reports' | 'logs' | 'ai-hub' | 'costs' | 'marketing' | 'more'
 
 const AdminSidebar = dynamic<any>(() => import('@/components/admin/AdminSidebar'), { ssr: false })
 
@@ -155,6 +157,7 @@ function AdminPanelContent() {
         { id: 'map-store', icon: Store, label: 'MapStore' },
         { id: 'ai-hub', icon: Cpu, label: 'AI Hub' },
         { id: 'costs', icon: DollarSign, label: 'Gastos' },
+        { id: 'marketing', icon: Megaphone, label: 'Marketing' },
         { id: 'reports', icon: Flag, label: 'Reportes', badge: stats.reports?.filter((r: any) => r.status === 'PENDING').length || 0 },
         { id: 'logs', icon: Terminal, label: 'Registros' },
     ]
@@ -201,6 +204,7 @@ function AdminPanelContent() {
                             {activeView === 'map-store' && <MapStoreTab businesses={stats.businesses.recent} />}
                             {activeView === 'ai-hub' && <AiHubTab />}
                             {activeView === 'costs' && <CostsTab />}
+                            {activeView === 'marketing' && <MarketingTab />}
 
                             {activeView === 'reports' && <ReportsTab reports={stats.reports} />}
                             {activeView === 'logs' && <LogsTab logs={stats.logs} />}
@@ -221,6 +225,54 @@ function AdminPanelContent() {
                 isOpen={showQRModal}
                 onClose={() => setShowQRModal(false)}
             />
+        </div>
+    )
+}
+
+function MarketingTab() {
+    const [activeMarketingTab, setActiveMarketingTab] = useState<'protocol' | 'calendar'>('protocol')
+
+    return (
+        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                    <Megaphone className="w-8 h-8 text-primary-500" />
+                    <h3 className="text-3xl font-black italic tracking-tighter uppercase">Marketing</h3>
+                </div>
+                <div className="w-12 h-1 bg-primary-500 rounded-full blur-[2px] opacity-50" />
+            </div>
+
+            <div className="flex gap-2 p-1 bg-[#111114] rounded-xl border border-white/5">
+                <button
+                    onClick={() => setActiveMarketingTab('protocol')}
+                    className={`flex-1 px-4 py-3 rounded-lg font-bold text-sm transition-all ${
+                        activeMarketingTab === 'protocol'
+                            ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/20'
+                            : 'text-zinc-400 hover:text-white hover:bg-white/5'
+                    }`}
+                >
+                    <div className="flex items-center justify-center gap-2">
+                        <Zap className="w-4 h-4" />
+                        Protocol Agent
+                    </div>
+                </button>
+                <button
+                    onClick={() => setActiveMarketingTab('calendar')}
+                    className={`flex-1 px-4 py-3 rounded-lg font-bold text-sm transition-all ${
+                        activeMarketingTab === 'calendar'
+                            ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/20'
+                            : 'text-zinc-400 hover:text-white hover:bg-white/5'
+                    }`}
+                >
+                    <div className="flex items-center justify-center gap-2">
+                        <Calendar className="w-4 h-4" />
+                        Calendario de Contenido
+                    </div>
+                </button>
+            </div>
+
+            {activeMarketingTab === 'protocol' && <ProtocolAgentTab />}
+            {activeMarketingTab === 'calendar' && <ContentCalendarTab />}
         </div>
     )
 }
