@@ -23,7 +23,7 @@ interface AdminMobileNavProps {
 
 export default function AdminMobileNav({ activeView, setActiveView, menuItems }: AdminMobileNavProps) {
     // Only show primary items in the bottom bar to avoid clutter
-    const primaryItems = ['overview', 'intelligence', 'inventory', 'menu']
+    const primaryItems = ['overview', 'intelligence', 'inventory', 'marketing', 'menu']
 
     // Helper to find icon for "More" menu or specific items
     const getIcon = (id: string) => {
