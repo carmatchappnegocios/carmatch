@@ -18,91 +18,97 @@ You are a marketing creative director for CarMatch, the #1 automotive social net
 Generate a COMPLETE set of AI image generation prompts for a marketing campaign about: "${topic}"
 
 ### CHARACTER:
-Don Match (App-Man) — A friendly Mexican man wearing a CarMatch-branded jacket, holding a phone showing the CarMatch app. He represents trust, honesty, and real value in the automotive world.
+Don Match (App-Man) — A friendly Mexican man in his 30s wearing a dark blue CarMatch-branded jacket over a white t-shirt, holding a modern smartphone showing the CarMatch app interface. Short black hair, warm smile, trustworthy appearance. He represents honesty and real value in the automotive world.
+
+### IMAGE PROMPT FORMAT FOR GEMINI:
+Each prompt should be a NATURAL LANGUAGE description (2-4 sentences) optimized for Gemini image generation.
+Write prompts as if describing a photo to a photographer. Include: subject, action, setting, lighting, mood, style.
+DO NOT use technical摄影术语. Write naturally.
+DO NOT include aspect ratios in the prompt text (Gemini handles that separately).
 
 ### RESPONSE FORMAT (JSON):
 {
   "topic": "${topic}",
-  "campaign_name": "Short campaign title",
+  "campaign_name": "Short campaign title in Spanish",
   "accent_color": "#hex",
   "hashtags": ["#tag1", "#tag2", "#tag3", "#tag4", "#tag5"],
 
   "image_prompts": {
     "hero_image": {
-      "prompt": "Detailed prompt for the main campaign image. Include: subject, setting, lighting, mood, style, camera angle, color palette. Use AUTHENTIC MEXICAN STREET PHOTOGRAPHY style. 8K, cinematic.",
+      "prompt": "Natural language description of the main campaign image. 2-4 sentences. Describe what you see: Don Match standing in a specific location, doing a specific action, with specific lighting and mood. Make it feel like a real photograph.",
       "aspect_ratio": "16:9",
       "platform": "Instagram/Facebook Cover",
-      "description": "What this image shows"
+      "description": "What this image shows and why it works"
     },
     "story_1": {
-      "prompt": "Prompt for Instagram Story 1. Vertical format. Bold text overlay area at top. Don Match pointing at camera. Urban Mexican street background. High energy. 9:16 ratio.",
+      "prompt": "Vertical story image. Describe Don Match in an engaging pose, pointing at the camera or making eye contact. Urban Mexican street or auto shop background. Energetic mood, natural lighting.",
       "aspect_ratio": "9:16",
       "platform": "Instagram/TikTok Story",
-      "description": "Hook image"
+      "description": "Hook image - stops the scroll"
     },
     "story_2": {
-      "prompt": "Prompt for Instagram Story 2. Show the problem/pain point. Frustrated person at a traditional dealership or mechanic. Dark moody lighting. 9:16 ratio.",
+      "prompt": "Vertical story image showing frustration or problem. A person looking stressed at a mechanic shop or dealership. Darker mood, dramatic lighting. Show the pain point visually.",
       "aspect_ratio": "9:16",
       "platform": "Instagram/TikTok Story",
-      "description": "Problem image"
+      "description": "Problem image - creates empathy"
     },
     "story_3": {
-      "prompt": "Prompt for Instagram Story 3. Show the CarMatch solution. Happy person using CarMatch app on phone. Bright, hopeful lighting. 9:16 ratio.",
+      "prompt": "Vertical story image showing the solution. A happy person using CarMatch on their phone, bright smile. Warm, hopeful lighting. Clean modern setting.",
       "aspect_ratio": "9:16",
       "platform": "Instagram/TikTok Story",
-      "description": "Solution image"
+      "description": "Solution image - shows the better way"
     },
     "carousel_1": {
-      "prompt": "Prompt for carousel post slide 1. Eye-catching opener. Don Match with arms crossed, confident pose. Bold colors. Square format. 1:1 ratio.",
+      "prompt": "Square format image. Don Match with confident pose, arms crossed or thumbs up. Bold solid color background matching the campaign accent color. Clean, modern, eye-catching.",
       "aspect_ratio": "1:1",
       "platform": "Instagram/Facebook Carousel",
-      "description": "Carousel opener"
+      "description": "Carousel opener - grabs attention"
     },
     "carousel_2": {
-      "prompt": "Prompt for carousel slide 2. Infographic style. Show data/statistics about the topic. Clean design with CarMatch branding. 1:1 ratio.",
+      "prompt": "Square format infographic-style image. Clean design with bold text areas and data visualization space. CarMatch branding colors. Modern, professional look.",
       "aspect_ratio": "1:1",
       "platform": "Instagram/Facebook Carousel",
-      "description": "Data slide"
+      "description": "Data slide - builds credibility"
     },
     "carousel_3": {
-      "prompt": "Prompt for carousel slide 3. Call to action. Don Match giving thumbs up. Phone showing CarMatch app. 1:1 ratio.",
+      "prompt": "Square format call-to-action image. Don Match giving a thumbs up or pointing at a phone showing the CarMatch app. Bright, inviting colors. Clear CTA feeling.",
       "aspect_ratio": "1:1",
       "platform": "Instagram/Facebook Carousel",
-      "description": "CTA slide"
+      "description": "CTA slide - drives action"
     },
     "thumbnail": {
-      "prompt": "YouTube thumbnail style. Bold, high contrast. Don Match face with shocked expression. Big text area. Bright colors on dark background. 16:9 ratio.",
+      "prompt": "YouTube thumbnail style. Bold, high contrast. Don Match face with expressive reaction. Space for large text overlay. Vibrant colors that pop on dark background.",
       "aspect_ratio": "16:9",
       "platform": "YouTube Thumbnail",
-      "description": "Video thumbnail"
+      "description": "Video thumbnail - maximizes clicks"
     },
     "banner": {
-      "prompt": "Facebook/X cover banner. Wide panoramic. CarMatch branding. Don Match walking on Mexican street with phone. Cinematic. 2.61:1 ratio.",
+      "prompt": "Wide panoramic banner image. CarMatch branding visible. Don Match walking confidently on a Mexican street with phone in hand. Cinematic wide angle, golden hour lighting.",
       "aspect_ratio": "2.61:1",
       "platform": "Facebook/X Banner",
-      "description": "Profile cover"
+      "description": "Profile cover - establishes brand"
     },
     "ad_square": {
-      "prompt": "Paid ad image. Clean, professional. Don Match holding phone with CarMatch app visible. White/bright background. Product photography style. 1:1 ratio.",
+      "prompt": "Clean professional ad image. Don Match holding phone with CarMatch app clearly visible on screen. Minimal background, product photography style. trustworthy and premium feel.",
       "aspect_ratio": "1:1",
       "platform": "Facebook/Instagram Ads",
-      "description": "Paid advertisement"
+      "description": "Paid ad - converts viewers"
     },
     "meme": {
-      "prompt": "Meme format image. Split panel: left side shows the 'old way' (frustration), right side shows the 'CarMatch way' (happiness). Bold contrast. 1:1 ratio.",
+      "prompt": "Meme-style split image. Left side: dark, frustrated person at old mechanic. Right side: bright, happy person using CarMatch. Strong visual contrast between problem and solution.",
       "aspect_ratio": "1:1",
       "platform": "TikTok/Kwai/All",
-      "description": "Viral meme"
+      "description": "Viral meme format - shareable content"
     }
   },
 
   "copy": {
-    "hook": "One-line viral hook for ${topic}",
-    "caption_ig": "Instagram caption (2-3 lines, emojis, CTA)",
-    "caption_tiktok": "TikTok caption (short, punchy, hashtag-heavy)",
-    "caption_fb": "Facebook post (longer, storytelling, community-focused)",
-    "caption_x": "X/Twitter post (under 280 chars, provocative)",
-    "caption_kwai": "Kwai caption (emotional, relatable, Brazilian/Mexican style)"
+    "hook": "One-line viral hook about ${topic} in Spanish",
+    "caption_ig": "Instagram caption (2-3 lines, emojis, CTA) in Spanish",
+    "caption_tiktok": "TikTok caption (short, punchy, hashtag-heavy) in Spanish",
+    "caption_fb": "Facebook post (longer, storytelling, community-focused) in Spanish",
+    "caption_x": "X/Twitter post (under 280 chars, provocative) in Spanish",
+    "caption_kwai": "Kwai caption (emotional, relatable) in Spanish"
   },
 
   "video_prompt": {
@@ -111,21 +117,22 @@ Don Match (App-Man) — A friendly Mexican man wearing a CarMatch-branded jacket
   },
 
   "storyboard": [
-    { "scene": 1, "visual": "Opening shot", "duration": "3s", "overlay": "TEXT", "audio": "Sound" },
-    { "scene": 2, "visual": "Problem reveal", "duration": "5s", "overlay": "TEXT", "audio": "Sound" },
-    { "scene": 3, "visual": "CarMatch solution", "duration": "8s", "overlay": "TEXT", "audio": "Sound" },
-    { "scene": 4, "visual": "CTA close", "duration": "4s", "overlay": "TEXT", "audio": "Sound" }
+    { "scene": 1, "visual": "Opening shot description", "duration": "3s", "overlay": "TEXT", "audio": "Sound" },
+    { "scene": 2, "visual": "Problem reveal description", "duration": "5s", "overlay": "TEXT", "audio": "Sound" },
+    { "scene": 3, "visual": "CarMatch solution description", "duration": "8s", "overlay": "TEXT", "audio": "Sound" },
+    { "scene": 4, "visual": "CTA close description", "duration": "4s", "overlay": "TEXT", "audio": "Sound" }
   ]
 }
 
-### RULES:
-- All image prompts must be in ENGLISH (for AI generators)
-- All copy/captions in SPANISH (for Mexican audience)
-- Style: AUTHENTIC, STREET, REAL, HIGH-CONTRAST, CINEMATIC
-- NO stock photos, NO generic imagery
+### RULES FOR IMAGE PROMPTS:
+- Write in ENGLISH (for Gemini image generation)
+- Each prompt: 2-4 natural sentences, like describing a photo
+- Be SPECIFIC: exact location, exact action, exact lighting
+- Style: AUTHENTIC, STREET, REAL, CINEMATIC
 - Don Match is always the hero character
-- Include specific camera angles, lighting, and mood in prompts
-- Each prompt should be 50-100 words optimized for AI image generation
+- NO stock photo vibes, NO generic imagery
+- Make it feel like a real photograph, not AI art
+- Include emotional details: facial expressions, body language, atmosphere
 `
 
     const result = await geminiFlash.generateContent({
