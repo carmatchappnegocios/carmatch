@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a combine harvester (cosechadora) in a wheat field. He holds grain in his hand and looks at the camera. The combine has a large header, grain tank, and unloading auger. Bold white text overlay reads "VENDES UNA COSECHADORA?" with a purple CarMatch logo. Photorealistic, wheat field golden hour lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes una cosechadora? Publicalo en CarMatch
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Cosechadora, agricultura, grano, farming, trigo, maiz

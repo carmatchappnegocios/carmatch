@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, standing next to a large semi-truck (tractocamion) on a highway. He holds a CB radio mic and looks at the camera. The truck is chrome-heavy, with a sleeper cab, dual exhaust stacks, and polished fuel tanks. Bold white text overlay reads "VENDES UN TRACTOCAMION?" with a purple CarMatch logo. Photorealistic, highway sunset lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes un tractocamion? Los transportistas te buscan
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Tractocamion, transporte, logistica, camionero, carretera

@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a dual-sport motorcycle on a dirt trail. He holds riding gear and looks at the camera. The bike has knobby tires, high fenders, and long-travel suspension. Bold white text overlay reads "VENDES TU MOTO OFF-ROAD?" with a purple CarMatch logo. Photorealistic, off-road trail lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu moto off-road? Los aventureros la buscan
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 22-45
+- Ubicacion: Mexico
+- Intereses: Off-road, enduro, aventura, terraceria, trail

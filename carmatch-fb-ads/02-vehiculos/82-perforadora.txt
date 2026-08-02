@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a drilling rig (perforadora) at a mining site. He holds a core sample and looks at the camera. The rig has a drill mast, rotary head, and mud system. Bold white text overlay reads "VENDES UNA PERFORADORA?" with a purple CarMatch logo. Photorealistic, mining site lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes una perforadora? Los de mineria te buscan
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Perforadora, mina, mineria, exploracion, sondeo

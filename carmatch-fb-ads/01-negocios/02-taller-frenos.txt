@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, standing next to a brake lathe machine in a brake workshop. He holds up a brake pad toward the camera with a confident expression. Behind him, a car is lifted on a hydraulic hoist with its wheels removed, showing brake discs. The workshop has stacks of brake pads and rotors on metal shelves. Bold white text overlay reads "¿ERES ESPECIALISTA EN FRENOS?" with a purple CarMatch logo. Photorealistic, warm lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Especialista en frenos? Miles de personas buscan tu servicio HOY
+
+CTA:
+Publica Gratis
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: Frenos, mecanica, seguridad vial, talleres automotrices

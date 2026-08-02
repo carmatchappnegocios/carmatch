@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, standing next to a Tesla being serviced in a specialized EV garage. He holds a high-voltage diagnostic tool and looks at the camera. Behind him, electric car battery packs, high-voltage cables, and specialized EV tools. Bold white text overlay reads "¿TALLER EV E HIBRIDO?" with a purple CarMatch logo. Photorealistic, modern clean workshop lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Especialista en electricos? El futuro esta aqui, publicate
+
+CTA:
+Publica Gratis
+
+SEGMENTACION:
+- Edad: 25-50
+- Ubicacion: Mexico
+- Intereses: Electrico, hibrido, Tesla, baterias, futuro, tecnologia

@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a Yamaha RZR ATV in a desert landscape. He holds a helmet and looks at the camera. The ATV is aggressive, with roll cage, large tires, and sporty design. Bold white text overlay reads "VENDES TU CUATRIMOTO (ATV)?" with a purple CarMatch logo. Photorealistic, desert terrain lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu cuatrimoto? Los aventureros la buscan
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 22-45
+- Ubicacion: Mexico
+- Intereses: ATV, cuatrimoto, off-road, aventura, Polaris, Can-Am

@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, a 20-year-old Mexican woman with trendy style and creative energy, wearing a dark blue CarMatch jacket, standing next to a tiny microcar on a narrow city street. She crouches next to it and smiles at the camera. The microcar is compact, electric, with a futuristic design. Bold white text overlay reads "VENDES TU MICROCAR?" with a purple CarMatch logo. Photorealistic, urban street lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu microcar? Economico y perfecto para la ciudad
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 22-45
+- Ubicacion: Mexico
+- Intereses: Microcar, electrico, economico, ciudad, compacto

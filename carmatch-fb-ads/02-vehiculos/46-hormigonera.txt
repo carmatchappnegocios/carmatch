@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, standing next to a concrete mixer truck (hormigonera) at a construction site. He holds a hard hat and looks at the camera. The truck has a large rotating drum, with concrete visible. Bold white text overlay reads "VENDES UNA HORMIGONERA?" with a purple CarMatch logo. Photorealistic, construction site lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes una hormigonera? Los de construccion la buscan
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Hormigonera, concreto, construccion, obra, cemento

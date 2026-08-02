@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, standing next to a dry van box truck (caja seca) at a loading dock. He holds a pallet jack and looks at the camera. The truck has a fully enclosed cargo box, roll-up rear door. Bold white text overlay reads "VENDES UNA CAJA SECA?" with a purple CarMatch logo. Photorealistic, warehouse loading dock lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes una caja seca? Los transportistas te compran
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 28-55
+- Ubicacion: Mexico
+- Intereses: Caja seca, transporte de carga, logistica, distribucion

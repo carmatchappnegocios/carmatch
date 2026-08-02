@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing in a motorcycle repair shop. He holds a motorcycle spark plug and smiles. Behind him, motorcycles of various types are on lifts, oil change equipment, tire changing tools, and motorcycle parts on shelves. Bold white text overlay reads "¿TALLER DE MOTOS?" with a purple CarMatch logo. Photorealistic, bright workshop lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Taller de motos? La comunidad de motociclistas te busca
+
+CTA:
+Publica Gratis
+
+SEGMENTACION:
+- Edad: 25-45
+- Ubicacion: Mexico
+- Intereses: Motocicletas, motos, mecanica, talleres, motociclismo

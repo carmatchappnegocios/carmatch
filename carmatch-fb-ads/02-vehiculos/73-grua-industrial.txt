@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to an industrial crane (grua industrial) in a factory. He holds a remote control and looks at the camera. The crane has a large boom, hook, and overhead structure. Bold white text overlay reads "VENDES UNA GRUA INDUSTRIAL?" with a purple CarMatch logo. Photorealistic, factory lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes una grua industrial? Los de fabrica te buscan
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Grua industrial, fabrica, planta, elevacion, carga pesada

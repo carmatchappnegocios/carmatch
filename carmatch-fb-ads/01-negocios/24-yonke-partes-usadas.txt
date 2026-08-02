@@ -1,0 +1,13 @@
+PROMPT:
+Car-mela, a 42-year-old Mexican woman with a kind organized demeanor, wearing a dark blue CarMatch jacket, standing in a junkyard surrounded by wrecked and salvaged cars. She holds a car part (alternator) and gestures at the camera. Rows of cars in various states of disassembly stretch Behind her. Bold white text overlay reads "¿VENDES PARTES USADAS?" with a purple CarMatch logo. Photorealistic, outdoor salvage yard lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes partes usadas? Publica tu inventario gratis
+
+CTA:
+Publica Gratis
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: Yonke, partes usadas, refacciones, salvage, negocios

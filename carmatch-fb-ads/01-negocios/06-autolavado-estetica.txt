@@ -1,0 +1,13 @@
+PROMPT:
+Car-mela, a 42-year-old Mexican woman with a kind organized demeanor, wearing a dark blue CarMatch jacket, standing at a car wash with a pressure washer in hand, spraying water on a shiny SUV. She looks at the camera with a thumbs up. Behind her, other workers are washing cars, soap suds everywhere, colorful towels hanging. The car wash has bright neon lights and wet concrete. Bold white text overlay reads "¿TU AUTOLAVADO SE VE VACIO?" with a purple CarMatch logo. Photorealistic, vibrant colors, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Tu autolavado se ve vacio? Llenalo de clientes con CarMatch
+
+CTA:
+Publica Gratis
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: Autolavado, estetica, limpieza, cuidado del auto, negocios

@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a friendly Mexican man in his 30s wearing a dark blue CarMatch jacket, crouching next to a pocket bike on a garage floor. He holds the tiny motorcycle and looks at the camera. The pocket bike is miniature, with small wheels and a compact engine. Bold white text overlay reads "VENDES TU POCKET BIKE?" with a purple CarMatch logo. Photorealistic, garage lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu pocket bike? Publicalo gratis
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 18-35
+- Ubicacion: Mexico
+- Intereses: Pocket bike, mini moto, diversion, coleccion, karting

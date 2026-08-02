@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a chrome cruiser motorcycle on a desert highway. He leans against the bike and looks at the camera. The cruiser has high handlebars, leather saddlebags, and a relaxed riding position. Bold white text overlay reads "VENDES TU CRUISER?" with a purple CarMatch logo. Photorealistic, desert highway golden hour lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu cruiser? Los motociclistas te compran
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 28-50
+- Ubicacion: Mexico
+- Intereses: Cruiser, Harley, motociclismo, carretera, libertad

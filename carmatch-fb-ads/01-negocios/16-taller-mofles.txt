@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, standing in an exhaust shop next to a car on a lift. He holds a stainless steel muffler toward the camera. Behind him, exhaust pipes, mufflers, and catalytic converters hang on the wall. Welding equipment and pipe bending tools are visible. Bold white text overlay reads "¿INSTALAS MOFLES?" with a purple CarMatch logo. Photorealistic, industrial workshop lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Instalas mofles? Tu negocio necesita visibilidad
+
+CTA:
+Publica Gratis
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: Escape, mofles, sonido, rendimiento, talleres

@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, standing next to a tow truck (grua) with a car being loaded. He holds a control pendant and looks at the camera. The tow truck has a boom, wheel lift, and flashing amber lights. Bold white text overlay reads "VENDES UNA GRUA?" with a purple CarMatch logo. Photorealistic, roadside lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes una grua? Publicalo en CarMatch
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 28-55
+- Ubicacion: Mexico
+- Intereses: Grua, asistencia vial, transporte, emergencias

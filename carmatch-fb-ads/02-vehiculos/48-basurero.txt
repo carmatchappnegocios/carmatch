@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, standing next to a garbage truck (basurero) in a residential area. He holds a clipboard and looks at the camera. The truck has a compactor body, with mechanical arms for bins. Bold white text overlay reads "VENDES UN BASURERO?" with a purple CarMatch logo. Photorealistic, residential street lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes un basurero? Municipalidades te buscan
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Basurero, recoleccion, residuos, municipio, limpieza

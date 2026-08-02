@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a bulldozer at an earthmoving site. He holds a control lever and looks at the camera. The bulldozer has a large front blade and tracks, with pushed dirt visible. Bold white text overlay reads "VENDES UN BULLDOZER?" with a purple CarMatch logo. Photorealistic, earthmoving site lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes un bulldozer? Los contratistas te compran
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Bulldozer, nivelacion, tierra, construccion, pesado

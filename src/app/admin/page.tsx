@@ -44,7 +44,6 @@ import {
     Rocket,
     MapPin,
     DollarSign,
-    Calendar
 } from 'lucide-react'
 import dynamic from 'next/dynamic'
 
@@ -53,8 +52,7 @@ const AdminMobileNav = dynamic<any>(() => import('@/components/admin/AdminMobile
 const CostsTab = dynamic<any>(() => import('@/components/admin/CostsTab'), { ssr: false })
 
 const BetaSessionsTab = dynamic<any>(() => import('@/components/admin/BetaSessionsTab'), { ssr: false })
-const ProtocolAgentTab = dynamic<any>(() => import('@/components/admin/ProtocolAgentTab'), { ssr: false })
-const ContentCalendarTab = dynamic<any>(() => import('@/components/admin/ContentCalendarTab'), { ssr: false })
+const FacebookAdsTab = dynamic<any>(() => import('@/components/admin/FacebookAdsTab'), { ssr: false })
 import ManageCreditsModal from '@/components/admin/ManageCreditsModal'
 import QRCodeModal from '@/components/QRCodeModal'
 import { testGeminiHealth, AiHealthReport } from '@/app/admin/actions/ai-health-actions'
@@ -230,8 +228,6 @@ function AdminPanelContent() {
 }
 
 function MarketingTab() {
-    const [activeMarketingTab, setActiveMarketingTab] = useState<'protocol' | 'calendar'>('protocol')
-
     return (
         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="flex items-center justify-between">
@@ -242,37 +238,7 @@ function MarketingTab() {
                 <div className="w-12 h-1 bg-primary-500 rounded-full blur-[2px] opacity-50" />
             </div>
 
-            <div className="flex gap-2 p-1 bg-[#111114] rounded-xl border border-white/5">
-                <button
-                    onClick={() => setActiveMarketingTab('protocol')}
-                    className={`flex-1 px-4 py-3 rounded-lg font-bold text-sm transition-all ${
-                        activeMarketingTab === 'protocol'
-                            ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/20'
-                            : 'text-zinc-400 hover:text-white hover:bg-white/5'
-                    }`}
-                >
-                    <div className="flex items-center justify-center gap-2">
-                        <Zap className="w-4 h-4" />
-                        Protocol Agent
-                    </div>
-                </button>
-                <button
-                    onClick={() => setActiveMarketingTab('calendar')}
-                    className={`flex-1 px-4 py-3 rounded-lg font-bold text-sm transition-all ${
-                        activeMarketingTab === 'calendar'
-                            ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/20'
-                            : 'text-zinc-400 hover:text-white hover:bg-white/5'
-                    }`}
-                >
-                    <div className="flex items-center justify-center gap-2">
-                        <Calendar className="w-4 h-4" />
-                        Calendario de Contenido
-                    </div>
-                </button>
-            </div>
-
-            {activeMarketingTab === 'protocol' && <ProtocolAgentTab />}
-            {activeMarketingTab === 'calendar' && <ContentCalendarTab />}
+            <FacebookAdsTab />
         </div>
     )
 }

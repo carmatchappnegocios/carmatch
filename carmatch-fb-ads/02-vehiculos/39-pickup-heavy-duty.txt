@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, standing next to a heavy-duty pickup truck (Ford F-450/Chevy 4500) with a gooseneck trailer. He gives a thumbs up toward the camera. The pickup is massive, with dual rear wheels, towing mirrors, and a work-ready appearance. Bold white text overlay reads "VENDES UNA PICKUP HEAVY DUTY?" with a purple CarMatch logo. Photorealistic, ranch setting lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes una pickup pesada? Para trabajo duro, publicalo
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Heavy duty, F-450, towing, trabajo, rancho, industria

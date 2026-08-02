@@ -1,0 +1,13 @@
+PROMPT:
+Car-mela, a 42-year-old Mexican woman with a kind organized demeanor, wearing a dark blue CarMatch jacket, standing next to a specialized armored vehicle (blindado especial) at a secure facility. She gestures toward the vehicle and looks at the camera. The armored vehicle has reinforced armor, bulletproof glass, and defensive features. Bold white text overlay reads "VENDES UN AUTO BLINDADO ESPECIAL?" with a purple CarMatch logo. Photorealistic, secure facility lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes un auto blindado especial? Los de seguridad te buscan
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Blindado, seguridad, VIP, proteccion, defensa

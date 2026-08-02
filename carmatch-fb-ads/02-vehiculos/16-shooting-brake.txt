@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, a 20-year-old Mexican woman with trendy style and creative energy, wearing a dark blue CarMatch jacket, standing next to a shooting brake grand tourer in a luxury garage. She gestures toward the car and looks at the camera. The car has an elongated roofline, sporty elegance, with premium finishes. Bold white text overlay reads "VENDES TU SHOOTING BRAKE?" with a purple CarMatch logo. Photorealistic, luxury garage lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu shooting brake? Unico, publicalo ya
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Shooting brake, exclusivo, gran turismo, lujo, unico

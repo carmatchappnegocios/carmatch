@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, standing next to a garbage compactor truck (compactador) at a waste management facility. He holds a control panel and looks at the camera. The truck has a hydraulic compaction system. Bold white text overlay reads "VENDES UN COMPACTADOR?" with a purple CarMatch logo. Photorealistic, waste facility lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes un compactador? Municipalidades lo necesitan
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Compactador, residuos, municipio, limpieza urbana

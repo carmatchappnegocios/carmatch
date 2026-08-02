@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a friendly Mexican man in his 30s wearing a dark blue CarMatch jacket, sitting on a golf cart at a golf course. She holds a golf club and looks at the camera. The golf cart is electric, with a canopy, golf bag holder, and clean design. Bold white text overlay reads "VENDES TU GOLF CART?" with a purple CarMatch logo. Photorealistic, golf course green lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu golf cart? Publicalo gratis en CarMatch
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Golf cart, golf, resort, comunidad cerrada, electrico

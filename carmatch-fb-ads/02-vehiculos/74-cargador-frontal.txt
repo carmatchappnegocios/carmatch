@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a wheel loader (cargador frontal) at a mining site. He holds a helmet and looks at the camera. The loader has a large front bucket, articulated steering, and heavy-duty tires. Bold white text overlay reads "VENDES UN CARGADOR FRONTAL?" with a purple CarMatch logo. Photorealistic, mining site lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes un cargador frontal? Publicalo gratis
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Cargador frontal, mina, construccion, carga, pesado

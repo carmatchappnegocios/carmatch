@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, standing next to a fire truck (bomberos) at a fire station. He holds a helmet and looks at the camera. The fire truck is red, with ladders, hoses, and emergency lights. Bold white text overlay reads "VENDES UN CAMION DE BOMBEROS?" with a purple CarMatch logo. Photorealistic, fire station lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes un camion de bomberos? Publicalo en CarMatch
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Bomberos, emergencias, seguridad, protection civil

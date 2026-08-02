@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, standing next to a medium-duty box truck (torton) in a commercial area. He gestures toward the truck and looks at the camera. The torton has a closed cargo box, with company branding space. Bold white text overlay reads "VENDES UN TORTON?" with a purple CarMatch logo. Photorealistic, commercial area lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes un torton? Publicalo gratis en CarMatch
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 28-55
+- Ubicacion: Mexico
+- Intereses: Torton, transporte de carga, negocio, distribucion

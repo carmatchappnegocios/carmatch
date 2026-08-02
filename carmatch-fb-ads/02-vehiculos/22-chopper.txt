@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a custom chopper motorcycle. He holds a wrench and looks at the camera. The chopper has extended forks, custom paint, sissy bar, and chrome details. Bold white text overlay reads "VENDES TU CHOPPER?" with a purple CarMatch logo. Photorealistic, garage workshop lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu chopper? Publicalo gratis en CarMatch
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 28-50
+- Ubicacion: Mexico
+- Intereses: Chopper, custom, motociclismo, personalizacion, estilo

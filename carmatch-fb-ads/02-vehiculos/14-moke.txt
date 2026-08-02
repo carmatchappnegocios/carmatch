@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, a 20-year-old Mexican woman with trendy style and creative energy, wearing a dark blue CarMatch jacket, standing next to a Moke-style open vehicle on a beach. She sits on the hood and looks at the camera. The Moke is colorful, open-top, with a fun tropical vibe. Bold white text overlay reads "VENDES TU MOKE?" with a purple CarMatch logo. Photorealistic, beach sunset lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu moke? Es un clasico, publicalo
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 25-50
+- Ubicacion: Mexico
+- Intereses: Moke, clasico, playa, tropical, vintage, diversion

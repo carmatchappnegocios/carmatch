@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, a 20-year-old Mexican woman with trendy style and creative energy, wearing a dark blue CarMatch jacket, standing next to a red sports car on a racetrack. She leans against the car and looks at the camera. The sports car is low, aerodynamic, with aggressive styling and large alloy wheels. Bold white text overlay reads "VENDES TU DEPORTIVO?" with a purple CarMatch logo. Photorealistic, dramatic racetrack lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu deportivo? Los entusiastas te encuentran aqui
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 25-45
+- Ubicacion: Mexico
+- Intereses: Deportivos, speed, performance, autos exclusivos, racing

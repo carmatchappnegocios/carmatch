@@ -1,0 +1,13 @@
+PROMPT:
+Car-mela, a 42-year-old Mexican woman with a kind organized demeanor, wearing a dark blue CarMatch jacket, standing next to a car being wrapped with colored vinyl. She holds a squeegee tool and smiles at the camera. Behind her, rolls of vinyl in various colors and finishes (matte, chrome, carbon fiber) are on a rack. Bold white text overlay reads "¿HACES POLARIZADO O VINIL?" with a purple CarMatch logo. Photorealistic, bright workshop lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Haces polarizado o wrap? Tus clientes te encuentran aqui
+
+CTA:
+Publica Gratis
+
+SEGMENTACION:
+- Edad: 25-45
+- Ubicacion: Mexico
+- Intereses: Polarizado, vinil, wrap, proteccion, customizacion, color

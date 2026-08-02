@@ -1,0 +1,13 @@
+PROMPT:
+Car-mela, a 42-year-old Mexican woman with a kind organized demeanor, wearing a dark blue CarMatch jacket, standing next to a passenger van (van pasajeros) at a transport hub. She gestures toward the van and looks at the camera. The van is configured for passenger transport with comfortable seating. Bold white text overlay reads "VENDES UNA VAN PASAJEROS?" with a purple CarMatch logo. Photorealistic, transport hub lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes una van de pasajeros? Los operadores te buscan
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 28-55
+- Ubicacion: Mexico
+- Intereses: Van, pasajeros, transporte, operador, servicio

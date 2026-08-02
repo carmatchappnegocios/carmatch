@@ -1,0 +1,13 @@
+PROMPT:
+Car-mela, a 42-year-old Mexican woman with a kind organized demeanor, wearing a dark blue CarMatch jacket, standing at an airport terminal entrance with planes visible through the windows Behind her. She holds a phone showing the CarMatch app map and gestures welcomingly. Behind her, the airport terminal, travelers with luggage, and aircraft on the tarmac. Bold white text overlay reads "¿TIENES AEROPUERTO?" with a purple CarMatch logo. Photorealistic, bright airport terminal lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Tienes aeropuerto? Publica en CarMatch para viajeros
+
+CTA:
+Publica Gratis
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: Aeropuerto, viajes, vuelos, turismo, transporte aereo

@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, a 20-year-old Mexican woman with trendy style and creative energy, wearing a dark blue CarMatch jacket, standing next to a targa-top sports car. She holds the removable roof panel and smiles at the camera. The car has a distinctive targa bar and open-top design. Bold white text overlay reads "VENDES TU TARGA?" with a purple CarMatch logo. Photorealistic, scenic coastal road lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu targa? Publicalo gratis en CarMatch
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 28-50
+- Ubicacion: Mexico
+- Intereses: Targa, deportivo, exclusivo, coleccion, estilo

@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a large adventure motorcycle loaded with aluminum panniers. He gestures toward a mountainous landscape behind him. The bike has crash bars, skid plate, tall windscreen. Bold white text overlay reads "VENDES TU ADVENTURE?" with a purple CarMatch logo. Photorealistic, mountain scenery lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu adventure? Los viajeros la buscan
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 28-50
+- Ubicacion: Mexico
+- Intereses: Adventure, viajes, mototurismo, off-road, exploracion

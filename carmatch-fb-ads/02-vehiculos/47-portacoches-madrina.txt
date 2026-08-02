@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, standing next to a car carrier truck (portacoches/madrina) loaded with multiple vehicles. He gestures toward the loaded truck and looks at the camera. The carrier has two levels of cars secured. Bold white text overlay reads "VENDES UN PORTACOCHES (MADRINA)?" with a purple CarMatch logo. Photorealistic, transport yard lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes un portacoches (madrina)? Publicalo ya
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Portacoches, madrina, transporte de autos, logistica

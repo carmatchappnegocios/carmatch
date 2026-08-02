@@ -1,0 +1,13 @@
+PROMPT:
+Car-mela, a 42-year-old Mexican woman with a kind organized demeanor, wearing a dark blue CarMatch jacket, standing next to a police patrol car (patrulla) at a police station. She holds a phone showing the CarMatch app and looks at the camera. The patrol car has police livery, light bar, and official markings. Bold white text overlay reads "VENDES UNA PATRULLA?" with a purple CarMatch logo. Photorealistic, police station lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes una patrulla? Municipalidades te compran
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Patrulla, policia, seguridad, gobierno, municipio

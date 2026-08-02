@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a scrambler motorcycle on a dirt path. He gives a thumbs up toward the camera. The scrambler has dual-purpose tires, high exhaust, minimal bodywork. Bold white text overlay reads "VENDES TU SCRAMBLER?" with a purple CarMatch logo. Photorealistic, countryside dirt road lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu scrambler? Publicalo gratis
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 25-45
+- Ubicacion: Mexico
+- Intereses: Scrambler, retro, aventura, off-road ligero, estilo

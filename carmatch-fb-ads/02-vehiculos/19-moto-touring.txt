@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a touring motorcycle loaded with panniers and a top case. He gestures toward the camera. The touring bike has a large windscreen, comfortable seats, and luggage system. Bold white text overlay reads "VENDES TU TOURING?" with a purple CarMatch logo. Photorealistic, mountain road scenery lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu touring? Para viajes largos, publicalo
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Touring, viajes, motociclismo, aventura, largo alcance

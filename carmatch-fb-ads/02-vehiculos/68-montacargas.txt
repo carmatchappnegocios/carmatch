@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a forklift (montacargas) in a warehouse. He holds the forks and looks at the camera. The forklift is industrial, with a mast, overhead guard, and propane tank. Bold white text overlay reads "VENDES UN MONTACARGAS?" with a purple CarMatch logo. Photorealistic, warehouse lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes un montacargas? Los de bodega lo buscan
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 28-55
+- Ubicacion: Mexico
+- Intereses: Montacargas, bodega, almacen, carga, logistica, industrial

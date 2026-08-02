@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, standing confidently in front of a busy mechanic workshop in Mexico City. He is pointing directly at the camera with a warm smile, holding a smartphone showing the CarMatch app. Behind him, a mechanic in blue overalls is working under a car hood with tools scattered around. The workshop has oil stains on concrete, fluorescent lights overhead, and spare parts on shelves. Bold white text overlay reads "TIENES TALLER MECANICO?" with a purple CarMatch logo in the corner. Photorealistic style, warm golden hour lighting, high contrast, professional Facebook ad photography, 1080x1080 square format.
+
+HOOK:
+¿Tienes taller mecanico? Publicalo gratis en CarMatch y que te encuentren los clientes
+
+CTA:
+Publica Gratis
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: Mecanica automotriz, talleres, negocios, emprendimiento, herramientas

@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a dual-sport motorcycle at a trail intersection. He points at the camera. The bike has both street and off-road capabilities, handguards, crash bars. Bold white text overlay reads "VENDES TU DUAL-SPORT?" with a purple CarMatch logo. Photorealistic, trail intersection lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu dual-sport? Carretera y terraceria
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 25-45
+- Ubicacion: Mexico
+- Intereses: Dual-sport, aventura, versatility, trail, carretera

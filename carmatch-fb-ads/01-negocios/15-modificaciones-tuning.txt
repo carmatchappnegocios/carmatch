@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, a 20-year-old Mexican woman with trendy style and creative energy, wearing a dark blue CarMatch jacket, standing next to a car with a custom wide body kit and neon underglow in a tuning garage. She holds a paint gun and looks at the camera. Behind her, cars with spoilers, custom wheels, and body modifications are being worked on. Bold white text overlay reads "¿HACES TUNING Y MODIFICACIONES?" with a purple CarMatch logo. Photorealistic, neon-lit garage atmosphere, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Haces tuning? Publica tus trabajos y atrae mas clientes
+
+CTA:
+Publica Gratis
+
+SEGMENTACION:
+- Edad: 18-40
+- Ubicacion: Mexico
+- Intereses: Tuning, modificacion, custom cars, neones, spoilers, rines

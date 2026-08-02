@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, a 20-year-old Mexican woman with trendy style and creative energy, wearing a dark blue CarMatch jacket, standing inside an armored vehicle conversion shop. She gestures toward a car being fitted with ballistic panels. Behind her, bulletproof glass samples, armored doors, and armoring materials are displayed. Bold white text overlay reads "¿HACES BLINDAJE AUTOMOTRIZ?" with a purple CarMatch logo. Photorealistic, secure facility lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Haces blindaje automotriz? Tu servicio es unico, publicalo
+
+CTA:
+Publica Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Blindaje, seguridad, proteccion, vehiculos blindados, defensa

@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, standing next to a car on an alignment rack. He holds a suspension component (control arm) and looks at the camera. Behind him, alignment machines, shock absorbers, springs, and stabilizer bars are displayed. Bold white text overlay reads "¿ESPECIALISTA EN SUSPENSION?" with a purple CarMatch logo. Photorealistic, precision workshop lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Especialista en suspension? Los clientes te buscan
+
+CTA:
+Publica Gratis
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: Suspension, amortiguadores, alineacion, balanceo, mecanica

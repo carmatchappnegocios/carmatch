@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a telehandler at a construction site. He holds a pallet and looks at the camera. The telehandler has an extendable boom with forks, for reaching high places. Bold white text overlay reads "VENDES UN TELEHANDLER?" with a purple CarMatch logo. Photorealistic, construction site lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes un telehandler? Los de construccion lo buscan
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Telehandler, Manitou, construccion, carga elevada, versatile

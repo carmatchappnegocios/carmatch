@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, standing next to a transmission on a workbench. He holds a torque wrench and looks at the camera. Behind him, disassembled transmission parts are laid out, clutch plates, gears, and a transmission jack. Bold white text overlay reads "¿SABES DE TRANSMISIONES?" with a purple CarMatch logo. Photorealistic, industrial workshop lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Especialista en transmisiones? CarMatch te conecta con clientes
+
+CTA:
+Publica Gratis
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: Transmisiones, caja de cambios, clutch, mecanica especializada

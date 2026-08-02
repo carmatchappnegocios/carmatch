@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a farm tractor in a field. He holds a stalk of corn and looks at the camera. The tractor is green (John Deere style), with large rear tires and a cab. Bold white text overlay reads "VENDES UN TRACTOR AGRICOLA?" with a purple CarMatch logo. Photorealistic, farm field lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes un tractor? Los agricultores te buscan
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Tractor, agricultura, campo, farming, cosecha

@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a skid steer loader (minicargador) at a landscaping site. He holds a bucket attachment and looks at the camera. The minicargador is compact, with quick-attach attachments. Bold white text overlay reads "VENDES UN MINICARGADOR?" with a purple CarMatch logo. Photorealistic, landscaping site lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes un minicargador? Los de construccion lo buscan
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 28-55
+- Ubicacion: Mexico
+- Intereses: Minicargador, compacto, construccion, landscaping, versatile

@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to an enduro motorcycle. He holds goggles and looks at the camera. The enduro has long-travel suspension, knobby tires, high ground clearance, and race-ready components. Bold white text overlay reads "VENDES TU ENDURO?" with a purple CarMatch logo. Photorealistic, off-road terrain lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu enduro? Los de enduro te compran
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 22-40
+- Ubicacion: Mexico
+- Intereses: Enduro, competicion, off-road, terraceria, rally

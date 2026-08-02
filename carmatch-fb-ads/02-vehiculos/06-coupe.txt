@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, a 20-year-old Mexican woman with trendy style and creative energy, wearing a dark blue CarMatch jacket, standing next to a sporty coupe in an urban parking garage. She looks at the camera with a confident pose. The coupe is two-door, aggressive design, with LED headlights on. Bold white text overlay reads "VENDES TU COUPE?" with a purple CarMatch logo. Photorealistic, urban garage lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu coupe? Los compradores te buscan
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 25-45
+- Ubicacion: Mexico
+- Intereses: Coupe, deportivos, estilo, compra-venta, autos

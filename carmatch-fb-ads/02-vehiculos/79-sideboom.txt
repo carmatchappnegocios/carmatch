@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a sideboom pipelayer at a pipeline construction site. He holds a hard hat and looks at the camera. The sideboom has a side-mounted crane boom for pipe laying. Bold white text overlay reads "VENDES UN SIDEBOOM?" with a purple CarMatch logo. Photorealistic, pipeline construction lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes un sideboom? Publicalo y vende
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Sideboom, pipeline, oleoducto, gasoducto, construccion especializada

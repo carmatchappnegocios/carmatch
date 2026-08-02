@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, standing next to a tanker trailer (madre nodriza) at a fuel depot. He gestures toward the large tank and looks at the camera. The tanker is designed for transporting fuels or chemicals. Bold white text overlay reads "VENDES UNA MADRE NODRIZA?" with a purple CarMatch logo. Photorealistic, fuel depot lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes una madre nodriza? Publicalo ya
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Madre nodriza, transporte de combustible, logistica, petrolera

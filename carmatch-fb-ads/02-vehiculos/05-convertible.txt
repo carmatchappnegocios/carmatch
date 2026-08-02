@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, a 20-year-old Mexican woman with trendy style and creative energy, wearing a dark blue CarMatch jacket, standing next to a convertible with its top down on a coastal road. He smiles at the camera with the ocean in the background. The convertible is sleek, with leather interior visible. Bold white text overlay reads "VENDES TU CONVERTIBLE?" with a purple CarMatch logo. Photorealistic, golden hour coastal lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu convertible? Publicalo gratis en CarMatch
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 25-50
+- Ubicacion: Mexico
+- Intereses: Convertible, descapotable, estilo, playas, verano

@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, a 20-year-old Mexican woman with trendy style and creative energy, wearing a dark blue CarMatch jacket, standing in a car audio shop holding a subwoofer speaker. Behind her, display walls show speakers, amplifiers, head units, and alarm systems with neon accent lighting. A car is being fitted with a custom sound system. Bold white text overlay reads "¿INSTALAS ESTEREOS Y ALARMAS?" with a purple CarMatch logo. Photorealistic, neon-lit atmosphere, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Instalas estereos y alarmas? Te estamos buscando
+
+CTA:
+Publica Gratis
+
+SEGMENTACION:
+- Edad: 25-45
+- Ubicacion: Mexico
+- Intereses: Audio automotriz, estereos, alarmas, seguridad, customizacion

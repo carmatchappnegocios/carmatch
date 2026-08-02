@@ -1,0 +1,13 @@
+PROMPT:
+Car-mela, a 42-year-old Mexican woman with a kind organized demeanor, wearing a dark blue CarMatch jacket, standing next to a double-decker bus at a tourist area. She gestures toward the open-top upper deck and looks at the camera. The bus has two levels with panoramic windows. Bold white text overlay reads "VENDES UN AUTOBUS DE DOS PISOS?" with a purple CarMatch logo. Photorealistic, tourist area lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes un autobus de dos pisos? Unico, publicalo
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Dos pisos, turismo, panoramico, doble nivel, exclusivo

@@ -1,0 +1,13 @@
+PROMPT:
+Car-mela, a 42-year-old Mexican woman with a kind organized demeanor, wearing a dark blue CarMatch jacket, standing at a gas station holding a fuel nozzle. He smiles at the camera with a thumbs up. Behind her, gas pumps, the station canopy, and cars refueling. Bold white text overlay reads "¿TIENES GASOLINERA?" with a purple CarMatch logo. Photorealistic, bright outdoor lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Tienes gasolinera? Aparece en el mapa para que te encuentren
+
+CTA:
+Publica Gratis
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: Gasolinera, combustible, servicio, estacion, negocios

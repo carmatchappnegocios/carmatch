@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a Can-Am Spyder three-wheeled motorcycle. He opens the trunk and looks at the camera. The Spyder has two wheels in front, one in back, with a touring setup. Bold white text overlay reads "VENDES TU TRICICLO (SPYDER)?" with a purple CarMatch logo. Photorealistic, scenic road lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu triciclo (Spyder/Ryker)? Publicalo ya
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Spyder, Ryker, triciclo, Can-Am, touring, confort

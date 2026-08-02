@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a cafe racer motorcycle. He holds a vintage helmet and looks at the camera. The cafe racer has clip-on handlebars, rear-set footpegs, retro paint scheme, and a solo seat cowl. Bold white text overlay reads "VENDES TU CAFE RACER?" with a purple CarMatch logo. Photorealistic, retro urban setting lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu cafe racer? Un clasico moderno
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 25-45
+- Ubicacion: Mexico
+- Intereses: Cafe racer, retro, vintage, estilo, custom

@@ -1,0 +1,13 @@
+PROMPT:
+Car-mela, a 42-year-old Mexican woman with a kind organized demeanor, wearing a dark blue CarMatch jacket, standing next to a stretch limousine in front of a luxury hotel. She opens the rear door and looks at the camera. The limousine is black, long, with tinted windows and chrome accents. Bold white text overlay reads "VENDES UNA LIMUSINA?" with a purple CarMatch logo. Photorealistic, luxury hotel entrance lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes una limusina? Publicalo gratis en CarMatch
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Limusina, lujo, eventos, bodas, transporte premium

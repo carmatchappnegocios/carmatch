@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a trials motorcycle on rocky terrain. He balances on a rock and looks at the camera. The trials bike is lightweight, no seat, with grippy tires and minimal bodywork. Bold white text overlay reads "VENDES TU TRIAL?" with a purple CarMatch logo. Photorealistic, rocky terrain lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu trial? Los de trial te compran
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 25-45
+- Ubicacion: Mexico
+- Intereses: Trial, habilidad, rocas, technical riding, competicion

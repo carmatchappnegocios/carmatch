@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, a 20-year-old Mexican woman with trendy style and creative energy, wearing a dark blue CarMatch jacket, standing in a showroom with imported luxury cars. She gestures proudly at the vehicles. Behind her, sleek European and Japanese cars on display, import documentation on a desk, international shipping containers visible through a window. Bold white text overlay reads "¿IMPORTAS VEHICULOS?" with a purple CarMatch logo. Photorealistic, showroom lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Importas vehiculos? Publica tu inventario en CarMatch
+
+CTA:
+Publica Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Importacion, autos importados, aduana, vehiculos exclusivos

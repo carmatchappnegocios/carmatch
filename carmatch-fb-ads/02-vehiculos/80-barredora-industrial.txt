@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a street sweeper (barredora industrial) in a city. He gestures toward the machine and looks at the camera. The sweeper has rotating brushes, water jets, and a debris hopper. Bold white text overlay reads "VENDES UNA BARREDORA INDUSTRIAL?" with a purple CarMatch logo. Photorealistic, city street lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes una barredora? Municipalidades te buscan
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Barredora, limpieza urbana, municipio, via publica, saneamiento

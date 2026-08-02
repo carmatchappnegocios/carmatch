@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, standing next to a small cargo truck (rabon) at a market. He holds a clipboard and looks at the camera. The rabon is compact, with an open cargo bed, ideal for local deliveries. Bold white text overlay reads "VENDES UN RABON?" with a purple CarMatch logo. Photorealistic, market area lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes un rabon? Los comerciantes lo necesitan
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: Rabon, distribucion, mercado, negocios, deliveries

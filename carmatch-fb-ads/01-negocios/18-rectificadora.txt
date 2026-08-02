@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, standing next to a cylinder head on a surface grinder machine. He holds a feeler gauge and looks at the camera. Behind him, engine blocks, cylinder heads, and precision measuring tools are organized on workbenches. Bold white text overlay reads "¿TIENES RECTIFICADORA?" with a purple CarMatch logo. Photorealistic, precision workshop lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Tienes rectificadora? Los mecanicos te buscan para referirte
+
+CTA:
+Publica Gratis
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: Rectificacion, cylinder head, engine rebuild, maquinaria, mecanica

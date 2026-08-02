@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, standing in a body shop with a freshly painted car fender on a stand. He is gesturing toward the camera with an inviting smile. Behind him, a car masked with plastic sheets is being prepped for painting. The shop has paint guns hanging on the wall, color mixing station, and compressed air hoses. Bold white text overlay reads "¿TIENES TALLER DE HOJALATERIA Y PINTURA?" with a purple CarMatch logo. Photorealistic, dramatic workshop lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Tienes taller de hojalateria? Publicalo y recibe clientes reales
+
+CTA:
+Publica Gratis
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: Hojalateria, pintura automotriz, colision, talleres

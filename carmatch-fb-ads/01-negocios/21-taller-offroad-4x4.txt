@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, standing next to a lifted 4x4 truck in an offroad garage. He holds a suspension spring and points at the camera. Behind him, offroad vehicles with big tires, winches, snorkels, and roll cages. Mud and dirt on the floor. Bold white text overlay reads "¿TALLER OFFROAD 4X4?" with a purple CarMatch logo. Photorealistic, rugged garage lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Taller 4x4? La comunidad offroad te esta buscando
+
+CTA:
+Publica Gratis
+
+SEGMENTACION:
+- Edad: 25-45
+- Ubicacion: Mexico
+- Intereses: Offroad, 4x4, terrenos, aventura, trucks, camionetas

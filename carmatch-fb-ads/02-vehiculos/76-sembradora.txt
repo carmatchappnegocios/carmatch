@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a seed planter (sembradora) in a farm field. He holds seeds in his hand and looks at the camera. The planter has multiple row units, seed hoppers, and planting mechanisms. Bold white text overlay reads "VENDES UNA SEMBRADORA?" with a purple CarMatch logo. Photorealistic, farm field lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes una sembradora? Los agricultores te compran
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Sembradora, agricultura, siembra, farming, maiz, frijol

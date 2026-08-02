@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, a 20-year-old Mexican woman with trendy style and creative energy, wearing a dark blue CarMatch jacket, standing next to a go-kart at a karting track. She holds a helmet and looks at the camera. The go-kart has a low profile, racing tires, and a number plate. Bold white text overlay reads "VENDES TU GO-KART?" with a purple CarMatch logo. Photorealistic, karting track lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu go-kart? Los de karting te buscan
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 18-40
+- Ubicacion: Mexico
+- Intereses: Go-kart, karting, carrera, pista, diversion, competicion

@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, a 20-year-old Mexican woman with trendy style and creative energy, wearing a dark blue CarMatch jacket, standing in an LED lighting shop holding an LED headlight bulb. Behind her, displays of LED bars, headlights, tail lights, and interior lighting with bright LED strips. Bold white text overlay reads "¿INSTALAS FAROS LED?" with a purple CarMatch logo. Photorealistic, bright LED-lit atmosphere, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Instalas faros LED? Publica tu negocio gratis
+
+CTA:
+Publica Gratis
+
+SEGMENTACION:
+- Edad: 25-45
+- Ubicacion: Mexico
+- Intereses: Iluminacion, LED, faros, customizacion, seguridad

@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a motor grader (motoconformadora) on a dirt road. He gestures toward the machine and looks at the camera. The grader has a long blade between the front and rear axles. Bold white text overlay reads "VENDES UNA MOTOCONFORMADORA?" with a purple CarMatch logo. Photorealistic, dirt road construction lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes una motoconformadora? Publicalo en CarMatch
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Motoconformadora, carretera, nivelacion, tierra, construccion

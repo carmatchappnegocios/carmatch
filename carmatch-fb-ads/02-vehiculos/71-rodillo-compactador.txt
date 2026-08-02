@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a road roller (rodillo compactador) at a road construction site. He holds a clipboard and looks at the camera. The roller has a large steel drum, with compacted asphalt visible. Bold white text overlay reads "VENDES UN RODILLO COMPACTADOR?" with a purple CarMatch logo. Photorealistic, road construction lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes un rodillo? Los de carreteras lo buscan
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Rodillo, carretera, asfalto, construccion vial, compactacion

@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, standing at an oil change bay with a car on a lift. He holds a bottle of motor oil and smiles. Behind him, oil drums, oil filter display, drain pans, and quick-lube equipment. Bold white text overlay reads "¿SERVICIO DE LUBRICANTES?" with a purple CarMatch logo. Photorealistic, bright workshop lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Servicio de lubricantes? Publicalo y recibe clientes hoy
+
+CTA:
+Publica Gratis
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: Aceite, lubricantes, cambio de aceite, mantenimiento, motor

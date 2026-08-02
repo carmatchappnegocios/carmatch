@@ -1,0 +1,13 @@
+PROMPT:
+Car-mela, a 42-year-old Mexican woman with a kind organized demeanor, wearing a dark blue CarMatch jacket, standing next to an airport shuttle bus at an airport terminal. She holds luggage and looks at the camera. The shuttle is designed for airport transfers, with luggage racks and airline signage. Bold white text overlay reads "VENDES UN SHUTTLE BUS?" with a purple CarMatch logo. Photorealistic, airport terminal lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes un shuttle bus? Aeropuertos y hoteles lo buscan
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Shuttle, aeropuerto, hotel, transfer, turismo, viajes

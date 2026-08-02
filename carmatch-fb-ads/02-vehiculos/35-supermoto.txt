@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a supermoto motorcycle on a paved track. He holds a helmet and looks at the camera. The supermoto has street tires on an enduro chassis, with aggressive styling. Bold white text overlay reads "VENDES TU SUPERMOTO?" with a purple CarMatch logo. Photorealistic, trackside lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu supermoto? Los motociclistas te buscan
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 22-40
+- Ubicacion: Mexico
+- Intereses: Supermoto, pista, enduro calle, competicion, agil

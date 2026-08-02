@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to an asphalt paver (pavimentadora) at a road construction site. He gestures toward the machine and looks at the camera. The paver has a hopper for asphalt and a screed for laying it flat. Bold white text overlay reads "VENDES UNA PAVIMENTADORA?" with a purple CarMatch logo. Photorealistic, road construction lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes una pavimentadora? Publicalo ya
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Pavimentadora, asfalto, carretera, construccion vial

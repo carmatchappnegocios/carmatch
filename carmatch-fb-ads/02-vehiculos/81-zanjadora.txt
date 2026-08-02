@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a trencher (zanjadora) at a utility construction site. He holds a shovel and looks at the camera. The trencher has a digging chain, with a visible trench in the ground. Bold white text overlay reads "VENDES UNA ZANJADORA?" with a purple CarMatch logo. Photorealistic, utility construction lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes una zanjadora? Publicalo gratis
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Zanjadora, utility, tuberia, cables, construccion subterranea

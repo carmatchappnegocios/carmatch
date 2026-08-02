@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, a 20-year-old Mexican woman with trendy style and creative energy, wearing a dark blue CarMatch jacket, standing at an EV charging station plugging a charger into an electric car. He smiles at the camera. Behind her, multiple charging stations with green energy symbols, solar panels on the roof, and electric vehicles charging. Bold white text overlay reads "¿TIENES CARGADOR ELECTRICO?" with a purple CarMatch logo. Photorealistic, modern green energy lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Tienes cargador electrico? Aparece en el mapa de CarMatch
+
+CTA:
+Publica Gratis
+
+SEGMENTACION:
+- Edad: 25-50
+- Ubicacion: Mexico
+- Intereses: Electrico, EV, carga, sostenible, electromovilidad, futuro

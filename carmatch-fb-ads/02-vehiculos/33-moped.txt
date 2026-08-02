@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a friendly Mexican man in his 30s wearing a dark blue CarMatch jacket, sitting on a moped on a city sidewalk. He smiles at the camera. The moped is small, practical, with pedals and a small engine. Bold white text overlay reads "VENDES TU MOPED?" with a purple CarMatch logo. Photorealistic, urban street lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu moped? Economico y practico
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 18-40
+- Ubicacion: Mexico
+- Intereses: Moped, economico, ciudad, deliveries, practico

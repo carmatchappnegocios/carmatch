@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a dune buggy on a beach. He sits on the buggy and looks at the camera. The buggy has a tubular frame, oversized tires, and open cockpit. Bold white text overlay reads "VENDES TU BUGGY / ARENERO?" with a purple CarMatch logo. Photorealistic, beach sunset lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu buggy? Para la playa, publicalo
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 22-40
+- Ubicacion: Mexico
+- Intereses: Buggy, arenero, playa, duna, diversion, off-road

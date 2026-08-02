@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, standing next to an armored truck (blindado) at a secure facility. He gestures toward the reinforced vehicle and looks at the camera. The truck has thick armored panels, bulletproof glass, and security features. Bold white text overlay reads "VENDES UN CAMION BLINDADO?" with a purple CarMatch logo. Photorealistic, secure facility lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes un camion blindado? Los de seguridad te buscan
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Blindado, seguridad, transporte de valores, proteccion

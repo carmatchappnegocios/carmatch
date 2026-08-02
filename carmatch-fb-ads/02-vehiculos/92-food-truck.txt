@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, a 20-year-old Mexican woman with trendy style and creative energy, wearing a dark blue CarMatch jacket, standing next to a food truck at a street food market. She holds a spatula and looks at the camera. The food truck has a serving window, menu board, and colorful branding. Bold white text overlay reads "VENDES TU FOOD TRUCK?" with a purple CarMatch logo. Photorealistic, street food market lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu food truck? Emprendedores lo buscan
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 25-45
+- Ubicacion: Mexico
+- Intereses: Food truck, gastronomy, emprendimiento, street food, negocios

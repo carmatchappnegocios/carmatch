@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a backhoe loader (retroexcavadora) at a construction site. He gestures toward the machine and looks at the camera. The backhoe has a loader bucket on front and an excavating arm on back. Bold white text overlay reads "VENDES UNA RETROEXCAVADORA?" with a purple CarMatch logo. Photorealistic, construction site lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes una retroexcavadora? Publicalo gratis
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Retroexcavadora, construccion, versatile, multi-propose, obra

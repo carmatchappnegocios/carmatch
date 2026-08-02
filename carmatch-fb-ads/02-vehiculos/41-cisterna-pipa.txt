@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, standing next to a water tanker truck (cisterna/pipa) on a rural road. He gestures toward the truck and looks at the camera. The tanker has a large cylindrical tank, with water spraying from the back. Bold white text overlay reads "VENDES UNA CISTERNA (PIPA)?" with a purple CarMatch logo. Photorealistic, rural road lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes una cisterna? Publicalo y vende
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Cisterna, pipa, agua, transporte de liquidos, agricultura

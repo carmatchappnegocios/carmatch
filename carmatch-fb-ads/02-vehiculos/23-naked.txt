@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, standing next to a naked streetfighter motorcycle in an urban setting. He looks at the camera with the bike. The naked has minimal bodywork, exposed engine, upright handlebars. Bold white text overlay reads "VENDES TU NAKED?" with a purple CarMatch logo. Photorealistic, urban evening lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes tu naked? Los motociclistas te encuentran
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 22-40
+- Ubicacion: Mexico
+- Intereses: Naked, streetfighter, ciudad, practico, potencia

@@ -1,0 +1,13 @@
+PROMPT:
+Car-mela, a 42-year-old Mexican woman with a kind organized demeanor, wearing a dark blue CarMatch jacket, standing next to a specialized fire truck (bomberos especial) at a fire station. She holds a fire helmet and looks at the camera. The fire truck has specialized rescue equipment, hazmat gear, and emergency lighting. Bold white text overlay reads "VENDES UN CAMION DE BOMBEROS ESPECIAL?" with a purple CarMatch logo. Photorealistic, fire station lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes un camion de bomberos especial? Publicalo
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Bomberos, emergencias, rescate, hazmat, protection civil

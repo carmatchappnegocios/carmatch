@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, a 20-year-old Mexican woman with trendy style and creative energy, wearing a dark blue CarMatch jacket, standing next to a tow truck on a highway at sunset. She holds a two-way radio and gestures at the camera. The tow truck has flashing amber lights, and a car is being loaded onto the flatbed. Bold white text overlay reads "¿TIENES GRUA?" with a purple CarMatch logo. Photorealistic, dramatic sunset lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Tienes grua? Publicate y que te llamen cuando te necesiten
+
+CTA:
+Publica Gratis
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: Grua, asistencia vial, emergencias, transporte, carreteras

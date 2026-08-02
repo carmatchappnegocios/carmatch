@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, standing next to a dump truck (volteo) at a construction site. He holds a hard hat and looks at the camera. The dump truck has a hydraulic bed, with gravel visible. Bold white text overlay reads "VENDES UN VOLTEO?" with a purple CarMatch logo. Photorealistic, construction site lighting, professional Facebook ad style, 1080x1080.
+
+HOOK:
+Vendes un volteo? Los de construccion te buscan
+
+CTA:
+Vende Gratis
+
+SEGMENTACION:
+- Edad: 28-55
+- Ubicacion: Mexico
+- Intereses: Volteo, construccion, materiales, obra, transporte
