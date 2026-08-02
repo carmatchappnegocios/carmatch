@@ -1,4 +1,4 @@
-﻿{
+{
     "common": {
         "login": "Inloggen",
         "logout": "Uitloggen",
@@ -130,7 +130,8 @@
             "h": "u",
             "d": "d",
             "sem": "week"
-        }
+        },
+        "default_user_name": "CarMatch Gebruiker"
     },
     "share": {
         "share_in": "Delen op...",
@@ -713,7 +714,16 @@
         "empty_title": "Het is hier nog leeg",
         "empty_text": "Gebruik CarMatch of MarketCar om opties te vinden en op te slaan die je leuk vindt.",
         "explore_carmatch": "CarMatch openen",
-        "go_to_market": "Naar MarketCar"
+        "go_to_market": "Naar MarketCar",
+        "compare_mode": "Vergelijkingsmodus",
+        "cancel_compare": "Vergelijking annuleren",
+        "compare_now": "Nu vergelijken",
+        "remove_favorite": "Verwijder uit favorieten",
+        "select_up_to_3": "Selecteer max. 3 voertuigen",
+        "comparing_count": "{count} voertuig(en) vergelijken",
+        "max_3_vehicles": "Max. 3 voertuigen",
+        "clear": "Wissen",
+        "unavailable_badge": "NIET BESCHIKBAAR"
     },
     "notifications": {
         "title": "Meldingen",
@@ -1433,4 +1443,3 @@
         "publishing_rules": "Publishing Rules"
     }
 }
-

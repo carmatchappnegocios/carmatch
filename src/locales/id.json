@@ -1,4 +1,4 @@
-﻿{
+{
     "common": {
         "login": "Masuk",
         "logout": "Keluar",
@@ -130,7 +130,8 @@
             "h": "j",
             "d": "h",
             "sem": "mgg"
-        }
+        },
+        "default_user_name": "Pengguna CarMatch"
     },
     "share": {
         "share_in": "Bagikan ke...",
@@ -713,7 +714,16 @@
         "empty_title": "Di sini masih kosong",
         "empty_text": "Gunakan CarMatch atau MarketCar untuk menemukan dan menyimpan pilihan yang Anda sukai.",
         "explore_carmatch": "Buka CarMatch",
-        "go_to_market": "Ke MarketCar"
+        "go_to_market": "Ke MarketCar",
+        "compare_mode": "Mode Perbandingan",
+        "cancel_compare": "Batalkan Perbandingan",
+        "compare_now": "Bandingkan Sekarang",
+        "remove_favorite": "Hapus dari favorit",
+        "select_up_to_3": "Pilih hingga 3 kendaraan",
+        "comparing_count": "Membandingkan {count} kendaraan",
+        "max_3_vehicles": "Hingga 3 kendaraan",
+        "clear": "Hapus",
+        "unavailable_badge": "TIDAK TERSEDIA"
     },
     "notifications": {
         "title": "Notifikasi",
@@ -1433,4 +1443,3 @@
         "publishing_rules": "Publishing Rules"
     }
 }
-

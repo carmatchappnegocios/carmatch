@@ -1,4 +1,4 @@
-﻿{
+{
     "common": {
         "login": "Logga in",
         "logout": "Logga ut",
@@ -130,7 +130,8 @@
             "h": "h",
             "d": "d",
             "sem": "sem"
-        }
+        },
+        "default_user_name": "CarMatch-användare"
     },
     "share": {
         "share_in": "Dela i...",
@@ -713,7 +714,16 @@
         "empty_title": "Här är det tomt än så länge",
         "empty_text": "Använd CarMatch eller MarketCar för att hitta och spara alternativ du gillar.",
         "explore_carmatch": "Öppna CarMatch",
-        "go_to_market": "Gå till MarketCar"
+        "go_to_market": "Gå till MarketCar",
+        "compare_mode": "Jämföringsläge",
+        "cancel_compare": "Avbryt jämförelse",
+        "compare_now": "Jämför nu",
+        "remove_favorite": "Ta bort från favoriter",
+        "select_up_to_3": "Välj upp till 3 fordon",
+        "comparing_count": "Jämför {count} fordon",
+        "max_3_vehicles": "Max. 3 fordon",
+        "clear": "Rensa",
+        "unavailable_badge": "EJ TILLGÄNGLIGT"
     },
     "notifications": {
         "title": "Aviseringar",
@@ -1433,4 +1443,3 @@
         "publishing_rules": "Publishing Rules"
     }
 }
-

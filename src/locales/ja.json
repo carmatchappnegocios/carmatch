@@ -1,4 +1,4 @@
-﻿{
+{
     "common": {
         "login": "ログイン",
         "logout": "ログアウト",
@@ -130,7 +130,8 @@
             "h": "h",
             "d": "d",
             "sem": "sem"
-        }
+        },
+        "default_user_name": "CarMatchユーザー"
     },
     "share": {
         "share_in": "共有先...",
@@ -713,7 +714,16 @@
         "empty_title": "まだお気に入りがありません",
         "empty_text": "CarMatchやMarketCarで気になる車を探して、「いいね」で保存しましょう。",
         "explore_carmatch": "CarMatchを見る",
-        "go_to_market": "MarketCarへ"
+        "go_to_market": "MarketCarへ",
+        "compare_mode": "比較モード",
+        "cancel_compare": "比較をキャンセル",
+        "compare_now": "今すぐ比較",
+        "remove_favorite": "お気に入りから削除",
+        "select_up_to_3": "最大3台を選択",
+        "comparing_count": "{count}台を比較中",
+        "max_3_vehicles": "最大3台",
+        "clear": "クリア",
+        "unavailable_badge": "利用不可"
     },
     "notifications": {
         "title": "通知",
@@ -1433,4 +1443,3 @@
         "publishing_rules": "Publishing Rules"
     }
 }
-

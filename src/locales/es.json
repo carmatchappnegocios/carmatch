@@ -130,13 +130,18 @@
             "h": "h",
             "d": "d",
             "sem": "sem"
-        }
+        },
+        "default_user_name": "Usuario CarMatch"
     },
     "share": {
-        "share_in": "Compartir en...",
-        "link_copied": "¡Link copiado!",
+        "share_on": "Compartir en...",
+        "share": "Compartir",
         "copied": "Copiado",
-        "share": "Compartir"
+        "link_copied": "Link Copiado",
+        "copied_tooltip": "✅ Link copiado • Pégalo en tu navegador",
+        "enter_phone": "Por favor escribe un número de teléfono",
+        "phone_placeholder": "Ej: 8123456789",
+        "whatsapp_message": "¡Hola! Te comparto CarMatch Social, la mejor app para comprar y vender vehículos:\n\n{url}\n\n¡Descarga la app y encuentra tu carro ideal!"
     },
     "image_upload": {
         "error_upload": "Error al subir imagen",
@@ -789,19 +794,44 @@
         "verified_seller": "Vendedor verificado"
     },
     "favorites": {
+        "like": "Me gusta",
+        "remove": "Quitar me gusta",
+        "favorited": "Favorito",
+        "compare_mode": "Modo Comparar",
+        "cancel_compare": "Cancelar Comparación",
+        "compare_now": "Comparar Ahora",
+        "remove_favorite": "Eliminar de favoritos",
         "title": "Mis Favoritos",
         "subtitle": "Colección de vehículos que te han gustado ({count})",
         "empty_title": "Aún no tienes favoritos",
-        "empty_text": "Explora CarMatch Social o MarketCar y dale like a los vehículos que te interesen para guardarlos aquí.",
+        "empty_text": "Explora CarMatch Social o MarketCar y dale like a los vehículos que más te gusten.",
         "explore_carmatch": "Explorar CarMatch Social",
-        "go_to_market": "Ir al MarketCar"
+        "go_to_market": "Ir al MarketCar",
+        "select_up_to_3": "Selecciona hasta 3 vehículos",
+        "comparing_count": "Comparando {count} vehículo(s)",
+        "max_3_vehicles": "Hasta 3 vehículos",
+        "clear": "Limpiar",
+        "unavailable_badge": "NO DISPONIBLE"
     },
     "notifications": {
+        "just_now": "Ahora",
+        "minutes_ago": "Hace {minutes}m",
+        "hours_ago": "Hace {hours}h",
+        "days_ago": "Hace {days}d",
         "title": "Notificaciones",
-        "mark_read": "Marcar todas como leídas",
-        "loading": "Cargando notificaciones...",
-        "empty_title": "No tienes notificaciones",
-        "empty_text": "Te avisaremos cuando haya actividad importante en tu cuenta."
+        "empty": "No tienes notificaciones",
+        "empty_desc": "Te avisaremos cuando haya actividad",
+        "auto_delete": "Las notificaciones se eliminan después de 24 horas",
+        "activate_title": "Activar Notificaciones",
+        "activate_desc": "Recibe alertas de mensajes y favoritos.",
+        "not_now": "Ahora no",
+        "activating": "Activando...",
+        "activate_btn": "Activar",
+        "login_required": "Debes iniciar sesión para activar las notificaciones",
+        "browser_not_supported": "Tu navegador no soporta notificaciones push",
+        "timeout": "Tiempo de espera agotado",
+        "save_error": "Error al guardar la suscripción",
+        "activate_error": "Error al activar las notificaciones"
     },
     "messages": {
         "loading_chat": "Cargando conversación...",
@@ -1510,25 +1540,6 @@
         "update_now": "Actualizar ahora",
         "later": "Después"
     },
-    "share": {
-        "share_on": "Compartir en...",
-        "share": "Compartir",
-        "copied": "Copiado",
-        "link_copied": "Link Copiado",
-        "copied_tooltip": "✅ Link copiado • Pégalo en tu navegador",
-        "enter_phone": "Por favor escribe un número de teléfono",
-        "phone_placeholder": "Ej: 8123456789",
-        "whatsapp_message": "¡Hola! Te comparto CarMatch Social, la mejor app para comprar y vender vehículos:\n\n{url}\n\n¡Descarga la app y encuentra tu carro ideal!"
-    },
-    "favorites": {
-        "like": "Me gusta",
-        "remove": "Quitar me gusta",
-        "favorited": "Favorito",
-        "compare_mode": "Modo Comparar",
-        "cancel_compare": "Cancelar Comparación",
-        "compare_now": "Comparar Ahora",
-        "remove_favorite": "Eliminar de favoritos"
-    },
     "contact": {
         "reactivate_prompt": "¿Deseas reactivar tu sesión para enviar este mensaje? Tu cuenta sigue vinculada.",
         "vehicle_unavailable": "Vehículo No Disponible",
@@ -1547,26 +1558,6 @@
     "sos2": {
         "connection_error": "Error al conectar con el servidor de emergencia. Llama directamente al 911.",
         "live_tracking": "LIVE TRACKING"
-    },
-    "notifications": {
-        "just_now": "Ahora",
-        "minutes_ago": "Hace {minutes}m",
-        "hours_ago": "Hace {hours}h",
-        "days_ago": "Hace {days}d",
-        "title": "Notificaciones",
-        "empty": "No tienes notificaciones",
-        "empty_desc": "Te avisaremos cuando haya actividad",
-        "auto_delete": "Las notificaciones se eliminan después de 24 horas",
-        "activate_title": "Activar Notificaciones",
-        "activate_desc": "Recibe alertas de mensajes y favoritos.",
-        "not_now": "Ahora no",
-        "activating": "Activando...",
-        "activate_btn": "Activar",
-        "login_required": "Debes iniciar sesión para activar las notificaciones",
-        "browser_not_supported": "Tu navegador no soporta notificaciones push",
-        "timeout": "Tiempo de espera agotado",
-        "save_error": "Error al guardar la suscripción",
-        "activate_error": "Error al activar las notificaciones"
     },
     "images": {
         "title": "Fotos de tu vehículo",

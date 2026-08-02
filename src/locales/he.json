@@ -1,4 +1,4 @@
-﻿{
+{
     "common": {
         "login": "התחבר",
         "logout": "התנתק",
@@ -130,7 +130,8 @@
             "h": "ש'",
             "d": "י'",
             "sem": "שב'"
-        }
+        },
+        "default_user_name": "משתמש CarMatch"
     },
     "share": {
         "share_in": "שתף ב...",
@@ -713,7 +714,16 @@
         "empty_title": "כאן עדיין ריק",
         "empty_text": "השתמש ב-CarMatch או ב-MarketCar כדי למצוא ולשמור אפשרויות שאתה אוהב.",
         "explore_carmatch": "פתח את CarMatch",
-        "go_to_market": "עבור ל-MarketCar"
+        "go_to_market": "עבור ל-MarketCar",
+        "compare_mode": "מצב השוואה",
+        "cancel_compare": "בטל השוואה",
+        "compare_now": "השווה עכשיו",
+        "remove_favorite": "הסר ממועדפים",
+        "select_up_to_3": "בחר עד 3 רכבים",
+        "comparing_count": "משווה {count} רכבים",
+        "max_3_vehicles": "עד 3 רכבים",
+        "clear": "נקה",
+        "unavailable_badge": "לא זמין"
     },
     "notifications": {
         "title": "התראות",
@@ -1433,4 +1443,3 @@
         "publishing_rules": "Publishing Rules"
     }
 }
-

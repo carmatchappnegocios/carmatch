@@ -1,4 +1,4 @@
-﻿{
+{
     "common": {
         "login": "Giriş Yap",
         "logout": "Çıkış Yap",
@@ -130,7 +130,8 @@
             "h": "h",
             "d": "d",
             "sem": "sem"
-        }
+        },
+        "default_user_name": "CarMatch Kullanıcı"
     },
     "share": {
         "share_in": "Şurada paylaş...",
@@ -713,7 +714,16 @@
         "empty_title": "Burası şu an boş",
         "empty_text": "Sevdiğin seçenekleri bulmak ve kaydetmek için CarMatch veya MarketCar kullan.",
         "explore_carmatch": "CarMatch'i Aç",
-        "go_to_market": "MarketCar'a Git"
+        "go_to_market": "MarketCar'a Git",
+        "compare_mode": "Karşılaştırma Modu",
+        "cancel_compare": "Karşılaştırmayı İptal Et",
+        "compare_now": "Şimdi Karşılaştır",
+        "remove_favorite": "Favorilerden kaldır",
+        "select_up_to_3": "3 araca kadar seçin",
+        "comparing_count": "{count} araç karşılaştırılıyor",
+        "max_3_vehicles": "3 araca kadar",
+        "clear": "Temizle",
+        "unavailable_badge": "MEVCUT DEĞİL"
     },
     "notifications": {
         "title": "Bildirimler",
@@ -1433,4 +1443,3 @@
         "publishing_rules": "Publishing Rules"
     }
 }
-

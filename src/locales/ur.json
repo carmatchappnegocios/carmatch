@@ -1,4 +1,4 @@
-﻿{
+{
     "common": {
         "login": "لاگ ان کریں",
         "logout": "لاگ آؤٹ کریں",
@@ -130,7 +130,8 @@
             "h": "h",
             "d": "d",
             "sem": "sem"
-        }
+        },
+        "default_user_name": "CarMatch صارف"
     },
     "share": {
         "share_in": "شیئر کریں...",
@@ -713,7 +714,16 @@
         "empty_title": "یہاں ابھی کچھ نہیں ہے",
         "empty_text": "اپنی پسند کے آپشنز تلاش کرنے اور محفوظ کرنے کے لیے CarMatch یا MarketCar استعمال کریں۔",
         "explore_carmatch": "CarMatch کھولیں",
-        "go_to_market": "MarketCar پر جائیں"
+        "go_to_market": "MarketCar پر جائیں",
+        "compare_mode": "مقابلہ موڈ",
+        "cancel_compare": "مقابلہ منسوخ",
+        "compare_now": "ابھی دیکھیں",
+        "remove_favorite": "پسندیدہ سے ہٹائیں",
+        "select_up_to_3": "3 گاڑیاں تک منتخب کریں",
+        "comparing_count": "{count} گاڑیاں دیکھ رہے ہیں",
+        "max_3_vehicles": "3 گاڑیاں تک",
+        "clear": "صاف کریں",
+        "unavailable_badge": "دستیاب نہیں"
     },
     "notifications": {
         "title": "اطلاعات",
@@ -1433,4 +1443,3 @@
         "publishing_rules": "Publishing Rules"
     }
 }
-

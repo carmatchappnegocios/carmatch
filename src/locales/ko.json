@@ -1,4 +1,4 @@
-﻿{
+{
     "common": {
         "login": "로그인",
         "logout": "로그아웃",
@@ -130,7 +130,8 @@
             "h": "시간",
             "d": "일",
             "sem": "주"
-        }
+        },
+        "default_user_name": "CarMatch사용자"
     },
     "share": {
         "share_in": "공유할 플랫폼 선택...",
@@ -713,7 +714,16 @@
         "empty_title": "관심 목록이 비어 있습니다",
         "empty_text": "CarMatch나 MarketCar에서 마음에 드는 차를 찾아 '좋아요'를 눌러보세요.",
         "explore_carmatch": "CarMatch 보기",
-        "go_to_market": "MarketCar 가기"
+        "go_to_market": "MarketCar 가기",
+        "compare_mode": "비교 모드",
+        "cancel_compare": "비교 취소",
+        "compare_now": "지금 비교",
+        "remove_favorite": "즐겨찾기에서 제거",
+        "select_up_to_3": "최대 3대 선택",
+        "comparing_count": "{count}대 비교 중",
+        "max_3_vehicles": "최대 3대",
+        "clear": "지우기",
+        "unavailable_badge": "사용 불가"
     },
     "notifications": {
         "title": "알림",
@@ -1433,4 +1443,3 @@
         "publishing_rules": "Publishing Rules"
     }
 }
-

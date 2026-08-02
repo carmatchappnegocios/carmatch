@@ -1,4 +1,4 @@
-﻿{
+{
     "common": {
         "login": "Kirjaudu sisään",
         "logout": "Kirjaudu ulos",
@@ -130,7 +130,8 @@
             "h": "h",
             "d": "d",
             "sem": "sem"
-        }
+        },
+        "default_user_name": "CarMatch-käyttäjä"
     },
     "share": {
         "share_in": "Jaa kohteessa...",
@@ -713,7 +714,16 @@
         "empty_title": "Täällä on vielä tyhjää",
         "empty_text": "Käytä CarMatchia tai MarketCaria löytääksesi ja tallentaaksesi kohteita, joista pidät.",
         "explore_carmatch": "Avaa CarMatch",
-        "go_to_market": "Siirry MarketCariin"
+        "go_to_market": "Siirry MarketCariin",
+        "compare_mode": "Vertailutila",
+        "cancel_compare": "Peruuta vertailu",
+        "compare_now": "Vertailu nyt",
+        "remove_favorite": "Poista suosikeista",
+        "select_up_to_3": "Valitse enintään 3 ajoneuvoa",
+        "comparing_count": "Vertaillaan {count} ajoneuvoa",
+        "max_3_vehicles": "Enintään 3 ajoneuvoa",
+        "clear": "Tyhjennä",
+        "unavailable_badge": "EI KÄYTETTÄVISSÄ"
     },
     "notifications": {
         "title": "Ilmoitukset",
@@ -1433,4 +1443,3 @@
         "publishing_rules": "Publishing Rules"
     }
 }
-

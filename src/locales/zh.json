@@ -1,4 +1,4 @@
-﻿{
+{
     "common": {
         "login": "登录",
         "logout": "退出登录",
@@ -130,7 +130,8 @@
             "h": "h",
             "d": "d",
             "sem": "sem"
-        }
+        },
+        "default_user_name": "CarMatch用户"
     },
     "share": {
         "share_in": "分享到...",
@@ -713,7 +714,16 @@
         "empty_title": "您还没有收藏任何车辆",
         "empty_text": "探索 CarMatch 或 MarketCar，为您感兴趣的车辆点赞以将其保存到这里。",
         "explore_carmatch": "探索 CarMatch",
-        "go_to_market": "前往 MarketCar"
+        "go_to_market": "前往 MarketCar",
+        "compare_mode": "比较模式",
+        "cancel_compare": "取消比较",
+        "compare_now": "立即比较",
+        "remove_favorite": "从收藏中删除",
+        "select_up_to_3": "最多选择3辆",
+        "comparing_count": "正在比较{count}辆",
+        "max_3_vehicles": "最多3辆",
+        "clear": "清除",
+        "unavailable_badge": "不可用"
     },
     "notifications": {
         "title": "通知",
@@ -1433,4 +1443,3 @@
         "publishing_rules": "Publishing Rules"
     }
 }
-

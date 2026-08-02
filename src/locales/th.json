@@ -1,4 +1,4 @@
-﻿{
+{
     "common": {
         "login": "เข้าสู่ระบบ",
         "logout": "ออกจากระบบ",
@@ -130,7 +130,8 @@
             "h": "h",
             "d": "d",
             "sem": "sem"
-        }
+        },
+        "default_user_name": "ผู้ใช้ CarMatch"
     },
     "share": {
         "share_in": "แชร์ไปยัง...",
@@ -713,7 +714,16 @@
         "empty_title": "ตรงนี้ยังว่างอยู่",
         "empty_text": "ใช้ CarMatch หรือ MarketCar เพื่อค้นหาและบันทึกรถที่คุณสนใจ",
         "explore_carmatch": "เปิด CarMatch",
-        "go_to_market": "ไปที่ MarketCar"
+        "go_to_market": "ไปที่ MarketCar",
+        "compare_mode": "เปรียบเทียบ",
+        "cancel_compare": "ยกเลิกการเปรียบเทียบ",
+        "compare_now": "เปรียบเทียบเดี๋ยวนี้",
+        "remove_favorite": "ลบออกจากรายการโปรด",
+        "select_up_to_3": "เลือกสูงสุด 3 คัน",
+        "comparing_count": "กำลังเปรียบเทียบ {count} คัน",
+        "max_3_vehicles": "สูงสุด 3 คัน",
+        "clear": "ล้าง",
+        "unavailable_badge": "ไม่ว่าง"
     },
     "notifications": {
         "title": "การแจ้งเตือน",
@@ -1433,4 +1443,3 @@
         "publishing_rules": "Publishing Rules"
     }
 }
-

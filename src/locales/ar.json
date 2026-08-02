@@ -1,4 +1,4 @@
-﻿{
+{
     "common": {
         "login": "تسجيل الدخول",
         "logout": "تسجيل الخروج",
@@ -130,7 +130,8 @@
             "h": "س",
             "d": "ي",
             "sem": "أسبوع"
-        }
+        },
+        "default_user_name": "مستخدم CarMatch"
     },
     "share": {
         "share_in": "مشاركة في...",
@@ -713,7 +714,16 @@
         "empty_title": "المكان هنا فارغ حالياً",
         "empty_text": "استخدم CarMatch أو MarketCar للعثور على وحفظ الخيارات التي تهمك.",
         "explore_carmatch": "فتح CarMatch",
-        "go_to_market": "الذهاب لـ MarketCar"
+        "go_to_market": "الذهاب لـ MarketCar",
+        "compare_mode": "وضع المقارنة",
+        "cancel_compare": "إلغاء المقارنة",
+        "compare_now": "قارن الآن",
+        "remove_favorite": "إزالة من المفضلة",
+        "select_up_to_3": "حدد حتى 3 مركبات",
+        "comparing_count": "مقارنة {count} مركبة(ات)",
+        "max_3_vehicles": "حتى 3 مركبات",
+        "clear": "مسح",
+        "unavailable_badge": "غير متاح"
     },
     "notifications": {
         "title": "الإشعارات",
@@ -1433,4 +1443,3 @@
         "publishing_rules": "Publishing Rules"
     }
 }
-

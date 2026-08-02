@@ -1,4 +1,4 @@
-﻿{
+{
     "common": {
         "login": "Zaloguj się",
         "logout": "Wyloguj się",
@@ -130,7 +130,8 @@
             "h": "h",
             "d": "d",
             "sem": "tydz."
-        }
+        },
+        "default_user_name": "Użytkownik CarMatch"
     },
     "share": {
         "share_in": "Udostępnij w...",
@@ -713,7 +714,16 @@
         "empty_title": "Tu jest pusto",
         "empty_text": "Użyj CarMatch lub MarketCar, aby znaleźć i zapisać opcje, które Ci się podobają.",
         "explore_carmatch": "Otwórz CarMatch",
-        "go_to_market": "Idź do MarketCar"
+        "go_to_market": "Idź do MarketCar",
+        "compare_mode": "Tryb porównywania",
+        "cancel_compare": "Anuluj porównanie",
+        "compare_now": "Porównaj teraz",
+        "remove_favorite": "Usuń z ulubionych",
+        "select_up_to_3": "Wybierz do 3 pojazdów",
+        "comparing_count": "Porównywanie {count} pojazdów",
+        "max_3_vehicles": "Do 3 pojazdów",
+        "clear": "Wyczyść",
+        "unavailable_badge": "NIEDOSTĘPNY"
     },
     "notifications": {
         "title": "Powiadomienia",
@@ -1433,4 +1443,3 @@
         "publishing_rules": "Publishing Rules"
     }
 }
-

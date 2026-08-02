@@ -1,4 +1,4 @@
-﻿{
+{
     "common": {
         "login": "Đăng Nhập",
         "logout": "Đăng Xuất",
@@ -130,7 +130,8 @@
             "h": "h",
             "d": "d",
             "sem": "sem"
-        }
+        },
+        "default_user_name": "Người dùng CarMatch"
     },
     "share": {
         "share_in": "Chia sẻ lên...",
@@ -713,7 +714,16 @@
         "empty_title": "Ở đây hiện đang trống",
         "empty_text": "Sử dụng CarMatch hoặc MarketCar để tìm và lưu các tùy chọn bạn thích.",
         "explore_carmatch": "Mở CarMatch",
-        "go_to_market": "Đến MarketCar"
+        "go_to_market": "Đến MarketCar",
+        "compare_mode": "Chế độ so sánh",
+        "cancel_compare": "Hủy so sánh",
+        "compare_now": "So sánh ngay",
+        "remove_favorite": "Xóa khỏi yêu thích",
+        "select_up_to_3": "Chọn tối đa 3 xe",
+        "comparing_count": "Đang so sánh {count} xe",
+        "max_3_vehicles": "Tối đa 3 xe",
+        "clear": "Xóa",
+        "unavailable_badge": "KHÔNG KHẢ DỤNG"
     },
     "notifications": {
         "title": "Thông báo",
@@ -1433,4 +1443,3 @@
         "publishing_rules": "Publishing Rules"
     }
 }
-

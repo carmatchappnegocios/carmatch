@@ -161,12 +161,12 @@ export default function FavoritesClient({ favorites }: { favorites: FavoriteVehi
                                 }`}
                             >
                                 <BarChart2 size={18} />
-                                {isCompareMode ? 'Cancelar Comparación' : 'Modo Comparar'}
+                                {isCompareMode ? t('favorites.cancel_compare') : t('favorites.compare_mode')}
                             </button>
                             
                             {isCompareMode && (
                                 <p className="text-xs font-bold text-primary-400 uppercase tracking-widest animate-pulse">
-                                    Selecciona hasta 3 vehículos
+                                    {t('favorites.select_up_to_3')}
                                 </p>
                             )}
                         </div>
@@ -202,7 +202,7 @@ export default function FavoritesClient({ favorites }: { favorites: FavoriteVehi
                                             {!isActive && (
                                                 <div className="absolute inset-0 bg-black/50 z-20 flex items-center justify-center">
                                                     <span className="bg-red-600/90 text-white px-4 py-2 rounded-lg font-bold shadow-xl border border-red-400 rotate-[-12deg] tracking-wider text-lg">
-                                                        NO DISPONIBLE
+                                                        {t('favorites.unavailable_badge')}
                                                     </span>
                                                 </div>
                                             )}
@@ -230,7 +230,7 @@ export default function FavoritesClient({ favorites }: { favorites: FavoriteVehi
                                             <button
                                                 onClick={(e) => handleRemove(e, vehicle.id)}
                                                 className="w-10 h-10 rounded-full bg-black/40 hover:bg-red-600/80 backdrop-blur-sm text-white flex items-center justify-center transition shadow-lg group-two"
-                                                title="Eliminar de favoritos"
+                                                title={t('favorites.remove_favorite')}
                                             >
                                                 {removingId === vehicle.id ? (
                                                     <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
@@ -313,10 +313,10 @@ export default function FavoritesClient({ favorites }: { favorites: FavoriteVehi
                                 </div>
                                 <div>
                                     <p className="text-sm font-bold text-white">
-                                        Comparando {selectedIds.length} vehículo{selectedIds.length > 1 ? 's' : ''}
+                                        {t('favorites.comparing_count').replace('{count}', selectedIds.length.toString())}
                                     </p>
                                     <p className="text-[10px] text-primary-400 font-black uppercase tracking-widest">
-                                        Hasta 3 vehículos
+                                        {t('favorites.max_3_vehicles')}
                                     </p>
                                 </div>
                             </div>
@@ -326,14 +326,14 @@ export default function FavoritesClient({ favorites }: { favorites: FavoriteVehi
                                     onClick={() => setSelectedIds([])}
                                     className="px-4 py-2 text-xs font-bold text-text-secondary hover:text-white transition"
                                 >
-                                    Limpiar
+                                    {t('favorites.clear')}
                                 </button>
                                 <button 
                                     onClick={handleCompare}
                                     disabled={selectedIds.length < 2}
                                     className="flex items-center gap-2 px-6 py-2 bg-primary-500 hover:bg-primary-600 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-xl text-sm font-bold transition shadow-lg shadow-primary-500/20"
                                 >
-                                    <span>Comparar Ahora</span>
+                                    <span>{t('favorites.compare_now')}</span>
                                     <ArrowRight size={16} />
                                 </button>
                             </div>

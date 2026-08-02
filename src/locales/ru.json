@@ -1,4 +1,4 @@
-﻿{
+{
     "common": {
         "login": "Войти",
         "logout": "Выйти",
@@ -130,7 +130,8 @@
             "h": "ч",
             "d": "д",
             "sem": "сем"
-        }
+        },
+        "default_user_name": "Пользователь CarMatch"
     },
     "share": {
         "share_in": "Поделиться в...",
@@ -713,7 +714,16 @@
         "empty_title": "Здесь пока пусто",
         "empty_text": "Используйте CarMatch или MarketCar, чтобы найти и сохранить интересные варианты.",
         "explore_carmatch": "Открыть CarMatch",
-        "go_to_market": "Перейти в MarketCar"
+        "go_to_market": "Перейти в MarketCar",
+        "compare_mode": "Режим сравнения",
+        "cancel_compare": "Отменить сравнение",
+        "compare_now": "Сравнить сейчас",
+        "remove_favorite": "Удалить из избранного",
+        "select_up_to_3": "Выберите до 3 транспортных средств",
+        "comparing_count": "Сравнение {count} транспортных средств",
+        "max_3_vehicles": "До 3 транспортных средств",
+        "clear": "Очистить",
+        "unavailable_badge": "НЕДОСТУПНО"
     },
     "notifications": {
         "title": "Уведомления",
@@ -1433,4 +1443,3 @@
         "publishing_rules": "Publishing Rules"
     }
 }
-
