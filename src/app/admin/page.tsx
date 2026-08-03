@@ -396,30 +396,6 @@ function OverviewTab({ stats, handleRunAnalyst, isAnalyzing, aiAnalysis }: any) 
     return (
         <div className="space-y-6">
 
-            {/* 💼 PITCH PDF CARD */}
-            <a
-                href="/pitch"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block bg-gradient-to-r from-[#0369a1]/20 to-[#f97316]/10 border border-[#0369a1]/40 rounded-3xl p-5 active:scale-[0.98] transition-all group hover:border-[#f97316]/50"
-            >
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#0369a1] to-[#f97316] flex items-center justify-center text-lg shadow-lg">
-                            📄
-                        </div>
-                        <div>
-                            <h3 className="text-sm font-black uppercase tracking-widest text-white">Pitch · Servicio de Testers</h3>
-                            <p className="text-[10px] text-zinc-500 mt-0.5">Abre y guarda como PDF con Ctrl+P</p>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-xl group-hover:bg-[#f97316]/10 group-hover:border-[#f97316]/30 transition-all">
-                        <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400 group-hover:text-[#f97316]">Ver PDF</span>
-                        <ArrowUpRight className="w-3.5 h-3.5 text-zinc-500 group-hover:text-[#f97316]" />
-                    </div>
-                </div>
-            </a>
-
             {/* Top Grid: Financials & Heatmap */}
             <div className="grid grid-cols-1 gap-3">
 
