@@ -25,6 +25,10 @@ export async function POST(
 
         if (!appointment) return NextResponse.json({ error: 'Cita no encontrada' }, { status: 404 })
 
+        if (appointment.buyerId !== session.user.id && appointment.sellerId !== session.user.id) {
+            return NextResponse.json({ error: 'No tienes permiso para esta cita' }, { status: 403 })
+        }
+
         if (action === 'STILL') {
             await prisma.appointment.update({
                 where: { id },

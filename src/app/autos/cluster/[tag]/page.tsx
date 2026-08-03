@@ -83,7 +83,7 @@ export default async function ClusterPage({ params }: Props) {
                 select: { id: true }
             } : { where: { id: 'none' }, take: 0 }
         },
-        take: 40,
+        take: 50,
         orderBy: { createdAt: 'desc' }
     })
 

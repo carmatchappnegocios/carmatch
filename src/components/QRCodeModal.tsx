@@ -8,6 +8,7 @@ import { useState, useRef } from 'react'
 import { QRCodeSVG } from 'qrcode.react'
 import { X, Copy, Download, Check, Send } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
+import { toast } from 'sonner'
 
 interface QRCodeModalProps {
     isOpen: boolean
@@ -24,7 +25,7 @@ export default function QRCodeModal({ isOpen, onClose }: QRCodeModalProps) {
     // URL de la aplicación (usa variable de entorno o fallback)
     const appUrl = typeof window !== 'undefined'
         ? window.location.origin
-        : process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+        : process.env.NEXT_PUBLIC_APP_URL || 'https://carmatchapp.net'
 
     const handleCopyLink = async () => {
         try {
@@ -80,7 +81,7 @@ export default function QRCodeModal({ isOpen, onClose }: QRCodeModalProps) {
 
     const handleSendWhatsApp = () => {
         if (!phoneNumber.trim()) {
-            alert('Por favor escribe un número de teléfono')
+            toast.error('Por favor escribe un número de teléfono')
             return
         }
 

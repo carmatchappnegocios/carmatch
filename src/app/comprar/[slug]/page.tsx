@@ -126,9 +126,6 @@ export default async function ComprarVehiclePage({ params, searchParams }: Props
 
     const brandEntity = getBrandEntity(vehicle.brand)
 
-    const fakeRating = (4.4 + (vehicle.model.length % 6) / 10).toFixed(1);
-    const fakeReviewCount = 12 + (vehicle.model.length * 2) + (vehicle.brand.length);
-
     // 🤖 ENTITY DETERMINATION: Detectamos el tipo de objeto para Schema.org (IA Friendly)
     let schemaType = "Car"
     const lowerType = vehicle.vehicleType?.toLowerCase() || ""
@@ -161,11 +158,6 @@ export default async function ComprarVehiclePage({ params, searchParams }: Props
         "vehicleEngine": {
             "@type": "EngineSpecification",
             "name": vehicle.engine || "No especificado",
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": fakeRating,
-            "reviewCount": fakeReviewCount
         },
         "offers": {
             "@type": "Offer",

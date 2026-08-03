@@ -40,6 +40,7 @@ export const authConfig: NextAuthConfig = {
                 '/auth',
                 '/privacy',
                 '/terms',
+                '/notifications',
                 '/api/auth',
             ]
 

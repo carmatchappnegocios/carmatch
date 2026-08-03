@@ -15,6 +15,7 @@ import { Star, Sparkles, MapPin, Settings2, Plus, Check, MessageSquare } from 'l
 import CategoryIcon from '@/components/CategoryIcon'
 import { MapStoreChat } from '@/components/MapStoreChat'
 import { useRestoreSessionModal } from "@/hooks/useRestoreSessionModal"
+import { toast } from 'sonner'
 
 const MapBoxStoreLocator = dynamic(() => import('@/components/MapBoxStoreLocator'), {
     ssr: false,
@@ -267,11 +268,11 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                 setStateInput('')
                 setCountryInput('')
             } else {
-                alert(t('map_store.location_not_found'))
+                toast.error(t('map_store.location_not_found'))
             }
         } catch (error) {
             console.error('Error buscando ciudad:', error)
-            alert(t('map_store.location_search_error'))
+            toast.error(t('map_store.location_search_error'))
         }
     }
 

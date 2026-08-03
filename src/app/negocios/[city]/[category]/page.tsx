@@ -6,7 +6,7 @@ import { prisma } from '@/lib/db'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 
-import { MapPin, Star, Phone, Navigation } from 'lucide-react'
+import { MapPin, Phone, Navigation } from 'lucide-react'
 import { Metadata } from 'next'
 import { getBusinessStatus } from '@/lib/businessTimeUtils'
 import { generateBusinessSlug } from '@/lib/slug'
@@ -105,7 +105,6 @@ export default async function LocalDirectoryPage({ params }: Props) {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {businesses.map((business) => {
                         const status = getBusinessStatus(business.hours, business.is24Hours)
-                        const rating = (Math.random() * (5 - 4) + 4).toFixed(1)
 
                         return (
                             <Link
@@ -135,10 +134,6 @@ export default async function LocalDirectoryPage({ params }: Props) {
                                         <h2 className="text-xl font-black text-text-primary line-clamp-1 group-hover:text-primary-500 transition">
                                             {business.name}
                                         </h2>
-                                        <div className="flex items-center gap-1 bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/20">
-                                            <Star size={12} fill="currentColor" className="text-amber-500" />
-                                            <span className="text-xs font-bold text-amber-500">{rating}</span>
-                                        </div>
                                     </div>
 
                                     <div className="flex items-center gap-1.5 text-sm text-text-secondary mb-4">

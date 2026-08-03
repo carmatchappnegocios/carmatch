@@ -42,9 +42,6 @@ export async function POST(request: NextRequest) {
             }
         })
 
-        // 🛡️ ANTI-SABOTAJE: Ya no ocultamos automáticamente (status: 'INACTIVE') de inmediato.
-        // Se queda en manos del Admin revisar los reportes.
-
         return NextResponse.json(report)
     } catch (error) {
         console.error('Error creating report:', error)

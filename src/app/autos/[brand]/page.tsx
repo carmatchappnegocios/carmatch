@@ -50,7 +50,7 @@ export default async function BrandPage({ params }: Props) {
                 select: { id: true }
             } : { where: { id: 'none' }, take: 0 }
         },
-        take: 30,
+        take: 50,
         orderBy: { createdAt: 'desc' }
     })
 

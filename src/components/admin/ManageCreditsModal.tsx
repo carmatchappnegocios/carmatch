@@ -7,6 +7,7 @@
 import { useState } from 'react'
 import { Coins, X, Loader2, CheckCircle2 } from 'lucide-react'
 import ConfirmationModal from '@/components/ConfirmationModal'
+import { toast } from 'sonner'
 
 interface ManageCreditsModalProps {
     isOpen: boolean
@@ -38,7 +39,7 @@ export default function ManageCreditsModal({ isOpen, onClose, user, onSuccess }:
             const finalAmount = parseInt(amount)
 
             if (isNaN(finalAmount)) {
-                alert('Por favor, ingresa una cantidad válida')
+                toast.error('Por favor, ingresa una cantidad válida')
                 setLoading(false)
                 setShowConfirm(false)
                 return
@@ -70,11 +71,11 @@ export default function ManageCreditsModal({ isOpen, onClose, user, onSuccess }:
                 setReason('')
             } else {
                 const errorData = await res.json().catch(() => ({}))
-                alert(`Error: ${errorData.error || 'No se pudo actualizar los créditos'}`)
+                toast.error(`Error: ${errorData.error || 'No se pudo actualizar los créditos'}`)
             }
         } catch (error) {
             console.error(error)
-            alert('Error de conexión')
+            toast.error('Error de conexión')
         } finally {
             setLoading(false)
             setShowConfirm(false)

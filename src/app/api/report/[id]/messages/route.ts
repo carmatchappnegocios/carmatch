@@ -19,6 +19,24 @@ export async function GET(
 
         const { id } = await context.params
 
+        const report = await prisma.report.findUnique({
+            where: { id },
+            select: { reporterId: true }
+        })
+
+        if (!report) {
+            return NextResponse.json({ error: 'Reporte no encontrado' }, { status: 404 })
+        }
+
+        const user = await prisma.user.findUnique({
+            where: { id: session.user.id },
+            select: { isAdmin: true }
+        })
+
+        if (report.reporterId !== session.user.id && !user?.isAdmin) {
+            return NextResponse.json({ error: 'No tienes permiso para ver este reporte' }, { status: 403 })
+        }
+
         const messages = await prisma.reportMessage.findMany({
             where: { reportId: id },
             include: {

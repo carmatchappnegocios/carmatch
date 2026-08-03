@@ -57,6 +57,7 @@ import ManageCreditsModal from '@/components/admin/ManageCreditsModal'
 import QRCodeModal from '@/components/QRCodeModal'
 import { testGeminiHealth, AiHealthReport } from '@/app/admin/actions/ai-health-actions'
 import { scoutGlobalStations } from '@/app/admin/actions/scout-actions'
+import { toast } from "sonner"
 
 type AdminView = 'overview' | 'users' | 'inventory' | 'map-store' | 'intelligence' | 'reports' | 'logs' | 'ai-hub' | 'costs' | 'marketing' | 'more'
 
@@ -1141,7 +1142,7 @@ function AdminGenericAction({ apiPath, method, body, label, danger }: any) {
             window.location.reload()
         } catch (error) {
             console.error(error)
-            alert('Error al realizar la acción')
+            toast.error('Error al realizar la acción')
         } finally {
             setLoading(false)
         }
@@ -1174,12 +1175,12 @@ function MapStoreTab({ businesses }: { businesses: any[] }) {
             setScoutResult(res)
             if (res.success) {
                 // Opción: Recargar datos o simplemente mostrar éxito
-                alert(`¡Éxito! Se importaron ${res.imported} gasolineras nuevas. Total encontradas: ${res.total}`)
+                toast.success(`¡Éxito! Se importaron ${res.imported} gasolineras nuevas. Total encontradas: ${res.total}`)
             } else {
-                alert(`Error: ${res.error}`)
+                toast.error(`Error: ${res.error}`)
             }
         } catch (e) {
-            alert('Error en el scouter')
+            toast.error('Error en el scouter')
         } finally {
             setIsScouting(false)
         }
@@ -1508,10 +1509,10 @@ function AiHubTab() {
                 setLastResult(data)
                 fetchLogs()
             } else {
-                alert(`Error: ${data.error}`)
+                toast.error(`Error: ${data.error}`)
             }
         } catch (e) {
-            alert('Error en la comunicación con el servidor')
+            toast.error('Error en la comunicación con el servidor')
         } finally {
             setIsUpdating(false)
         }

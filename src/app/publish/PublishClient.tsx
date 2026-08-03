@@ -35,6 +35,7 @@ import {
 } from '@/lib/vehicleTaxonomy'
 import { getUserLocation, reverseGeocode } from '@/lib/geolocation'
 import { useModelNames } from '@/hooks/useVehicleData'
+import { toast } from 'sonner'
 
 type FormStep = 1 | 2 | 3 | 4
 type VehicleStatus = 'ACTIVE' | 'INACTIVE' | 'SOLD'
@@ -671,7 +672,7 @@ export default function PublishClient() {
 
                 } catch (err) {
                     console.error(err)
-                    alert('Error cargando vehículo para editar')
+                    toast.error('Error cargando vehículo para editar')
                 } finally {
                     setLoading(false)
                 }

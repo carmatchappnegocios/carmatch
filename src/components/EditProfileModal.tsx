@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { useSession } from 'next-auth/react'
 import ImageUpload from './ImageUpload'
+import { toast } from 'sonner'
 
 interface EditProfileModalProps {
     isOpen: boolean
@@ -248,7 +249,7 @@ export default function EditProfileModal({ isOpen, onClose, currentUser, userVeh
                                                     await navigator.share(shareData)
                                                 } else {
                                                     navigator.clipboard.writeText(shareData.text)
-                                                    alert('Código copiado al portapapeles')
+                                                    toast('Código copiado al portapapeles')
                                                 }
                                             } catch (err) {
                                                 console.error('Error sharing:', err)

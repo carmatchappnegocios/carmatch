@@ -14,6 +14,7 @@ import OpenInBrowserBanner from "@/components/OpenInBrowserBanner";
 import Header from "@/components/Header";
 import RestoringSessionOverlay from "@/components/RestoringSessionOverlay";
 import RestoreSessionModal from "@/components/RestoreSessionModal";
+import { Toaster } from "sonner";
 
 import InstallInvasiveBanner from "@/components/InstallInvasiveBanner";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
@@ -149,6 +150,7 @@ export default function RootLayout({
             <body className={`${inter.className} min-h-screen-safe bg-[#0f172a]`}>
                 <GoogleAnalytics />
                 <Providers>
+                    <Toaster position="top-center" richColors closeButton />
                     {/* <InstallInvasiveBanner /> */}
                     {/* <PushNotificationRequest /> */}
                     {/* <OpenInBrowserBanner /> */}

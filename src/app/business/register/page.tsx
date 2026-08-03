@@ -7,9 +7,11 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import nextDynamic from 'next/dynamic'
+import { useSession } from 'next-auth/react'
 
 import { useLanguage } from '@/contexts/LanguageContext'
 import { BUSINESS_CATEGORIES } from '@/lib/businessCategories'
+import { toast } from "sonner"
 
 // Dynamic import for Mapbox component
 const MapBoxAddressPicker = nextDynamic(() => import('@/components/MapBoxAddressPicker'), {
@@ -20,6 +22,7 @@ const MapBoxAddressPicker = nextDynamic(() => import('@/components/MapBoxAddress
 export default function BusinessRegisterPage() {
     const router = useRouter()
     const { t } = useLanguage()
+    const { data: session, status } = useSession()
     const [loading, setLoading] = useState(false)
 
     // Form Data
@@ -119,7 +122,7 @@ export default function BusinessRegisterPage() {
                         state: data.state || ''
                     })
                 } else {
-                    alert('No encontramos esa ubicación. Intenta ser más específico.')
+                    toast.error('No encontramos esa ubicación. Intenta ser más específico.')
                 }
             }
         } catch (error) {
@@ -132,7 +135,7 @@ export default function BusinessRegisterPage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         if (!latitude || !longitude) {
-            alert('Por favor selecciona la ubicación exacta en el mapa')
+            toast.error('Por favor selecciona la ubicación exacta en el mapa')
             return
         }
 
@@ -166,11 +169,11 @@ export default function BusinessRegisterPage() {
             if (!res.ok) throw new Error(data.error)
 
             // Redirigir a perfil con éxito
-            alert('¡Negocio registrado! Tu periodo de prueba de 3 meses ha comenzado.')
+            toast.success('¡Negocio registrado! Tu periodo de prueba de 3 meses ha comenzado.')
             router.push('/profile?business_registered=true')
 
         } catch (error) {
-            alert(error instanceof Error ? error.message : 'Error al registrar')
+            toast.error(error instanceof Error ? error.message : 'Error al registrar')
         } finally {
             setLoading(false)
         }
@@ -179,6 +182,26 @@ export default function BusinessRegisterPage() {
     return (
         <div className="min-h-screen bg-background flex flex-col items-center py-12 px-4">
 
+            {status === 'loading' && (
+                <div className="max-w-3xl w-full flex items-center justify-center py-20">
+                    <div className="w-8 h-8 border-4 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
+                </div>
+            )}
+
+            {status === 'unauthenticated' && (
+                <div className="max-w-3xl w-full text-center py-20 space-y-6">
+                    <h2 className="text-2xl font-bold text-text-primary">Inicia sesión para registrar tu negocio</h2>
+                    <p className="text-text-secondary">Necesitas una cuenta para gestionar tu negocio en CarMatch.</p>
+                    <button
+                        onClick={() => router.push('/auth')}
+                        className="px-8 py-3 bg-primary-700 text-white rounded-xl font-bold hover:bg-primary-600 transition"
+                    >
+                        Iniciar Sesión
+                    </button>
+                </div>
+            )}
+
+            {status === 'authenticated' && (
             <div className="max-w-3xl w-full space-y-8">
                 {/* Header */}
                 <div className="text-center">
@@ -377,6 +400,7 @@ export default function BusinessRegisterPage() {
                     </form>
                 </div>
             </div>
+            )}
 
         </div>
     )

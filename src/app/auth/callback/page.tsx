@@ -13,9 +13,6 @@ export default async function AuthCallbackPage() {
         redirect('/auth')
     }
 
-    // Lógica de Usuario Regular (70/30 split)
-    const randomValue = Math.random()
-    const destination = randomValue < 0.7 ? "/swipe" : "/market"
-
-    redirect(destination)
+    const { getWeightedHomePath } = await import("@/lib/navigation")
+    redirect(getWeightedHomePath())
 }

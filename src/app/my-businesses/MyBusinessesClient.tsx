@@ -17,6 +17,7 @@ import ConfirmationModal from '@/components/ConfirmationModal'
 import { AlertTriangle, Clock, MapPin, Phone, Globe, Trash2, Edit, AlertCircle, Plus, Sparkles, ChevronRight, X, Image as ImageIcon, Briefcase, Info, CheckCircle, Pause, CreditCard, Play, ShieldCheck } from 'lucide-react'
 import CategoryIcon from '@/components/CategoryIcon'
 import OpeningHoursEditor from '@/components/OpeningHoursEditor'
+import { toast } from "sonner"
 
 // Modified: MapBox Component replacement
 const MapBoxAddressPicker = dynamic(() => import('@/components/MapBoxAddressPicker'), {
@@ -262,7 +263,7 @@ export default function MyBusinessesClient() {
                     if (data.street) setStreet(data.street)
                     if (data.city) setCity(data.city)
                 } else {
-                    alert('No encontramos esa ubicación. Intenta ser más específico.')
+                    toast.error('No encontramos esa ubicación. Intenta ser más específico.')
                 }
             }
         } catch (error) {
@@ -432,11 +433,11 @@ export default function MyBusinessesClient() {
                 resetForm()
             } else {
                 const data = await res.json()
-                alert(data.error || 'Error al guardar negocio')
+                toast.error(data.error || 'Error al guardar negocio')
             }
         } catch (error) {
             console.error('Error saving business:', error)
-            alert('Error de conexión al guardar negocio')
+            toast.error('Error de conexión al guardar negocio')
         } finally {
             setFormLoading(false)
         }
@@ -459,11 +460,11 @@ export default function MyBusinessesClient() {
                 fetchBusinesses()
                 setBusinessToDelete(null)
             } else {
-                alert('Error al eliminar negocio')
+                toast.error('Error al eliminar negocio')
             }
         } catch (error) {
             console.error('Error deleting business:', error)
-            alert('Error al eliminar negocio')
+            toast.error('Error al eliminar negocio')
         } finally {
             setIsDeleting(false)
         }
@@ -493,11 +494,11 @@ export default function MyBusinessesClient() {
                     setShowSuccessModal(true)
                 }
             } else {
-                alert(data.error || 'Error al cambiar estado')
+                toast.error(data.error || 'Error al cambiar estado')
             }
         } catch (error) {
             console.error('Error toggling status:', error)
-            alert('Error al cambiar estado')
+            toast.error('Error al cambiar estado')
         }
     }
 

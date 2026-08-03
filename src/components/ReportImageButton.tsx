@@ -6,6 +6,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
 interface ReportImageButtonProps {
     imageUrl: string
@@ -63,11 +64,11 @@ export default function ReportImageButton({
                     setDescription("")
                 }, 2000)
             } else {
-                alert("Error al enviar reporte. Por favor intenta de nuevo.")
+                toast.error("Error al enviar reporte. Por favor intenta de nuevo.")
             }
         } catch (error) {
             console.error(error)
-            alert("Error de conexión.")
+            toast.error("Error de conexión.")
         } finally {
             setLoading(false)
         }

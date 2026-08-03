@@ -8,6 +8,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useLanguage } from '@/contexts/LanguageContext'
 import dynamic from 'next/dynamic'
 import { ShieldAlert, Siren } from 'lucide-react'
+import { toast } from 'sonner'
 
 // Dynamically import Mapbox to ensure client-side only
 import mapboxgl from 'mapbox-gl'
@@ -163,7 +164,7 @@ export default function SOSComponent({ isActive, otherUserId, onEndMeeting, chat
             }
         } catch (e) {
             console.error("🚨 Error crítico al disparar SOS:", e)
-            alert(t('sos2.connection_error'))
+            toast.error(t('sos2.connection_error'))
         } finally {
             setLoadingLocation(false)
         }

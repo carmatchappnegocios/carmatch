@@ -9,6 +9,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { useRestoreSessionModal } from '@/hooks/useRestoreSessionModal'
+import { toast } from 'sonner'
 
 interface ContactButtonProps {
     vehicleId: string
@@ -82,11 +83,11 @@ export default function ContactButton({
                     console.error('Error parseando JSON de error:', jsonError)
                     errorMessage = 'Error desconocido del servidor (' + res.status + ')'
                 }
-                alert(t('contact.chat_error') + ': ' + (errorMessage || t('common.errors.chat_creation')))
+                toast.error(t('contact.chat_error') + ': ' + (errorMessage || t('common.errors.chat_creation')))
             }
         } catch (error: any) {
             console.error('Error al contactar:', error)
-            alert(t('contact.connection_error') + ': ' + (error.message || t('common.errors.connection')))
+            toast.error(t('contact.connection_error') + ': ' + (error.message || t('common.errors.connection')))
         } finally {
             setLoading(false)
         }

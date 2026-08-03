@@ -14,6 +14,7 @@ import AppointmentCard from './AppointmentCard'
 import AppointmentModal from './AppointmentModal'
 import SOSComponent from '@/components/SOSComponent'
 import dynamic from 'next/dynamic'
+import { toast } from "sonner"
 
 interface Message {
     id: string
@@ -275,11 +276,11 @@ export default function ChatPage({
                 router.refresh()
             } else {
                 const errorData = await res.json().catch(() => ({}))
-                alert(`Error: ${errorData.error || 'No se pudo guardar la cita'}`)
+                toast.error(`Error: ${errorData.error || 'No se pudo guardar la cita'}`)
             }
         } catch (error) {
             console.error('Error handling appointment:', error)
-            alert('Error de conexión al intentar guardar la cita.')
+            toast.error('Error de conexión al intentar guardar la cita.')
         } finally {
             setSending(false)
         }

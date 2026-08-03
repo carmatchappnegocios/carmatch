@@ -25,6 +25,7 @@ import {
     Navigation
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion' // ✅ AnimatePresence
+import { toast } from "sonner"
 
 const VAPID_KEY = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY
 
@@ -80,17 +81,17 @@ export default function SettingsPage() {
 
     const subscribe = useCallback(async () => {
         if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
-            alert('Tu navegador no soporta notificaciones push.')
+            toast.error('Tu navegador no soporta notificaciones push.')
             return
         }
         if (!VAPID_KEY) {
-            alert('Error de configuración. Las notificaciones no están disponibles.')
+            toast.error('Error de configuración. Las notificaciones no están disponibles.')
             return
         }
         try {
             const perm = await Notification.requestPermission()
             if (perm !== 'granted') {
-                alert('Permiso de notificaciones denegado.')
+                toast.error('Permiso de notificaciones denegado.')
                 return
             }
             let reg = await getSWRegistration()
@@ -114,7 +115,7 @@ export default function SettingsPage() {
                 }).catch(() => {})
                 setIsSubscribed(true)
                 setPushPermission('granted')
-                alert('¡Notificaciones Activadas!')
+                toast.success('¡Notificaciones Activadas!')
                 return
             }
 
@@ -132,10 +133,10 @@ export default function SettingsPage() {
             if (!res.ok) throw new Error(`Backend error: ${res.status}`)
             setIsSubscribed(true)
             setPushPermission('granted')
-            alert('¡Notificaciones Activadas!')
+            toast.success('¡Notificaciones Activadas!')
         } catch (error: any) {
             console.error('[PUSH] Error:', error)
-            alert(`Error: ${error.message || 'Error activando notificaciones.'}`)
+            toast.error(`Error: ${error.message || 'Error activando notificaciones.'}`)
         }
     }, [])
 
@@ -154,10 +155,10 @@ export default function SettingsPage() {
             }
             setIsSubscribed(false)
             setPushPermission('default')
-            alert('Notificaciones desactivadas')
+            toast.success('Notificaciones desactivadas')
         } catch (error) {
             console.error('[PUSH] Error:', error)
-            alert('Error desactivando notificaciones.')
+            toast.error('Error desactivando notificaciones.')
         }
     }, [])
 

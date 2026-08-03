@@ -6,6 +6,7 @@
 
 import { useState, useEffect } from 'react'
 import { useLanguage } from '@/contexts/LanguageContext'
+import { toast } from "sonner"
 
 interface SafePlace {
     id: string | number
@@ -234,7 +235,7 @@ export default function AppointmentModal({ onClose, onSubmit, chatId, initialApp
 
     const handleSubmit = () => {
         if (!date || !time) {
-            alert('Por favor selecciona fecha y hora.')
+            toast.error('Por favor selecciona fecha y hora.')
             return
         }
 
@@ -242,7 +243,7 @@ export default function AppointmentModal({ onClose, onSubmit, chatId, initialApp
         const locationAddress = selectedPlace ? selectedPlace.address : ''
 
         if (!locationName) {
-            alert('Por favor selecciona o escribe un lugar de encuentro.')
+            toast.error('Por favor selecciona o escribe un lugar de encuentro.')
             return
         }
 
@@ -251,7 +252,7 @@ export default function AppointmentModal({ onClose, onSubmit, chatId, initialApp
             const dateTime = new Date(`${date}T${time}`)
 
             if (isNaN(dateTime.getTime())) {
-                alert('Fecha o hora no válidas.')
+                toast.error('Fecha o hora no válidas.')
                 setIsSubmitting(false)
                 return
             }
@@ -266,7 +267,7 @@ export default function AppointmentModal({ onClose, onSubmit, chatId, initialApp
             })
         } catch (error) {
             console.error('Error in handleSubmit:', error)
-            alert('Error al procesar los datos.')
+            toast.error('Error al procesar los datos.')
             setIsSubmitting(false)
         }
     }

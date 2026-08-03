@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react'
 import { Bell, X } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import { useLanguage } from '@/contexts/LanguageContext'
+import { toast } from 'sonner'
 
 // Función auxiliar para convertir VAPID key
 function urlBase64ToUint8Array(base64String: string) {
@@ -62,7 +63,7 @@ export default function PushNotificationRequest() {
 
     const subscribeUser = async () => {
         if (!session?.user?.id) {
-            alert(t('notifications.login_required'))
+            toast.error(t('notifications.login_required'))
             return
         }
 
@@ -121,7 +122,7 @@ export default function PushNotificationRequest() {
 
         } catch (error: any) {
             console.error('Push Error:', error)
-            alert(error.message || t('notifications.activate_error'))
+            toast.error(error.message || t('notifications.activate_error'))
             // No es necesario cerrar el modal aquí, ya se cerró al inicio
         } finally {
             setIsLoading(false)

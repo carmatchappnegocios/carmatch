@@ -88,9 +88,6 @@ export default async function SemanticBusinessPage({ params }: Props) {
         return "LocalBusiness";
     };
 
-    const fakeRating = (4.5 + (business.name.length % 5) / 10).toFixed(1);
-    const fakeReviewCount = 25 + (business.name.length * 3);
-
     const jsonLd = {
         "@context": "https://schema.org",
         "@type": getSchemaType(business.category),
@@ -111,12 +108,7 @@ export default async function SemanticBusinessPage({ params }: Props) {
         },
         "url": `https://carmatchapp.net/negocio/${slug}`,
         "telephone": business.phone || undefined,
-        "sameAs": getBrandEntity(business.name) || undefined,
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": fakeRating,
-            "reviewCount": fakeReviewCount
-        }
+        "sameAs": getBrandEntity(business.name) || undefined
     }
 
     // 🤖 FAQ SCHEMA for AI Answers (Direct indexing for LLMs - Business Edition)

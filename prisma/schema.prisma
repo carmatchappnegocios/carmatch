@@ -997,6 +997,68 @@ enum SocialPlatform {
   SNAPCHAT
   GOOGLE_ADS
   YOUTUBE
+  LINKEDIN
+  PINTEREST
+  TELEGRAM
+  WHATSAPP
+  SIGNAL
+  WECHAT
+  QQ
+  QZONE
+  DOUYIN
+  KUAISHOU
+  LINE
+  VIBER
+  DISCORD
+  REDDIT
+  TUMBLR
+  FLICKR
+  VIMEO
+  DAILYMOTION
+  TWITCH
+  MIXER
+  PERRISCOPE
+  LIKE
+  SHARE_CHAT
+  IMO
+  HANGOUTS
+  SKYPE
+  SNAPCHAT_T
+  WIRE
+  THREEMA
+  ELEMENT
+  MATRIX
+  MASTODON
+  BLUESKY
+  NOSTR
+  TRUTH_SOCIAL
+  PARLER
+  GAB
+  GETTR
+  MINDS
+  BITCHUTE
+  ODYSEE
+  RUMBLE
+  BRIGHTEON
+  DLIVE
+  LOOM
+  VKONTAKTE
+  OK_RU
+  YANDEX_ZEN
+  TENCENT_VIDEO
+  IQIYI
+  BILIBILI
+  KAKAOTALK
+  BAND
+  CAFE_NAVER
+  ZALO
+  BIGO_LIVE
+  TANGO
+  AZAR
+  HOLLA
+  YOUBRAND_NOW
+  KEKU
+  PUBLICITY_PANEL
 }
 
 enum PostStatus {
@@ -1041,4 +1103,18 @@ model BetaSession {
   @@unique([userId, date])
   @@index([userId])
   @@index([date])
+}
+
+model BlockedIdentity {
+  id            String   @id @default(cuid())
+  blockedUserId String
+  blockedByEmail String?
+  blockedByIp   String?
+  reason        String
+  blockedAt     DateTime @default(now())
+  blockedBy     String   // admin userId who performed the block
+
+  @@index([blockedUserId])
+  @@index([blockedByEmail])
+  @@index([blockedByIp])
 }

@@ -129,14 +129,12 @@ export async function DELETE(
 
         const { id } = await context.params
 
-        // We probably shouldn't fully delete users if they have references, 
-        // but for this MVP, let's delete them or deactivate them.
-        // If we want total deletion:
-        await prisma.user.delete({
-            where: { id }
+        await prisma.user.update({
+            where: { id },
+            data: { isActive: false }
         })
 
-        return NextResponse.json({ success: true })
+        return NextResponse.json({ success: true, message: 'Usuario desactivado' })
     } catch (error) {
         console.error('Error admin deleting user:', error)
         return NextResponse.json({ error: 'Error interno' }, { status: 500 })

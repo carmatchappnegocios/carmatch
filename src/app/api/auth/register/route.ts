@@ -59,6 +59,27 @@ export async function POST(request: Request) {
             )
         }
 
+        // Check if this email or IP is blocked (fraud prevention)
+        const blockedEmail = await prisma.blockedIdentity.findFirst({
+            where: { blockedByEmail: normalizedEmail }
+        })
+        if (blockedEmail) {
+            return NextResponse.json(
+                { error: "No se pudo crear la cuenta" },
+                { status: 403 }
+            )
+        }
+
+        const blockedIp = await prisma.blockedIdentity.findFirst({
+            where: { blockedByIp: ip }
+        })
+        if (blockedIp) {
+            return NextResponse.json(
+                { error: "No se pudo crear la cuenta" },
+                { status: 403 }
+            )
+        }
+
         // Hash password
         const hashedPassword = await hashPassword(password)
 
