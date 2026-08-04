@@ -9,7 +9,7 @@ import { io } from "socket.io-client";
 export const socket = {
     connected: false,
     connect: () => {},
-    emit: () => {},
-    on: () => {},
-    off: () => {},
+    emit: (..._args: unknown[]) => {},
+    on: (..._args: unknown[]) => {},
+    off: (..._args: unknown[]) => {},
 };
