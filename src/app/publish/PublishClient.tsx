@@ -34,7 +34,7 @@ import {
     formatNumber
 } from '@/lib/vehicleTaxonomy'
 import { getUserLocation, reverseGeocode } from '@/lib/geolocation'
-import { useModelNames } from '@/hooks/useVehicleData'
+import { useModelNames, useBrandNames } from '@/hooks/useVehicleData'
 import { toast } from 'sonner'
 
 type FormStep = 1 | 2 | 3 | 4
@@ -289,6 +289,20 @@ export default function PublishClient() {
 
     // 🤖 Dynamic vehicle data from database
     const modelNames = useModelNames(brand)
+
+    // Map vehicleCategory to taxonomy category for API fetch
+    const mappedTaxCategory = (() => {
+        const cat = vehicleCategory.toLowerCase()
+        if (cat.includes('moto')) return 'Motocicleta'
+        if (cat.includes('camion') || cat.includes('comercial')) return 'Camión'
+        if (cat.includes('industrial') || cat.includes('maquinaria')) return 'Maquinaria'
+        if (cat.includes('transporte') || cat.includes('autobus') || cat.includes('bus')) return 'Autobús'
+        if (cat.includes('especial')) return 'Especial'
+        return 'Automóvil'
+    })() as keyof typeof BRANDS
+
+    // Dynamic brand names from API (auto-updated by Gemini AI cron jobs)
+    const apiBrandNames = useBrandNames(mappedTaxCategory)
 
     // Validation State
     const [validImagesCache, setValidImagesCache] = useState<string[]>([])
@@ -993,18 +1007,7 @@ export default function PublishClient() {
                                             setUserEditedFields(prev => new Set(prev).add('brand'))
                                         }}
                                         strict={false}
-                                        options={(() => {
-                                            const cat = vehicleCategory.toLowerCase()
-                                            let taxCat: VehicleCategory = 'Automóvil'
-
-                                            if (cat.includes('moto')) taxCat = 'Motocicleta'
-                                            else if (cat.includes('camion') || cat.includes('comercial')) taxCat = 'Camión'
-                                            else if (cat.includes('industrial') || cat.includes('maquinaria')) taxCat = 'Maquinaria'
-                                            else if (cat.includes('transporte') || cat.includes('autobus') || cat.includes('bus')) taxCat = 'Autobús'
-                                            else if (cat.includes('especial')) taxCat = 'Especial'
-
-                                            return BRANDS[taxCat] || BRANDS['Automóvil']
-                                        })()}
+                                        options={apiBrandNames.length > 0 ? apiBrandNames : (BRANDS[mappedTaxCategory] || BRANDS['Automóvil'])}
                                     />
                                     <SearchableSelect
                                         label={t('publish.labels.model')}

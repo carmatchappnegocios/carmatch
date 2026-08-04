@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with warm confident smile, wearing a dark blue CarMatch jacket, stands in an airfield holding a phone showing CarMatch app with aircraft listings. Bold white text overlay reads "¿BUSCAS UN AUTO AEREO?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un auto aereo? Aviones y helicopteros disponibles
+
+CTA:
+Encuentra Tu Aereo
+
+SEGMENTACION:
+- Edad: 35-55
+- Ubicacion: Mexico
+- Intereses: aereo, avion, helicoptero, vuelo

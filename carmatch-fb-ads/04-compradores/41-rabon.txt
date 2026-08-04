@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, hombre mexicano de 45 años, sonrisa cálida y confiada, con chaqueta azul oscuro de CarMatch, sostiene un teléfono mostrando la app CarMatch con listados de rabones. Texto superpuesto en blanco y negrita lee "¿BUSCAS UN RABON?" con el logo púrpura de CarMatch. Fotografía realista, anuncio profesional de Facebook, 1080x1080.
+
+HOOK:
+¿Buscas un rabon? Para distribucion y deliveries
+
+CTA:
+Encuentra Tu Rabon
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: rabon, distribucion, mercado, deliveries

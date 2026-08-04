@@ -1,0 +1,13 @@
+PROMPT:
+[Don Match, 45-year-old Mexican man with warm confident smile, wearing dark blue CarMatch jacket, customer/client concerned about vehicle security. He holds a phone showing CarMatch app with nearby armored car specialists. Bold white text overlay reads "¿BUSCAS BLINDAJE?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.]
+
+HOOK:
+¿Quieres proteger tu auto? Blindaje automotriz especializado en CarMatch
+
+CTA:
+Proteccion Maxima
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: blindaje, seguridad, proteccion

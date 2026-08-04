@@ -1,0 +1,13 @@
+PROMPT:
+[Car-mela, 42-year-old Mexican woman with kind organized demeanor, wearing dark blue CarMatch jacket, customer/client looking for a specific car part. She holds a phone showing CarMatch app with nearby auto parts stores. Bold white text overlay reads "¿BUSCAS REFACCION?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.]
+
+HOOK:
+¿Buscas una refaccion? Miles de refacciones disponibles en CarMatch
+
+CTA:
+Encuentra Tu Parte
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: refacciones, autopartes, repuestos

@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, hombre mexicano de 45 años, sonrisa cálida y confiada, con chaqueta azul oscuro de CarMatch, sostiene un teléfono mostrando la app CarMatch con listados de plataformas. Texto superpuesto en blanco y negrita lee "¿BUSCAS UNA PLATAFORMA?" con el logo púrpura de CarMatch. Fotografía realista, anuncio profesional de Facebook, 1080x1080.
+
+HOOK:
+¿Buscas una plataforma? Transporte de autos seguro
+
+CTA:
+Encuentra Tu Plataforma
+
+SEGMENTACION:
+- Edad: 28-55
+- Ubicacion: Mexico
+- Intereses: plataforma, transporte de autos, remolque

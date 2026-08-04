@@ -1,0 +1,13 @@
+PROMPT:
+[Don Match, 45-year-old Mexican man with warm confident smile, wearing dark blue CarMatch jacket, customer/client frustrated with high fuel consumption. He holds a phone showing CarMatch app with nearby injector cleaning services. Bold white text overlay reads "¿BUSCAS INYECTORES?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.]
+
+HOOK:
+¿Auto gaston? Limpieza de inyectores que ahorra gasolina en CarMatch
+
+CTA:
+Rendimiento Maximo
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: inyectores, limpieza, rendimiento, consumo

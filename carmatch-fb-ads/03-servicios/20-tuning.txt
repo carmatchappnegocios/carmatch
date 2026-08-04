@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with an energetic adventurous spirit, wearing a dark blue CarMatch jacket, imagines modifications for his car. He holds a phone showing the CarMatch app with nearby tuning and modification services. Bold white text overlay reads "¿BUSCAS TUNING Y MODIFICACIONES?" with the purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Quieres tunear tu auto? Modificaciones y tuning experto
+
+CTA:
+Tu Auto Tu Estilo
+
+SEGMENTACION:
+- Edad: 18-35
+- Ubicacion: Mexico
+- Intereses: tuning, modificacion, performance, custom

@@ -1,0 +1,13 @@
+PROMPT:
+[Don Match, 45-year-old Mexican man with warm confident smile, wearing dark blue CarMatch jacket, customer/client who needs to report an incident to police. He holds a phone showing CarMatch app with nearby police stations. Bold white text overlay reads "¿BUSCAS POLICIA?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.]
+
+HOOK:
+¿Necesitas policia? Estaciones de policias en tu zona en CarMatch
+
+CTA:
+Seguridad Cerca
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: policia, seguridad, emergencias, transito

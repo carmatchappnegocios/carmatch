@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, stands in front of a massive vehicle holding a phone showing CarMatch app with giant vehicle listings. Bold white text overlay reads "¿BUSCAS UN AUTO GIGANTE?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un auto gigante? Los mas grandes del mundo
+
+CTA:
+Piensa en Grande
+
+SEGMENTACION:
+- Edad: 18-40
+- Ubicacion: Mexico
+- Intereses: gigante, extremo, grande, monstruo

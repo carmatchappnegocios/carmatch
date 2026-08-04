@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, struggles with his car's shifting. He holds a phone showing the CarMatch app with nearby transmission specialists. Bold white text overlay reads "¿BUSCAS ESPECIALISTAS EN TRANSMISION?" with the purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Problemas con la transmision? Especialistas que te ayudan
+
+CTA:
+Transmision Segura
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: transmision, caja de cambios, clutch

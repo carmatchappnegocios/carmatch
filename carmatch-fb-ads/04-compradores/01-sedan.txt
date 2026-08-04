@@ -1,0 +1,13 @@
+PROMPT:
+Car-mela, 42-year-old Mexican woman with kind organized demeanor, wearing dark blue CarMatch jacket, standing as a buyer looking at sedan listings. She holds a phone showing CarMatch app with sedan vehicle listings. Bold white text overlay reads "¿BUSCAS UN SEDAN?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un sedan? Miles de opciones cerca de ti
+
+CTA:
+Encuentra Tu Sedan
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: sedan, auto, familia, compra-venta

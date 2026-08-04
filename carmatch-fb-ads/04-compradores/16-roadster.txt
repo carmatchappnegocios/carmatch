@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, 18-year-old Mexican guy with energetic adventurous spirit, wearing dark blue CarMatch jacket, standing as a buyer looking at roadster listings. He holds a phone showing CarMatch app with roadster vehicle listings. Bold white text overlay reads "¿BUSCAS UN ROADSTER?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un roadster? La experiencia de conducir al maximo
+
+CTA:
+Encuentra Tu Roadster
+
+SEGMENTACION:
+- Edad: 25-45
+- Ubicacion: Mexico
+- Intereses: roadster, velocidad, clasico, aventura

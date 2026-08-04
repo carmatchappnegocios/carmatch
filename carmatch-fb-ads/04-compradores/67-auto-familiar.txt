@@ -1,0 +1,13 @@
+PROMPT:
+Car-mela, a 42-year-old Mexican woman with kind organized demeanor, wearing a dark blue CarMatch jacket, stands in a bright living room holding a phone showing CarMatch app with family vehicle listings. Bold white text overlay reads "¿BUSCAS UN AUTO FAMILIAR?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un auto familiar? Seguridad y espacio para los tuyos
+
+CTA:
+Encuentra Tu Familiar
+
+SEGMENTACION:
+- Edad: 28-55
+- Ubicacion: Mexico
+- Intereses: familia, seguridad, espacio, hijos

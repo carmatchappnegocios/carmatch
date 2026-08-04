@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with warm confident smile, wearing a dark blue CarMatch jacket, stands in a logistics center holding a phone showing CarMatch app with articulated vehicle listings. Bold white text overlay reads "¿BUSCAS UN AUTO ARTICULADO?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un auto articulado? Transporte pesado especializado
+
+CTA:
+Encuentra Tu Articulado
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: articulado, transporte pesado, logistica

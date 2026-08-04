@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, hombre mexicano de 45 años, sonrisa cálida y confiada, con chaqueta azul oscuro de CarMatch, sostiene un teléfono mostrando la app CarMatch con listados de cajas secas. Texto superpuesto en blanco y negrita lee "¿BUSCAS UNA CAJA SECA?" con el logo púrpura de CarMatch. Fotografía realista, anuncio profesional de Facebook, 1080x1080.
+
+HOOK:
+¿Buscas una caja seca? Carga cerrada y segura
+
+CTA:
+Encuentra Tu Caja Seca
+
+SEGMENTACION:
+- Edad: 28-55
+- Ubicacion: Mexico
+- Intereses: caja seca, transporte de carga, logistica

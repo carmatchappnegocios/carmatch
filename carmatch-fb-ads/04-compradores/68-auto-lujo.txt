@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, a 20-year-old Mexican woman with trendy style and creative energy, wearing a dark blue CarMatch jacket, stands in an elegant showroom holding a phone showing CarMatch app with luxury vehicle listings. Bold white text overlay reads "¿BUSCAS UN AUTO DE LUJO?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un auto de lujo? Exclusividad que mereces
+
+CTA:
+Encuentra Tu Lujo
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: lujo, exclusivo, premium, imagen

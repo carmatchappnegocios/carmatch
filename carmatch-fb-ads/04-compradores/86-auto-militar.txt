@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with warm confident smile, wearing a dark blue CarMatch jacket, stands in a military vehicle exhibition holding a phone showing CarMatch app with tactical vehicle listings. Bold white text overlay reads "¿BUSCAS UN AUTO MILITAR?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un auto militar? Vehiculos tacticos disponibles
+
+CTA:
+Encuentra Tu Militar
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: militar, tactico, coleccion, especial

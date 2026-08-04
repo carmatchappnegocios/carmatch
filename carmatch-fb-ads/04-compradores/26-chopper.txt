@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, 18-year-old Mexican guy with energetic adventurous spirit, wearing dark blue CarMatch jacket, standing as a buyer looking at chopper listings. He holds a phone showing CarMatch app with chopper vehicle listings. Bold white text overlay reads "¿BUSCAS UN CHOPPER?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un chopper? Estilo custom que te representa
+
+CTA:
+Encuentra Tu Chopper
+
+SEGMENTACION:
+- Edad: 28-50
+- Ubicacion: Mexico
+- Intereses: chopper, custom, motociclismo, estilo

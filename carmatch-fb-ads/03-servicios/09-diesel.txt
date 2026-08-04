@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, stands next to his diesel truck with engine trouble. He holds a phone showing the CarMatch app with nearby diesel mechanics. Bold white text overlay reads "¿BUSCAS MECANICOS DIESEL?" with the purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Tienes diesel? Mecanicos especializados en diesel
+
+CTA:
+Diesel Experto
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: diesel, camionetas, turbo

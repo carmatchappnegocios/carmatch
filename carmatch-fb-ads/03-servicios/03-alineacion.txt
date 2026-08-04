@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, is inside his car noticing it pulling to one side. He holds a phone showing the CarMatch app with nearby alignment specialists. Bold white text overlay reads "¿BUSCAS ALINEACION Y BALANCEO?" with the purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Tu auto se desvia? Alineacion y balanceo cerca de ti
+
+CTA:
+Alineacion Perfecta
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: alineacion, balanceo, llantas, suspension

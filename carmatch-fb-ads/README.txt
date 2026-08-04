@@ -31,20 +31,28 @@ LA FAMILIA MATCH
 ESTRUCTURA:
 -----------
 carmatch-fb-ads/
-├── 01-negocios/        (39 archivos - anuncios para duenos de negocios)
+├── 01-negocios/        (39 archivos - OFERTA: anuncios para duenos de negocios)
 │   ├── 01-taller-mecanico.txt
-│   ├── 02-taller-frenos.txt
 │   ├── ... (39 archivos)
 │   └── 39-aeropuerto.txt
-├── 02-vehiculos/       (97 archivos - anuncios para vendedores de vehiculos)
+├── 02-vehiculos/       (97 archivos - OFERTA: anuncios para vendedores de vehiculos)
 │   ├── 01-sedan.txt
-│   ├── 02-suv.txt
 │   ├── ... (97 archivos)
-│   └── 97-plataforma-porta-contenedor.txt
+│   └── 97-madre-nodriza.txt
+├── 03-servicios/       (39 archivos - DEMANDA: anuncios para clientes buscando servicios)
+│   ├── 01-mecanico.txt
+│   ├── ... (39 archivos)
+│   └── 39-aeropuerto.txt
+├── 04-compradores/     (97 archivos - DEMANDA: anuncios para compradores de vehiculos)
+│   ├── 01-sedan.txt
+│   ├── ... (97 archivos)
+│   └── 97-auto-gigante.txt
 ├── FAMILIA-MATCH.md    (descripciones de los 4 personajes)
+├── generate-prompts.js (script para generar prompts de demanda)
+├── generate-prompts-full.js (script con descripciones visuales)
 └── README.txt          (este archivo)
 
-TOTAL: 136 archivos de prompts + 2 archivos extra
+TOTAL: 272 archivos de prompts (136 OFERTA + 136 DEMANDA)
 
 
 COMO USAR:
@@ -66,7 +74,7 @@ CONTENIDO DE CADA ARCHIVO:
 
 - HOOK: Texto en espanol para el copy del anuncio (la pregunta que engancha)
 
-- CTA: Boton del anuncio (ej: "Publica Gratis", "Vende Gratis")
+- CTA: Boton del anuncio (ej: "Publica Gratis", "Vende Gratis" para OFERTA; "Encuentra Tu Taller", "Busca Ahora" para DEMANDA)
 
 - SEGMENTACION: Sugerencia de audience para Facebook Ads Manager
   - Edad objetivo

@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, 45-year-old Mexican man with warm confident smile, wearing dark blue CarMatch jacket, standing as a buyer looking at wagon listings. He holds a phone showing CarMatch app with wagon vehicle listings. Bold white text overlay reads "¿BUSCAS UN WAGON?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un wagon? Espacio y aventura juntos
+
+CTA:
+Encuentra Tu Wagon
+
+SEGMENTACION:
+- Edad: 28-50
+- Ubicacion: Mexico
+- Intereses: wagon, familiar, aventura, carga

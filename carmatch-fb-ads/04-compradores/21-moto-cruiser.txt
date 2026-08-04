@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, 18-year-old Mexican guy with energetic adventurous spirit, wearing dark blue CarMatch jacket, standing as a buyer looking at cruiser motorcycle listings. He holds a phone showing CarMatch app with cruiser motorcycle listings. Bold white text overlay reads "¿BUSCAS UNA CRUISER?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas una cruiser? Libertad en carretera
+
+CTA:
+Encuentra Tu Cruiser
+
+SEGMENTACION:
+- Edad: 28-50
+- Ubicacion: Mexico
+- Intereses: cruiser, Harley, motociclismo, carretera

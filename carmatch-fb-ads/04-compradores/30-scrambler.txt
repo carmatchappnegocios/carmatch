@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, 18-year-old Mexican guy with energetic adventurous spirit, wearing dark blue CarMatch jacket, standing as a buyer looking at scrambler listings. He holds a phone showing CarMatch app with scrambler motorcycle listings. Bold white text overlay reads "¿BUSCAS UN SCRAMBLER?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un scrambler? Aventura ligera sobre ruedas
+
+CTA:
+Encuentra Tu Scrambler
+
+SEGMENTACION:
+- Edad: 25-45
+- Ubicacion: Mexico
+- Intereses: scrambler, retro, aventura, off-road ligero

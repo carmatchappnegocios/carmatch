@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, 18-year-old Mexican guy with energetic adventurous spirit, wearing dark blue CarMatch jacket, standing as a buyer looking at motocross listings. He holds a phone showing CarMatch app with motocross motorcycle listings. Bold white text overlay reads "¿BUSCAS UN MOTOCROSS?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un motocross? Dirt track y saltos
+
+CTA:
+Encuentra Tu Motocross
+
+SEGMENTACION:
+- Edad: 18-35
+- Ubicacion: Mexico
+- Intereses: motocross, competicion, dirt track, salto

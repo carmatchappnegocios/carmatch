@@ -1,0 +1,13 @@
+PROMPT:
+Car-mela, a 42-year-old Mexican woman with kind organized demeanor, wearing a dark blue CarMatch jacket, stands in a marina holding a phone showing CarMatch app with nautical vehicle listings. Bold white text overlay reads "¿BUSCAS UN AUTO NAUTICO?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un auto nautico? Embarcaciones y accesorios
+
+CTA:
+Encuentra Tu Nautico
+
+SEGMENTACION:
+- Edad: 28-55
+- Ubicacion: Mexico
+- Intereses: nautico, mar, embarcacion, agua

@@ -1,0 +1,13 @@
+PROMPT:
+Car-mela, 42-year-old Mexican woman with kind organized demeanor, wearing dark blue CarMatch jacket, standing as a buyer looking at crossover listings. She holds a phone showing CarMatch app with crossover vehicle listings. Bold white text overlay reads "¿BUSCAS UN CROSSOVER?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un crossover? Lo mejor de dos mundos
+
+CTA:
+Encuentra Tu Crossover
+
+SEGMENTACION:
+- Edad: 25-50
+- Ubicacion: Mexico
+- Intereses: crossover, SUV, practico, moderno

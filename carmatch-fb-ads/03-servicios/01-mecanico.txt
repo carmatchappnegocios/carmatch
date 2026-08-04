@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, standing on a smooth road looking at his smartphone showing the CarMatch app with nearby mechanics map. He gives a thumbs up to the camera. Behind him, a well-lit mechanic workshop with a car on a lift is visible. Bold white text overlay reads "¿NECESITAS UN BUEN MECANICO?" with a purple CarMatch logo in the corner. Photorealistic style, warm golden hour lighting, high contrast, professional Facebook ad photography, 1080x1080 square format.
+
+HOOK:
+Necesitas un buen mecanico? Encuentra los mejores talleres cerca de ti en CarMatch
+
+CTA:
+Encuentra Tu Taller
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: Mecanica automotriz, talleres, reparacion, emergencias, carreteras

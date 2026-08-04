@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, 20-year-old Mexican woman with trendy style and creative energy, wearing dark blue CarMatch jacket, standing as a buyer looking at scooter listings. She holds a phone showing CarMatch app with scooter listings. Bold white text overlay reads "¿BUSCAS UN SCOOTER?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un scooter? Practico y economico para la ciudad
+
+CTA:
+Encuentra Tu Scooter
+
+SEGMENTACION:
+- Edad: 22-45
+- Ubicacion: Mexico
+- Intereses: scooter, ciudad, practico, economico

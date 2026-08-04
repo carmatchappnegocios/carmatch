@@ -1,0 +1,13 @@
+PROMPT:
+[Car-litos, 18-year-old Mexican guy with energetic adventurous spirit, wearing dark blue CarMatch jacket, customer/client with a loud or damaged exhaust. He holds a phone showing CarMatch app with nearby muffler shops. Bold white text overlay reads "¿BUSCAS MOFLES?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.]
+
+HOOK:
+¿Escape ruidoso o danado? Taller de mofles especializado en CarMatch
+
+CTA:
+Escape Perfecto
+
+SEGMENTACION:
+- Edad: 18-40
+- Ubicacion: Mexico
+- Intereses: mofles, escape, sonido, rendimiento

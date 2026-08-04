@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, 18-year-old Mexican guy with energetic adventurous spirit, wearing dark blue CarMatch jacket, standing as a buyer looking at trial motorcycle listings. He holds a phone showing CarMatch app with trial motorcycle listings. Bold white text overlay reads "¿BUSCAS UN TRIAL?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un trial? Habilidad y precision sobre rocas
+
+CTA:
+Encuentra Tu Trial
+
+SEGMENTACION:
+- Edad: 25-45
+- Ubicacion: Mexico
+- Intereses: trial, habilidad, rocas, technical

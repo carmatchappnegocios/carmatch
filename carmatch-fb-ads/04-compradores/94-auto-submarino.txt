@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, stands near an underwater exploration vehicle holding a phone showing CarMatch app with submarine listings. Bold white text overlay reads "¿BUSCAS UN SUBMARINO?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un submarino? Explora el fondo del mar
+
+CTA:
+Explora el Mar
+
+SEGMENTACION:
+- Edad: 22-40
+- Ubicacion: Mexico
+- Intereses: submarino, mar, exploracion, aventura

@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, stands in front of a camper van holding a phone showing CarMatch app with camper vehicle listings. Bold white text overlay reads "¿BUSCAS UN AUTO CAMPERO?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un auto campero? Para vivir sobre ruedas
+
+CTA:
+Encuentra Tu Campero
+
+SEGMENTACION:
+- Edad: 25-45
+- Ubicacion: Mexico
+- Intereses: campero, van, aventura, naturaleza

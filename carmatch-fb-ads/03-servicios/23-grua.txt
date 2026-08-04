@@ -1,0 +1,13 @@
+PROMPT:
+[Car-mela, 42-year-old Mexican woman with kind organized demeanor, wearing dark blue CarMatch jacket, customer/client stranded on the road after her car broke down. She holds a phone showing CarMatch app with nearby tow truck services. Bold white text overlay reads "¿BUSCAS GRUA?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.]
+
+HOOK:
+¿Te quedaste varado? Grua y asistencia vial rapida en CarMatch
+
+CTA:
+Ayuda Rapida
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: grua, asistencia vial, emergencia, carretera

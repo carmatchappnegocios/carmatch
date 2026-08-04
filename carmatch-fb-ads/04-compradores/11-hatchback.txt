@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, 20-year-old Mexican woman with trendy style and creative energy, wearing dark blue CarMatch jacket, standing as a buyer looking at hatchback listings. She holds a phone showing CarMatch app with hatchback vehicle listings. Bold white text overlay reads "¿BUSCAS UN HATCHBACK?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un hatchback? Compacto y perfecto para la ciudad
+
+CTA:
+Encuentra Tu Hatchback
+
+SEGMENTACION:
+- Edad: 22-40
+- Ubicacion: Mexico
+- Intereses: hatchback, compacto, ciudad, economico

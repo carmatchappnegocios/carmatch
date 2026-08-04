@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, hombre mexicano de 45 años, sonrisa cálida y confiada, con chaqueta azul oscuro de CarMatch, sostiene un teléfono mostrando la app CarMatch con listados de hormigoneras. Texto superpuesto en blanco y negrita lee "¿BUSCAS UNA HORMIGONERA?" con el logo púrpura de CarMatch. Fotografía realista, anuncio profesional de Facebook, 1080x1080.
+
+HOOK:
+¿Buscas una hormigonera? Para obras grandes
+
+CTA:
+Encuentra Tu Hormigonera
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: hormigonera, concreto, construccion, obra

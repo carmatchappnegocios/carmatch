@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, 45-year-old Mexican man with warm confident smile, wearing dark blue CarMatch jacket, standing as a buyer looking at touring motorcycle listings. He holds a phone showing CarMatch app with touring motorcycle listings. Bold white text overlay reads "¿BUSCAS UNA TOURING?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas una touring? Para viajes largos y comodos
+
+CTA:
+Encuentra Tu Touring
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: touring, viajes, motociclismo, aventura

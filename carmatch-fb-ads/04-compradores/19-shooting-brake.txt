@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, 20-year-old Mexican woman with trendy style and creative energy, wearing dark blue CarMatch jacket, standing as a buyer looking at shooting brake listings. She holds a phone showing CarMatch app with shooting brake vehicle listings. Bold white text overlay reads "¿BUSCAS UN SHOOTING BRAKE?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un shooting brake? Gran turismo elegante
+
+CTA:
+Encuentra Tu Shooting Brake
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: shooting brake, exclusivo, lujo, gran turismo

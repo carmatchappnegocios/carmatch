@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, a 20-year-old Mexican woman with trendy style and creative energy, wearing a dark blue CarMatch jacket, looks at her dull car paint with disappointment. She holds a phone showing the CarMatch app with nearby detailing services. Bold white text overlay reads "¿BUSCAS DETALLADO PROFESIONAL?" with the purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Auto sin brillo? Detallado profesional que transforma
+
+CTA:
+Brillo Profesional
+
+SEGMENTACION:
+- Edad: 22-45
+- Ubicacion: Mexico
+- Intereses: detallado, ceramico, pulido, proteccion

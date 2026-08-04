@@ -1,0 +1,13 @@
+PROMPT:
+[Car-mela, 42-year-old Mexican woman with kind organized demeanor, wearing dark blue CarMatch jacket, customer/client running low on fuel. She holds a phone showing CarMatch app with nearby gas stations and their prices. Bold white text overlay reads "¿BUSCAS GASOLINERA?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.]
+
+HOOK:
+¿Necesitas gasolina? Gasolineras cerca de ti con mejores precios en CarMatch
+
+CTA:
+Combustible Cerca
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: gasolinera, combustible, gasolina, precios

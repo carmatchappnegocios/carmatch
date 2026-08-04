@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, mujer mexicana de 20 años, estilo moderno y energía creativa, con chaqueta azul oscuro de CarMatch, sostiene un teléfono mostrando la app CarMatch con listados de autos para ciudad. Texto superpuesto en blanco y negrita lee "¿BUSCAS UN AUTO PARA LA CIUDAD?" con el logo púrpura de CarMatch. Fotografía realista, anuncio profesional de Facebook, 1080x1080.
+
+HOOK:
+¿Buscas un auto para la ciudad? Compacto y eficiente
+
+CTA:
+Encuentra Tu Ciudad
+
+SEGMENTACION:
+- Edad: 22-40
+- Ubicacion: Mexico
+- Intereses: ciudad, compacto, economico, urbano

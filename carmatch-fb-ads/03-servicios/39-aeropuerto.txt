@@ -1,0 +1,13 @@
+PROMPT:
+[Car-mela, 42-year-old Mexican woman with kind organized demeanor, wearing dark blue CarMatch jacket, customer/client preparing to travel by air. She holds a phone showing CarMatch app with nearby airports and transport services. Bold white text overlay reads "¿BUSCAS AEROPUERTO?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.]
+
+HOOK:
+¿Viajas en avion? Aeropuertos y servicios de transporte en CarMatch
+
+CTA:
+Viaja Tranquilo
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: aeropuerto, viajes, vuelos, turismo

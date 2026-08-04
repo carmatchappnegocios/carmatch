@@ -1,0 +1,13 @@
+PROMPT:
+[Car-mela, 42-year-old Mexican woman with kind organized demeanor, wearing dark blue CarMatch jacket, customer/client in an emergency medical situation. She holds a phone showing CarMatch app with nearby hospitals and emergency rooms. Bold white text overlay reads "¿BUSCAS HOSPITAL?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.]
+
+HOOK:
+¿Emergencia medica? Hospitales y urgencias en el mapa en CarMatch
+
+CTA:
+Emergencias Cerca
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: hospital, emergencias, salud, ambulancia

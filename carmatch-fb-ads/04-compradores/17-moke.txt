@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, 18-year-old Mexican guy with energetic adventurous spirit, wearing dark blue CarMatch jacket, standing as a buyer looking at Moke listings. He holds a phone showing CarMatch app with Moke vehicle listings. Bold white text overlay reads "¿BUSCAS UN MOKE?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un moke? Diversion tropical sobre ruedas
+
+CTA:
+Encuentra Tu Moke
+
+SEGMENTACION:
+- Edad: 25-50
+- Ubicacion: Mexico
+- Intereses: moke, playa, tropical, diversion

@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, mujer mexicana de 20 años, estilo moderno y energía creativa, con chaqueta azul oscuro de CarMatch, sostiene un teléfono mostrando la app CarMatch con listados de autos para principiantes. Texto superpuesto en blanco y negrita lee "¿ES TU PRIMER AUTO?" con el logo púrpura de CarMatch. Fotografía realista, anuncio profesional de Facebook, 1080x1080.
+
+HOOK:
+¿Es tu primer auto? Guia para comprar seguro
+
+CTA:
+Tu Primer Auto
+
+SEGMENTACION:
+- Edad: 18-30
+- Ubicacion: Mexico
+- Intereses: primer auto, aprendizaje, seguridad, joven

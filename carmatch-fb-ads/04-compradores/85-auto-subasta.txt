@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with warm confident smile, wearing a dark blue CarMatch jacket, stands in a vehicle auction house holding a phone showing CarMatch app with auction vehicle listings. Bold white text overlay reads "¿BUSCAS EN SUBASTA?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas en subasta? Vehiculos a precios increibles
+
+CTA:
+Gana la Subasta
+
+SEGMENTACION:
+- Edad: 28-55
+- Ubicacion: Mexico
+- Intereses: subasta, puja, precio, oportunidad

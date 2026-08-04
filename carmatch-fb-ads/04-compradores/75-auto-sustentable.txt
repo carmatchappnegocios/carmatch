@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, a 20-year-old Mexican woman with trendy style and creative energy, wearing a dark blue CarMatch jacket, stands in a green park holding a phone showing CarMatch app with eco-friendly vehicle listings. Bold white text overlay reads "¿BUSCAS UN AUTO SUSTENTABLE?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un auto sustentable? Cuida el planeta
+
+CTA:
+Encuentra Tu Sustentable
+
+SEGMENTACION:
+- Edad: 22-45
+- Ubicacion: Mexico
+- Intereses: sustentable, ecologico, verde, planeta

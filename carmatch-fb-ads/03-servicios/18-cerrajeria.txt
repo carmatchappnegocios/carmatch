@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, stands outside his locked car looking concerned. He holds a phone showing the CarMatch app with nearby automotive locksmith services. Bold white text overlay reads "¿BUSCAS CERRAJERIA AUTOMOTRIZ?" with the purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Llaves dentro o perdidas? Cerrajeria automotriz 24/7
+
+CTA:
+Abre Tu Auto
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: cerrajeria, llaves, emergencia, seguridad

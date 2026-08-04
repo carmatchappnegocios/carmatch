@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with warm confident smile, wearing a dark blue CarMatch jacket, stands in a construction site holding a phone showing CarMatch app with tunnel construction vehicle listings. Bold white text overlay reads "¿BUSCAS UN AUTO TUNEL?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un auto tunel? Maquinaria para construccion
+
+CTA:
+Encuentra Tu Tunel
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: tunel, construccion, infraestructura, maquinaria

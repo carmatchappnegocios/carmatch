@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with warm confident smile, wearing a dark blue CarMatch jacket, stands in a construction site holding a phone showing CarMatch app with pickup truck listings. Bold white text overlay reads "¿BUSCAS UNA CAMIONETA?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas una camioneta? Versatil para todo
+
+CTA:
+Encuentra Tu Camioneta
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: camioneta, pickup, trabajo, versatil

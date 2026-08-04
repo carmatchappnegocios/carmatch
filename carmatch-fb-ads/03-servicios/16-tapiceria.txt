@@ -1,0 +1,13 @@
+PROMPT:
+Car-mela, a 42-year-old Mexican woman with a kind organized demeanor, wearing a dark blue CarMatch jacket, looks at a tear in her car's upholstery. She holds a phone showing the CarMatch app with nearby upholstery restoration services. Bold white text overlay reads "¿BUSCAS RESTAURACION DE TAPICERIA?" with the purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Tapiceria danada? Restauracion profesional que impresiona
+
+CTA:
+Interior Nuevo
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: tapiceria, cuero, interior, restauracion

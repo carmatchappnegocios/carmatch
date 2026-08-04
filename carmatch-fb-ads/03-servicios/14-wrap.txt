@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, a 20-year-old Mexican woman with trendy style and creative energy, wearing a dark blue CarMatch jacket, imagines her car in a new color. She holds a phone showing the CarMatch app with nearby vehicle wrap services. Bold white text overlay reads "¿BUSCAS WRAP Y VINIL?" with the purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Quieres cambiar el color? Wrap y vinil profesional
+
+CTA:
+Transforma Tu Auto
+
+SEGMENTACION:
+- Edad: 18-40
+- Ubicacion: Mexico
+- Intereses: wrap, vinil, color, customizacion

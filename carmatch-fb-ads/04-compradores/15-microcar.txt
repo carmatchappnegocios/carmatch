@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, 20-year-old Mexican woman with trendy style and creative energy, wearing dark blue CarMatch jacket, standing as a buyer looking at microcar listings. She holds a phone showing CarMatch app with microcar vehicle listings. Bold white text overlay reads "¿BUSCAS UN MICROCAR?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un microcar? Mini pero poderoso para la ciudad
+
+CTA:
+Encuentra Tu Microcar
+
+SEGMENTACION:
+- Edad: 22-40
+- Ubicacion: Mexico
+- Intereses: microcar, electrico, economico, ciudad

@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, stands next to a sporty manual car holding a phone showing CarMatch app with standard transmission vehicle listings. Bold white text overlay reads "¿BUSCAS UN AUTO ESTANDAR?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un auto estandar? Control total en cada cambio
+
+CTA:
+Encuentra Tu Estandar
+
+SEGMENTACION:
+- Edad: 18-40
+- Ubicacion: Mexico
+- Intereses: estandar, manual, control, conduccion

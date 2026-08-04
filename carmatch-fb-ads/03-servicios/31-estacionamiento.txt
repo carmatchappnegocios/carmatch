@@ -1,0 +1,13 @@
+PROMPT:
+[Car-mela, 42-year-old Mexican woman with kind organized demeanor, wearing dark blue CarMatch jacket, customer/client searching for parking in a busy area. She holds a phone showing CarMatch app with nearby secure parking lots. Bold white text overlay reads "¿BUSCAS ESTACIONAMIENTO?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.]
+
+HOOK:
+¿Buscas donde estacionar? Estacionamientos seguros cerca en CarMatch
+
+CTA:
+Estaciona Seguro
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: estacionamiento, parking, seguridad, centro

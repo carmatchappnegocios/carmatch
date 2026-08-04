@@ -1,0 +1,13 @@
+PROMPT:
+[Matchy, 20-year-old Mexican woman with trendy style and creative energy, wearing dark blue CarMatch jacket, customer/client with an electric vehicle needing a charge. She holds a phone showing CarMatch app with nearby EV charging stations. Bold white text overlay reads "¿BUSCAS ELECTROLINERA?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.]
+
+HOOK:
+¿Auto electrico sin carga? Electrolineras disponibles ahora en CarMatch
+
+CTA:
+Carga Electrica
+
+SEGMENTACION:
+- Edad: 22-45
+- Ubicacion: Mexico
+- Intereses: electrico, EV, carga, sostenible

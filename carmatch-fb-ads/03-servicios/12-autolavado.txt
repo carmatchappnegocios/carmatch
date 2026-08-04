@@ -1,0 +1,13 @@
+PROMPT:
+Car-mela, a 42-year-old Mexican woman with a kind organized demeanor, wearing a dark blue CarMatch jacket, notices her dirty car. She holds a phone showing the CarMatch app with nearby car wash services. Bold white text overlay reads "¿BUSCAS AUTOLAVADO RAPIDO?" with the purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Auto sucio? Autolavado cerca de ti rapido y economico
+
+CTA:
+Limpieza Express
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: autolavado, limpieza, lavado

@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, de 18 años, joven mexicano con energía aventurera, sostiene un teléfono mostrando la app CarMatch con listados de triciclos. Texto superpuesto en blanco y negrita lee "¿BUSCAS UN TRICICLO?" con el logo púrpura de CarMatch. Fotografía realista, anuncio profesional de Facebook, 1080x1080.
+
+HOOK:
+¿Buscas un triciclo (Spyder/Ryker)? Experiencia unica sobre ruedas
+
+CTA:
+Encuentra Tu Triciclo
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: Spyder, Ryker, triciclo, Can-Am

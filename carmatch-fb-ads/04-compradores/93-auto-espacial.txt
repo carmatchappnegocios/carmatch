@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, a 20-year-old Mexican woman with trendy style and creative energy, wearing a dark blue CarMatch jacket, stands in a futuristic setting holding a phone showing CarMatch app with space vehicle listings. Bold white text overlay reads "¿BUSCAS UN AUTO ESPACIAL?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un auto espacial? El futuro de la transporte
+
+CTA:
+Mira el Futuro
+
+SEGMENTACION:
+- Edad: 18-35
+- Ubicacion: Mexico
+- Intereses: espacial, futuro, tecnologia, innovacion

@@ -1,0 +1,13 @@
+PROMPT:
+[Matchy, 20-year-old Mexican woman with trendy style and creative energy, wearing dark blue CarMatch jacket, customer/client looking for car accessories and gadgets. She holds a phone showing CarMatch app with nearby automotive boutiques. Bold white text overlay reads "¿BUSCAS AUTO BOUTIQUE?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.]
+
+HOOK:
+¿Accesorios para tu auto? Boutiques automotrices cerca de ti en CarMatch
+
+CTA:
+Accesorios que Enamoran
+
+SEGMENTACION:
+- Edad: 18-40
+- Ubicacion: Mexico
+- Intereses: accesorios, gadgets, tapetes, perfumes

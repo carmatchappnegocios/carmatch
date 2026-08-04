@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with warm confident smile, wearing a dark blue CarMatch jacket, stands in an international shipping port holding a phone showing CarMatch app with export-ready vehicle listings. Bold white text overlay reads "¿BUSCAS UN AUTO PARA EXPORTAR?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un auto para exportar? Vehiculos listos para salir
+
+CTA:
+Exporta Tu Auto
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: exportacion, aduana, internacional

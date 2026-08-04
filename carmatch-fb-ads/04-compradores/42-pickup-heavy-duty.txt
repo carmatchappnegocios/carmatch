@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, hombre mexicano de 45 años, sonrisa cálida y confiada, con chaqueta azul oscuro de CarMatch, sostiene un teléfono mostrando la app CarMatch con listados de pickups heavy duty. Texto superpuesto en blanco y negrita lee "¿BUSCAS UNA PICKUP HEAVY DUTY?" con el logo púrpura de CarMatch. Fotografía realista, anuncio profesional de Facebook, 1080x1080.
+
+HOOK:
+¿Buscas una pickup heavy duty? Para trabajo duro de verdad
+
+CTA:
+Encuentra Tu Heavy Duty
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: heavy duty, F-450, towing, rancho

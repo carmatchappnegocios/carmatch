@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, de 18 años, joven mexicano con energía aventurera, sostiene un teléfono mostrando la app CarMatch con listados de supermotos. Texto superpuesto en blanco y negrita lee "¿BUSCAS UN SUPERMOTO?" con el logo púrpura de CarMatch. Fotografía realista, anuncio profesional de Facebook, 1080x1080.
+
+HOOK:
+¿Buscas un supermoto? Agil y potente para pista
+
+CTA:
+Encuentra Tu Supermoto
+
+SEGMENTACION:
+- Edad: 22-40
+- Ubicacion: Mexico
+- Intereses: supermoto, pista, enduro calle, competicion

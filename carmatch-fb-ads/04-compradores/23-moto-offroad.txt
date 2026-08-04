@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, 18-year-old Mexican guy with energetic adventurous spirit, wearing dark blue CarMatch jacket, standing as a buyer looking at off-road motorcycle listings. He holds a phone showing CarMatch app with off-road motorcycle listings. Bold white text overlay reads "¿BUSCAS UNA MOTO OFF-ROAD?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas una moto off-road? Para terraceria y aventura
+
+CTA:
+Encuentra Tu Off-road
+
+SEGMENTACION:
+- Edad: 22-45
+- Ubicacion: Mexico
+- Intereses: off-road, enduro, aventura, terraceria

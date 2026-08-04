@@ -1,0 +1,13 @@
+PROMPT:
+[Don Match, 45-year-old Mexican man with warm confident smile, wearing dark blue CarMatch jacket, customer/client whose car engine needs rectification work. He holds a phone showing CarMatch app with nearby engine reconditioning shops. Bold white text overlay reads "¿BUSCAS RECTIFICADORA?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.]
+
+HOOK:
+¿Motor necesita rectificacion? Rectificadoras expertas cerca de ti en CarMatch
+
+CTA:
+Precision Exacta
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: rectificacion, motor, cylinder head

@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with warm confident smile, wearing a dark blue CarMatch jacket, stands in a warehouse holding a phone showing CarMatch app with cargo vehicle listings. Bold white text overlay reads "¿BUSCAS UN AUTO DE CARGA?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un auto de carga? Para tu negocio
+
+CTA:
+Encuentra Tu Carga
+
+SEGMENTACION:
+- Edad: 28-55
+- Ubicacion: Mexico
+- Intereses: carga, negocio, transporte, distribucion

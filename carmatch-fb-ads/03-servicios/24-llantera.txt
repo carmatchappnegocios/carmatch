@@ -1,0 +1,13 @@
+PROMPT:
+[Don Match, 45-year-old Mexican man with warm confident smile, wearing dark blue CarMatch jacket, customer/client with a flat tire on the side of the road. He holds a phone showing CarMatch app with nearby tire shops. Bold white text overlay reads "¿BUSCAS LLANTERA?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.]
+
+HOOK:
+¿Pinchazo o llanta danada? Llantera cercana que te ayuda en CarMatch
+
+CTA:
+Llantas Nuevas
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: llantas, neumaticos, pinchazo, vulcanizadora

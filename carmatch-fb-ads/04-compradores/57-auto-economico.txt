@@ -1,0 +1,13 @@
+PROMPT:
+Car-mela, mujer mexicana de 42 años, demeanor amable y organizada, con chaqueta azul oscuro de CarMatch, sostiene un teléfono mostrando la app CarMatch con listados de autos económicos. Texto superpuesto en blanco y negrita lee "¿BUSCAS UN AUTO ECONOMICO?" con el logo púrpura de CarMatch. Fotografía realista, anuncio profesional de Facebook, 1080x1080.
+
+HOOK:
+¿Buscas un auto economico? Sin gastar de mas
+
+CTA:
+Encuentra Tu Economico
+
+SEGMENTACION:
+- Edad: 22-50
+- Ubicacion: Mexico
+- Intereses: economico, presupuesto, ahorro, primer auto

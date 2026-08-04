@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, a 20-year-old Mexican woman with trendy style and creative energy, wearing a dark blue CarMatch jacket, imagines better sound in her car. She holds a phone showing the CarMatch app with nearby car audio installation services. Bold white text overlay reads "¿BUSCAS INSTALACION DE AUDIO?" with the purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Audio basico? Instalacion de estereos y alarmas
+
+CTA:
+Sonido Potente
+
+SEGMENTACION:
+- Edad: 18-40
+- Ubicacion: Mexico
+- Intereses: audio, estereos, alarma, sonido

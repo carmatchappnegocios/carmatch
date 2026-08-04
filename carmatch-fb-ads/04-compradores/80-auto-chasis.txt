@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with warm confident smile, wearing a dark blue CarMatch jacket, stands in a custom vehicle workshop holding a phone showing CarMatch app with chassis listings. Bold white text overlay reads "¿BUSCAS UN CHASIS?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un chasis? Para conversiones personalizadas
+
+CTA:
+Encuentra Tu Chasis
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: chasis, conversion, personalizacion, proyecto

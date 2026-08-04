@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, a 20-year-old Mexican woman with trendy style and creative energy, wearing a dark blue CarMatch jacket, squints from sun glare through her windshield. She holds a phone showing the CarMatch app with nearby window tinting services. Bold white text overlay reads "¿BUSCAS POLARIZADO PROFESIONAL?" with the purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Sol molestando? Polarizado profesional cerca de ti
+
+CTA:
+Proteccion Total
+
+SEGMENTACION:
+- Edad: 22-45
+- Ubicacion: Mexico
+- Intereses: polarizado, proteccion solar, privacidad

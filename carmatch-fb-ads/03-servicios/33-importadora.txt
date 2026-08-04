@@ -1,0 +1,13 @@
+PROMPT:
+[Don Match, 45-year-old Mexican man with warm confident smile, wearing dark blue CarMatch jacket, customer/client interested in purchasing an imported vehicle. He holds a phone showing CarMatch app with verified import agencies. Bold white text overlay reads "¿BUSCAS IMPORTADORA?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.]
+
+HOOK:
+¿Buscas un auto importado? Importadoras verificadas en CarMatch
+
+CTA:
+Importa Directo
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: importacion, autos importados, aduana

@@ -1,0 +1,13 @@
+PROMPT:
+Car-mela, 42-year-old Mexican woman with kind organized demeanor, wearing dark blue CarMatch jacket, standing as a buyer looking at SUV listings. She holds a phone showing CarMatch app with SUV vehicle listings. Bold white text overlay reads "¿BUSCAS UNA SUV?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas una SUV? La familia perfecta espera
+
+CTA:
+Encuentra Tu SUV
+
+SEGMENTACION:
+- Edad: 28-55
+- Ubicacion: Mexico
+- Intereses: SUV, familia, seguridad, espacio

@@ -1,0 +1,13 @@
+PROMPT:
+Car-mela, a 42-year-old Mexican woman with kind organized demeanor, wearing a dark blue CarMatch jacket, stands in a used car lot holding a phone showing CarMatch app with verified used vehicle listings. Bold white text overlay reads "¿BUSCAS UN AUTO USADO?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un auto usado? Verificado y a buen precio
+
+CTA:
+Encuentra Tu Usado
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: usado, verificado, economico, segunda mano

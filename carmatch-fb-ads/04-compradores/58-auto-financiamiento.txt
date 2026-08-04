@@ -1,0 +1,13 @@
+PROMPT:
+Car-mela, mujer mexicana de 42 años, demeanor amable y organizada, con chaqueta azul oscuro de CarMatch, sostiene un teléfono mostrando la app CarMatch con listados de autos con financiamiento. Texto superpuesto en blanco y negrita lee "¿BUSCAS AUTO CON FINANCIAMIENTO?" con el logo púrpura de CarMatch. Fotografía realista, anuncio profesional de Facebook, 1080x1080.
+
+HOOK:
+¿Buscas auto con financiamiento? Opciones reales para ti
+
+CTA:
+Financiamiento Justo
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: financiamiento, credito, pago mensual

@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with a warm confident smile, wearing a dark blue CarMatch jacket, hears a squeal from his brakes. He holds a phone showing the CarMatch app with nearby brake specialists. Bold white text overlay reads "¿BUSCAS ESPECIALISTAS EN FRENOS?" with the purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Frenos que chirrpan? Encuentra especialistas en frenos
+
+CTA:
+Frenos Seguros
+
+SEGMENTACION:
+- Edad: 25-55
+- Ubicacion: Mexico
+- Intereses: frenos, balatas, seguridad vial

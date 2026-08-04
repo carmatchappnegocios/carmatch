@@ -1,0 +1,13 @@
+PROMPT:
+Matchy, mujer mexicana de 20 años, estilo moderno y energía creativa, con chaqueta azul oscuro de CarMatch, sostiene un teléfono mostrando la app CarMatch con listados de autos 0km. Texto superpuesto en blanco y negrita lee "¿BUSCAS UN AUTO 0KM?" con el logo púrpura de CarMatch. Fotografía realista, anuncio profesional de Facebook, 1080x1080.
+
+HOOK:
+¿Buscas un auto 0km? El mas nuevo del mercado
+
+CTA:
+Encuentra Tu 0km
+
+SEGMENTACION:
+- Edad: 22-45
+- Ubicacion: Mexico
+- Intereses: 0km, nuevo, agencia, garantia

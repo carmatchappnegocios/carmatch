@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, 45-year-old Mexican man with warm confident smile, wearing dark blue CarMatch jacket, standing as a buyer looking at limousine listings. He holds a phone showing CarMatch app with limousine vehicle listings. Bold white text overlay reads "¿BUSCAS UNA LIMUSINA?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas una limusina? Para eventos especiales
+
+CTA:
+Encuentra Tu Limusina
+
+SEGMENTACION:
+- Edad: 30-55
+- Ubicacion: Mexico
+- Intereses: limusina, lujo, eventos, bodas

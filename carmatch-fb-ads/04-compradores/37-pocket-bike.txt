@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, de 18 años, joven mexicano con energía aventurera, sostiene un teléfono mostrando la app CarMatch con listados de pocket bikes. Texto superpuesto en blanco y negrita lee "¿BUSCAS UN POCKET BIKE?" con el logo púrpura de CarMatch. Fotografía realista, anuncio profesional de Facebook, 1080x1080.
+
+HOOK:
+¿Buscas un pocket bike? Mini moto para diversion
+
+CTA:
+Encuentra Tu Pocket Bike
+
+SEGMENTACION:
+- Edad: 18-35
+- Ubicacion: Mexico
+- Intereses: pocket bike, mini moto, diversion, karting

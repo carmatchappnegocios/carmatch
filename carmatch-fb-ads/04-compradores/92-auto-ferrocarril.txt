@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with warm confident smile, wearing a dark blue CarMatch jacket, stands in a railway yard holding a phone showing CarMatch app with rail vehicle listings. Bold white text overlay reads "¿BUSCAS UN AUTO FERROCARRIL?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un auto ferrocarril? Vagones y locomotoras
+
+CTA:
+Encuentra Tu Ferrocarril
+
+SEGMENTACION:
+- Edad: 35-55
+- Ubicacion: Mexico
+- Intereses: ferrocarril, tren, vagones, locomotora

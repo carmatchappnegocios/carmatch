@@ -1,0 +1,13 @@
+PROMPT:
+Don Match, a 45-year-old Mexican man with warm confident smile, wearing a dark blue CarMatch jacket, stands in a commercial loading dock holding a phone showing CarMatch app with van listings. Bold white text overlay reads "¿BUSCAS UNA FURGONETA?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas una furgoneta? Carga y pasajeros juntos
+
+CTA:
+Encuentra Tu Furgoneta
+
+SEGMENTACION:
+- Edad: 28-55
+- Ubicacion: Mexico
+- Intereses: furgoneta, carga, pasajeros, negocio

@@ -1,0 +1,13 @@
+PROMPT:
+Car-litos, an 18-year-old Mexican guy with energetic adventurous spirit, wearing a dark blue CarMatch jacket, stands in front of a rugged 4x4 vehicle holding a phone showing CarMatch app with off-road vehicle listings. Bold white text overlay reads "¿BUSCAS UN AUTO 4X4?" with purple CarMatch logo. Photorealistic, professional Facebook ad, 1080x1080.
+
+HOOK:
+¿Buscas un auto 4x4? Para cualquier terreno
+
+CTA:
+Encuentra Tu 4x4
+
+SEGMENTACION:
+- Edad: 22-45
+- Ubicacion: Mexico
+- Intereses: 4x4, off-road, aventura, terreno
