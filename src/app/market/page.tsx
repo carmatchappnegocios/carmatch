@@ -70,6 +70,7 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
 
 interface SearchParams {
     search?: string
+    city?: string
     brand?: string
     model?: string
     minPrice?: string
