@@ -211,7 +211,7 @@ function AdminPanelContent() {
                             {activeView === 'more' && (
                                 <MoreTab
                                     menuItems={menuItems}
-                                    setActiveView={setActiveView}
+                                    setActiveView={setActiveView as (id: string) => void}
                                 />
                             )}
                         </motion.div>
