@@ -79,7 +79,7 @@ export async function GET(request: NextRequest) {
                     // Notificación de renovación exitosa
                     await upsertNotification({
                         userId: user.id,
-                        type: 'BUSINESS_ACTIVITY',
+                        type: 'BUSINESS_AUTO_RENEWED',
                         title: '✅ Negocio renovado automáticamente',
                         message: `Tu negocio "${business.name}" se renovó automáticamente por 30 días más. Créditos restantes: ${user.credits - 1}`,
                         link: `/my-businesses?businessId=${business.id}`,
@@ -107,7 +107,7 @@ export async function GET(request: NextRequest) {
 
                     await upsertNotification({
                         userId: user.id,
-                        type: 'BUSINESS_ACTIVITY',
+                        type: 'BUSINESS_EXPIRED_NO_CREDITS',
                         title: '⚠️ Negocio desactivado - Compra créditos',
                         message: `Tu negocio "${business.name}" se desactivó por falta de créditos.\n\n📊 Últimos 30 días:\n• ${totalViews} vistas\n• ~${estimatedLeads} clientes potenciales\n• Est. $${potentialRevenue} en oportunidades\n\n💡 Reactívalo con 1 crédito y sigue captando clientes.`,
                         link: '/profile?tab=credits',
@@ -131,7 +131,7 @@ export async function GET(request: NextRequest) {
                 const existingNotif = await prisma.notification.findFirst({
                     where: {
                         userId: business.userId,
-                        type: 'BUSINESS_ACTIVITY',
+                        type: 'BUSINESS_EXPIRES_2_DAYS',
                         metadata: {
                             path: ['businessId'],
                             equals: business.id
@@ -147,7 +147,7 @@ export async function GET(request: NextRequest) {
 
                     await upsertNotification({
                         userId: business.userId,
-                        type: 'BUSINESS_ACTIVITY',
+                        type: 'BUSINESS_EXPIRES_2_DAYS',
                         title: userHasCredits ? '🔄 Próxima renovación automática' : '⏰ Sin créditos - Compra ahora',
                         message: userHasCredits
                             ? `Tu negocio "${business.name}" se renovará automáticamente en 2 días (1 crédito). Créditos disponibles: ${business.user.credits}`

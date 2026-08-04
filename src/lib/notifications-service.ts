@@ -18,6 +18,9 @@ export type NotificationType =
     | 'VEHICLE_EXPIRED_NO_CREDITS'
     | 'VEHICLE_EXPIRES_2_DAYS'
     | 'BUSINESS_ACTIVITY'
+    | 'BUSINESS_AUTO_RENEWED'
+    | 'BUSINESS_EXPIRED_NO_CREDITS'
+    | 'BUSINESS_EXPIRES_2_DAYS'
 
 interface CreateNotificationParams {
     userId: string
