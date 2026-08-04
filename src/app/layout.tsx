@@ -70,10 +70,10 @@ export const metadata: Metadata = {
         description: "Publica tu vehículo gratis y sin comisiones. Encuentra mecánicos y servicios 24/7 en nuestra comunidad.",
         images: [
             {
-                url: "/icon-512-v20.png?v=22",
-                width: 512,
-                height: 512,
-                alt: "CarMatch Social",
+                url: "/portada_1024x500.png?v=23",
+                width: 1024,
+                height: 500,
+                alt: "CarMatch",
             },
         ],
     },
@@ -81,7 +81,7 @@ export const metadata: Metadata = {
         card: "summary_large_image",
         title: "CarMatch | Compra y Vende Autos Gratis en México",
         description: "La red social automotriz que revoluciona el mercado. Publica gratis y encuentra talleres 24/7.",
-        images: ["/icon-512-v20.png?v=22"],
+        images: ["/portada_1024x500.png?v=23"],
     },
     appleWebApp: {
         capable: true,

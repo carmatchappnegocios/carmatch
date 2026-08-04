@@ -24,7 +24,7 @@ export const metadata = {
     openGraph: {
         title: "Map Store | Encuentra Servicios Automotrices Cerca de Ti",
         description: "El directorio más completo de talleres y servicios mecánicos en tiempo real. ¡Encuentra ayuda ahora mismo!",
-        images: ["/icon-512-v20.png"],
+        images: [{ url: "/portada_1024x500.png?v=23", width: 1024, height: 500, alt: "CarMatch" }],
     }
 }
 

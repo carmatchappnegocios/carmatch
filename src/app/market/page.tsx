@@ -57,13 +57,13 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
             url: "https://carmatchapp.net/market",
             siteName: "CarMatch",
             type: "website",
-            images: [{ url: "https://carmatchapp.net/og-market.png" }],
+            images: [{ url: "https://carmatchapp.net/portada_1024x500.png?v=23", width: 1024, height: 500, alt: "CarMatch" }],
         },
         twitter: {
             card: "summary_large_image",
             title,
             description,
-            images: ["https://carmatchapp.net/og-market.png"],
+            images: ["https://carmatchapp.net/portada_1024x500.png?v=23"],
         }
     }
 }

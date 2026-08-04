@@ -32,10 +32,10 @@ export const metadata = {
         type: "website",
         images: [
             {
-                url: "https://carmatchapp.net/og-mapstore.png",
-                width: 1200,
-                height: 630,
-                alt: "CarMatch Map Store - Talleres y Servicios Automotrices 24/7",
+                url: "https://carmatchapp.net/portada_1024x500.png?v=23",
+                width: 1024,
+                height: 500,
+                alt: "CarMatch",
             }
         ],
     },
@@ -43,7 +43,7 @@ export const metadata = {
         card: "summary_large_image",
         title: "Talleres Mecánicos 24/7 | CarMatch Map Store",
         description: "Encuentra mecánicos, desponchadoras y grúas cerca de ti. Servicio 24/7.",
-        images: ["https://carmatchapp.net/og-mapstore.png"],
+        images: ["https://carmatchapp.net/portada_1024x500.png?v=23"],
     }
 }
 

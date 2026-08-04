@@ -34,10 +34,10 @@ export const metadata = {
         type: "website",
         images: [
             {
-                url: "https://carmatchapp.net/og-swipe.png",
-                width: 1200,
-                height: 630,
-                alt: "CarMatch Swipe - Descubre tu Auto Ideal",
+                url: "https://carmatchapp.net/portada_1024x500.png?v=23",
+                width: 1024,
+                height: 500,
+                alt: "CarMatch",
             }
         ],
     },
@@ -45,7 +45,7 @@ export const metadata = {
         card: "summary_large_image",
         title: "CarMatch Swipe | Tinder de Carros - Descubre tu Auto Ideal",
         description: "Desliza, da Like y guarda tus favoritos. La forma más rápida de encontrar tu auto.",
-        images: ["https://carmatchapp.net/og-swipe.png"],
+        images: ["https://carmatchapp.net/portada_1024x500.png?v=23"],
     }
 }
 
