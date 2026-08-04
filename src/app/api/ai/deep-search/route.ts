@@ -22,8 +22,8 @@ export async function POST(req: NextRequest) {
             const where = filters ? buildBusinessQuery(filters) : {
                 isActive: true,
                 OR: [
-                    { name: { contains: query, mode: 'insensitive' } },
-                    { description: { contains: query, mode: 'insensitive' } }
+                    { name: { contains: query, mode: 'insensitive' as const } },
+                    { description: { contains: query, mode: 'insensitive' as const } }
                 ]
             }
 
@@ -47,8 +47,8 @@ export async function POST(req: NextRequest) {
             const where = filters ? buildVehicleQuery(filters) : {
                 status: 'ACTIVE',
                 OR: [
-                    { title: { contains: query, mode: 'insensitive' } },
-                    { description: { contains: query, mode: 'insensitive' } }
+                    { title: { contains: query, mode: 'insensitive' as const } },
+                    { description: { contains: query, mode: 'insensitive' as const } }
                 ]
             }
 
