@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
         } else {
             // Búsqueda en Vehículos usando filtros estructurados
             const where = filters ? buildVehicleQuery(filters) : {
-                status: 'ACTIVE',
+                status: 'ACTIVE' as const,
                 OR: [
                     { title: { contains: query, mode: 'insensitive' as const } },
                     { description: { contains: query, mode: 'insensitive' as const } }
