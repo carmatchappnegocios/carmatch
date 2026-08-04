@@ -5,6 +5,7 @@
 import { prisma } from '@/lib/db'
 import { renewBusinessForOneMonth } from '@/lib/businessMonetization'
 import { serializeDecimal } from '@/lib/serialize'
+import { NextRequest } from 'next/server'
 
 export async function GET(
     request: NextRequest,
