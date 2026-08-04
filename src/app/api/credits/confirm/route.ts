@@ -109,7 +109,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({
             success: true,
             creditsAdded: creditsToAdd,
-            currentCredits: updatedUser.credits
+            currentCredits: updatedUser?.credits ?? 0
         })
 
     } catch (error) {
