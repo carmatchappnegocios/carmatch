@@ -54,7 +54,6 @@ FORMATO JSON:
   "response": "Mensaje amable al usuario explicando que vamos a investigar y pidiendo más detalles si es necesario"
 }`
 
-            const { geminiFlash } = await import('@/lib/ai/geminiClient')
             const aiResponse = await safeGenerateContent(reportPrompt, 3, 'FLASH')
             const reportData = safeExtractJSON<{
                 reason: string
@@ -165,8 +164,7 @@ ${history?.map((h: any) => `${h.sender === 'user' ? 'Usuario' : 'Soporte'}: ${h.
   "actionLink": "/path" (opcional, ej: /market, /map)
 }`
 
-        const { geminiFlashConversational } = await import('@/lib/ai/geminiClient')
-        const response = await safeGenerateContent(prompt, 5, 'CONVERSATIONAL')
+        const response = await safeGenerateContent(prompt, 5, 'FLASH')
         const responseText = response.text()
 
         const aiResponse = safeExtractJSON<{ response: string, command?: any, actionLink?: string }>(responseText)
