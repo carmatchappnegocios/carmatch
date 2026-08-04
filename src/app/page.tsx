@@ -11,7 +11,7 @@ export default async function Home() {
     
     if (session?.user) {
         // Redirección inteligente basada en comportamiento historico
-        redirect(getWeightedHomePath(session.user))
+        redirect(getWeightedHomePath())
     }
 
     // 🚀 Visitantes van directo al MarketCar (no necesitan cuenta para ver)
