@@ -53,6 +53,7 @@ const CostsTab = dynamic<any>(() => import('@/components/admin/CostsTab'), { ssr
 
 const BetaSessionsTab = dynamic<any>(() => import('@/components/admin/BetaSessionsTab'), { ssr: false })
 const FacebookAdsTab = dynamic<any>(() => import('@/components/admin/FacebookAdsTab'), { ssr: false })
+const VideoPromptsTab = dynamic<any>(() => import('@/components/admin/VideoPromptsTab'), { ssr: false })
 import ManageCreditsModal from '@/components/admin/ManageCreditsModal'
 import QRCodeModal from '@/components/QRCodeModal'
 import { testGeminiHealth, AiHealthReport } from '@/app/admin/actions/ai-health-actions'
@@ -240,6 +241,7 @@ function MarketingTab() {
             </div>
 
             <FacebookAdsTab />
+            <VideoPromptsTab />
         </div>
     )
 }
