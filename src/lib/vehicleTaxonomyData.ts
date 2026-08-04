@@ -1,7 +1,7 @@
 ﻿// 🛡️ PROHIBIDO MODIFICAR SIN ORDEN EXPLÍCITA DEL USUARIO
 // Heavy vehicle data extracted from vehicleTaxonomy.ts to fix TDZ bundler bug in production
 
-type VehicleCategoryData = 'Automóbil' | 'Motocicleta' | 'Camión' | 'Autobús' | 'Maquinaria' | 'Especial'
+type VehicleCategoryData = 'Automóvil' | 'Motocicleta' | 'Camión' | 'Autobús' | 'Maquinaria' | 'Especial'
 
 // 🌍 Global Brands Database (Structured for Scalability)
 // Note: This is a curated list of major global brands. In a real AI scenario, this would be fetched from an API.
