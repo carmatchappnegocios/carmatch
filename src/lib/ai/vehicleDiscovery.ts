@@ -44,8 +44,8 @@ export async function discoverNewBrands(): Promise<number> {
   `
 
     // ✅ Usar Pro para descubrimiento (requiere conocimiento profundo del mercado)
-    const { geminiPro } = await import('@/lib/ai/geminiClient');
-    const response = await safeGenerateContent(prompt, 5, geminiPro);
+    const { 'PRO' } = await import('@/lib/ai/geminiClient');
+    const response = await safeGenerateContent(prompt, 5, 'PRO');
     const responseText = response.text().trim()
 
     const brands = safeExtractJSON<any[]>(responseText)
@@ -130,8 +130,8 @@ export async function discoverNewModels(): Promise<number> {
     Responde SOLO JSON, sin markdown.
     `
 
-        const { geminiPro } = await import('@/lib/ai/geminiClient');
-        const response = await safeGenerateContent(prompt, 5, geminiPro); // ✅ Pro
+        const { 'PRO' } = await import('@/lib/ai/geminiClient');
+        const response = await safeGenerateContent(prompt, 5, 'PRO'); // ✅ Pro
         const responseText = response.text().trim()
 
         const models = safeExtractJSON<any[]>(responseText)
@@ -205,8 +205,8 @@ export async function discoverNewVehicleTypes(): Promise<number> {
   Solo JSON, sin markdown.
   `
 
-    const { geminiPro } = await import('@/lib/ai/geminiClient');
-    const response = await safeGenerateContent(prompt, 5, geminiPro); // ✅ Pro
+    const { 'PRO' } = await import('@/lib/ai/geminiClient');
+    const response = await safeGenerateContent(prompt, 5, 'PRO'); // ✅ Pro
     const responseText = response.text().trim()
 
     const types = safeExtractJSON<any[]>(responseText)

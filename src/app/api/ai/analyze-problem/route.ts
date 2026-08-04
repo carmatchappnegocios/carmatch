@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
 
         console.log('🤖 Consultando Asesor Experto para:', query)
         const { geminiPro } = await import('@/lib/ai/geminiModels');
-        const response = await safeGenerateContent(finalPrompt, 3, geminiPro);
+        const response = await safeGenerateContent(finalPrompt, 3, 'PRO');
         const responseText = response.text()
         const aiResponse = safeExtractJSON<any>(responseText)
 
