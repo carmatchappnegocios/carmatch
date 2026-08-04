@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
                 metadata: { sig: sig?.substring(0, 20), bodyPreview: body.substring(0, 100) }
             }
         })
-        return NextResponse.json({ error: `Webhook Error: ${err.message}` }, { status: 400 })
+        return NextResponse.json({ error: 'Firma invalida' }, { status: 400 })
     }
 
     // --- LOG DE EVENTO ---

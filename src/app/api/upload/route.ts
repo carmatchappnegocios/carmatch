@@ -26,7 +26,6 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'Debes iniciar sesión para subir imágenes' }, { status: 401 })
     }
 
-    console.log(`--- RECIBIDA PETICIÓN DE SUBIDA (${session.user.email}) ---`)
     try {
         const formData = await request.formData()
         const file = formData.get('file') as File | null
@@ -40,7 +39,13 @@ export async function POST(request: NextRequest) {
             )
         }
 
-        console.log(`📁 Archivo recibido: ${file.name} (${file.size} bytes) - Tipo: ${imageType}`)
+        // File size limit: 10MB
+        if (file.size > 10 * 1024 * 1024) {
+            return NextResponse.json(
+                { error: 'El archivo es demasiado grande (máximo 10MB)' },
+                { status: 400 }
+            )
+        }
 
         // Debug Cloud Config (Log bools only for security)
         const configCheck = {
@@ -79,8 +84,6 @@ export async function POST(request: NextRequest) {
             }
         }
 
-        console.log('🚀 Iniciando subida a Cloudinary...')
-
         // Upload to Cloudinary using a Promise wrapper
         const result = await new Promise((resolve, reject) => {
             const uploadStream = cloudinary.uploader.upload_stream(
@@ -94,7 +97,6 @@ export async function POST(request: NextRequest) {
                         reject(error)
                     }
                     else {
-                        console.log('✅ Éxito Callback Cloudinary:', result?.secure_url)
                         resolve(result)
                     }
                 }
@@ -108,7 +110,6 @@ export async function POST(request: NextRequest) {
             uploadStream.end(buffer)
         })
 
-        console.log('🏁 Proceso finalizado con éxito')
         return NextResponse.json(result)
 
     } catch (error) {

@@ -78,11 +78,12 @@ export async function PATCH(
         }
 
         // Update simple si no hay créditos
+        // Only master admin can change isAdmin flag
         const updatedUser = await prisma.user.update({
             where: { id },
             data: {
                 ...(typeof isActive === 'boolean' && { isActive }),
-                ...(typeof isAdmin === 'boolean' && { isAdmin })
+                ...(isAdminMaster && typeof isAdmin === 'boolean' && { isAdmin })
             }
         })
 

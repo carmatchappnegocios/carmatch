@@ -1,8 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
+import { checkRateLimit } from '@/lib/rate-limit'
 
 export async function POST(request: NextRequest) {
     try {
+        const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
+        const rl = checkRateLimit(`waitlist:${ip}`, { windowMs: 60000, max: 3 })
+        if (!rl.allowed) {
+            return NextResponse.json({ error: 'Demasiados intentos. Intenta más tarde.' }, { status: 429 })
+        }
+
         const { email, name } = await request.json()
 
         if (!email) {

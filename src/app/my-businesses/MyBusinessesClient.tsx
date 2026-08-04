@@ -209,7 +209,7 @@ export default function MyBusinessesClient() {
 
         // Reverse Geocode to fill address fields automatically (required since inputs are hidden)
         try {
-            const token = process.env.NEXT_PUBLIC_MAPBOX_TOKEN
+            const token = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
             if (!token) return
 
             const res = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${token}&types=address,poi`)

@@ -129,7 +129,7 @@ export default function SwipeClient({ initialItems, currentUserId }: SwipeClient
                 try {
                     const parsed = JSON.parse(cached)
                     setShuffledItems(parsed)
-                    console.log('📦 Cargado Swipe desde cache offline')
+
                 } catch (e) {
                     console.error('Error parsing swipe cache', e)
                 }
@@ -178,7 +178,7 @@ export default function SwipeClient({ initialItems, currentUserId }: SwipeClient
 
                 // Si está dentro del radio actual (o es boosted), avisar
                 if (dist <= RADIUS_TIERS[tierIndex] || vehicle.isBoosted) {
-                    console.log("🔔 [Swipe] Nuevo vehículo detectado:", vehicle.title)
+
                     setNewVehiclesCount(prev => prev + 1)
                 }
             } else if (!location) {
@@ -309,14 +309,10 @@ export default function SwipeClient({ initialItems, currentUserId }: SwipeClient
     const expandTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
     const expandSearch = useCallback(() => {
-        console.log('[expandSearch] Llamada recibida, isExpandingRef.current:', isExpandingRef.current)
-
         if (isExpandingRef.current) {
-            console.log('[expandSearch] BLOQUEADO - ya está expandiendo')
             return
         }
 
-        console.log('[expandSearch] EJECUTANDO expansión...')
         isExpandingRef.current = true
 
         // Limpiar timeout anterior si existe
@@ -330,14 +326,12 @@ export default function SwipeClient({ initialItems, currentUserId }: SwipeClient
             // 🔥 BATCH UPDATE: Actualizar todo el estado de una vez usando función de actualización
             setTierIndex(prev => {
                 const nextTier = (prev + 1) % RADIUS_TIERS.length
-                console.log('[expandSearch] Cambiando tier de', prev, 'a', nextTier)
                 return nextTier
             })
             setSeenIds(new Set())
             setIsInternalLoading(true)
 
             expandTimeoutRef.current = setTimeout(() => {
-                console.log('[expandSearch] Reseteando flags después de 600ms')
                 setIsInternalLoading(false)
                 isExpandingRef.current = false
                 expandTimeoutRef.current = null

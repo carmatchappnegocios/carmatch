@@ -19,7 +19,12 @@ export async function POST(request: Request) {
             )
         }
 
-        const { email, password, name } = await request.json()
+        const { email, password, name, website } = await request.json()
+
+        // Honeypot check: bots fill hidden fields
+        if (website) {
+            return NextResponse.json({ error: "Error al crear la cuenta" }, { status: 400 })
+        }
 
         if (!email || !password) {
             return NextResponse.json(

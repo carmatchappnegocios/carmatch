@@ -159,7 +159,6 @@ export default function ChatPage({
             const res = await fetch(`/api/chats/${chatId}`)
             if (res.ok) {
                 const data = await res.json()
-                console.log('✅ [CHAT DETAILS LOADED]', data)
                 setChat(data)
             } else {
                 console.error('❌ [CHAT DETAILS ERROR]', res.status, await res.text())
@@ -199,7 +198,6 @@ export default function ChatPage({
             const res = await fetch(`/api/chats/${chatId}/messages`)
             if (res.ok) {
                 const data = await res.json()
-                console.log('🔥 [FRONTEND DEBUG] Messages received:', data)
                 const uniqueMessages = Array.from(
                     new Map<string, Message>(data.map((m: Message) => [m.id, m])).values()
                 )

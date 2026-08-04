@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback } from 'react'
+import { toast } from 'sonner'
 
 const PUBLIC_KEY = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY
 
@@ -66,19 +67,19 @@ export function usePushNotifications() {
 
     const subscribe = useCallback(async () => {
         if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
-            alert('Tu navegador no soporta notificaciones push.')
+            toast.error('Tu navegador no soporta notificaciones push.')
             return
         }
 
         if (!PUBLIC_KEY) {
-            alert('Error de configuración. Las notificaciones no están disponibles.')
+            toast.error('Error de configuración. Las notificaciones no están disponibles.')
             return
         }
 
         try {
             const perm = await Notification.requestPermission()
             if (perm !== 'granted') {
-                alert('Permiso de notificaciones denegado.')
+                toast.error('Permiso de notificaciones denegado.')
                 return
             }
 
@@ -103,11 +104,11 @@ export function usePushNotifications() {
             setIsSubscribed(true)
             setSubscription(sub)
             setPermission('granted')
-            alert('¡Notificaciones Activadas!')
+            toast.success('¡Notificaciones Activadas!')
 
         } catch (error) {
             console.error('[PUSH] Error suscribiendo a push:', error)
-            alert('Error activando notificaciones. Revisa permisos.')
+            toast.error('Error activando notificaciones. Revisa permisos.')
         }
     }, [])
 
@@ -131,11 +132,11 @@ export function usePushNotifications() {
             setIsSubscribed(false)
             setSubscription(null)
             setPermission('default')
-            alert('Notificaciones desactivadas')
+            toast.success('Notificaciones desactivadas')
 
         } catch (error) {
             console.error('[PUSH] Error desuscribiendo:', error)
-            alert('Error desactivando notificaciones.')
+            toast.error('Error desactivando notificaciones.')
         }
     }, [])
 

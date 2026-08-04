@@ -33,8 +33,6 @@ export async function POST(request: NextRequest) {
             useCredit
         } = body
 
-        console.log(`🔍 [FRAUD CHECK] Usuario: ${session.user.id} | Vehículo: ${vehicleData.brand} ${vehicleData.model} ${vehicleData.year}`);
-
         // 1. Generar huella única del vehículo
         const priceRange = normalizePriceRange(vehicleData.price);
         const coverImageHash = await hashImageUrl(images[0]);
@@ -47,8 +45,6 @@ export async function POST(request: NextRequest) {
         });
 
         const gpsHash = hashGPSLocation(gpsLocation?.latitude, gpsLocation?.longitude);
-
-        console.log(`🔑 Vehicle Hash: ${vehicleHash.substring(0, 12)}... | GPS Hash: ${gpsHash?.substring(0, 8) || 'N/A'}`);
 
         // 2. Obtener datos del usuario (créditos y contador histórico)
         const user = await prisma.user.findUnique({
@@ -65,8 +61,6 @@ export async function POST(request: NextRequest) {
 
         const lifetimeCount = user?.lifetimeVehicleCount || 0;
         const userCredits = user?.credits || 0;
-
-        console.log(`📊 Usuario tiene ${activeVehiclesCount} activos | ${lifetimeCount} históricos | ${userCredits} créditos`);
 
         // 3. Buscar si este VEHÍCULO EXACTO ya fue publicado por ESTE USUARIO
         const userVehicles = await prisma.vehicle.findMany({
@@ -121,15 +115,11 @@ export async function POST(request: NextRequest) {
                 }
             }
 
-            console.log(`🎯 Similaridad con vehículo ${existingVehicle.id}: ${similarityScore}%`);
-
             // Si es MUY similar (>= 70%) y NO es una edición (ya filtrado arriba)
             if (similarityScore >= 70) {
                 const daysSinceLastUpdate = Math.floor(
                     (new Date().getTime() - new Date(existingVehicle.updatedAt).getTime()) / (1000 * 60 * 60 * 24)
                 );
-
-                console.log(`⚠️ VEHÍCULO DUPLICADO DETECTADO | Status: ${existingVehicle.status} | Hace ${daysSinceLastUpdate} días`);
 
                 // Si está actualmente ACTIVO, probablemente es un error del usuario intentando publicar de nuevo en vez de editar
                 // PERO, si el usuario insiste, le avisamos.
@@ -153,7 +143,6 @@ export async function POST(request: NextRequest) {
             });
 
             if (currentVehicle?.status === 'ACTIVE' && currentVehicle.expiresAt && currentVehicle.expiresAt > new Date()) {
-                console.log(`✨ EDICIÓN PERMITIDA: Vehículo ${body.currentVehicleId} ya está activo y vigente.`);
                 return NextResponse.json({
                     isFraud: false,
                     score: 0,
@@ -169,7 +158,6 @@ export async function POST(request: NextRequest) {
         // Si lifetimeCount >= 25, significa que ya publicó 25 autos (0 al 24).
         // El auto #26 (count 25) es el primero que cobra.
         if (lifetimeCount >= 25 && !useCredit) {
-            console.log(`💰 LÍMITE GRATUITO EXCEDIDO (${lifetimeCount} históricos) - Requiere crédito`);
             return NextResponse.json({
                 action: 'REQUIRE_CREDIT',
                 isFraud: false,
@@ -183,10 +171,8 @@ export async function POST(request: NextRequest) {
             });
         }
 
-        // 6. TODO: Buscar publicaciones similares de OTROS usuarios (fraude cruzado)
-        // Por ahora, permitir la publicación
-
-        console.log('✅ Publicación aprobada - Sin fraude detectado');
+        // 6. Fraud cruzado: no buscamos proactivamente (imposible con millones de autos iguales)
+        // Se rastrea al usuario DESPUES de una denuncia/bloqueo via /api/admin/blocked-identity
 
         return NextResponse.json({
             isFraud: false,

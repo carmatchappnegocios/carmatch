@@ -4,8 +4,10 @@ import { useState } from "react"
 import { signIn } from "next-auth/react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Mail, Lock, User, AlertCircle, ArrowRight, X, Eye, EyeOff, CheckCircle, Send } from "lucide-react"
+import { useLanguage } from "@/contexts/LanguageContext"
 
 export default function CredentialsForm({ linkedEmail, forceOnlyLinked }: { linkedEmail?: string | null, forceOnlyLinked?: boolean }) {
+    const { t } = useLanguage()
     const [isExpanded, setIsExpanded] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
     const [isLogin, setIsLogin] = useState(true)
@@ -53,7 +55,7 @@ export default function CredentialsForm({ linkedEmail, forceOnlyLinked }: { link
                 })
 
                 if (res?.error) {
-                    setError("Correo o contraseña incorrectos")
+                    setError(t("auth.invalid_credentials"))
                     setIsLoading(false)
                 } else {
                     window.location.href = "/"
@@ -73,7 +75,7 @@ export default function CredentialsForm({ linkedEmail, forceOnlyLinked }: { link
                 const data = await res.json()
 
                 if (!res.ok) {
-                    setError(data.error || "Ocurrió un error al registrarse")
+                    setError(data.error || t("auth.registration_error"))
                     setIsLoading(false)
                 } else {
                     // Send verification email
@@ -84,7 +86,7 @@ export default function CredentialsForm({ linkedEmail, forceOnlyLinked }: { link
                 }
             }
         } catch (err) {
-            setError("Ocurrió un error inesperado")
+            setError(t("auth.unexpected_error"))
             setIsLoading(false)
         }
     }
@@ -105,13 +107,13 @@ export default function CredentialsForm({ linkedEmail, forceOnlyLinked }: { link
                     <div className="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
                         <CheckCircle className="w-10 h-10 text-green-500" />
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2">Revisa tu correo</h3>
+                    <h3 className="text-xl font-bold text-white mb-2">{t("auth.check_email")}</h3>
                     <p className="text-text-secondary text-sm mb-4">
-                        Te enviamos un enlace de verificación a<br />
+                        {t("auth.verification_sent")}<br />
                         <span className="text-white font-medium">{registeredEmail}</span>
                     </p>
                     <p className="text-text-secondary text-xs mb-6">
-                        Haz clic en el enlace del correo para activar tu cuenta.
+                        {t("auth.verification_instructions")}
                     </p>
 
                     <button
@@ -120,7 +122,7 @@ export default function CredentialsForm({ linkedEmail, forceOnlyLinked }: { link
                         className="text-primary-400 hover:text-white transition-colors text-sm font-medium flex items-center justify-center gap-2 mx-auto"
                     >
                         <Send className="w-4 h-4" />
-                        {isResending ? "Enviando..." : "Reenviar correo de verificación"}
+                        {isResending ? "Enviando..." : t("auth.resend_verification")}
                     </button>
 
                     <div className="mt-6 pt-4 border-t border-surface-highlight">
@@ -131,7 +133,7 @@ export default function CredentialsForm({ linkedEmail, forceOnlyLinked }: { link
                             }}
                             className="text-text-secondary hover:text-white transition-colors text-sm"
                         >
-                            Volver al login
+                            {t("auth.back_to_login")}
                         </button>
                     </div>
                 </div>
@@ -144,7 +146,7 @@ export default function CredentialsForm({ linkedEmail, forceOnlyLinked }: { link
             <div className="mt-4">
                 <div className="relative flex py-4 items-center">
                     <div className="flex-grow border-t border-surface-highlight"></div>
-                    <span className="flex-shrink-0 mx-4 text-text-secondary text-sm font-medium">o con correo electrónico</span>
+                    <span className="flex-shrink-0 mx-4 text-text-secondary text-sm font-medium">{t("auth.or_with_email")}</span>
                     <div className="flex-grow border-t border-surface-highlight"></div>
                 </div>
                 <button
@@ -153,7 +155,7 @@ export default function CredentialsForm({ linkedEmail, forceOnlyLinked }: { link
                     className="w-full flex items-center justify-center gap-2 px-6 py-3.5 transition-all rounded-xl border border-surface-highlight text-text-secondary hover:bg-surface hover:text-white group bg-background"
                 >
                     <Mail className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                    <span className="font-medium text-sm">Entrar con Email y Contraseña</span>
+                    <span className="font-medium text-sm">{t("auth.login_with_email")}</span>
                 </button>
             </div>
         )
@@ -177,10 +179,10 @@ export default function CredentialsForm({ linkedEmail, forceOnlyLinked }: { link
             <form onSubmit={handleSubmit} className="space-y-4 pt-1">
                 <div className="text-center mb-6">
                     <h3 className="text-xl font-bold text-white tracking-tight">
-                        {isLogin ? "Iniciar Sesión" : "Crear Cuenta"}
+                        {isLogin ? t("auth.login_cred") : t("auth.register_cred")}
                     </h3>
                     <p className="text-text-secondary text-xs mt-1">
-                         {isLogin ? "Ingresa para continuar" : "Registra tus datos a continuación"}
+                         {isLogin ? t("auth.login_subtitle_cred") : t("auth.register_subtitle_cred")}
                     </p>
                 </div>
 
@@ -207,7 +209,7 @@ export default function CredentialsForm({ linkedEmail, forceOnlyLinked }: { link
                             <input
                                 type="text"
                                 required={!isLogin}
-                                placeholder="Nombre completo"
+                                placeholder={t("auth.full_name")}
                                 value={form.name}
                                 onChange={e => setForm({ ...form, name: e.target.value })}
                                 className="w-full bg-transparent border-none text-white focus:ring-0 px-3 py-3.5 text-sm outline-none placeholder:text-gray-500"
@@ -221,7 +223,7 @@ export default function CredentialsForm({ linkedEmail, forceOnlyLinked }: { link
                     <input
                         type="email"
                         required
-                        placeholder="Correo electrónico"
+                        placeholder={t("auth.email_placeholder")}
                         value={form.email}
                         onChange={e => setForm({ ...form, email: e.target.value })}
                         disabled={!!linkedEmail && forceOnlyLinked}
@@ -234,7 +236,7 @@ export default function CredentialsForm({ linkedEmail, forceOnlyLinked }: { link
                     <input
                         type={showPassword ? "text" : "password"}
                         required
-                        placeholder="Contraseña"
+                        placeholder={t("auth.password_placeholder")}
                         value={form.password}
                         onChange={e => setForm({ ...form, password: e.target.value })}
                         minLength={6}
@@ -259,7 +261,7 @@ export default function CredentialsForm({ linkedEmail, forceOnlyLinked }: { link
                         <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                     ) : (
                         <>
-                            {isLogin ? "Entrar" : "Registrarse"}
+                            {isLogin ? t("auth.login_cred") : t("auth.register_cred")}
                             <ArrowRight className="w-4 h-4 ml-1" />
                         </>
                     )}
@@ -274,7 +276,7 @@ export default function CredentialsForm({ linkedEmail, forceOnlyLinked }: { link
                         }}
                         className="text-primary-400 hover:text-white transition-colors text-sm font-medium"
                     >
-                        {isLogin ? "¿No tienes cuenta? Crea una aquí" : "¿Ya tienes cuenta? Inicia sesión"}
+                        {isLogin ? t("auth.no_account") : t("auth.has_account")}
                     </button>
                 </div>
             </form>

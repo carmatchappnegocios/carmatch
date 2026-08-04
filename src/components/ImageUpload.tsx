@@ -44,7 +44,6 @@ async function compressImage(file: File): Promise<File> {
                                 type: 'image/jpeg',
                                 lastModified: Date.now(),
                             })
-                            console.log(`🗜️ Comprimido: ${(file.size / 1024 / 1024).toFixed(2)}MB → ${(compressedFile.size / 1024 / 1024).toFixed(2)}MB`)
                             resolve(compressedFile)
                         } else {
                             reject(new Error('Error al comprimir imagen'))
@@ -95,7 +94,6 @@ export default function ImageUpload({ images, onImagesChange, maxImages = 5, lab
 
         try {
             // 🚀 COMPRIMIR todas las imágenes ANTES de subir
-            console.log(`🗜️ Comprimiendo ${files.length} imagen(es)...`)
             const compressedFiles = await Promise.all(
                 files.map(file => compressImage(file))
             )

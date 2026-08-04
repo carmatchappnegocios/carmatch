@@ -273,7 +273,7 @@ export default function PublishClient() {
 
                 // Notificar discretamente (podría ser un toast, pero por ahora un log está bien, 
                 // el usuario verá sus datos ahí y se alegrará)
-                console.log('♻️ Borrador restaurado exitosamente')
+
 
             } catch (e) {
                 console.error('Error restaurando borrador:', e)
@@ -319,8 +319,6 @@ export default function PublishClient() {
         setAiError('')
         // NO establecer aiConfidence aquí - el useEffect lo manejará desde 0%
 
-        console.log(`🧪 [Intento ${retryCount + 1}] Iniciando validación de imágenes...`, images.length, 'fotos')
-
         try {
             const res = await fetch('/api/ai/validate-images-bulk', {
                 method: 'POST',
@@ -342,8 +340,6 @@ export default function PublishClient() {
                 console.warn(`⚠️ Error técnico del servidor. Reintentando automáticamente (${retryCount + 1}/3)...`);
                 return setTimeout(() => validateImagesAndProceed(retryCount + 1), 2000);
             }
-
-            console.log('🤖 Respuesta del Asesor IA:', validation)
 
             if (!res.ok) throw new Error('No pudimos completar la verificación técnica. Intenta de nuevo.')
 
@@ -374,7 +370,6 @@ export default function PublishClient() {
             if (invalidIndices.length > 0) {
                 const galleryRejected = invalidIndices.filter((idx: number) => idx > 0)
                 if (galleryRejected.length > 0) {
-                    console.log(`🧹 CarMatch: Filtrando silenciosamente ${galleryRejected.length} fotos que no coinciden.`);
                     // En la galería, el índice 0 de la respuesta de la IA corresponde a la portada, 
                     // así que restamos 1 para los índices de la galería local.
                     const newGallery = galleryImages.filter((_, idx) => !invalidIndices.includes(idx + 1))
@@ -698,9 +693,7 @@ export default function PublishClient() {
         ]
         let finalImages = allImages.filter((_, idx) => !rejectedIndices.has(idx))
 
-        if (finalImages.length < allImages.length) {
-            console.log(`🚀 CarMatch: Filtrando ${allImages.length - finalImages.length} imágenes de galería que no pasaron la auditoría IA.`);
-        }
+
 
         try {
 

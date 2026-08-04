@@ -4,6 +4,7 @@ import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 import { interpretSearchQuery } from '@/lib/ai/searchInterpreter'
 import { buildVehicleQuery, buildBusinessQuery } from '@/lib/ai/searchQueryBuilder'
+import { checkRateLimit, RATE_LIMITS } from '@/lib/rate-limit'
 
 const REPORT_KEYWORDS = ['reportar', 'denunciar', 'bloquear', 'perfil falso', 'estafa', 'fraude', 'scam', 'fake', 'spam', 'acoso', 'harassment', 'abuse', 'malicious', 'malicioso', 'sospechoso', 'suplantación', 'robo', 'perdida']
 
@@ -20,6 +21,14 @@ export async function POST(req: NextRequest) {
 
         if (!message) {
             return NextResponse.json({ error: 'Mensaje es requerido' }, { status: 400 })
+        }
+
+        // Rate limit: 20 requests per minute per user
+        if (userId) {
+            const rl = checkRateLimit(`chatbot:${userId}`, { windowMs: 60000, max: 20 })
+            if (!rl.allowed) {
+                return NextResponse.json({ error: 'Demasiadas peticiones. Espera un momento.' }, { status: 429 })
+            }
         }
 
         const lowerMessage = message.toLowerCase()

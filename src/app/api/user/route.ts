@@ -40,7 +40,12 @@ export async function PATCH(request: NextRequest) {
             }
         })
 
-        return NextResponse.json(updatedUser)
+        return NextResponse.json({
+            id: updatedUser.id,
+            name: updatedUser.name,
+            image: updatedUser.image,
+            email: updatedUser.email
+        })
 
     } catch (error) {
         console.error('Error actualizando perfil:', error)

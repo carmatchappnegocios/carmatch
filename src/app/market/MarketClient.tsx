@@ -173,7 +173,7 @@ export default function MarketClient({
                 try {
                     const parsed = JSON.parse(cached)
                     setItems(parsed)
-                    console.log('📦 Cargado Market desde cache offline')
+
                 } catch (e) {
                     console.error('Error parsing market cache', e)
                 }
@@ -224,8 +224,6 @@ export default function MarketClient({
     useEffect(() => {
         const handleAiFilter = (e: any) => {
             const params = e.detail
-            console.log('🤖 Market AI Filter Applied:', params)
-
             const urlParams = new URLSearchParams()
             if (params.brand) urlParams.set('brand', params.brand)
             if (params.model) urlParams.set('model', params.model)

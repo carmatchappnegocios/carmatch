@@ -7,6 +7,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface ReportImageButtonProps {
     imageUrl: string
@@ -16,13 +17,13 @@ interface ReportImageButtonProps {
     className?: string
 }
 
-const REPORT_REASONS = [
-    "Contenido Sexual / Desnudos",
-    "Violencia / Sangre",
-    "Acoso / Odio",
-    "Spam / Estafa",
-    "No es un vehículo / negocio real",
-    "Otro"
+const REPORT_REASON_KEYS = [
+    'report.reason.sexual',
+    'report.reason.violence',
+    'report.reason.harassment',
+    'report.reason.spam',
+    'report.reason.not_real',
+    'report.reason.other'
 ]
 
 export default function ReportImageButton({
@@ -32,8 +33,9 @@ export default function ReportImageButton({
     targetUserId,
     className = "absolute top-2 right-2"
 }: ReportImageButtonProps) {
+    const { t } = useLanguage()
     const [isOpen, setIsOpen] = useState(false)
-    const [reason, setReason] = useState(REPORT_REASONS[0])
+    const [reason, setReason] = useState(REPORT_REASON_KEYS[0])
     const [description, setDescription] = useState("")
     const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState(false)
@@ -64,11 +66,11 @@ export default function ReportImageButton({
                     setDescription("")
                 }, 2000)
             } else {
-                toast.error("Error al enviar reporte. Por favor intenta de nuevo.")
+                toast.error(t('report.error.send'))
             }
         } catch (error) {
             console.error(error)
-            toast.error("Error de conexión.")
+            toast.error(t('report.error.connection'))
         } finally {
             setLoading(false)
         }
@@ -83,7 +85,7 @@ export default function ReportImageButton({
                     setIsOpen(true)
                 }}
                 className={`p-1.5 bg-black/20 hover:bg-red-600/80 text-white rounded-full backdrop-blur-sm transition ${className}`}
-                title="Reportar imagen"
+                title={t('report.image_title')}
             >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
@@ -108,33 +110,33 @@ export default function ReportImageButton({
                                     <svg className="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                                     </svg>
-                                    Reportar Contenido
+                                    {t('report.title')}
                                 </h3>
 
                                 <p className="text-sm text-text-secondary">
-                                    Ayuda a mantener segura la comunidad de CarMatch Social. Tu reporte es anónimo.
+                                    {t('report.subtitle')}
                                 </p>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-text-secondary mb-1">Motivo</label>
+                                    <label className="block text-sm font-medium text-text-secondary mb-1">{t('report.reason_label')}</label>
                                     <select
                                         value={reason}
                                         onChange={(e) => setReason(e.target.value)}
                                         className="w-full bg-background border border-surface-highlight rounded-lg px-3 py-2 text-text-primary"
                                     >
-                                        {REPORT_REASONS.map(r => (
-                                            <option key={r} value={r}>{r}</option>
+                                        {REPORT_REASON_KEYS.map(key => (
+                                            <option key={key} value={key}>{t(key)}</option>
                                         ))}
                                     </select>
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-text-secondary mb-1">Detalles adicionales (opcional)</label>
+                                    <label className="block text-sm font-medium text-text-secondary mb-1">{t('report.details_label')}</label>
                                     <textarea
                                         value={description}
                                         onChange={(e) => setDescription(e.target.value)}
                                         className="w-full bg-background border border-surface-highlight rounded-lg px-3 py-2 text-text-primary h-24 resize-none"
-                                        placeholder="Describe el problema..."
+                                        placeholder={t('report.description_placeholder')}
                                     />
                                 </div>
 
@@ -144,14 +146,14 @@ export default function ReportImageButton({
                                         onClick={() => setIsOpen(false)}
                                         className="px-4 py-2 text-text-secondary hover:text-text-primary"
                                     >
-                                        Cancelar
+                                        {t('report.cancel')}
                                     </button>
                                     <button
                                         type="submit"
                                         disabled={loading}
                                         className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium shadow-lg disabled:opacity-50"
                                     >
-                                        {loading ? 'Enviando...' : 'Enviar Reporte'}
+                                        {loading ? t('report.sending') : t('report.submit')}
                                     </button>
                                 </div>
                             </form>
@@ -162,8 +164,8 @@ export default function ReportImageButton({
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                     </svg>
                                 </div>
-                                <h3 className="text-xl font-bold text-text-primary mb-2">¡Reporte Enviado!</h3>
-                                <p className="text-text-secondary">Gracias por ayudar a mantener la comunidad segura.</p>
+                                <h3 className="text-xl font-bold text-text-primary mb-2">{t('report.success_title')}</h3>
+                                <p className="text-text-secondary">{t('report.success_message')}</p>
                             </div>
                         )}
                     </div>

@@ -4,8 +4,20 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
+import { auth } from '@/lib/auth'
+import { checkRateLimit } from '@/lib/rate-limit'
 
 export async function GET(req: NextRequest) {
+    const session = await auth()
+    if (!session?.user?.id) {
+        return NextResponse.json({ error: 'No autenticado' }, { status: 401 })
+    }
+
+    const rl = checkRateLimit(`map-search:${session.user.id}`, { windowMs: 60000, max: 30 })
+    if (!rl.allowed) {
+        return NextResponse.json({ error: 'Demasiadas peticiones' }, { status: 429 })
+    }
+
     const { searchParams } = new URL(req.url)
     const lat = parseFloat(searchParams.get('lat') || '0')
     const lng = parseFloat(searchParams.get('lng') || '0')

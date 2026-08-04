@@ -124,35 +124,13 @@ export default function RootLayout({
     return (
         <html lang="es" className="dark" style={{ colorScheme: 'dark' }} suppressHydrationWarning>
             <head>
-                {/* 🛡️ NUCLEAR MOBILE BLINDAJE: Force viewport at the absolute beginning */}
-                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover" />
-                <script
-                    dangerouslySetInnerHTML={{
-                        __html: `
-                            (function() {
-                                function forceMobile() {
-                                    var meta = document.querySelector('meta[name="viewport"]');
-                                    var content = "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover";
-                                    if (meta) {
-                                        if (meta.getAttribute('content') !== content) {
-                                            meta.setAttribute('content', content);
-                                        }
-                                    }
-                                }
-                                forceMobile();
-                                window.addEventListener('resize', forceMobile);
-                                setInterval(forceMobile, 1000);
-                            })();
-                        `
-                    }}
-                />
             </head>
             <body className={`${inter.className} min-h-screen-safe bg-[#0f172a]`}>
                 <GoogleAnalytics />
                 <Providers>
                     <Toaster position="top-center" richColors closeButton />
                     {/* <InstallInvasiveBanner /> */}
-                    {/* <PushNotificationRequest /> */}
+                    <PushNotificationRequest />
                     {/* <OpenInBrowserBanner /> */}
                     {/* <ResponsiveViewportFix /> */}
                     <RestoringSessionOverlay />

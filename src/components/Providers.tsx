@@ -20,7 +20,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
                 <LanguageProvider>
                     <LocationProvider>
                         <RegisterSW />
-                        {/* <PushNotificationRequest /> */}
+                        <PushNotificationRequest />
                         {/* <HistoryShield /> */}
                         {children}
                         {/* <GlobalLocationGate /> */}

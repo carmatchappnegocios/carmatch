@@ -61,15 +61,12 @@ export default function ContactButton({
 
         setLoading(true)
         try {
-            console.log('Iniciando contacto para vehículo:', vehicleId)
             // Crear o abrir chat existente
             const res = await fetch('/api/chats', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ vehicleId })
             })
-
-            console.log('Respuesta status:', res.status)
 
             if (res.ok) {
                 const chat = await res.json()

@@ -21,7 +21,7 @@ export async function GET() {
             STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY ? 'CONFIGURED' : 'MISSING',
             STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET ? 'CONFIGURED' : 'MISSING',
             DATABASE_URL: process.env.DATABASE_URL ? 'CONFIGURED' : 'MISSING',
-            NEXTAUTH_URL: process.env.NEXTAUTH_URL || 'NOT SET',
+            NEXTAUTH_URL: process.env.NEXTAUTH_URL ? 'CONFIGURED' : 'MISSING',
         },
         database: 'PENDING',
         stripe: 'PENDING'

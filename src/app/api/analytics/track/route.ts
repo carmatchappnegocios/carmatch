@@ -5,6 +5,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import { auth } from '@/lib/auth'
+import { checkRateLimit } from '@/lib/rate-limit'
 
 /**
  * Helper: Preparar data de MapStore para inserción
@@ -31,6 +32,14 @@ function prepareMapStoreData(data: any) {
 export async function POST(request: NextRequest) {
     try {
         const session = await auth()
+
+        // Rate limit: 60 events per minute per user/IP
+        const identifier = session?.user?.id || request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'anonymous'
+        const rl = checkRateLimit(`analytics:${identifier}`, { windowMs: 60000, max: 60 })
+        if (!rl.allowed) {
+            return NextResponse.json({ error: 'Rate limit' }, { status: 429 })
+        }
+
         const body = await request.json()
         const { eventType, entityType, entityId, metadata } = body
 

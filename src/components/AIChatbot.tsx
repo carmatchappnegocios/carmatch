@@ -70,7 +70,6 @@ export default function AIChatbot() {
 
             // 🔥 UI ORCHESTRATOR: Despachar comandos si existen
             if (data.command && data.command.type !== 'NONE') {
-                console.log('🤖 AI Command Received:', data.command)
                 const eventName = data.command.type === 'MARKET_FILTER' ? 'market-ai-filter' : 'map-ai-search';
                 window.dispatchEvent(new CustomEvent(eventName, { detail: data.command.params }))
 

@@ -68,28 +68,22 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'El pago no corresponde al usuario actual' }, { status: 403 })
         }
 
-        // 3. Verificar si ya se procesó (Webhook o intento previo)
-        const existingPayment = await prisma.payment.findUnique({
-            where: { transactionId: piId }
-        })
-
-        if (existingPayment) {
-            const user = await prisma.user.findUnique({ where: { id: userId }, select: { credits: true } })
-            return NextResponse.json({
-                success: true,
-                message: 'Pago ya procesado',
-                creditsAdded: existingPayment.creditsAdded,
-                currentCredits: user?.credits
+        // 3. Verificar si ya se procesó (Webhook o intento previo) - INSIDE transaction
+        const [updatedUser] = await prisma.$transaction(async (tx) => {
+            const existingPayment = await tx.payment.findUnique({
+                where: { transactionId: piId }
             })
-        }
 
-        // 4. Transacción Quirúrgica: Registrar pago, Sumar créditos y Crear Movimiento
-        const [updatedUser] = await prisma.$transaction([
-            prisma.user.update({
+            if (existingPayment) {
+                const user = await tx.user.findUnique({ where: { id: userId }, select: { credits: true } })
+                return [user]
+            }
+
+            const user = await tx.user.update({
                 where: { id: userId },
                 data: { credits: { increment: creditsToAdd } }
-            }),
-            prisma.payment.create({
+            })
+            await tx.payment.create({
                 data: {
                     userId: userId,
                     amount: amount,
@@ -99,8 +93,8 @@ export async function POST(request: NextRequest) {
                     creditsAdded: creditsToAdd,
                     paymentMethod: 'stripe'
                 }
-            }),
-            prisma.creditTransaction.create({
+            })
+            await tx.creditTransaction.create({
                 data: {
                     userId: userId,
                     amount: creditsToAdd,
@@ -109,7 +103,8 @@ export async function POST(request: NextRequest) {
                     details: { gateway: 'stripe', amount, currency }
                 }
             })
-        ])
+            return [user]
+        })
 
         return NextResponse.json({
             success: true,

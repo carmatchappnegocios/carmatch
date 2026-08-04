@@ -141,9 +141,7 @@ export async function GET(req: Request) {
                 lastLatitude: true,
                 lastLongitude: true,
                 lastLocationUpdate: true,
-                // Also return generic info for police report
                 id: true,
-                email: true, // Maybe useful for police
                 name: true
             }
         })
