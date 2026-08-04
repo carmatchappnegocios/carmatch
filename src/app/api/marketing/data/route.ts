@@ -67,7 +67,7 @@ export async function GET(req: NextRequest) {
                     .map(([city, count]) => ({ city, count }))
 
                 // Rangos de precios
-                const prices = activeVehicles.map(v => v.price).filter(p => p > 0)
+                const prices = activeVehicles.map(v => Number(v.price)).filter(p => p > 0)
                 const avgPrice = prices.length > 0 ? Math.round(prices.reduce((a, b) => a + b, 0) / prices.length) : 0
                 const minPrice = prices.length > 0 ? Math.min(...prices) : 0
                 const maxPrice = prices.length > 0 ? Math.max(...prices) : 0
