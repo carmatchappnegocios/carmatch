@@ -47,6 +47,14 @@ export async function POST(request: NextRequest) {
             )
         }
 
+        const allowedMimes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
+        if (!allowedMimes.includes(file.type)) {
+            return NextResponse.json(
+                { error: 'Tipo de archivo no permitido. Solo JPG, PNG, WEBP o GIF.' },
+                { status: 400 }
+            )
+        }
+
         // Debug Cloud Config (Log bools only for security)
         const configCheck = {
             cloud_name: !!process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,

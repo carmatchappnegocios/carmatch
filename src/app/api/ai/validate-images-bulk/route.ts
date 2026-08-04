@@ -9,6 +9,17 @@ async function urlToBase64(url: string): Promise<string> {
     let lastError;
     const maxRetries = 3;
 
+    let parsed: URL
+    try {
+        parsed = new URL(url)
+    } catch {
+        throw new Error('Invalid image URL')
+    }
+    const allowedHosts = ['res.cloudinary.com']
+    if (!allowedHosts.includes(parsed.hostname)) {
+        throw new Error('Image host not allowed')
+    }
+
     for (let i = 0; i < maxRetries; i++) {
         try {
             // 🚀 OPTIMIZACIÓN CARMATCH: Si es URL de Cloudinary, pedir versión optimizada

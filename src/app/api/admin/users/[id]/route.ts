@@ -58,7 +58,7 @@ export async function PATCH(
                     data: {
                         credits: (currentUser.credits || 0) + amount,
                         ...(typeof isActive === 'boolean' && { isActive }),
-                        ...(typeof isAdmin === 'boolean' && { isAdmin })
+                        ...(isAdminMaster && typeof isAdmin === 'boolean' && { isAdmin })
                     }
                 })
 

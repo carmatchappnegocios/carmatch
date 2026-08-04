@@ -4,6 +4,7 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { parseAddressWithAI } from '@/lib/ai/addressParser'
+import { checkRateLimit } from '@/lib/rate-limit'
 
 /**
  * API endpoint para geocodificación reversa
@@ -20,6 +21,12 @@ import { parseAddressWithAI } from '@/lib/ai/addressParser'
  */
 export async function GET(request: NextRequest) {
     try {
+        const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown'
+        const rl = checkRateLimit(`geolocation:${ip}`, { max: 60, windowMs: 60_000 })
+        if (!rl.allowed) {
+            return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429 })
+        }
+
         const searchParams = request.nextUrl.searchParams
         const lat = searchParams.get('lat')
         const lng = searchParams.get('lng')

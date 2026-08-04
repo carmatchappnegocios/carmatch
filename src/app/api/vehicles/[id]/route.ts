@@ -63,7 +63,21 @@ export async function PATCH(
 
         const { id } = await params
         const body = await request.json()
-        const { status, ...updateData } = body
+        const { status } = body
+
+        // Allowlist: never accept raw body into Prisma (blocks mass assignment)
+        const ALLOWED_VEHICLE_FIELDS = [
+            'brand', 'model', 'version', 'year', 'price', 'currency', 'description',
+            'images', 'city', 'state', 'country', 'latitude', 'longitude', 'address',
+            'transmission', 'mileage', 'mileageUnit', 'fuel', 'engine', 'doors', 'color',
+            'condition', 'vehicleType', 'displacement', 'cargoCapacity', 'features',
+            'operatingHours', 'passengers', 'hp', 'torque', 'aspiration', 'cylinders',
+            'batteryCapacity', 'range', 'weight', 'axles', 'traction', 'category'
+        ] as const
+        const updateData: Record<string, any> = {}
+        for (const key of ALLOWED_VEHICLE_FIELDS) {
+            if (body[key] !== undefined) updateData[key] = body[key]
+        }
 
         // Verificar propiedad del vehículo
         const vehicle = await prisma.vehicle.findUnique({
@@ -173,15 +187,6 @@ export async function PATCH(
 
             if (keyFieldsChanged) {
                 finalUpdateData.moderationStatus = 'PENDING_AI'
-            }
-
-            // 3. Ejecutar la actualización del vehículo dentro de la misma transacción
-            // 🚨 CRITICAL FIX: Remover useCredit si existe en updateData/finalUpdateData ya que no es un campo de la DB
-            if ('useCredit' in finalUpdateData) {
-                delete finalUpdateData.useCredit
-            }
-            if ('deviceFingerprint' in finalUpdateData) {
-                delete finalUpdateData.deviceFingerprint
             }
 
             return await tx.vehicle.update({

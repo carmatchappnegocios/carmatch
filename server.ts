@@ -25,23 +25,33 @@ app.prepare().then(() => {
         console.log("Client connected:", socket.id);
 
         // Join user to their own room for notifications
+        // Only allow joining a room matching a claimed userId once per socket
         socket.on("join-user", (userId) => {
-            if (userId) {
-                socket.join(`user:${userId}`);
-                console.log(`Socket ${socket.id} joined user:${userId}`);
+            if (typeof userId !== "string" || !userId || userId.length > 64) return;
+            // Drop previous user rooms on this socket
+            for (const room of socket.rooms) {
+                if (room.startsWith("user:") && room !== `user:${userId}`) {
+                    socket.leave(room);
+                }
             }
+            socket.data.userId = userId;
+            socket.join(`user:${userId}`);
+            console.log(`Socket ${socket.id} joined user:${userId}`);
         });
 
-        // Join specific rooms (chats, emergency channels)
+        // Join specific rooms (chats, emergency channels) — validate format only
         socket.on("join-room", (room) => {
-            if (room) {
-                socket.join(room);
-                console.log(`Socket ${socket.id} joined room:${room}`);
-            }
+            if (typeof room !== "string" || !room || room.length > 128) return;
+            // Block joining arbitrary user rooms via join-room
+            if (room.startsWith("user:")) return;
+            const allowed = /^(chat:|emergency:|sos:)[\w-]+$/i.test(room);
+            if (!allowed) return;
+            socket.join(room);
+            console.log(`Socket ${socket.id} joined room:${room}`);
         });
 
         socket.on("leave-room", (room) => {
-            if (room) {
+            if (typeof room === "string" && room) {
                 socket.leave(room);
             }
         });

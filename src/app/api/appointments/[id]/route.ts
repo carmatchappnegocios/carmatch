@@ -30,6 +30,18 @@ export async function PUT(
             return NextResponse.json({ error: 'El anuncio ya no está activo. No se pueden realizar cambios en la cita.' }, { status: 410 })
         }
 
+        const isParticipant =
+            checkAppointment.chat.buyerId === session.user.id ||
+            checkAppointment.chat.sellerId === session.user.id
+        if (!isParticipant) {
+            return NextResponse.json({ error: 'No autorizado' }, { status: 403 })
+        }
+
+        const allowedStatuses = ['ACCEPTED', 'REJECTED', 'CANCELLED', 'PENDING', 'COMPLETED']
+        if (!status || !allowedStatuses.includes(status)) {
+            return NextResponse.json({ error: 'Estado inválido' }, { status: 400 })
+        }
+
         const appointment = await prisma.appointment.update({
             where: { id },
             data: { status },

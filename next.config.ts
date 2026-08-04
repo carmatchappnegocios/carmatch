@@ -86,8 +86,12 @@ const nextConfig: NextConfig = {
                         value: '1; mode=block'
                     },
                     {
+                        key: 'Strict-Transport-Security',
+                        value: 'max-age=63072000; includeSubDomains; preload'
+                    },
+                    {
                         key: 'Content-Security-Policy',
-                        value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://res.cloudinary.com https://image.pollinations.ai https://replicate.delivery https://*.mapbox.com; connect-src 'self' https://*.mapbox.com wss://carmatchapp.net ws://localhost:3001; frame-src 'none';"
+                        value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://*.mapbox.com data:; img-src 'self' data: blob: https://res.cloudinary.com https://image.pollinations.ai https://replicate.delivery https://*.mapbox.com; connect-src 'self' https://*.mapbox.com https://api.mapbox.com https://events.mapbox.com wss://carmatchapp.net ws://localhost:3001; worker-src 'self' blob:; child-src blob:; frame-src 'none';"
                     }
                 ]
             }

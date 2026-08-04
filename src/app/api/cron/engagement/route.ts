@@ -21,17 +21,9 @@ export const dynamic = 'force-dynamic'
  * Estrategia: Mantener usuarios enganchados con actividad constante
  */
 export async function GET(req: NextRequest) {
-    const { searchParams } = new URL(req.url)
-    const key = searchParams.get('key')
     const authHeader = req.headers.get('authorization')
-
-    // Vercel Cron envía: Authorization: Bearer <CRON_SECRET>
-    // Llamadas manuales pueden usar: ?key=<CRON_SECRET>
-    const isAuthorized =
-        key === process.env.CRON_SECRET ||
-        authHeader === `Bearer ${process.env.CRON_SECRET}`
-
-    if (!isAuthorized) {
+    // Solo Bearer header — nunca query string (se filtra en logs/proxies)
+    if (!process.env.CRON_SECRET || authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 

@@ -138,6 +138,10 @@ export default function MapBoxComponent({
                     'top-right'
                 )
 
+                newMap.on('load', () => {
+                    setMapLoaded(true)
+                })
+
                 map.current = newMap
             })
 

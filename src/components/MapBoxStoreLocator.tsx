@@ -67,6 +67,7 @@ export default function MapBoxStoreLocator({
         const token = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
         if (!token) {
             console.error('Mapbox token missing')
+            setMapLoaded(true)
             return
         }
         mapboxgl.accessToken = token
