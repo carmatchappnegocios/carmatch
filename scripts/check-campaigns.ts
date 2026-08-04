@@ -6,10 +6,7 @@ async function main() {
   console.log("\n--- RECENT CAMPAIGNS ---")
   const campaigns = await prisma.publicityCampaign.findMany({
     orderBy: { createdAt: 'desc' },
-    take: 5,
-    include: {
-        // We fetch posts manually since no relation
-    }
+    take: 5
   })
   
   const posts = await prisma.socialPost.findMany({
