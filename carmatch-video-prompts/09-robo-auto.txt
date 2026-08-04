@@ -1,0 +1,39 @@
+# TE ROBARON EL AUTO
+
+## ESCENAS
+ESCENA 1 (0-3s) HOOK:
+Una sombra ladrona se lleva un auto en humo. Texto en negrita: "TE ROBARON EL AUTO". Efecto de desaparición y sonido de robo.
+
+ESCENA 2 (3-8s) PROBLEMA:
+Un dueño llega y ve su espacio vacío. Cara de pánico y desesperación. Busca frenéticamente su auto por todas partes. Close-up de llaves huérfanas.
+
+ESCENA 3 (8-15s) HÉROE:
+Don Match llega con su teléfono mostrando la app CarMatch con localización en tiempo real y alertas. Sonrisa cálida y confiada. Explica cómo proteger tu auto.
+
+ESCENA 4 (15-20s) DERROTA:
+La sombra ladrona es capturada por las alertas de CarMatch. El auto aparece en el mapa localizado. El dueño abraza su auto. Momento de recuperación y alivio.
+
+ESCENA 5 (20-25s) CTA:
+Logo de CarMatch con texto: "PROTEGE TU AUTO CON CARMATCH". Don Match invita a activar la protección. Hashtags: #CarMatch #SeguridadAuto #SinRobos #Localizacion.
+
+## HOOK (primeros 3 segundos)
+"TE ROBARON EL AUTO" - Voz en off de emergencia y urgencia.
+
+## VOZ EN OFF (guion completo)
+"¡Te robaron el auto! Un momento de descuido y tu auto desapareció. El pánico se apodera de ti... ¡pero Don Match tiene la solución! CarMatch te ofrece localización en tiempo real y alertas de seguridad. Tu auto siempre estará protegido. Localiza, recupera, protege. Protege tu auto con CarMatch. Descarga la app y安心."
+
+## MÚSICA
+Tensión dramática con transición a ritmo de acción y victoria.
+
+## TEXTO EN PANTALLA
+- "TE ROBARON EL AUTO" (0-3s)
+- "¡PÁNICO TOTAL!" (3-8s)
+- "LOCALIZACIÓN EN TIEMPO REAL" (8-15s)
+- "AUTO RECUPERADO" (15-20s)
+- "PROTEGE TU AUTO CON CARMATCH" (20-25s)
+
+## SEGMENTACION
+- Edad: 25-50 años
+- Ubicacion: Mexico
+- Plataformas: TikTok, Instagram Reels, YouTube Shorts, Facebook Reels
+- Intereses: robo, seguridad, proteccion, localizacion, emergencias

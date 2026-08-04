@@ -1,0 +1,39 @@
+# EL SEGURO TE COBRA DEMASIADO
+
+## ESCENAS
+ESCENA 1 (0-3s) HOOK:
+Un personaje caro con signos de dólar y papeles de seguro volando. Texto en negrita: "EL SEGURO TE COBRA DEMASIADO". Efecto de ahogamiento en papeles y sonido de alerta.
+
+ESCENA 2 (3-8s) PROBLEMA:
+Una persona se ahoga en papeles de seguro con precios altísimos. Cara de frustración y desesperación. Close-up de cotizaciones ridículamente caras. Expresión de impotencia.
+
+ESCENA 3 (8-15s) HÉROE:
+Car-mela llega con su teléfono mostrando la app CarMatch con comparador de seguros. Demeanor amable y organizado. Explica cómo encontrar el mejor precio.
+
+ESCENA 4 (15-20s) DERROTA:
+El seguro caro se desinfla y cae. Car-mela muestra pantalla con comparación de precios bajos. La persona sonríe al ver ahorro. Momento de libertad financiera.
+
+ESCENA 5 (20-25s) CTA:
+Logo de CarMatch con texto: "COMPARA SEGUROS EN CARMATCH". Car-mela invita a comparar. Hashtags: #CarMatch #SeguroBarato #Ahorro #ComparadorDeSeguros.
+
+## HOOK (primeros 3 segundos)
+"EL SEGURO TE COBRA DEMASIADO" - Voz en off frustrada y cansada.
+
+## VOZ EN OFF (guion completo)
+"¡El seguro te cobra demasiado! Cada mes pagas una fortuna por protección que no usas. Los papeles se acumulan y el dinero vuela... ¡pero Car-mela tiene la solución! CarMatch tiene un comparador de seguros donde encuentras el mejor precio. Compara, elige, ahorra. Compara seguros en CarMatch. Descarga la app y deja de pagar de más."
+
+## MÚSICA
+Melancólica con transición a ritmo optimista y liberador.
+
+## TEXTO EN PANTALLA
+- "EL SEGURO TE COBRA DEMASIADO" (0-3s)
+- "¡AHOGADO EN PAPELES!" (3-8s)
+- "COMPARADOR DE SEGUROS" (8-15s)
+- "AHORRO GARANTIZADO" (15-20s)
+- "COMPARA SEGUROS EN CARMATCH" (20-25s)
+
+## SEGMENTACION
+- Edad: 28-50 años
+- Ubicacion: Mexico
+- Plataformas: TikTok, Instagram Reels, YouTube Shorts, Facebook Reels
+- Intereses: seguro, proteccion, comparador, ahorro, legal

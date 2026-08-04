@@ -1,0 +1,40 @@
+# EL BACHE TE DESTRUYÓ EL AUTO
+
+## ESCENAS
+ESCENA 1 (0-3s) HOOK:
+Un auto estrella contra un bache enorme. El bache cobra vida: Don Bacho, un villano con forma de agujero oscuro, sonríe malvadamente. Texto en pantalla: "EL BACHE TE DESTRUYÓ EL AUTO". El auto se sacude violentamente.
+
+ESCENA 2 (3-8s) PROBLEMA:
+El conductor sale del auto, angustiado, revisando la llanta pinchada. Sus amigos se burlan. Don Bacho crece y causa más caos, agrietando el asfalto. El conductor mira su teléfono desesperado, buscando ayuda.
+
+ESCENA 3 (8-15s) HÉROE:
+Don Match llega con su chaqueta azul de CarMatch, sonrisa confiada. Saca su teléfono y muestra la app CarMatch: un mapa con talleres mecánicos cercanos verificados. Don Match dice: "No te preocupes, aquí hay taller a la vuelta".
+
+ESCENA 4 (15-20s) DERROTA:
+Don Bacho se encoge y desaparece mientras el conductor sigue la ruta en la app. El auto es reparado rápidamente en un taller confiable. El conductor sonríe aliviado, dando un pulgar arriba.
+
+ESCENA 5 (20-25s) CTA:
+Don Match y el conductor aplauden. Aparece el logo de CarMatch. Texto: "Encuentra el taller más cercano en CarMatch". Hashtags: #CarMatch #Baches #Mecánica #AutoSeguro.
+
+## HOOK (primeros 3 segundos)
+¡EL BACHE TE DESTRUYÓ EL AUTO! ¡No dejes que te deje varado!
+
+## VOZ EN OFF (guion completo)
+¡Cuidado con ese bache! ¡Va a destrozar tu auto! Mira, Don Bacho se tragó tu llanta. ¿Qué haces ahora? ¡Relájate! Don Match llegó con la solución. Abre CarMatch y encuentra el taller mecánico más cercano. ¡Talleres verificados, precios justos! ¡Adiós a los baches, hola a la carretera! Descarga CarMatch ahora.
+
+## MÚSICA
+Música electrónica alta energía con beats de reggaetón, estilo viral de TikTok.
+
+## TEXTO EN PANTALLA
+- EL BACHE TE DESTRUYÓ EL AUTO
+- DON BACHO ATACA
+- DON MATCH RESCATA
+- TALLERES CERCANOS VERIFICADOS
+- CARRMATCH: TU SOLUCIÓN
+- #CarMatch #Baches #Mecánica
+
+## SEGMENTACION
+- Edad: 18-45 años
+- Ubicacion: Mexico
+- Plataformas: TikTok, Instagram Reels, YouTube Shorts, Facebook Reels
+- Intereses: mecanica, suspension, llantas, baches, carreteras, autos, reparacion, mantenimiento

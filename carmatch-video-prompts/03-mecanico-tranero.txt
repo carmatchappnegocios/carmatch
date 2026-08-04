@@ -1,0 +1,40 @@
+# EL MECÁNICO TE ESTAFÓ
+
+## ESCENAS
+ESCENA 1 (0-3s) HOOK:
+Un mecánico sombrío, Don Trantero, con overol sucio y cara de pícaro, muestra una factura inflada a un cliente. Texto en pantalla: "EL MECÁNICO TE ESTAFÓ". El cliente se sorprende al ver el monto.
+
+ESCENA 2 (3-8s) PROBLEMA:
+Don Trantero reemplaza piezas que no necesitan cambio, cobrando de más. El cliente mira confundido, desconfiado. El taller está oscuro y desordenado, transmitiendo desconfianza.
+
+ESCENA 3 (8-15s) HÉROE:
+Don Match llega con su chaqueta azul, sonrisa confiada. Abre la app CarMatch mostrando reseñas verificadas de mecánicos honestos. Dice: "No te arriesgues, elige talleres con buenas reseñas".
+
+ESCENA 4 (15-20s) DERROTA:
+Don Trantero se esconde debajo del auto avergonzado. El cliente lleva su auto a un taller verificado en CarMatch, recibiendo trato honesto y precio justo. Satisfecho, le da un apretón de manos al mecánico honesto.
+
+ESCENA 5 (20-25s) CTA:
+Don Match y el cliente aplauden. Logo de CarMatch. Texto: "Solo mecánicos verificados en CarMatch". Hashtags: #CarMatch #MecánicosHonestos #SinEstafas #Confianza.
+
+## HOOK (primeros 3 segundos)
+¡EL MECÁNICO TE ESTAFÓ! ¡No dejes que te robe!
+
+## VOZ EN OFF (guion completo)
+¿Te han estafado con piezas falsas? Don Trantero quiere tu dinero. ¡Pero no hoy! Don Match tiene la app CarMatch con mecánicos verificados. ¡Lee reseñas, compara precios, elige confianza! ¡Olvida las estafas, encuentra honestidad! Descarga CarMatch y cuida tu auto.
+
+## MÚSICA
+Música suspenseful al inicio, cambiando a ritmo triunfal y optimista.
+
+## TEXTO EN PANTALLA
+- EL MECÁNICO TE ESTAFÓ
+- PIEzas innecesarias
+- DON MATCH PROTEGE
+- MECÁNICOS VERIFICADOS CON RESEÑAS
+- CONFIANZA GARANTIZADA
+- #CarMatch #MecánicosHonestos #SinEstafas
+
+## SEGMENTACION
+- Edad: 20-50 años
+- Ubicacion: Mexico
+- Plataformas: TikTok, Instagram Reels, YouTube Shorts, Facebook Reels
+- Intereses: mecanica, estafas, reparacion, confianza, reseñas, autos, mantenimiento, taller

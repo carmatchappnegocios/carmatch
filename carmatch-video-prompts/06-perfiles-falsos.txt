@@ -1,0 +1,39 @@
+# PERFILES FALSOS EN MARKETPLACE
+
+## ESCENAS
+ESCENA 1 (0-3s) HOOK:
+Un pixelado rostro falso aparece en pantalla con signos de interrogación y advertencias. Texto en negrita: "PERFILES FALSOS EN MARKETPLACE". Efecto de glitch y sonido de alerta.
+
+ESCENA 2 (3-8s) PROBLEMA:
+Una persona decepcionada mira su teléfono, habiendo transferido dinero por un auto que nunca existió. Expresión de frustración y arrepentimiento. Close-up de la transferencia bancaria con cara triste.
+
+ESCENA 3 (8-15s) HÉROE:
+Matchy llega con su teléfono mostrando la app CarMatch con perfiles verificados. Sonrisa confiada y moderna. Explica con gestos que en CarMatch los usuarios están verificados.
+
+ESCENA 4 (15-20s) DERROTA:
+El perfil falso se desintegra con efecto de pixelación. CarMatch muestra pantalla de verificación exitosa. El estafador desaparece. Momento satisfactorio de victoria.
+
+ESCENA 5 (20-25s) CTA:
+Logo de CarMatch con texto: "SOLO PERFILES VERIFICADOS EN CARMATCH". Matchy invita a descargar la app. Hashtags: #CarMatch #Seguridad #SinEstafas #PerfilesVerificados.
+
+## HOOK (primeros 3 segundos)
+"PERFILES FALSOS EN MARKETPLACE" - Voz en off dramática y urgente.
+
+## VOZ EN OFF (guion completo)
+"¡Cuidado! Los perfiles falsos están acechando en Marketplace. Alguien como tú ya cayó... transfirió su dinero y nunca vio el auto. ¡Pero no todo está perdido! Matchy te presenta CarMatch, donde cada perfil está verificado y garantizado. Adiós a las estafas, hola a la seguridad. Solo perfiles verificados en CarMatch. Descarga la app ahora."
+
+## MÚSICA
+Electrónica con ritmo de alerta, luego transición a beat optimista y moderno.
+
+## TEXTO EN PANTALLA
+- "PERFILES FALSOS EN MARKETPLACE" (0-3s)
+- "¡TE ESTAFARON!" (3-8s)
+- "PERFILES VERIFICADOS" (8-15s)
+- "ESTAFA DERROTADA" (15-20s)
+- "SOLO PERFILES VERIFICADOS EN CARMATCH" (20-25s)
+
+## SEGMENTACION
+- Edad: 18-35 años
+- Ubicacion: Mexico
+- Plataformas: TikTok, Instagram Reels, YouTube Shorts, Facebook Reels
+- Intereses: marketplace, estafa, perfiles, seguridad, verificacion

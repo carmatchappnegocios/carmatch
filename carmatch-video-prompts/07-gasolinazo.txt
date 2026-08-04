@@ -1,0 +1,39 @@
+# EL GASOLINAZO TE MATÓ
+
+## ESCENAS
+ESCENA 1 (0-3s) HOOK:
+Un personaje inflado con signos de dólar y precios de gas subiendo explosivamente. Texto en negrita: "EL GASOLINAZO TE MATÓ". Efecto de explosión y sonido de bomba.
+
+ESCENA 2 (3-8s) PROBLEMA:
+Un conductor en su auto viejo ve el precio de la gasolina en la estación. Grita al ver el precio. Close-up de su billetera vacía con polvo saliendo. Expresión de desesperación.
+
+ESCENA 3 (8-15s) HÉROE:
+Car-litos llega con energía en un auto eléctrico/híbrido moderno desde CarMatch. Muestra la app en su teléfono con opciones de autos eficientes. Sonrisa aventurera y juvenil.
+
+ESCENA 4 (15-20s) DERROTA:
+El gasolinazo se desinfla y cae derrotado. El conductor ahora sonríe en su auto eléctrico. Ahorro en la pantalla con signos de moneda. Momento de liberación.
+
+ESCENA 5 (20-25s) CTA:
+Logo de CarMatch con texto: "ESCAPA DEL GASOLINAZO CON CARMATCH". Car-litos invita a explorar autos eléctricos. Hashtags: #CarMatch #AutoElectrico #AhorroGasolina #SinGasolinazo.
+
+## HOOK (primeros 3 segundos)
+"EL GASOLINAZO TE MATÓ" - Voz en off impactante y frustrada.
+
+## VOZ EN OFF (guion completo)
+"¡El gasolinazo te está matando! Cada vez que vas a la bomba, tu billetera llora. El precio sube y sube... ¡pero no tienes que seguir sufriendo! Car-litos te trae la solución: autos eléctricos e híbridos en CarMatch. Olvídate de las gasolinazos y viaja más barato. Escapa del gasolinazo con CarMatch. Descarga la app y encuentra tu auto ideal."
+
+## MÚSICA
+Rock energético con transición a ritmo futurista y optimista.
+
+## TEXTO EN PANTALLA
+- "EL GASOLINAZO TE MATÓ" (0-3s)
+- "¡BILLETERA VACÍA!" (3-8s)
+- "AUTOS ELÉCTRICOS E HÍBRIDOS" (8-15s)
+- "AHORRO TOTAL" (15-20s)
+- "ESCAPA DEL GASOLINAZO CON CARMATCH" (20-25s)
+
+## SEGMENTACION
+- Edad: 20-40 años
+- Ubicacion: Mexico
+- Plataformas: TikTok, Instagram Reels, YouTube Shorts, Facebook Reels
+- Intereses: gasolina, electrico, hibrido, ahorro, combustible

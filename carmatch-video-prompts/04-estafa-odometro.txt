@@ -1,0 +1,40 @@
+# TE VENDIERON KILOMETRAJE FALSO
+
+## ESCENAS
+ESCENA 1 (0-3s) HOOK:
+Un comprador revisa un auto seminuevo, el odómetro muestra 50,000 km. Don Kilometraje, un villano con un odómetro distorsionado, sonríe maliciosamente. Texto en pantalla: "TE VENDIERON KILOMETRAJE FALSO".
+
+ESCENA 2 (3-8s) PROBLEMA:
+El comprador descubre que el odómetro fue adulterado: el auto realmente tiene 150,000 km. Se enoja, siente que fue engañado. Don Kilometraje se ríe y desaparece en una nube de polvo digital.
+
+ESCENA 3 (8-15s) HÉROE:
+Matchy, con su estilo moderno y chaqueta azul, aparece con energía. Muestra la app CarMatch con listados verificados donde el kilometraje está comprobado. Dice: "No compres a ciegas, verifica con CarMatch".
+
+ESCENA 4 (15-20s) DERROTA:
+Don Kilometraje se desintegra. El comprador elige un auto verificado en CarMatch, con historial透明. Sonríe, confiado en su compra. Matchy le da un apretón de manos.
+
+ESCENA 5 (20-25s) CTA:
+Matchy y el comprador celebran. Logo de CarMatch. Texto: "Autos verificados en CarMatch". Hashtags: #CarMatch #KilometrajeVerificado #SinEstafas #CompraSegura.
+
+## HOOK (primeros 3 segundos)
+¡TE VENDIERON KILOMETRAJE FALSO! ¡No dejes que te engañen!
+
+## VOZ EN OFF (guion completo)
+¿Compraste un auto y el kilometraje era mentira? Don Kilometraje te engañó. ¡Pero ahora tienes a Matchy! Usa CarMatch para autos con kilometraje verificado. ¡Historial透明, kilometraje real! ¡Compra segura, sin sorpresas! Descarga CarMatch y evita estafas.
+
+## MÚSICA
+Música electropop con ritmo rápido, estilo juvenil y viral.
+
+## TEXTO EN PANTALLA
+- TE VENDIERON KILOMETRAJE FALSO
+- ODOMETRO ADULTERADO
+- MATCHY VERIFICA
+- KILOMETRAJE REAL GARANTIZADO
+- COMPRA SEGURA CON CARRMATCH
+- #CarMatch #KilometrajeVerificado #CompraSegura
+
+## SEGMENTACION
+- Edad: 18-40 años
+- Ubicacion: Mexico
+- Plataformas: TikTok, Instagram Reels, YouTube Shorts, Facebook Reels
+- Intereses: seminuevo, kilometraje, estafa, compra-venta, verificacion, autos, transparencia, confianza

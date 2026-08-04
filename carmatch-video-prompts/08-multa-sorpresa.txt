@@ -1,0 +1,39 @@
+# LA MULTA SORPRESA
+
+## ESCENAS
+ESCENA 1 (0-3s) HOOK:
+Un policía fantasma aparece de la nada con multa en mano. Texto en negrita: "LA MULTA SORPRESA". Efecto de aparición misteriosa y sonido de sirena lejana.
+
+ESCENA 2 (3-8s) PROBLEMA:
+Un conductor recibe una multa inesperada. Cara de shock y frustración. Close-up del boleto de multa con monto alto. Expresión de impotencia al volante.
+
+ESCENA 3 (8-15s) HÉROE:
+Car-mela llega con su teléfono mostrando la app CarMatch con sistema de alertas y rutas seguras. Demeanor organizado y amable. Explica cómo evitar multas sorpresa.
+
+ESCENA 4 (15-20s) DERROTA:
+El policía fantasma se desvanece. CarMatch muestra ruta alternativa sin multas. El conductor sonríe al ver su app. Momento de alivio y control.
+
+ESCENA 5 (20-25s) CTA:
+Logo de CarMatch con texto: "CONDUCE TRANQUILO CON CARMATCH". Car-mela invita a activar las alertas. Hashtags: #CarMatch #SinMultas #AlertasDeTransito #ConduceTranquilo.
+
+## HOOK (primeros 3 segundos)
+"LA MULTA SORPRESA" - Voz en off susurrante y misteriosa.
+
+## VOZ EN OFF (guion completo)
+"La multa sorpresa... aparece de la nada y te arruina el día. ¡Ya te pasó! Esa multa que no viste venir, ese boleto que te dejó sin dinero. Pero Car-mela tiene la solución: CarMatch te alerta sobre radas, zonas peligrosas y rutas seguras. Conduce tranquilo, conoce el camino. Conduce tranquilo con CarMatch. Descarga la app y evita sorpresas."
+
+## MÚSICA
+Tensión misteriosa con transición a ritmo relajado y seguro.
+
+## TEXTO EN PANTALLA
+- "LA MULTA SORPRESA" (0-3s)
+- "¡MULTA INESPERADA!" (3-8s)
+- "SISTEMA DE ALERTAS" (8-15s)
+- "RUTAS SEGURAS" (15-20s)
+- "CONDUCE TRANQUILO CON CARMATCH" (20-25s)
+
+## SEGMENTACION
+- Edad: 25-45 años
+- Ubicacion: Mexico
+- Plataformas: TikTok, Instagram Reels, YouTube Shorts, Facebook Reels
+- Intereses: multas, transito, seguridad, driving, alertas
