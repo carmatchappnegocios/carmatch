@@ -103,7 +103,7 @@ export async function POST(request: NextRequest) {
                     level: 'INFO',
                     source: 'StripeWebhook',
                     message: `💸 Pago async confirmado (SPEI/OXXO): session ${session.id}`,
-                    metadata: { sessionId: session.id, userId: metadata?.userId, paymentIntent: session.payment_intent }
+                    metadata: { sessionId: session.id, userId: metadata?.userId, paymentIntent: typeof session.payment_intent === 'string' ? session.payment_intent : session.payment_intent?.id || null }
                 }
             })
 
