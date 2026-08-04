@@ -79,7 +79,7 @@ export async function GET(request: NextRequest) {
                     // Notificación de renovación exitosa
                     await upsertNotification({
                         userId: user.id,
-                        type: 'MESSAGE_RECEIVED',
+                        type: 'BUSINESS_ACTIVITY',
                         title: '✅ Negocio renovado automáticamente',
                         message: `Tu negocio "${business.name}" se renovó automáticamente por 30 días más. Créditos restantes: ${user.credits - 1}`,
                         link: `/my-businesses?businessId=${business.id}`,
