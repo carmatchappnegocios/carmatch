@@ -166,7 +166,8 @@ RESPONDE SOLO EL JSON.
         // Primer intento: Flash-8B (rápido y económico)
         // Segundo intento (solo si hubo error técnico): Flash estándar
         const modelToUse = i === 0 ? geminiFlash8B : geminiFlash;
-        console.log(`🤖 [IA] Intento técnico ${i + 1}/${maxTechnicalRetries} usando ${modelToUse.model}`);
+        const modelLabel = i === 0 ? 'FLASH-8B' : 'FLASH';
+        console.log(`🤖 [IA] Intento técnico ${i + 1}/${maxTechnicalRetries} usando ${modelLabel}`);
         result = await modelToUse.generateContent([prompt, imagePart]);
 
       } catch (genError) {

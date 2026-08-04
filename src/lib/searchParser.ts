@@ -13,6 +13,8 @@ interface SearchFilters {
     fuel?: string
     brand?: string
     city?: string
+    passengers?: number
+    aiReasoning?: string
 }
 
 // Diccionario de sinónimos para vehículos

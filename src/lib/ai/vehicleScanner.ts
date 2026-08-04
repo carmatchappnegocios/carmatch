@@ -38,8 +38,8 @@ export async function suggestModelsForBrand(brand: string): Promise<string[]> {
         // Limpiar y formatear la lista
         const aiModels = text
             .split(',')
-            .map(m => m.trim())
-            .filter(m => m.length > 0);
+            .map((m: string) => m.trim())
+            .filter((m: string) => m.length > 0);
 
         // Combinar con los estáticos y eliminar duplicados
         const combined = Array.from(new Set([...aiModels, ...staticModels])).sort();

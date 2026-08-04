@@ -99,6 +99,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
     const isOwner = !!currentUserId && currentUserId === vehicle.userId
     const isGuest = !currentUserId
     const [isSoftLogout, setIsSoftLogout] = useState(false)
+    const [zoomScale, setZoomScale] = useState(1)
 
     useEffect(() => {
         setIsSoftLogout(document.cookie.includes('soft_logout=true') || localStorage.getItem('soft_logout') === 'true')
@@ -406,9 +407,10 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                             minScale={0.5}
                                             maxScale={4}
                                             centerOnInit
+                                            onTransformed={(_, state) => setZoomScale(state.scale)}
                                         >
-                                            {({ zoomIn, zoomOut, resetTransform, state }) => {
-                                                const currentScale = state?.scale || 1;
+                                            {({ zoomIn, zoomOut, resetTransform }) => {
+                                                const currentScale = zoomScale;
                                                 return (
                                                     <TransformComponent wrapperClass="!w-full !h-full flex items-center justify-center" contentClass="!w-full !h-full flex items-center justify-center">
                                                         <motion.img
@@ -559,7 +561,6 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                                 {/* Hidden trigger for the report modal */}
                                                 <div className="hidden">
                                                     <ReportImageButton 
-                                                        id="report-image-button-trigger"
                                                         vehicleId={vehicle.id}
                                                         imageUrl={vehicle.images?.[0] || ''}
                                                     />

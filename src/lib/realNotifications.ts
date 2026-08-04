@@ -144,8 +144,8 @@ export async function trackRealView(userId: string | null, targetId: string, typ
             message: isVehicle
                 ? `Una persona está viendo los detalles de tu "${(item as any).title}".`
                 : `Un cliente potencial acaba de abrir la información de tu negocio "${(item as any).name}".`,
-            vehicleId: isVehicle ? targetId : null,
-            businessId: !isVehicle ? targetId : null,
+            vehicleId: isVehicle ? targetId : undefined,
+            businessId: !isVehicle ? targetId : undefined,
             isFake: false,
             link: semanticLink
         })

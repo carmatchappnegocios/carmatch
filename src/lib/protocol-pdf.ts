@@ -1,5 +1,3 @@
-import { jsPDF } from 'jspdf'
-
 export function renderProtocolPDF(
   data: any,
   topic: string
