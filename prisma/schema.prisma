@@ -978,7 +978,6 @@ enum NotificationType {
   PROFILE_VIEWED
   MESSAGE_RECEIVED
   APPOINTMENT_SCHEDULED
-  BUSINESS_AUTO_RENEWED
 }
 
 enum ReportStatus {
