@@ -280,20 +280,42 @@ const allPrompts: AdPrompt[] = [
 
 export default function FacebookAdsTab() {
     const [searchTerm, setSearchTerm] = useState('')
-    const [filterCharacter, setFilterCharacter] = useState<Character | 'all'>('all')
     const [filterCategory, setFilterCategory] = useState<Category | 'all'>('all')
     const [copiedId, setCopiedId] = useState<number | null>(null)
     const [expandedId, setExpandedId] = useState<number | null>(null)
+    const [publishedIds, setPublishedIds] = useState<Set<number>>(() => {
+        if (typeof window !== 'undefined') {
+            const saved = localStorage.getItem('carmatch-published-ads')
+            return saved ? new Set(JSON.parse(saved)) : new Set()
+        }
+        return new Set()
+    })
+
+    const togglePublished = (id: number) => {
+        setPublishedIds(prev => {
+            const next = new Set(prev)
+            if (next.has(id)) next.delete(id)
+            else next.add(id)
+            localStorage.setItem('carmatch-published-ads', JSON.stringify([...next]))
+            return next
+        })
+    }
 
     const filteredPrompts = useMemo(() => {
         return allPrompts.filter(prompt => {
-            const matchesSearch = prompt.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            const matchesSearch = !searchTerm ||
+                prompt.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 prompt.hook.toLowerCase().includes(searchTerm.toLowerCase())
-            const matchesCharacter = filterCharacter === 'all' || prompt.character === filterCharacter
             const matchesCategory = filterCategory === 'all' || prompt.category === filterCategory
-            return matchesSearch && matchesCharacter && matchesCategory
+            return matchesSearch && matchesCategory
         })
-    }, [searchTerm, filterCharacter, filterCategory])
+    }, [searchTerm, filterCategory])
+
+    const progress = useMemo(() => {
+        const total = allPrompts.length
+        const published = allPrompts.filter(p => publishedIds.has(p.id)).length
+        return { total, published, pct: total > 0 ? Math.round((published / total) * 100) : 0 }
+    }, [publishedIds])
 
     const copyToClipboard = async (text: string, id: number) => {
         await navigator.clipboard.writeText(text)
@@ -301,32 +323,46 @@ export default function FacebookAdsTab() {
         setTimeout(() => setCopiedId(null), 2000)
     }
 
-    const stats = useMemo(() => {
-        const byCharacter = allPrompts.reduce((acc, p) => {
-            acc[p.character] = (acc[p.character] || 0) + 1
-            return acc
-        }, {} as Record<string, number>)
-        return byCharacter
-    }, [])
+    const categoryLabels: Record<Category, string> = {
+        negocios: 'Negocios (Supply)',
+        vehiculos: 'Vehiculos (Supply)',
+        servicios: 'Servicios (Demand)',
+        compradores: 'Compradores (Demand)'
+    }
+
+    const categoryColors: Record<Category, string> = {
+        negocios: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+        vehiculos: 'bg-green-500/10 text-green-400 border-green-500/20',
+        servicios: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
+        compradores: 'bg-orange-500/10 text-orange-400 border-orange-500/20'
+    }
 
     return (
         <div className="space-y-6">
             {/* Header */}
             <div className="flex items-center gap-3">
                 <Facebook className="w-8 h-8 text-blue-500" />
-                <h3 className="text-2xl font-black italic tracking-tighter uppercase">Facebook Ads Prompts</h3>
-                <span className="ml-auto text-sm text-zinc-500">{allPrompts.length} prompts</span>
+                <h3 className="text-2xl font-black italic tracking-tighter uppercase">Facebook Ads Timeline</h3>
             </div>
 
-            {/* Character Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                {Object.entries(characters).map(([key, char]) => (
-                    <div key={key} className="bg-[#111114] rounded-xl border border-white/5 p-4 text-center">
-                        <char.icon className={`w-6 h-6 mx-auto mb-2 ${char.color}`} />
-                        <div className="text-white font-bold text-sm">{char.name}</div>
-                        <div className="text-zinc-500 text-xs">{stats[key] || 0} prompts</div>
+            {/* Progress Bar */}
+            <div className="bg-[#111114] rounded-2xl border border-white/5 p-5">
+                <div className="flex items-center justify-between mb-3">
+                    <div>
+                        <div className="text-white font-black text-lg">{progress.published} / {progress.total}</div>
+                        <div className="text-zinc-500 text-xs">anuncios publicados</div>
                     </div>
-                ))}
+                    <div className="text-right">
+                        <div className="text-primary-400 font-black text-2xl">{progress.pct}%</div>
+                        <div className="text-zinc-500 text-xs">progreso total</div>
+                    </div>
+                </div>
+                <div className="w-full h-3 bg-black/50 rounded-full overflow-hidden">
+                    <div
+                        className="h-full bg-gradient-to-r from-primary-500 to-primary-400 rounded-full transition-all duration-500"
+                        style={{ width: `${progress.pct}%` }}
+                    />
+                </div>
             </div>
 
             {/* Filters */}
@@ -335,118 +371,140 @@ export default function FacebookAdsTab() {
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
                     <input
                         type="text"
-                        placeholder="Buscar prompts..."
+                        placeholder="Buscar por titulo o hook..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="w-full pl-10 pr-4 py-3 bg-[#111114] border border-white/10 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:border-primary-500"
                     />
                 </div>
                 <select
-                    value={filterCharacter}
-                    onChange={(e) => setFilterCharacter(e.target.value as Character | 'all')}
-                    className="px-4 py-3 bg-[#111114] border border-white/10 rounded-xl text-white focus:outline-none focus:border-primary-500"
-                >
-                    <option value="all">Todos los personajes</option>
-                    {Object.entries(characters).map(([key, char]) => (
-                        <option key={key} value={key}>{char.name}</option>
-                    ))}
-                </select>
-                <select
                     value={filterCategory}
                     onChange={(e) => setFilterCategory(e.target.value as Category | 'all')}
                     className="px-4 py-3 bg-[#111114] border border-white/10 rounded-xl text-white focus:outline-none focus:border-primary-500"
                 >
                     <option value="all">Todas las categorias</option>
-                    <option value="negocios">Negocios (39)</option>
-                    <option value="vehiculos">Vehiculos (97)</option>
-                    <option value="servicios">Servicios (39)</option>
-                    <option value="compradores">Compradores (97)</option>
+                    {Object.entries(categoryLabels).map(([key, label]) => (
+                        <option key={key} value={key}>{label}</option>
+                    ))}
                 </select>
             </div>
 
-            {/* Results count */}
             <div className="text-zinc-500 text-sm">
                 Mostrando {filteredPrompts.length} de {allPrompts.length} prompts
             </div>
 
-            {/* Prompts Grid */}
-            <div className="grid gap-4">
-                {filteredPrompts.map((prompt) => {
-                    const char = characters[prompt.character]
-                    const isExpanded = expandedId === prompt.id
+            {/* Timeline */}
+            <div className="relative">
+                {/* Vertical line */}
+                <div className="absolute left-[19px] top-0 bottom-0 w-0.5 bg-white/10" />
 
-                    return (
-                        <div
-                            key={prompt.id}
-                            className="bg-[#111114] rounded-xl border border-white/5 overflow-hidden hover:border-white/10 transition-colors"
-                        >
-                            {/* Header */}
-                            <div
-                                className="flex items-center gap-3 p-4 cursor-pointer"
-                                onClick={() => setExpandedId(isExpanded ? null : prompt.id)}
-                            >
-                                <char.icon className={`w-5 h-5 ${char.color}`} />
-                                <div className="flex-1">
-                                    <div className="text-white font-bold text-sm">{prompt.title}</div>
-                                    <div className="text-zinc-500 text-xs">{char.name} · {prompt.category} · {prompt.subcategory}</div>
+                <div className="space-y-2">
+                    {filteredPrompts.map((prompt, idx) => {
+                        const char = characters[prompt.character]
+                        const isExpanded = expandedId === prompt.id
+                        const isPublished = publishedIds.has(prompt.id)
+
+                        return (
+                            <div key={prompt.id} className="relative flex gap-4 group">
+                                {/* Timeline dot */}
+                                <div className="relative z-10 flex-shrink-0 mt-4">
+                                    <button
+                                        onClick={() => togglePublished(prompt.id)}
+                                        className={`w-10 h-10 rounded-full border-2 flex items-center justify-center text-xs font-black transition-all ${
+                                            isPublished
+                                                ? 'bg-green-500 border-green-500 text-white shadow-lg shadow-green-500/30'
+                                                : 'bg-[#111114] border-white/20 text-zinc-500 hover:border-primary-500 hover:text-primary-400'
+                                        }`}
+                                    >
+                                        {isPublished ? '✓' : idx + 1}
+                                    </button>
                                 </div>
-                                <div className="flex gap-2">
-                                    <button
-                                        onClick={(e) => { e.stopPropagation(); copyToClipboard(prompt.prompt, prompt.id * 10 + 1) }}
-                                        className="px-3 py-1.5 bg-primary-500/10 text-primary-400 rounded-lg text-xs font-bold hover:bg-primary-500/20 transition-colors"
+
+                                {/* Card */}
+                                <div className={`flex-1 rounded-xl border overflow-hidden transition-all ${
+                                    isPublished
+                                        ? 'bg-green-500/5 border-green-500/20 opacity-70'
+                                        : 'bg-[#111114] border-white/5 hover:border-white/10'
+                                }`}>
+                                    {/* Card Header */}
+                                    <div
+                                        className="flex items-center gap-3 p-4 cursor-pointer"
+                                        onClick={() => setExpandedId(isExpanded ? null : prompt.id)}
                                     >
-                                        {copiedId === prompt.id * 10 + 1 ? 'Copiado!' : 'Prompt'}
-                                    </button>
-                                    <button
-                                        onClick={(e) => { e.stopPropagation(); copyToClipboard(prompt.hook, prompt.id * 10 + 2) }}
-                                        className="px-3 py-1.5 bg-orange-500/10 text-orange-400 rounded-lg text-xs font-bold hover:bg-orange-500/20 transition-colors"
-                                    >
-                                        {copiedId === prompt.id * 10 + 2 ? 'Copiado!' : 'Hook'}
-                                    </button>
+                                        <div className="flex-1 min-w-0">
+                                            <div className="flex items-center gap-2 mb-1">
+                                                <span className={`text-[9px] font-black px-2 py-0.5 rounded border ${categoryColors[prompt.category]}`}>
+                                                    {prompt.category.toUpperCase()}
+                                                </span>
+                                                <span className="text-zinc-600 text-[10px]">{prompt.subcategory}</span>
+                                                {isPublished && (
+                                                    <span className="text-[9px] font-black px-2 py-0.5 rounded bg-green-500/20 text-green-400">
+                                                        PUBLICADO
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <div className={`font-bold text-sm ${isPublished ? 'text-zinc-500 line-through' : 'text-white'}`}>
+                                                {prompt.title}
+                                            </div>
+                                            <div className={`text-xs mt-0.5 ${isPublished ? 'text-zinc-600' : 'text-zinc-500'}`}>
+                                                {prompt.hook}
+                                            </div>
+                                        </div>
+
+                                        <div className="flex items-center gap-2 flex-shrink-0">
+                                            <button
+                                                onClick={(e) => { e.stopPropagation(); copyToClipboard(prompt.prompt, prompt.id * 10 + 1) }}
+                                                className="px-3 py-1.5 bg-primary-500/10 text-primary-400 rounded-lg text-xs font-bold hover:bg-primary-500/20 transition-colors"
+                                            >
+                                                {copiedId === prompt.id * 10 + 1 ? 'Copiado!' : 'Prompt'}
+                                            </button>
+                                            <button
+                                                onClick={(e) => { e.stopPropagation(); copyToClipboard(prompt.hook, prompt.id * 10 + 2) }}
+                                                className="px-3 py-1.5 bg-orange-500/10 text-orange-400 rounded-lg text-xs font-bold hover:bg-orange-500/20 transition-colors"
+                                            >
+                                                {copiedId === prompt.id * 10 + 2 ? 'Copiado!' : 'Hook'}
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* Expanded Content */}
+                                    {isExpanded && (
+                                        <div className="px-4 pb-4 space-y-3 border-t border-white/5 pt-3">
+                                            <div>
+                                                <div className="text-zinc-400 text-xs font-bold mb-1">PROMPT (Gemini):</div>
+                                                <div className="bg-black/50 rounded-lg p-3 text-zinc-300 text-sm font-mono whitespace-pre-wrap max-h-48 overflow-y-auto">
+                                                    {prompt.prompt}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div className="text-zinc-400 text-xs font-bold mb-1">HOOK (Facebook):</div>
+                                                <div className="bg-black/50 rounded-lg p-3 text-white text-sm font-bold">
+                                                    {prompt.hook}
+                                                </div>
+                                            </div>
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                                <div>
+                                                    <div className="text-zinc-400 text-xs font-bold mb-1">CTA:</div>
+                                                    <div className="bg-primary-500/10 text-primary-400 rounded-lg p-2 text-sm font-bold text-center">
+                                                        {prompt.cta}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div className="text-zinc-400 text-xs font-bold mb-1">SEGMENTACION:</div>
+                                                    <div className="bg-black/50 rounded-lg p-3 text-zinc-300 text-xs space-y-1">
+                                                        <div>Edad: {prompt.segmentacion.edad}</div>
+                                                        <div>Ubicacion: {prompt.segmentacion.ubicacion}</div>
+                                                        <div>Intereses: {prompt.segmentacion.intereses}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
-
-                            {/* Expanded Content */}
-                            {isExpanded && (
-                                <div className="px-4 pb-4 space-y-3 border-t border-white/5 pt-3">
-                                    {/* Prompt */}
-                                    <div>
-                                        <div className="text-zinc-400 text-xs font-bold mb-1">PROMPT (Gemini):</div>
-                                        <div className="bg-black/50 rounded-lg p-3 text-zinc-300 text-sm font-mono whitespace-pre-wrap">
-                                            {prompt.prompt}
-                                        </div>
-                                    </div>
-
-                                    {/* Hook */}
-                                    <div>
-                                        <div className="text-zinc-400 text-xs font-bold mb-1">HOOK (Facebook):</div>
-                                        <div className="bg-black/50 rounded-lg p-3 text-white text-sm font-bold">
-                                            {prompt.hook}
-                                        </div>
-                                    </div>
-
-                                    {/* CTA & Segmentacion */}
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                        <div>
-                                            <div className="text-zinc-400 text-xs font-bold mb-1">CTA:</div>
-                                            <div className="bg-primary-500/10 text-primary-400 rounded-lg p-2 text-sm font-bold text-center">
-                                                {prompt.cta}
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div className="text-zinc-400 text-xs font-bold mb-1">SEGMENTACION:</div>
-                                            <div className="bg-black/50 rounded-lg p-3 text-zinc-300 text-xs space-y-1">
-                                                <div>Edad: {prompt.segmentacion.edad}</div>
-                                                <div>Ubicacion: {prompt.segmentacion.ubicacion}</div>
-                                                <div>Intereses: {prompt.segmentacion.intereses}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    )
-                })}
+                        )
+                    })}
+                </div>
             </div>
         </div>
     )
