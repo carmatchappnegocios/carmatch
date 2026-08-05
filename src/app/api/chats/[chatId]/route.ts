@@ -22,8 +22,8 @@ export async function GET(
         const chat = await prisma.chat.findUnique({
             where: { id: chatId },
             include: {
-                buyer: { select: { id: true, name: true, image: true, email: true } },
-                seller: { select: { id: true, name: true, image: true, email: true } },
+                buyer: { select: { id: true, name: true, image: true } },
+                seller: { select: { id: true, name: true, image: true } },
                 vehicle: {
                     select: {
                         id: true,

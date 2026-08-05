@@ -32,6 +32,10 @@ export async function POST(
 
         if (!chat) return NextResponse.json({ error: 'Chat no encontrado' }, { status: 404 })
 
+        if (chat.buyerId !== session.user.id && chat.sellerId !== session.user.id) {
+            return NextResponse.json({ error: 'No autorizado' }, { status: 403 })
+        }
+
         const isBuyer = chat.buyerId === session.user.id
         const user = isBuyer ? chat.buyer : chat.seller
         const otherUser = isBuyer ? chat.seller : chat.buyer

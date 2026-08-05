@@ -29,6 +29,10 @@ export async function POST(
             return NextResponse.json({ error: 'No tienes permiso para esta cita' }, { status: 403 })
         }
 
+        if (!['STILL', 'FINISH', 'SOS'].includes(action)) {
+            return NextResponse.json({ error: 'Acción inválida' }, { status: 400 })
+        }
+
         if (action === 'STILL') {
             await prisma.appointment.update({
                 where: { id },

@@ -16,6 +16,26 @@ export async function POST(req: Request) {
       return new NextResponse("Missing coordinates", { status: 400 });
     }
 
+    if (appointmentId) {
+      const appointment = await prisma.appointment.findUnique({
+        where: { id: appointmentId },
+        select: { chat: { select: { buyerId: true, sellerId: true } } }
+      });
+      if (!appointment || (appointment.chat.buyerId !== session.user.id && appointment.chat.sellerId !== session.user.id)) {
+        return new NextResponse("Forbidden", { status: 403 });
+      }
+    }
+
+    if (sosAlertId) {
+      const sosAlert = await prisma.sOSAlert.findUnique({
+        where: { id: sosAlertId },
+        select: { victimId: true }
+      });
+      if (!sosAlert || sosAlert.victimId !== session.user.id) {
+        return new NextResponse("Forbidden", { status: 403 });
+      }
+    }
+
     // Guardar el log histórico a la nube
     await prisma.locationLog.create({
       data: {

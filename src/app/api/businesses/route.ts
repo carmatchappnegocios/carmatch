@@ -299,7 +299,7 @@ export async function POST(request: NextRequest) {
     } catch (error) {
         console.error('Error creando negocio:', error)
         return NextResponse.json(
-            { error: `Error al crear negocio: ${(error as Error).message}` },
+            { error: 'Error al crear negocio' },
             { status: 500 }
         )
     }
@@ -313,7 +313,13 @@ export async function GET(request: NextRequest) {
     try {
         const session = await auth()
         const searchParams = request.nextUrl.searchParams
-        const userId = searchParams.get('userId') || session?.user?.id
+        const requestedUserId = searchParams.get('userId')
+
+        if (requestedUserId && requestedUserId !== session?.user?.id) {
+            return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
+        }
+
+        const userId = requestedUserId || session?.user?.id
 
         if (!userId) {
             return NextResponse.json(
@@ -362,7 +368,7 @@ export async function GET(request: NextRequest) {
     } catch (error) {
         console.error('Error obteniendo negocios:', error)
         return NextResponse.json(
-            { error: `Error al obtener negocios: ${(error as Error).message}` },
+            { error: 'Error al obtener negocios' },
             { status: 500 }
         )
     }

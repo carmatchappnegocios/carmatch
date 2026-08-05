@@ -29,7 +29,7 @@ export async function GET(
         const { id } = await params
         const vehicle = await prisma.vehicle.findUnique({
             where: { id },
-            include: { user: { select: { name: true, image: true, id: true } } }
+            include: { user: { select: { name: true, image: true } } }
         })
 
         if (!vehicle) {

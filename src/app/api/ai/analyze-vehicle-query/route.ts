@@ -105,9 +105,7 @@ Responde SOLO con el JSON del Estratega. No incluyas markdown.`
         console.error('❌ [AI Search Crash]:', error)
         // 🚨 DEBUG: Exposing error details to client to diagnose production issue
         return NextResponse.json({
-            error: 'AI Search Failed',
-            details: error.message || String(error),
-            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+            error: 'AI Search Failed'
         }, { status: 500 })
     }
 }

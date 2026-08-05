@@ -91,7 +91,7 @@ const nextConfig: NextConfig = {
                     },
                     {
                         key: 'Content-Security-Policy',
-                        value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://*.mapbox.com data:; img-src 'self' data: blob: https: http:; connect-src 'self' https://*.mapbox.com https://api.mapbox.com https://events.mapbox.com https://res.cloudinary.com https://www.google-analytics.com https://www.googletagmanager.com wss://carmatchapp.net ws://localhost:3001; worker-src 'self' blob:; child-src blob:; frame-src 'none';"
+                        value: "default-src 'self'; script-src 'self' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://*.mapbox.com data:; img-src 'self' data: blob: https: http:; connect-src 'self' https://*.mapbox.com https://api.mapbox.com https://events.mapbox.com https://res.cloudinary.com https://www.google-analytics.com https://www.googletagmanager.com wss://carmatchapp.net ws://localhost:3001; worker-src 'self' blob:; child-src blob:; frame-src 'none';"
                     }
                 ]
             }

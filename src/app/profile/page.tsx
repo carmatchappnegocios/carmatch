@@ -96,7 +96,6 @@ export default async function ProfilePage() {
                     message: `ProfilePage Error: ${error.message || String(error)}`,
                     source: "ProfilePage",
                     metadata: {
-                        stack: error.stack,
                         timestamp: new Date().toISOString()
                     }
                 }

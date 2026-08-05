@@ -101,7 +101,7 @@ export async function PATCH(
             }
         }).catch(() => { })
 
-        return NextResponse.json({ error: `Error interno: ${error.message || 'Desconocido'}` }, { status: 500 })
+        return NextResponse.json({ error: 'Error interno' }, { status: 500 })
     }
 }
 

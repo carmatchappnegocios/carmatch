@@ -128,6 +128,6 @@ export async function POST(request: NextRequest) {
 
     } catch (error: any) {
         console.error('Error creating checkout session:', error)
-        return NextResponse.json({ error: error.message || 'Error al iniciar pago' }, { status: 500 })
+        return NextResponse.json({ error: 'Error al iniciar pago' }, { status: 500 })
     }
 }

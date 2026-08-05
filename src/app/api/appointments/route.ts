@@ -32,6 +32,10 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'No se pueden proponer citas para un vehículo inactivo.' }, { status: 410 })
         }
 
+        if (chatCheck.buyerId !== (session.user as any).id && chatCheck.sellerId !== (session.user as any).id) {
+            return NextResponse.json({ error: 'No autorizado' }, { status: 403 })
+        }
+
         const appointment = await prisma.appointment.create({
             data: {
                 chatId,
