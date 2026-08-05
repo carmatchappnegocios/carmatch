@@ -88,6 +88,7 @@ export default async function SwipePage() {
 
     const vehicles = await prisma.vehicle.findMany({
         where: vehiclesWhere,
+        take: 100,
         select: {
             id: true,
             userId: true,

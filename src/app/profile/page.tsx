@@ -22,7 +22,13 @@ export default async function ProfilePage() {
             where: { email: session.user.email },
             include: {
                 vehicles: {
-                    orderBy: { createdAt: "asc" }, // 🛡️ Orden secuencial como se agregaron
+                    orderBy: { createdAt: "asc" },
+                    take: 100,
+                    select: {
+                        id: true, title: true, brand: true, model: true, version: true,
+                        year: true, price: true, currency: true, images: true, city: true,
+                        status: true, vehicleType: true, createdAt: true
+                    }
                 },
                 _count: {
                     select: {
@@ -32,6 +38,7 @@ export default async function ProfilePage() {
                     },
                 },
                 reportsMade: {
+                    take: 20,
                     include: {
                         vehicle: { select: { title: true } },
                         business: { select: { name: true } }
@@ -39,7 +46,7 @@ export default async function ProfilePage() {
                     orderBy: { createdAt: 'desc' }
                 }
             },
-        })
+        }) as any
 
         if (!user) {
             console.error(`❌ Usuario no encontrado en DB para el email: ${session.user.email}`)
@@ -52,7 +59,7 @@ export default async function ProfilePage() {
         // Filtrar y ordenar vehículos
         let vehiclesToShow = isOwner
             ? user.vehicles
-            : user.vehicles.filter(v => v.status === "ACTIVE")
+            : user.vehicles.filter((v: any) => v.status === "ACTIVE")
 
         // 🛡️ Si es visitante, barajar aleatoriamente
         if (!isOwner) {
@@ -64,7 +71,7 @@ export default async function ProfilePage() {
                 <ProfileClient
                     user={{
                         ...user,
-                        vehicles: user.vehicles.map(v => ({
+                        vehicles: user.vehicles.map((v: any) => ({
                             ...v,
                             price: typeof v.price === 'object' && v.price?.toNumber ? v.price.toNumber() : Number(v.price),
                             latitude: v.latitude,
@@ -72,7 +79,7 @@ export default async function ProfilePage() {
                         }))
                     }}
                     isOwner={isOwner}
-                    vehiclesToShow={vehiclesToShow.map(v => ({
+                    vehiclesToShow={vehiclesToShow.map((v: any) => ({
                         ...v,
                         price: typeof v.price === 'object' && v.price?.toNumber ? v.price.toNumber() : Number(v.price),
                         latitude: v.latitude,

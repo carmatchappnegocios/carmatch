@@ -6,26 +6,37 @@ import { notFound, redirect } from 'next/navigation'
 import { prisma } from '@/lib/db'
 import { Metadata } from 'next'
 import MiniWebClient from './MiniWebClient'
+import { cache } from 'react'
 
 interface Props {
     params: Promise<{ slug: string }>
     searchParams: Promise<any>
 }
 
+const reservedRoutes = ['market', 'swipe', 'map', 'map-store', 'profile', 'credits', 'publish', 'auth', 'api', 'admin', 'messages', 'notifications', 'my-businesses', 'favorites', 'terms', 'privacy']
+
+const getBusiness = cache(async (slug: string) => {
+    return prisma.business.findUnique({
+        where: { slug },
+        include: {
+            user: {
+                select: {
+                    name: true,
+                    image: true
+                }
+            }
+        }
+    })
+})
+
 export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
     const { slug } = await params
-
-    // Lista de rutas reservadas que NO deben confundirse con slugs de negocios
-    const reservedRoutes = ['market', 'swipe', 'map', 'map-store', 'profile', 'credits', 'publish', 'auth', 'api', 'admin', 'messages', 'notifications', 'my-businesses', 'favorites', 'terms', 'privacy']
 
     if (reservedRoutes.includes(slug)) {
         return {}
     }
 
-    const business = await prisma.business.findUnique({
-        where: { slug },
-        select: { name: true, category: true, description: true, images: true, city: true }
-    })
+    const business = await getBusiness(slug)
 
     if (!business) {
         return {
@@ -54,23 +65,11 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
 export default async function MiniWebPage({ params, searchParams }: Props) {
     const { slug } = await params
 
-    // 1. Evitar colisión con rutas estáticas (aunque Next.js ya prioriza, por seguridad)
-    const reservedRoutes = ['market', 'swipe', 'map', 'map-store', 'profile', 'credits', 'publish', 'auth', 'api', 'admin', 'messages', 'notifications', 'my-businesses', 'favorites', 'terms', 'privacy']
     if (reservedRoutes.includes(slug)) {
         notFound()
     }
 
-    const business = await prisma.business.findUnique({
-        where: { slug },
-        include: {
-            user: {
-                select: {
-                    name: true,
-                    image: true
-                }
-            }
-        }
-    })
+    const business = await getBusiness(slug)
 
     // 3. Validaciones
     if (!business) {

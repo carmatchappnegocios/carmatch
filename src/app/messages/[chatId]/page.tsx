@@ -12,9 +12,10 @@ import { getRandomTip } from '@/lib/safety-tips'
 import { useLanguage } from '@/contexts/LanguageContext'
 import AppointmentCard from './AppointmentCard'
 import AppointmentModal from './AppointmentModal'
-import SOSComponent from '@/components/SOSComponent'
 import dynamic from 'next/dynamic'
 import { toast } from "sonner"
+
+const SOSComponent = dynamic(() => import('@/components/SOSComponent'), { ssr: false })
 
 interface Message {
     id: string

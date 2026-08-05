@@ -26,13 +26,16 @@ export async function GET(req: NextRequest) {
         const [recentSearches, activeVehicles, allBusinesses] = await Promise.all([
             prisma.searchMetric.findMany({
                 where: { createdAt: { gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) } },
+                take: 500,
                 select: { latitude: true, longitude: true, category: true, brand: true, model: true, maxPrice: true, color: true, transmission: true, fuel: true, query: true }
             }),
             prisma.vehicle.findMany({
                 where: { status: 'ACTIVE' },
+                take: 500,
                 select: { latitude: true, longitude: true, title: true, vehicleType: true, brand: true, model: true, price: true }
             }),
             prisma.business.findMany({
+                take: 500,
                 select: { latitude: true, longitude: true, name: true, category: true }
             })
         ])

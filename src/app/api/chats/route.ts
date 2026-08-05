@@ -59,31 +59,39 @@ export async function GET(request: NextRequest) {
                     }
                 },
                 messages: {
-                    orderBy: { createdAt: 'desc' }
+                    orderBy: { createdAt: 'desc' },
+                    take: 1
                 }
             },
             orderBy: { updatedAt: 'desc' }
         })
 
         // Marcar cuál es el "otro" usuario (con quien hablas)
+        const chatIds = chats.map(c => c.id)
+        const unreadCounts = await prisma.message.groupBy({
+            by: ['chatId'],
+            where: {
+                chatId: { in: chatIds },
+                isRead: false,
+                senderId: { not: user.id }
+            },
+            _count: { id: true }
+        })
+        const unreadMap = new Map(unreadCounts.map(u => [u.chatId, u._count.id]))
+
         const chatsWithOther = chats
-            .filter(chat => chat.messages.length > 0) // Solo mostrar chats con mensajes
+            .filter(chat => chat.messages.length > 0)
             .map(chat => {
                 const isBuyer = chat.buyerId === user.id
                 const otherUser = isBuyer ? chat.seller : chat.buyer
                 const lastMessage = chat.messages[0]
-
-                // Contar mensajes no leídos (enviados por el otro usuario)
-                const unreadCount = chat.messages.filter(msg =>
-                    !msg.isRead && msg.senderId !== user.id
-                ).length
 
                 return {
                     ...chat,
                     otherUser,
                     isBuyer,
                     lastMessage,
-                    unreadCount
+                    unreadCount: unreadMap.get(chat.id) || 0
                 }
             })
 

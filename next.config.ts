@@ -9,8 +9,7 @@ const nextConfig: NextConfig = {
         },
     },
     experimental: {
-        // 🔧 DESACTIVADO TEMPORALMENTE para depuración de raíz
-        // optimizePackageImports: ['lucide-react', 'framer-motion'],
+        optimizePackageImports: ['lucide-react', 'framer-motion'],
     },
 
     images: {

@@ -24,11 +24,11 @@ export async function GET(request: NextRequest) {
             return NextResponse.json({ error: 'Usuario no encontrado' }, { status: 404 })
         }
 
-        // Auto-eliminar notificaciones leídas de más de 24 horas
-        await cleanupOldNotifications(user.id)
+        // Auto-eliminar notificaciones leídas de más de 24 horas (fire-and-forget)
+        cleanupOldNotifications(user.id).catch(() => {})
 
-        // Lógica de Notificaciones Simuladas (Engagement)
-        await generateSimulatedNotifications(user.id)
+        // Lógica de Notificaciones Simuladas (Engagement) (fire-and-forget)
+        generateSimulatedNotifications(user.id).catch(() => {})
 
         const { searchParams } = new URL(request.url)
         const unreadOnly = searchParams.get('unreadOnly') === 'true'

@@ -24,7 +24,13 @@ export default async function PublicProfilePage({ params, searchParams }: Public
         where: { id },
         include: {
             vehicles: {
-                orderBy: { createdAt: "asc" }, // 🛡️ Orden secuencial como se agregaron
+                orderBy: { createdAt: "asc" },
+                take: 100,
+                    select: {
+                        id: true, title: true, brand: true, model: true, version: true,
+                        year: true, price: true, currency: true, images: true, city: true,
+                        status: true, vehicleType: true, createdAt: true
+                    }
             },
             _count: {
                 select: {
@@ -34,7 +40,7 @@ export default async function PublicProfilePage({ params, searchParams }: Public
                 },
             },
         },
-    })
+    }) as any
 
     if (!user) {
         return notFound()
@@ -46,7 +52,7 @@ export default async function PublicProfilePage({ params, searchParams }: Public
     // Filtrar vehículos: El visitante solo ve los ACTIVOS
     let vehiclesToShow = isOwner
         ? user.vehicles
-        : user.vehicles.filter(v => v.status === "ACTIVE")
+        : user.vehicles.filter((v: any) => v.status === "ACTIVE")
 
     // 🛡️ Si es visitante, barajar aleatoriamente
     if (!isOwner) {
@@ -57,7 +63,7 @@ export default async function PublicProfilePage({ params, searchParams }: Public
         <ProfileClient
             user={{
                 ...user,
-                vehicles: user.vehicles.map(v => ({
+                vehicles: user.vehicles.map((v: any) => ({
                     ...v,
                     price: v.price.toNumber(),
                     latitude: v.latitude,
@@ -65,7 +71,7 @@ export default async function PublicProfilePage({ params, searchParams }: Public
                 }))
             }}
             isOwner={isOwner}
-            vehiclesToShow={vehiclesToShow.map(v => ({
+            vehiclesToShow={vehiclesToShow.map((v: any) => ({
                 ...v,
                 price: v.price.toNumber(),
                 latitude: v.latitude,

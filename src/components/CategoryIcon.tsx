@@ -2,11 +2,25 @@
 // ⚠️ CRITICAL WARNING: FILE PROTECTED BY PROJECT RULES.
 // DO NOT MODIFY THIS FILE WITHOUT EXPLICIT USER INSTRUCTION.
 
-"use client"
-
 import React from 'react'
-import * as LucideIcons from 'lucide-react'
+import {
+    Activity, Armchair, Bike, CircleDot, Disc, Droplet, Droplets, Fuel, Gauge,
+    Glasses, Hammer, HelpCircle, Hospital, Key, Lightbulb, Mountain, Package,
+    Paintbrush, PenTool, Plane, PlugZap, Recycle, Settings2, ShieldAlert,
+    ShieldCheck, Ship, ShoppingBag, Snowflake, Speaker, Sparkles, Square,
+    SquareParking, Syringe, Thermometer, TrainFront, Truck, Wallet, Wrench,
+    Wind, Zap
+} from 'lucide-react'
 import { LucideIcon } from 'lucide-react'
+
+const ICON_MAP: Record<string, LucideIcon> = {
+    Activity, Armchair, Bike, CircleDot, Disc, Droplet, Droplets, Fuel, Gauge,
+    Glasses, Hammer, HelpCircle, Hospital, Key, Lightbulb, Mountain, Package,
+    Paintbrush, PenTool, Plane, PlugZap, Recycle, Settings2, ShieldAlert,
+    ShieldCheck, Ship, ShoppingBag, Snowflake, Speaker, Sparkles, Square,
+    SquareParking, Syringe, Thermometer, TrainFront, Truck, Wallet, Wrench,
+    Wind, Zap
+}
 
 interface CategoryIconProps {
     iconName: string
@@ -16,14 +30,7 @@ interface CategoryIconProps {
 }
 
 const CategoryIcon = ({ iconName, className = '', size = 20, color }: CategoryIconProps) => {
-    // Get the icon component from Lucide
-    const Icon = (LucideIcons as any)[iconName] as LucideIcon
-
-    if (!Icon) {
-        // Fallback if icon not found
-        return <LucideIcons.HelpCircle className={className} size={size} style={{ color }} />
-    }
-
+    const Icon = ICON_MAP[iconName] || HelpCircle
     return <Icon className={className} size={size} style={{ color }} />
 }
 

@@ -20,7 +20,6 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { Edit3, Sparkles, CreditCard, Play, Pause, BadgeCheck, AlertTriangle, Share2, X, Trash2 } from 'lucide-react'
 import { generateVehicleSlug } from '@/lib/slug'
 import ConfirmationModal from '@/components/ConfirmationModal'
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch"
 
 interface VehicleDetailProps {
     vehicle: {
@@ -402,45 +401,29 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                     )}
 
                                     <div className="w-full h-full flex items-center justify-center">
-                                        <TransformWrapper
-                                            initialScale={1}
-                                            minScale={0.5}
-                                            maxScale={4}
-                                            centerOnInit
-                                            onTransformed={(_, state) => setZoomScale(state.scale)}
-                                        >
-                                            {({ zoomIn, zoomOut, resetTransform }) => {
-                                                const currentScale = zoomScale;
-                                                return (
-                                                    <TransformComponent wrapperClass="!w-full !h-full flex items-center justify-center" contentClass="!w-full !h-full flex items-center justify-center">
-                                                        <motion.img
-                                                            key={activeImage}
-                                                            src={vehicle.images?.[activeImage]}
-                                                            alt={vehicle.title}
-                                                            loading="lazy"
-                                                            initial={{ opacity: 0, scale: 0.9 }}
-                                                            animate={{ opacity: 1, scale: 1 }}
-                                                            exit={{ opacity: 0, scale: 1.1 }}
-                                                            transition={{ duration: 0.2 }}
-                                                            className="max-w-full max-h-screen object-contain"
-                                                            drag={currentScale === 1 ? "x" : false}
-                                                            dragConstraints={{ left: 0, right: 0 }}
-                                                            dragElastic={0.1}
-                                                            dragDirectionLock
-                                                            onDragEnd={(e, { offset }) => {
-                                                                if (currentScale !== 1) return;
-                                                                const swipe = offset.x
-                                                                if (swipe < -60 && activeImage < vehicle.images.length - 1) {
-                                                                    setActiveImage(activeImage + 1)
-                                                                } else if (swipe > 60 && activeImage > 0) {
-                                                                    setActiveImage(activeImage - 1)
-                                                                }
-                                                            }}
-                                                        />
-                                                    </TransformComponent>
-                                                )
+                                        <motion.img
+                                            key={activeImage}
+                                            src={vehicle.images?.[activeImage]}
+                                            alt={vehicle.title}
+                                            loading="lazy"
+                                            initial={{ opacity: 0, scale: 0.9 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            exit={{ opacity: 0, scale: 1.1 }}
+                                            transition={{ duration: 0.2 }}
+                                            className="max-w-full max-h-screen object-contain cursor-zoom-in"
+                                            drag="x"
+                                            dragConstraints={{ left: 0, right: 0 }}
+                                            dragElastic={0.1}
+                                            dragDirectionLock
+                                            onDragEnd={(e, { offset }) => {
+                                                const swipe = offset.x
+                                                if (swipe < -60 && activeImage < vehicle.images.length - 1) {
+                                                    setActiveImage(activeImage + 1)
+                                                } else if (swipe > 60 && activeImage > 0) {
+                                                    setActiveImage(activeImage - 1)
+                                                }
                                             }}
-                                        </TransformWrapper>
+                                        />
                                     </div>
                                 </div>
                             </div>

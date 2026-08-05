@@ -30,9 +30,14 @@ export default async function FavoritesPage() {
         where: {
             userId: currentUser.id
         },
+        take: 50,
         include: {
             vehicle: {
-                include: {
+                select: {
+                    id: true, title: true, brand: true, model: true, version: true,
+                    year: true, price: true, currency: true, images: true, city: true,
+                    status: true, vehicleType: true, latitude: true, longitude: true,
+                    userId: true,
                     user: {
                         select: {
                             name: true,
@@ -50,10 +55,10 @@ export default async function FavoritesPage() {
         orderBy: {
             createdAt: "desc"
         }
-    })
+    }) as any
 
     // Serializar Decimals a números planos para el componente cliente
-    const serializedFavorites = favorites.map(fav => ({
+    const serializedFavorites = favorites.map((fav: any) => ({
         ...fav,
         vehicle: {
             ...fav.vehicle,

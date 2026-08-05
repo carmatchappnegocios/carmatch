@@ -45,10 +45,15 @@ export async function GET(request: NextRequest) {
             whereClause.category = category
         }
 
-        // Obtener todos los negocios activos
+        // Bounding box pre-filter (approximate degree offset for radius)
+        const latOffset = radius / 111.0
+        const lngOffset = radius / (111.0 * Math.cos(lat * Math.PI / 180))
+
         const allBusinesses = await prisma.business.findMany({
             where: {
                 isActive: true,
+                latitude: { gte: lat - latOffset, lte: lat + latOffset },
+                longitude: { gte: lng - lngOffset, lte: lng + lngOffset },
                 ...(category ? { category } : {})
             },
             select: {

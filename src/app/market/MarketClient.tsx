@@ -14,12 +14,14 @@ import Link from 'next/link'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { useLocation } from '@/contexts/LocationContext'
 import { searchCity, searchCities, calculateDistance, normalizeCountryCode, LocationData } from '@/lib/geolocation'
-import MarketFilters from '@/components/MarketFilters'
+import dynamic from 'next/dynamic'
 import FavoriteButton from '@/components/FavoriteButton'
 import ShareButton from '@/components/ShareButton'
 import ReportImageButton from '@/components/ReportImageButton'
 import { formatPrice, formatNumber } from '@/lib/vehicleTaxonomy'
 import { generateVehicleSlug, generateBusinessSlug } from '@/lib/slug'
+
+const MarketFilters = dynamic(() => import('@/components/MarketFilters'), { ssr: false })
 
 interface FeedItem {
     id: string
