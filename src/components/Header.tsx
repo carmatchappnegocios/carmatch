@@ -15,7 +15,7 @@ import PWAInstallModal from "@/components/PWAInstallModal"
 import NotificationsDropdown from "@/components/NotificationsDropdown"
 import { usePWAInstall } from '@/hooks/usePWAInstall'
 import { getWeightedHomePath } from "@/lib/navigation"
-import { ThumbsUp, Headset, Flame, ShoppingBag, UserRound, Map, Bell, BellOff, Settings, ShieldCheck, Coins, Heart, MessageSquare, Briefcase, Smartphone } from "lucide-react"
+import { ThumbsUp, Headset, Flame, Car, UserRound, Map, Bell, BellOff, Settings, ShieldCheck, Coins, Heart, MessageSquare, Briefcase, Smartphone } from "lucide-react"
 import { usePushNotifications } from "@/hooks/usePushNotifications"
 import { BUSINESS_CATEGORIES } from "@/lib/businessCategories"
 import { useRestoreSessionModal } from "@/hooks/useRestoreSessionModal"
@@ -318,7 +318,7 @@ export default function Header() {
                                 ? 'bg-blue-500/10 text-blue-400 font-bold ring-1 ring-blue-500/20' 
                                 : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
                         >
-                            <ShoppingBag size={18} className={isActive('/market') ? 'text-blue-500' : ''} />
+                            <Car size={18} className={isActive('/market') ? 'text-blue-500' : ''} />
                             <span className="hidden lg:inline text-sm tracking-tight">{t('nav.marketcar') || 'MarketCar'}</span>
                         </Link>
 
