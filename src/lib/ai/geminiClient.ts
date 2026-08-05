@@ -33,7 +33,7 @@ function mapPartsToRest(parts: any[]) {
 async function geminiRestFetch(promptOrParts: string | any[] | { contents: any[] }, model: string, version: string = 'v1') {
     const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || "";
     const fullModelName = model.startsWith('models/') ? model : `models/${model}`;
-    const url = `https://generativelanguage.googleapis.com/${version}/${fullModelName}:generateContent?key=${apiKey}`;
+    const url = `https://generativelanguage.googleapis.com/${version}/${fullModelName}:generateContent`;
     
     // 🛠️ TRADUCTOR DE FORMATOS (v7.9.5): Soporta String, Array de Partes o Request Object completo
     let finalContents: any[] = [];
@@ -63,7 +63,10 @@ async function geminiRestFetch(promptOrParts: string | any[] | { contents: any[]
 
     const response = await fetch(url, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Content-Type': 'application/json',
+            'x-goog-api-key': apiKey
+        },
         body: JSON.stringify(body)
     });
 
