@@ -91,19 +91,20 @@ export async function GET(request: NextRequest) {
             const biasLng = searchParams.get('biasLng') ? parseFloat(searchParams.get('biasLng')!) : undefined
 
             // INTELIGENCIA ARTIFICIAL GEMINI 🧠
-            // Refinamos la búsqueda con AI para inferir ciudad/estado si faltan
+            // Solo usamos AI si el query parece incompleto o complejo (>15 chars, contiene comas, etc.)
             let finalQuery = query;
+            const isComplexQuery = query.length > 15 || query.includes(',') || query.includes('-')
 
-            // Solo usamos AI si el query parece incompleto (corto) o si el usuario lo pide implícitamente
-            // Para asegurar máxima precisión como pidió el usuario, lo usamos siempre en este endpoint de "búsqueda exacta".
-            try {
-                const aiParsed = await parseAddressWithAI(query, biasLat, biasLng);
-                if (aiParsed && aiParsed.full_search_query) {
-                    console.log(`🤖 AI Refined Address: "${query}" -> "${aiParsed.full_search_query}"`);
-                    finalQuery = aiParsed.full_search_query;
+            if (isComplexQuery) {
+                try {
+                    const aiParsed = await parseAddressWithAI(query, biasLat, biasLng);
+                    if (aiParsed && aiParsed.full_search_query) {
+                        console.log(`🤖 AI Refined Address: "${query}" -> "${aiParsed.full_search_query}"`);
+                        finalQuery = aiParsed.full_search_query;
+                    }
+                } catch (e) {
+                    console.warn("AI Parse skipped due to error, using raw query");
                 }
-            } catch (e) {
-                console.warn("AI Parse skipped due to error, using raw query");
             }
 
             const limit = parseInt(searchParams.get('limit') || '1')

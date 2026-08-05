@@ -295,23 +295,8 @@ export default function MapClient({ businesses, user }: MapClientProps) {
         return result;
     }, [dynamicBusinesses, selectedCategories])
 
-    // 🔒 El cargando ahora solo se muestra si el contexto está 'initializing' (leyendo localStorage)
-    if (initializing) {
-        return (
-            <div className="flex flex-col h-full bg-background">
-                <div className="flex-1 flex flex-col items-center justify-center p-8">
-                    <div className="max-w-md text-center space-y-6">
-                        <div className="w-20 h-20 mx-auto bg-primary-700/20 rounded-full flex items-center justify-center animate-pulse">
-                            <MapPin className="w-10 h-10 text-primary-500" />
-                        </div>
-                        <h2 className="text-2xl font-black italic text-white uppercase tracking-tighter">
-                            {t('map_store.loading')}
-                        </h2>
-                    </div>
-                </div>
-            </div>
-        )
-    }
+    // 🔒 El mapa se renderiza inmediatamente, sin esperar la ubicación.
+    // La ubicación IP/GPS llega async y el mapa hace flyTo cuando está lista.
 
     // 🕵️ No bloqueamos si no hay GPS. El contexto LocationContext ya nos dio la ciudad por IP.
     // El mapa se cargará en esa ciudad automáticamente.

@@ -86,7 +86,6 @@ export default function MapBoxStoreLocator({
             minTileCacheSize: 500,
             maxTileCacheSize: 1000,
             refreshExpiredTiles: false,
-            preserveDrawingBuffer: true,
             trackResize: true,
         })
 

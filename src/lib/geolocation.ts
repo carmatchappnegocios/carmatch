@@ -79,7 +79,7 @@ function getPosition(options?: PositionOptions): Promise<Coordinates> {
     })
 }
 
-export async function getLocationFromIP(): Promise<Coordinates> {
+export async function getLocationFromIP(): Promise<LocationData> {
     try {
         // Nueva detección profesional mediante el servidor
         const response = await fetch('/api/geolocation?detect=true')
@@ -89,7 +89,11 @@ export async function getLocationFromIP(): Promise<Coordinates> {
         if (data.latitude && data.longitude) {
             return {
                 latitude: Number(data.latitude),
-                longitude: Number(data.longitude)
+                longitude: Number(data.longitude),
+                city: data.city || undefined,
+                state: data.state || undefined,
+                country: data.country || undefined,
+                countryCode: data.countryCode || undefined,
             }
         }
         throw new Error('IP localization failed')

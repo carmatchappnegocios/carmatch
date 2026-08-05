@@ -66,7 +66,7 @@ export default async function MapPage() {
 
     const businesses = await prisma.business.findMany({
         where: whereCondition,
-        take: 500, // optimization: don't load 5000 at once on mobile
+        take: 100, // Light SSR: only markers, details load on click via bounds API
         select: {
             id: true,
             name: true,
@@ -74,35 +74,12 @@ export default async function MapPage() {
             latitude: true,
             longitude: true,
             city: true,
-            state: true,
-            address: true,
-            street: true,
-            streetNumber: true,
-            colony: true,
-            images: true,
-            description: true,
-            services: true,
-            phone: true,
-            whatsapp: true,
-            telegram: true,
-            website: true,
-            facebook: true,
-            instagram: true,
-            tiktok: true,
-            hours: true,
-            additionalPhones: true,
             is24Hours: true,
             hasEmergencyService: true,
             hasHomeService: true,
             isSafeMeetingPoint: true,
             hasMiniWeb: true,
             userId: true,
-            user: {
-                select: {
-                    name: true,
-                    image: true
-                }
-            }
         }
     })
 

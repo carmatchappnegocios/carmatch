@@ -177,8 +177,7 @@ export function LocationProvider({
             try {
                 if (!hasSaved) setLoading(true)
                 
-                const coords = await getLocationFromIP()
-                const locationData = await reverseGeocode(coords.latitude, coords.longitude)
+                const locationData = await getLocationFromIP()
                 
                 // Actualizar ubicación:
                 // - Si no hay nada → usar IP
