@@ -23,7 +23,6 @@ const MapBoxStoreLocator = dynamic(() => import('@/components/MapBoxStoreLocator
 })
 
 const BusinessDetailsModal = dynamic(() => import('@/components/BusinessDetailsModal'), { ssr: false })
-const BusinessListCard = dynamic(() => import('@/components/BusinessListCard'), { ssr: false })
 
 
 interface MapClientProps {

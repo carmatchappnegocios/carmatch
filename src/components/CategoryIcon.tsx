@@ -2,6 +2,8 @@
 // ⚠️ CRITICAL WARNING: FILE PROTECTED BY PROJECT RULES.
 // DO NOT MODIFY THIS FILE WITHOUT EXPLICIT USER INSTRUCTION.
 
+"use client"
+
 import React from 'react'
 import {
     Activity, Armchair, Bike, CircleDot, Disc, Droplet, Droplets, Fuel, Gauge,

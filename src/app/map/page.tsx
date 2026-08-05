@@ -74,6 +74,7 @@ export default async function MapPage() {
             latitude: true,
             longitude: true,
             city: true,
+            images: true,
             is24Hours: true,
             hasEmergencyService: true,
             hasHomeService: true,
