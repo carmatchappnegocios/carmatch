@@ -37,11 +37,11 @@ export default async function MapPage() {
         "@type": "CollectionPage",
         "name": "CarMatch Map Store",
         "description": "Directorio en tiempo real de servicios automotrices, talleres y asistencia vial.",
-        "url": "https://carmatchapp.net/map-store",
+        "url": "https://www.carmatchapp.net/map-store",
         "provider": {
             "@type": "Organization",
             "name": "CarMatch",
-            "url": "https://carmatchapp.net"
+            "url": "https://www.carmatchapp.net"
         },
         "specialty": "Automotive Services"
     }

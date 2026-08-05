@@ -22,17 +22,17 @@ export const metadata = {
         "mecánico express", "reparación en sitio", "mantenimiento en casa", "CarMatch"
     ],
     alternates: {
-        canonical: "https://carmatchapp.net/map-store",
+        canonical: "https://www.carmatchapp.net/map-store",
     },
     openGraph: {
         title: "Talleres Mecánicos 24/7 cerca de ti | CarMatch Map Store",
         description: "Encuentra mecánicos, desponchadoras, refaccionarias y grúas cerca de ti. Servicio 24/7 en todo México.",
-        url: "https://carmatchapp.net/map-store",
+        url: "https://www.carmatchapp.net/map-store",
         siteName: "CarMatch",
         type: "website",
         images: [
             {
-                url: "https://carmatchapp.net/portada_1024x500.png?v=23",
+                url: "https://www.carmatchapp.net/portada_1024x500.png?v=23",
                 width: 1024,
                 height: 500,
                 alt: "CarMatch",
@@ -43,7 +43,7 @@ export const metadata = {
         card: "summary_large_image",
         title: "Talleres Mecánicos 24/7 | CarMatch Map Store",
         description: "Encuentra mecánicos, desponchadoras y grúas cerca de ti. Servicio 24/7.",
-        images: ["https://carmatchapp.net/portada_1024x500.png?v=23"],
+        images: ["https://www.carmatchapp.net/portada_1024x500.png?v=23"],
     }
 }
 

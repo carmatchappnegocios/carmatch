@@ -24,17 +24,17 @@ export const metadata = {
         "carros en venta swipe", "marketplace dinámico autos", "feed interactivo vehiculos"
     ],
     alternates: {
-        canonical: "https://carmatchapp.net/swipe",
+        canonical: "https://www.carmatchapp.net/swipe",
     },
     openGraph: {
         title: "CarMatch Swipe | Descubre Tu Auto Ideal Deslizando",
         description: "La experiencia tipo Tinder para encontrar autos. Desliza, da Like y guarda tus favoritos al instante. Miles de vehículos esperándote.",
-        url: "https://carmatchapp.net/swipe",
+        url: "https://www.carmatchapp.net/swipe",
         siteName: "CarMatch",
         type: "website",
         images: [
             {
-                url: "https://carmatchapp.net/portada_1024x500.png?v=23",
+                url: "https://www.carmatchapp.net/portada_1024x500.png?v=23",
                 width: 1024,
                 height: 500,
                 alt: "CarMatch",
@@ -45,7 +45,7 @@ export const metadata = {
         card: "summary_large_image",
         title: "CarMatch Swipe | Tinder de Carros - Descubre tu Auto Ideal",
         description: "Desliza, da Like y guarda tus favoritos. La forma más rápida de encontrar tu auto.",
-        images: ["https://carmatchapp.net/portada_1024x500.png?v=23"],
+        images: ["https://www.carmatchapp.net/portada_1024x500.png?v=23"],
     }
 }
 

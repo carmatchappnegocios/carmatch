@@ -49,21 +49,21 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
         description,
         keywords,
         alternates: {
-            canonical: "https://carmatchapp.net/market",
+            canonical: "https://www.carmatchapp.net/market",
         },
         openGraph: {
             title,
             description,
-            url: "https://carmatchapp.net/market",
+            url: "https://www.carmatchapp.net/market",
             siteName: "CarMatch",
             type: "website",
-            images: [{ url: "https://carmatchapp.net/portada_1024x500.png?v=23", width: 1024, height: 500, alt: "CarMatch" }],
+            images: [{ url: "https://www.carmatchapp.net/portada_1024x500.png?v=23", width: 1024, height: 500, alt: "CarMatch" }],
         },
         twitter: {
             card: "summary_large_image",
             title,
             description,
-            images: ["https://carmatchapp.net/portada_1024x500.png?v=23"],
+            images: ["https://www.carmatchapp.net/portada_1024x500.png?v=23"],
         }
     }
 }

@@ -68,7 +68,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
             title,
             description,
             images: vehicle.images.length > 0 ? [vehicle.images[0]] : [],
-            url: `https://carmatchapp.net/comprar/${slug}`,
+            url: `https://www.carmatchapp.net/comprar/${slug}`,
             siteName: 'CarMatch',
             type: 'website',
         },
@@ -79,7 +79,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
             images: vehicle.images.length > 0 ? [vehicle.images[0]] : [],
         },
         alternates: {
-            canonical: `https://carmatchapp.net/comprar/${slug}`,
+            canonical: `https://www.carmatchapp.net/comprar/${slug}`,
         }
     }
 }
@@ -165,12 +165,12 @@ export default async function ComprarVehiclePage({ params, searchParams }: Props
             "priceCurrency": vehicle.currency || "MXN",
             "availability": "https://schema.org/InStock",
             "itemCondition": "https://schema.org/UsedCondition",
-            "url": `https://carmatchapp.net/comprar/${slug}`,
+            "url": `https://www.carmatchapp.net/comprar/${slug}`,
             "priceValidUntil": new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0],
             "seller": {
                 "@type": "Organization",
                 "name": "CarMatch",
-                "url": "https://carmatchapp.net"
+                "url": "https://www.carmatchapp.net"
             }
         }
     }
@@ -196,10 +196,10 @@ export default async function ComprarVehiclePage({ params, searchParams }: Props
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "CarMatch", "item": "https://carmatchapp.net" },
-            { "@type": "ListItem", "position": 2, "name": "Comprar", "item": "https://carmatchapp.net/market" },
-            { "@type": "ListItem", "position": 3, "name": vehicle.brand, "item": `https://carmatchapp.net/market?brand=${encodeURIComponent(vehicle.brand)}` },
-            { "@type": "ListItem", "position": 4, "name": vehicle.model, "item": `https://carmatchapp.net/comprar/${slug}` }
+            { "@type": "ListItem", "position": 1, "name": "CarMatch", "item": "https://www.carmatchapp.net" },
+            { "@type": "ListItem", "position": 2, "name": "Comprar", "item": "https://www.carmatchapp.net/market" },
+            { "@type": "ListItem", "position": 3, "name": vehicle.brand, "item": `https://www.carmatchapp.net/market?brand=${encodeURIComponent(vehicle.brand)}` },
+            { "@type": "ListItem", "position": 4, "name": vehicle.model, "item": `https://www.carmatchapp.net/comprar/${slug}` }
         ]
     }
 

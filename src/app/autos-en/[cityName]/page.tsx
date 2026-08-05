@@ -117,17 +117,17 @@ export async function generateMetadata({
             `carMatch ${city}`, `comprar carro ${city}`, `vender auto ${city}`
         ],
         alternates: {
-            canonical: `https://carmatchapp.net/autos-en/${cityName}`,
+            canonical: `https://www.carmatchapp.net/autos-en/${cityName}`,
         },
         openGraph: {
             title,
             description,
-            url: `https://carmatchapp.net/autos-en/${cityName}`,
+            url: `https://www.carmatchapp.net/autos-en/${cityName}`,
             siteName: 'CarMatch',
             type: 'website',
             images: [
                 {
-                    url: 'https://carmatchapp.net/portada_1024x500.png?v=23',
+                    url: 'https://www.carmatchapp.net/portada_1024x500.png?v=23',
                     width: 1024,
                     height: 500,
                     alt: `Autos en venta en ${city} - CarMatch`,
@@ -138,7 +138,7 @@ export async function generateMetadata({
             card: 'summary_large_image',
             title,
             description,
-            images: ['https://carmatchapp.net/portada_1024x500.png?v=23'],
+            images: ['https://www.carmatchapp.net/portada_1024x500.png?v=23'],
         },
     }
 }
@@ -214,9 +214,9 @@ export default async function CityPage({
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "CarMatch", "item": "https://carmatchapp.net" },
-            { "@type": "ListItem", "position": 2, "name": "Autos por Ciudad", "item": "https://carmatchapp.net/market" },
-            { "@type": "ListItem", "position": 3, "name": `Autos en ${city}`, "item": `https://carmatchapp.net/autos-en/${cityName}` }
+            { "@type": "ListItem", "position": 1, "name": "CarMatch", "item": "https://www.carmatchapp.net" },
+            { "@type": "ListItem", "position": 2, "name": "Autos por Ciudad", "item": "https://www.carmatchapp.net/market" },
+            { "@type": "ListItem", "position": 3, "name": `Autos en ${city}`, "item": `https://www.carmatchapp.net/autos-en/${cityName}` }
         ]
     }
 

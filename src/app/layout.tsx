@@ -27,13 +27,13 @@ import GlobalSOSWatcher from "@/components/GlobalSOSWatcher";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    metadataBase: new URL("https://carmatchapp.net"),
+    metadataBase: new URL("https://www.carmatchapp.net"),
     title: "CarMatch | Compra y Vende Autos Gratis en México",
     description: "La red social automotriz #1 de México. Vende tu auto sin comisiones, encuentra talleres mecánicos 24/7 y descubre tu próximo vehículo.",
     alternates: {
-        canonical: "https://carmatchapp.net",
+        canonical: "https://www.carmatchapp.net",
         languages: {
-            'es': 'https://carmatchapp.net',
+            'es': 'https://www.carmatchapp.net',
         },
     },
     verification: {
@@ -61,16 +61,19 @@ export const metadata: Metadata = {
     authors: [{ name: "CarMatch" }],
     creator: "CarMatch",
     publisher: "CarMatch",
+    other: {
+        'fb:app_id': '1792641761453760',
+    },
     openGraph: {
         type: "website",
         locale: "es_MX",
-        url: "https://carmatchapp.net",
+        url: "https://www.carmatchapp.net",
         siteName: "CarMatch Social",
         title: "CarMatch | Vende tu Auto Gratis en México",
         description: "Publica tu vehículo gratis y sin comisiones. Encuentra mecánicos y servicios 24/7 en nuestra comunidad.",
         images: [
             {
-                url: "/portada_1024x500.png?v=23",
+                url: "https://www.carmatchapp.net/portada_1024x500.png?v=23",
                 width: 1024,
                 height: 500,
                 alt: "CarMatch",
@@ -81,7 +84,7 @@ export const metadata: Metadata = {
         card: "summary_large_image",
         title: "CarMatch | Compra y Vende Autos Gratis en México",
         description: "La red social automotriz que revoluciona el mercado. Publica gratis y encuentra talleres 24/7.",
-        images: ["/portada_1024x500.png?v=23"],
+        images: ["https://www.carmatchapp.net/portada_1024x500.png?v=23"],
     },
     appleWebApp: {
         capable: true,

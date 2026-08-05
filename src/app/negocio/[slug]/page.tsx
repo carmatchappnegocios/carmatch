@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             title,
             description,
             images: business.images.length > 0 ? [business.images[0]] : [],
-            url: `https://carmatchapp.net/negocio/${slug}`,
+            url: `https://www.carmatchapp.net/negocio/${slug}`,
             siteName: 'CarMatch',
             type: 'website',
         },
@@ -53,7 +53,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             images: business.images.length > 0 ? [business.images[0]] : [],
         },
         alternates: {
-            canonical: `https://carmatchapp.net/negocio/${slug}`,
+            canonical: `https://www.carmatchapp.net/negocio/${slug}`,
         }
     }
 }
@@ -140,10 +140,10 @@ export default async function SemanticBusinessPage({ params }: Props) {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "CarMatch", "item": "https://carmatchapp.net" },
-            { "@type": "ListItem", "position": 2, "name": "MapStore", "item": "https://carmatchapp.net/map-store" },
-            { "@type": "ListItem", "position": 3, "name": business.city, "item": `https://carmatchapp.net/map-store?city=${encodeURIComponent(business.city)}` },
-            { "@type": "ListItem", "position": 4, "name": business.name, "item": `https://carmatchapp.net/negocio/${slug}` }
+            { "@type": "ListItem", "position": 1, "name": "CarMatch", "item": "https://www.carmatchapp.net" },
+            { "@type": "ListItem", "position": 2, "name": "MapStore", "item": "https://www.carmatchapp.net/map-store" },
+            { "@type": "ListItem", "position": 3, "name": business.city, "item": `https://www.carmatchapp.net/map-store?city=${encodeURIComponent(business.city)}` },
+            { "@type": "ListItem", "position": 4, "name": business.name, "item": `https://www.carmatchapp.net/negocio/${slug}` }
         ]
     }
 
