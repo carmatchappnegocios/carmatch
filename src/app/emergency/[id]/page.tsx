@@ -65,7 +65,8 @@ export default function EmergencyPage({
             socket.emit('join-room', `emergency:${id}`)
 
             // Listen for location updates
-            socket.on('emergency-update', (data: SOSData) => {
+            socket.on('emergency-update', (...args: unknown[]) => {
+                const data = args[0] as SOSData
                 console.log('🚨 [SOCKET] Emergency update received:', data)
                 setSOSData(data)
                 updateMap(data)
