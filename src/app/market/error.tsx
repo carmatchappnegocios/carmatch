@@ -1,5 +1,7 @@
 "use client"
 
+import * as Sentry from "@sentry/nextjs"
+
 export default function MarketError({
     error,
     reset,
@@ -7,6 +9,8 @@ export default function MarketError({
     error: Error & { digest?: string }
     reset: () => void
 }) {
+    Sentry.captureException(error)
+
     return (
         <div className="min-h-[60vh] flex items-center justify-center bg-background px-4">
             <div className="text-center max-w-md">
