@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
     LayoutDashboard,
@@ -15,10 +15,6 @@ import {
     Store,
     Flag,
     Terminal,
-    Settings,
-    LogOut,
-    Menu,
-    X,
     Headset,
     ChevronRight,
     Search,
@@ -27,12 +23,8 @@ import {
     Activity,
     ShieldCheck,
     AlertCircle,
-    CheckCircle2,
     TrendingUp,
-    Map as MapIcon,
-    BarChart2,
     Target,
-    QrCode,
     Cpu,
     Sparkles,
     RefreshCw,
@@ -123,30 +115,82 @@ function AdminPanelContent() {
 
     const handleRunAnalyst = async () => {
         setIsAnalyzing(true)
-        // Análisis dinámico basado en stats reales
-        setTimeout(() => {
-            const userTotal = stats.users.total || 0
-            const vehicleTotal = stats.vehicles.active || 0
-            const revenueTotal = stats.financials?.totalRevenue || 0
+        try {
+            const res = await fetch('/api/admin/stats')
+            if (!res.ok) throw new Error('Failed to fetch stats')
+            const data = await res.json()
+
+            const userTotal = data.users?.total || 0
+            const vehicleTotal = data.vehicles?.active || 0
+            const revenueTotal = data.financials?.totalRevenue || 0
+            const businessTotal = data.businesses?.recent?.length || 0
+            const reportPending = data.reports?.filter((r: any) => r.status === 'PENDING').length || 0
+            const freeVehicles = data.detailedStats?.vehicleStats?.free || 0
+            const paidVehicles = data.detailedStats?.vehicleStats?.paid || 0
+            const registrationsThisMonth = data.registrations?.thisMonth || 0
+            const registrationsToday = data.registrations?.today || 0
+            const creditsPurchased = data.detailedStats?.creditStats?.purchased || 0
+            const creditsUsed = data.detailedStats?.creditStats?.used || 0
+
+            const insights: any[] = []
+
+            if (userTotal === 0) {
+                insights.push({ observation: 'Sin usuarios registrados aún.', recommendation: 'Iniciar campaña de adquisición en redes sociales.' })
+            } else if (registrationsThisMonth > 0) {
+                insights.push({ observation: `${registrationsThisMonth} registros este mes. ${registrationsToday} hoy.`, recommendation: 'Mantener ritmo de adquisición y activar notificaciones push.' })
+            }
+
+            if (vehicleTotal === 0) {
+                insights.push({ observation: 'Sin vehículos publicados.', recommendation: 'Publicar inventario inicial para generar tráfico.' })
+            } else if (vehicleTotal < 50) {
+                insights.push({ observation: `Stock de ${vehicleTotal} vehículos — bajo.`, recommendation: 'Incentivar publicaciones con bonos de créditos.' })
+            } else {
+                insights.push({ observation: `${vehicleTotal} vehículos activos en inventario.`, recommendation: 'Segmentar por región y categoría para campañas dirigidas.' })
+            }
+
+            if (freeVehicles > 0 && paidVehicles === 0) {
+                insights.push({ observation: `${freeVehicles} publicaciones gratuitas, 0 pagadas.`, recommendation: 'Implementar recordatorios de expiración para convertir gratuitos a pagados.' })
+            }
+
+            if (creditsPurchased > 0) {
+                const usageRatio = ((creditsUsed / creditsPurchased) * 100).toFixed(0)
+                insights.push({ observation: `${creditsPurchased} créditos comprados, ${creditsUsed} usados (${usageRatio}%).`, recommendation: Number(usageRatio) < 30 ? 'Créditos subutilizados — enviar recordatorios de uso.' : 'Buena tasa de uso de créditos.' })
+            }
+
+            if (reportPending > 0) {
+                insights.push({ observation: `${reportPending} reportes pendientes de moderación.`, recommendation: 'Revisar reportes urgentemente para mantener confianza de la comunidad.' })
+            }
+
+            if (businessTotal > 0) {
+                insights.push({ observation: `${businessTotal} negocios registrados en MapStore.`, recommendation: 'Verificar que tengan horarios y fotos completos para mejorar conversión.' })
+            }
+
+            if (insights.length === 0) {
+                insights.push({ observation: 'Datos insuficientes para análisis profundo.', recommendation: 'Necesitamos más actividad de usuarios para generar insights precisos.' })
+            }
+
+            const opportunities: any[] = []
+            if (vehicleTotal > 10 && businessTotal < 5) {
+                opportunities.push({ title: 'Directorio de Talleres', location: 'Zonas con más ventas', roiScore: 85, reason: `${vehicleTotal} autos activos pero pocos talleres afiliados. Oportunidad de captar mecánicos.` })
+            }
+            if (registrationsThisMonth > 5) {
+                opportunities.push({ title: 'Monetización de Créditos', location: 'Usuarios activos', roiScore: 78, reason: `${registrationsThisMonth} usuarios nuevos este mes. Monetizar con paquetes de créditos.` })
+            }
 
             setAiAnalysis({
-                summary: `Análisis de CarMatch OS: Contamos con ${userTotal} usuarios y un stock activo de ${vehicleTotal} vehículos. Los ingresos totales ascienden a $${revenueTotal.toLocaleString()}.`,
-                insights: [
-                    { 
-                        observation: userTotal > 0 ? `Base de ${userTotal} usuarios detectada.` : 'Iniciando captación de usuarios.', 
-                        recommendation: 'Optimizar embudo de conversión en registros nuevos.' 
-                    },
-                    { 
-                        observation: vehicleTotal < 50 ? 'Stock de vehículos bajo.' : `Contamos con ${vehicleTotal} unidades activas.`, 
-                        recommendation: vehicleTotal < 50 ? 'Incentivar publicaciones con bonos de créditos.' : 'Segmentar inventario por regiones de alta demanda.' 
-                    }
-                ],
-                businessOppotunities: [
-                    { title: 'Expansión de Créditos', location: 'Global', roiScore: 95, reason: 'El nuevo precio de $10 MXN está incentivando micro-pagos.' }
-                ]
+                summary: `Análisis de CarMatch OS: ${userTotal} usuarios, ${vehicleTotal} vehículos activos, ${businessTotal} negocios. Ingresos totales: $${revenueTotal.toLocaleString()}.`,
+                insights,
+                businessOppotunities: opportunities
             })
+        } catch {
+            setAiAnalysis({
+                summary: 'Error al obtener datos para análisis.',
+                insights: [{ observation: 'No se pudieron cargar los datos.', recommendation: 'Verificar conexión a la base de datos.' }],
+                businessOppotunities: []
+            })
+        } finally {
             setIsAnalyzing(false)
-        }, 1500)
+        }
     }
 
     const menuItems = [
@@ -276,16 +320,6 @@ function MoreTab({ menuItems, setActiveView }: { menuItems: any[], setActiveView
                         </button>
                     )
                 })}
-            </div>
-
-            <div className="p-6 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 border border-white/5 rounded-[2.5rem] mt-4 flex items-center gap-6">
-                <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 shrink-0">
-                    <Settings className="w-8 h-8 text-zinc-600" />
-                </div>
-                <div>
-                    <h4 className="text-sm font-black text-white uppercase tracking-widest">Configuración</h4>
-                    <p className="text-[10px] text-zinc-500 font-bold mt-1">PROXIMAMENTE: AJUSTES DE SISTEMA</p>
-                </div>
             </div>
         </div>
     )
@@ -428,12 +462,18 @@ function OverviewTab({ stats, handleRunAnalyst, isAnalyzing, aiAnalysis }: any) 
                         <div>
                             <div className="flex items-center justify-between mb-2">
                                 <h4 className="text-xs font-black uppercase tracking-widest text-text-secondary">Crecimiento Usuarios</h4>
-                                <span className="text-[10px] font-bold text-green-500 bg-green-500/10 px-2 py-0.5 rounded-full">+12% Mes</span>
+                                {stats.registrations?.thisMonth > 0 && (
+                                    <span className="text-[10px] font-bold text-green-500 bg-green-500/10 px-2 py-0.5 rounded-full">+{stats.registrations.thisMonth} este mes</span>
+                                )}
                             </div>
                             <h3 className="text-3xl font-black italic tracking-tighter text-white">{stats.users.total.toLocaleString('es-MX')}</h3>
                         </div>
                         <div className="flex-1 mt-2">
-                            <SimpleLineChart data={stats.users.growth || [10, 20, 15, 30, 40]} color="#3b82f6" height={80} />
+                            {stats.users.growth && stats.users.growth.length > 0 && stats.users.growth.some((v: number) => v > 0) ? (
+                                <SimpleLineChart data={stats.users.growth} color="#3b82f6" height={80} />
+                            ) : (
+                                <div className="h-full flex items-center justify-center text-[10px] text-text-secondary italic">Sin datos de crecimiento</div>
+                            )}
                         </div>
                     </div>
 
@@ -442,12 +482,16 @@ function OverviewTab({ stats, handleRunAnalyst, isAnalyzing, aiAnalysis }: any) 
                         <div>
                             <div className="flex items-center justify-between mb-2">
                                 <h4 className="text-xs font-black uppercase tracking-widest text-text-secondary">Ganancias Netas (Est.)</h4>
-                                <span className="text-[10px] font-bold text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded-full">$10 / Crédito</span>
+                                <span className="text-[10px] font-bold text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded-full">$20 / Crédito</span>
                             </div>
                             <h3 className="text-3xl font-black italic tracking-tighter text-white">${(stats.financials?.projectedRevenue || 0).toLocaleString('es-MX')}</h3>
                         </div>
                         <div className="flex-1 mt-2">
-                            <SimpleLineChart data={stats.financials?.revenue || [100, 120, 180, 220, 300]} color="#10b981" height={80} />
+                            {stats.financials?.revenue && stats.financials.revenue.length > 0 && stats.financials.revenue.some((v: number) => v > 0) ? (
+                                <SimpleLineChart data={stats.financials.revenue} color="#10b981" height={80} />
+                            ) : (
+                                <div className="h-full flex items-center justify-center text-[10px] text-text-secondary italic">Sin datos de ingresos</div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -634,7 +678,17 @@ function BetaTimeCard({ betaToday }: { betaToday: { maxDuration: number; lastPin
 function UsersTab({ users }: { users: any[] }) {
     const [selectedUser, setSelectedUser] = useState<any>(null)
     const [showCreditModal, setShowCreditModal] = useState(false)
+    const [searchTerm, setSearchTerm] = useState('')
     const router = useRouter()
+
+    const filteredUsers = useMemo(() => {
+        if (!searchTerm.trim()) return users
+        const term = searchTerm.toLowerCase()
+        return users.filter(u =>
+            u.name?.toLowerCase().includes(term) ||
+            u.email?.toLowerCase().includes(term)
+        )
+    }, [users, searchTerm])
 
     return (
         <div className="space-y-6">
@@ -643,16 +697,27 @@ function UsersTab({ users }: { users: any[] }) {
 
             <div className="bg-[#111114] border border-white/5 rounded-3xl overflow-hidden shadow-2xl">
                 <div className="p-4 border-b border-white/5">
-                <h3 className="font-bold text-lg mb-3">Gestión de Usuarios</h3>
+                <h3 className="font-bold text-lg mb-3">Gestión de Usuarios ({filteredUsers.length})</h3>
                 <div className="relative">
                     <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary" />
-                    <input type="text" placeholder="Buscar usuario..." className="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 h-12 text-base focus:outline-none focus:border-primary-500 transition" />
+                    <input
+                        type="text"
+                        placeholder="Buscar por nombre o email..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 h-12 text-base focus:outline-none focus:border-primary-500 transition"
+                    />
                 </div>
             </div>
             {/* Desktop Table View */}
             {/* Premium Mobile Card View — Eliminada tabla Legacy */}
             <div className="grid grid-cols-1 gap-4 p-4">
-                {users.map(user => (
+                {filteredUsers.length === 0 ? (
+                    <div className="text-center py-12 opacity-30">
+                        <Users className="w-12 h-12 mx-auto mb-4" />
+                        <p className="text-sm font-bold">{searchTerm ? 'No se encontraron usuarios' : 'No hay usuarios registrados'}</p>
+                    </div>
+                ) : filteredUsers.map(user => (
                     <div key={user.id} className="bg-[#1a1a1d] border border-white/5 rounded-3xl p-5 shadow-xl space-y-5 transition-all active:scale-[0.98]">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-4">
@@ -740,14 +805,51 @@ function UsersTab({ users }: { users: any[] }) {
 }
 
 function InventoryTab({ vehicles }: { vehicles: any[] }) {
+    const [exporting, setExporting] = useState(false)
+
+    const handleExportCSV = () => {
+        if (vehicles.length === 0) return
+        setExporting(true)
+        try {
+            const headers = ['ID', 'Título', 'Precio', 'Moneda', 'Ciudad', 'Estado', 'Propietario', 'Fecha']
+            const rows = vehicles.map(v => [
+                v.id,
+                `"${(v.title || '').replace(/"/g, '""')}"`,
+                v.price || 0,
+                v.currency || 'MXN',
+                `"${(v.city || 'N/A').replace(/"/g, '""')}"`,
+                v.status || 'UNKNOWN',
+                `"${(v.user?.name || 'Sistema').replace(/"/g, '""')}"`,
+                v.createdAt ? new Date(v.createdAt).toLocaleDateString() : 'N/A'
+            ])
+            const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n')
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+            const url = URL.createObjectURL(blob)
+            const link = document.createElement('a')
+            link.href = url
+            link.download = `carmatch-inventario-${new Date().toISOString().split('T')[0]}.csv`
+            link.click()
+            URL.revokeObjectURL(url)
+            toast.success(`CSV exportado: ${vehicles.length} vehículos`)
+        } catch {
+            toast.error('Error al exportar CSV')
+        } finally {
+            setExporting(false)
+        }
+    }
+
     return (
         <div className="bg-[#111114] border border-white/5 rounded-3xl overflow-hidden shadow-2xl">
             <div className="p-4 border-b border-white/5">
-                <h3 className="font-bold text-lg mb-3">Inventario Global</h3>
+                <h3 className="font-bold text-lg mb-3">Inventario Global ({vehicles.length})</h3>
                 <div className="flex gap-2">
                     <button className="p-3 min-h-[44px] min-w-[44px] bg-white/5 border border-white/10 rounded-xl hover:text-primary-500 hover:bg-white/10 active:bg-white/15 transition flex items-center justify-center"><Filter className="w-5 h-5" /></button>
-                    <button className="flex-1 px-4 py-3 min-h-[44px] bg-primary-600 active:bg-primary-700 text-white rounded-xl text-sm font-bold flex items-center justify-center gap-2">
-                        <ArrowUpRight className="w-5 h-5" /> Exportar CSV
+                    <button
+                        onClick={handleExportCSV}
+                        disabled={exporting || vehicles.length === 0}
+                        className="flex-1 px-4 py-3 min-h-[44px] bg-primary-600 active:bg-primary-700 disabled:opacity-50 text-white rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-colors"
+                    >
+                        <ArrowUpRight className="w-5 h-5" /> {exporting ? 'Exportando...' : 'Exportar CSV'}
                     </button>
                 </div>
             </div>
@@ -1061,11 +1163,37 @@ function ReportChat({ reportId }: { reportId: string }) {
 }
 
 function LogsTab({ logs }: { logs: any[] }) {
+    const [clearing, setClearing] = useState(false)
+
+    const handleClearLogs = async () => {
+        if (!confirm('¿Eliminar todos los registros del sistema? Esta acción no se puede deshacer.')) return
+        setClearing(true)
+        try {
+            const res = await fetch('/api/admin/logs', { method: 'DELETE' })
+            if (res.ok) {
+                toast.success('Registros limpiados')
+                window.location.reload()
+            } else {
+                toast.error('Error al limpiar registros')
+            }
+        } catch {
+            toast.error('Error al limpiar registros')
+        } finally {
+            setClearing(false)
+        }
+    }
+
     return (
         <div className="bg-[#111114] border border-white/5 rounded-3xl overflow-hidden shadow-2xl">
             <div className="p-6 border-b border-white/5 flex items-center justify-between">
                 <h3 className="font-bold text-lg flex items-center gap-2"><Terminal className="w-5 h-5" /> Audit Log</h3>
-                <button className="text-xs font-bold text-primary-400 hover:underline">Limpiar Registros</button>
+                <button
+                    onClick={handleClearLogs}
+                    disabled={clearing || logs.length === 0}
+                    className="text-xs font-bold text-red-400 hover:text-red-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                    {clearing ? 'Limpiando...' : 'Limpiar Registros'}
+                </button>
             </div>
             <div className="p-6 font-mono text-[11px] space-y-2 bg-black/40">
                 {logs.map(log => (
@@ -1323,11 +1451,21 @@ function MapStoreTab({ businesses }: { businesses: any[] }) {
 function IntelligenceTab({ stats }: { stats: any }) {
     const intelligenceData = stats.intelligence || { searches: [], vehicles: [], businesses: [], stats: { techTrends: {} } }
     
-    const opportunities = [
-        { id: 1, type: 'Taller Especializado', location: 'Centro Histórico', confidence: 94, reason: 'Alta demanda de servicios mecánicos y poca presencia de talleres afiliados.', action: 'Contactar Talleres en la Zona' },
-        { id: 2, type: 'Punto de Venta Seminuevos', location: 'Zona Norte', confidence: 88, reason: 'Público buscando modelos 2018-2022 con pagos a crédito.', action: 'Ver Inventario Disponible' },
-        { id: 3, type: 'Estética Automotriz', location: 'San Pedro', confidence: 91, reason: 'Búsquedas de "Detailing" y "Cerámico" han crecido 40% este mes.', action: 'Lanzar Campaña Local' }
-    ]
+    const totalSearches = intelligenceData.searches?.length || 0
+    const totalVehicles = intelligenceData.vehicles?.length || 0
+    const totalBusinesses = intelligenceData.businesses?.length || 0
+    const hasEnoughData = totalSearches >= 10
+
+    const opportunities = []
+    if (totalSearches > 5 && totalBusinesses < 3) {
+        opportunities.push({ id: 1, type: 'Directorio de Servicios', location: 'Zonas con más búsquedas', confidence: Math.min(95, 60 + totalSearches), reason: `${totalSearches} búsquedas detectadas pero solo ${totalBusinesses} negocios. Alta demanda sin oferta.`, action: 'Contactar Talleres en la Zona' })
+    }
+    if (totalVehicles > 3 && totalSearches > totalVehicles * 2) {
+        opportunities.push({ id: 2, type: 'Demanda de Seminuevos', location: 'Mercado activo', confidence: Math.min(92, 50 + totalVehicles), reason: `${totalSearches} búsquedas superan el inventario de ${totalVehicles} vehículos. Los compradores buscan más.`, action: 'Ver Inventario Disponible' })
+    }
+    if (totalBusinesses > 0 && totalSearches > totalBusinesses * 3) {
+        opportunities.push({ id: 3, type: 'Expansión de Categorías', location: 'Multi-zona', confidence: Math.min(88, 55 + totalBusinesses), reason: `Alta proporción de búsquedas vs negocios (${(totalSearches / Math.max(totalBusinesses, 1)).toFixed(1)}:1).`, action: 'Lanzar Campaña Local' })
+    }
 
     return (
         <div className="space-y-12 pb-24">
@@ -1438,7 +1576,12 @@ function IntelligenceTab({ stats }: { stats: any }) {
                 </header>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {opportunities.map((opp) => (
+                    {opportunities.length === 0 ? (
+                        <div className="col-span-3 text-center py-12 opacity-30">
+                            <Rocket className="w-12 h-12 mx-auto mb-4" />
+                            <p className="text-sm font-bold">Necesitamos más datos de búsquedas y negocios para generar oportunidades de expansión.</p>
+                        </div>
+                    ) : opportunities.map((opp) => (
                         <div
                             key={opp.id}
                             className="bg-gradient-to-br from-[#121215] to-black border border-green-500/10 p-8 rounded-[40px] relative overflow-hidden group hover:border-green-400/40 transition-all hover:shadow-[0_20px_50px_rgba(34,197,94,0.1)]"

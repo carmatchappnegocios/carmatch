@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Globe, Database, Image, Map, Cpu, CreditCard, Server, Wifi, TriangleAlert, CheckCircle2, Clock, DollarSign, Edit3, Save, X } from 'lucide-react'
 
 interface Service {
@@ -150,6 +150,30 @@ export default function CostsTab() {
     const [services, setServices] = useState<Service[]>(INITIAL_SERVICES)
     const [editingId, setEditingId] = useState<string | null>(null)
     const [editValues, setEditValues] = useState<Partial<Service>>({})
+    const [loaded, setLoaded] = useState(false)
+
+    useEffect(() => {
+        try {
+            const saved = localStorage.getItem('carmatch-costs')
+            if (saved) {
+                const parsed = JSON.parse(saved)
+                const restored = parsed.map((s: any) => {
+                    const initial = INITIAL_SERVICES.find(i => i.id === s.id)
+                    return { ...initial, ...s, icon: initial?.icon || Globe }
+                })
+                setServices(restored)
+            }
+        } catch {}
+        setLoaded(true)
+    }, [])
+
+    useEffect(() => {
+        if (!loaded) return
+        try {
+            const toSave = services.map(s => ({ ...s, icon: undefined }))
+            localStorage.setItem('carmatch-costs', JSON.stringify(toSave))
+        } catch {}
+    }, [services, loaded])
 
     const totalMensual = services.reduce((acc, s) => {
         if (s.cycle === 'anual') return acc + s.costMXN / 12
