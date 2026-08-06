@@ -102,6 +102,22 @@ export async function POST(
             body: content.length > 50 ? content.substring(0, 47) + '...' : content,
         })
 
+        // 3. Emitir evento Socket.IO en tiempo real al chat room
+        try {
+            const io = (global as any).io
+            if (io) {
+                io.to(`chat:${chatId}`).emit('new-message', message)
+                // También emitir al usuario receptor para actualizar la lista de chats
+                io.to(`user:${receiverId}`).emit('chat-updated', {
+                    chatId,
+                    lastMessage: message,
+                    vehicleId: chat.vehicleId
+                })
+            }
+        } catch {
+            // Socket.IO no disponible (Vercel serverless) — push notification es el fallback
+        }
+
         return NextResponse.json(message)
 
     } catch (error) {

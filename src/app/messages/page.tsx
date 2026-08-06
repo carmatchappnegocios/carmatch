@@ -57,6 +57,22 @@ export default function MessagesPage() {
         }
 
         fetchChats()
+
+        // 🔄 Auto-refresh cada 15 segundos (fallback para cuando Socket.IO no está disponible)
+        const pollInterval = setInterval(fetchChats, 15000)
+
+        // 🚀 REAL-TIME: Escuchar actualizaciones vía Socket.IO
+        import('@/lib/socket').then(({ socket }) => {
+            if (!socket.connected) socket.connect()
+            socket.on('chat-updated', () => fetchChats())
+        })
+
+        return () => {
+            clearInterval(pollInterval)
+            import('@/lib/socket').then(({ socket }) => {
+                socket.off('chat-updated')
+            })
+        }
     }, [session, status])
 
     const fetchChats = async () => {

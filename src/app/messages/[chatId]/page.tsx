@@ -94,6 +94,23 @@ export default function ChatPage({
             })
         })
 
+        // 🔄 POLLING FALLBACK: cada 10 segundos buscar nuevos mensajes (si Socket.IO no conecta)
+        const pollInterval = setInterval(() => {
+            fetch(`/api/chats/${chatId}/messages`)
+                .then(res => res.ok ? res.json() : [])
+                .then((data: Message[]) => {
+                    if (data.length > 0) {
+                        setMessages(prev => {
+                            const existingIds = new Set(prev.map(m => m.id))
+                            const newMessages = data.filter(m => !existingIds.has(m.id))
+                            if (newMessages.length === 0) return prev
+                            return [...prev, ...newMessages]
+                        })
+                    }
+                })
+                .catch(() => {})
+        }, 10000)
+
         // Safety reminders interval (local check, no db cost)
         const safetyInterval = setInterval(checkSafetyReminders, 60000)
 
@@ -102,6 +119,7 @@ export default function ChatPage({
                 socket.emit('leave-room', `chat:${chatId}`)
                 socket.off('new-message')
             })
+            clearInterval(pollInterval)
             clearInterval(safetyInterval)
         }
     }, [session, status, chatId])
