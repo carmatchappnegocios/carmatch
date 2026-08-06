@@ -81,6 +81,23 @@ export async function POST(
             data: { updatedAt: new Date() }
         })
 
+        // 📊 REGISTRAR EVENTO: Mensaje enviado
+        try {
+            const { trackChatEvent } = await import('@/lib/tracking')
+            await trackChatEvent({
+                eventType: 'MESSAGE_SENT',
+                userId: user.id,
+                chatId,
+                metadata: {
+                    vehicleId: chat.vehicleId,
+                    messageLength: content.trim().length,
+                    receiverId
+                }
+            })
+        } catch {
+            // Fail silently
+        }
+
         // TODO: Crear notificación para el otro usuario
         const receiverId = chat.buyerId === user.id ? chat.sellerId : chat.buyerId
         await upsertNotification({
@@ -192,7 +209,7 @@ export async function GET(
         ].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
 
         // Marcar mensajes como leídos
-        await prisma.message.updateMany({
+        const unreadMessages = await prisma.message.updateMany({
             where: {
                 chatId,
                 senderId: { not: user.id },
@@ -200,6 +217,23 @@ export async function GET(
             },
             data: { isRead: true }
         })
+
+        // 📊 REGISTRAR EVENTO: Mensajes leídos (solo si había mensajes sin leer)
+        if (unreadMessages.count > 0) {
+            try {
+                const { trackChatEvent } = await import('@/lib/tracking')
+                await trackChatEvent({
+                    eventType: 'MESSAGE_READ',
+                    userId: user.id,
+                    chatId,
+                    metadata: {
+                        messagesRead: unreadMessages.count
+                    }
+                })
+            } catch {
+                // Fail silently
+            }
+        }
 
         return NextResponse.json(timeline)
 

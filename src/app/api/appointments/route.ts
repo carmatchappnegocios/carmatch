@@ -85,6 +85,25 @@ export async function POST(request: Request) {
         // Notificar en el chat (mensaje de sistema opcional o dejar que la UI lo maneje)
         // Por ahora solo creamos la cita
 
+        // 📊 REGISTRAR EVENTO: Cita creada
+        try {
+            const { trackAppointmentEvent } = await import('@/lib/tracking')
+            await trackAppointmentEvent({
+                eventType: 'APPOINTMENT_CREATED',
+                userId: (session.user as any).id,
+                entityId: appointment.id,
+                metadata: {
+                    chatId,
+                    vehicleId: chatCheck.vehicleId,
+                    location,
+                    monitoringActive: !!monitoringActive,
+                    date
+                }
+            })
+        } catch {
+            // Fail silently
+        }
+
         // 2. Notificar al otro usuario vía Push
         const chat = await prisma.chat.findUnique({
             where: { id: chatId },

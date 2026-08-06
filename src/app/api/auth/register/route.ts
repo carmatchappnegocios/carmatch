@@ -97,6 +97,41 @@ export async function POST(request: Request) {
             },
         })
 
+        // 📊 REGISTRAR EVENTO: Usuario registrado
+        try {
+            const { trackUserEvent } = await import('@/lib/tracking')
+            await trackUserEvent({
+                eventType: 'USER_REGISTERED',
+                userId: user.id,
+                metadata: { email: normalizedEmail, method: 'email', ip }
+            })
+        } catch {
+            // Fail silently
+        }
+
+        // 📊 REGISTRAR CONVERSIÓN WAITLIST: Si el email estaba en la waitlist
+        try {
+            const waitlistEntry = await prisma.waitlist.findUnique({
+                where: { email: normalizedEmail }
+            })
+            if (waitlistEntry) {
+                await prisma.analyticsEvent.create({
+                    data: {
+                        userId: user.id,
+                        eventType: 'WAITLIST_CONVERSION',
+                        entityType: 'USER',
+                        metadata: {
+                            waitlistSource: waitlistEntry.source,
+                            waitlistCreatedAt: waitlistEntry.createdAt,
+                            timestamp: new Date().toISOString()
+                        }
+                    }
+                })
+            }
+        } catch {
+            // Fail silently
+        }
+
         return NextResponse.json(
             {
                 success: true,

@@ -46,6 +46,25 @@ export async function POST(request: NextRequest) {
                     deviceOS 
                 }
             })
+
+            // 📊 REGISTRAR EVENTO: Sesión iniciada
+            try {
+                await prisma.analyticsEvent.create({
+                    data: {
+                        userId,
+                        eventType: 'SESSION_STARTED',
+                        entityType: 'SESSION',
+                        metadata: {
+                            deviceOS,
+                            date: today,
+                            timestamp: now.toISOString()
+                        }
+                    }
+                })
+            } catch {
+                // Fail silently
+            }
+
             return NextResponse.json({ ok: true, completedToday: false, secondsInSession: 1 })
         }
 
@@ -86,6 +105,28 @@ export async function POST(request: NextRequest) {
                 deviceOS 
             }
         })
+
+        // 📊 REGISTRAR EVENTO: Sesión completada (4 minutos alcanzados)
+        if (isCompleted && !existing.completedToday) {
+            try {
+                await prisma.analyticsEvent.create({
+                    data: {
+                        userId,
+                        eventType: 'SESSION_ENDED',
+                        entityType: 'SESSION',
+                        metadata: {
+                            durationSeconds: currentContinuousSeconds,
+                            deviceOS,
+                            completed: true,
+                            date: today,
+                            timestamp: now.toISOString()
+                        }
+                    }
+                })
+            } catch {
+                // Fail silently
+            }
+        }
 
         return NextResponse.json({ 
             ok: true, 

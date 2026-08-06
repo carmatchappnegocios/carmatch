@@ -86,7 +86,15 @@ export async function trackRealView(userId: string | null, targetId: string, typ
         }
     })
 
-    // 1.1 Registrar tambien en la tabla contadora especifica (BusinessView) si es negocio
+    // 1.1 Incrementar contador real de vistas en el vehículo
+    if (isVehicle) {
+        await prisma.vehicle.update({
+            where: { id: targetId },
+            data: { views: { increment: 1 } }
+        })
+    }
+
+    // 1.2 Registrar tambien en la tabla contadora especifica (BusinessView) si es negocio
     // Esto cumple con el requerimiento: "cada vez que abran su etiqueta del mapa cuenta como vista"
     if (!isVehicle) {
         await prisma.businessView.create({

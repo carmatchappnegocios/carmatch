@@ -108,6 +108,23 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
     useEffect(() => {
         // Registrar vista real al entrar
         fetch(`/api/vehicles/${vehicle.id}/view`, { method: 'POST' }).catch(() => { })
+
+        // 📊 REGISTRAR EVENTO: Galería de fotos abierta
+        if (vehicle.images && vehicle.images.length > 1) {
+            fetch('/api/analytics/track', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    eventType: 'IMAGE_GALLERY_OPENED',
+                    entityType: 'VEHICLE',
+                    entityId: vehicle.id,
+                    metadata: {
+                        totalImages: vehicle.images.length,
+                        timestamp: new Date().toISOString()
+                    }
+                })
+            }).catch(() => {})
+        }
     }, [vehicle.id])
 
     // Sincronizar scroll manual de miniaturas con la imagen principal

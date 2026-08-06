@@ -52,6 +52,26 @@ export async function POST(
       data: updateData,
     });
 
+    // 📊 REGISTRAR EVENTO: Llegada a cita (posible completación)
+    try {
+      const { trackAppointmentEvent } = await import('@/lib/tracking')
+      const bothArrived = updatedAppointment.buyerArrived && updatedAppointment.sellerArrived
+      await trackAppointmentEvent({
+        eventType: bothArrived ? 'APPOINTMENT_COMPLETED' : 'APPOINTMENT_CREATED',
+        userId: session.user.id,
+        entityId: appointmentId,
+        metadata: {
+          chatId: appointment.chatId,
+          whoArrived: isBuyer ? 'buyer' : 'seller',
+          bothArrived,
+          buyerArrived: updatedAppointment.buyerArrived,
+          sellerArrived: updatedAppointment.sellerArrived
+        }
+      })
+    } catch {
+      // Fail silently
+    }
+
     return NextResponse.json({
       success: true,
       appointment: updatedAppointment,

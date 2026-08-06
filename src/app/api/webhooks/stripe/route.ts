@@ -206,5 +206,26 @@ async function processCreditPurchase(
         }
     })
 
+    // 📊 REGISTRAR EVENTO: Pago completado
+    try {
+        await prisma.analyticsEvent.create({
+            data: {
+                userId,
+                eventType: 'PAYMENT_COMPLETED',
+                entityType: 'PAYMENT',
+                metadata: {
+                    amount,
+                    currency,
+                    credits,
+                    transactionId,
+                    description,
+                    timestamp: new Date().toISOString()
+                }
+            }
+        })
+    } catch {
+        // Fail silently
+    }
+
     console.log(`✅ ${credits} créditos sumados al usuario ${userId} via ${transactionId}`)
 }

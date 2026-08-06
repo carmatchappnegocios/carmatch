@@ -393,6 +393,22 @@ export default function SwipeClient({ initialItems, currentUserId }: SwipeClient
 
     const handleDislike = (id: string) => {
         markAsSeen(id)
+
+        // 📊 REGISTRAR EVENTO: Dislike
+        try {
+            fetch('/api/analytics/track', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    eventType: 'DISLIKE',
+                    entityType: 'VEHICLE',
+                    entityId: id,
+                    metadata: { timestamp: new Date().toISOString() }
+                })
+            }).catch(() => {})
+        } catch {
+            // Fail silently
+        }
     }
 
 

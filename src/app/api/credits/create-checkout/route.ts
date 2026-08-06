@@ -124,6 +124,27 @@ export async function POST(request: NextRequest) {
         // Crear sesión de Checkout
         const checkoutSession = await stripe.checkout.sessions.create(checkoutParams)
 
+        // 📊 REGISTRAR EVENTO: Checkout iniciado
+        try {
+            await prisma.analyticsEvent.create({
+                data: {
+                    userId: session.user.id,
+                    eventType: 'PAYMENT_INITIATED',
+                    entityType: 'PAYMENT',
+                    metadata: {
+                        quantity,
+                        country,
+                        amount: priceInCents / 100,
+                        currency,
+                        paymentMethods: country === 'MX' ? ['card', 'oxxo', 'spei'] : ['automatic'],
+                        timestamp: new Date().toISOString()
+                    }
+                }
+            })
+        } catch {
+            // Fail silently
+        }
+
         return NextResponse.json({ url: checkoutSession.url })
 
     } catch (error: any) {

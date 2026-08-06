@@ -7,6 +7,34 @@ export default auth((req) => {
     const userAgent = req.headers.get('user-agent') || '';
     const isBot = /bot|crawler|spider|googlebot|bingbot|yandexbot|duckduckbot|slurp|baiduspider|facebookexternalhit|twitterbot/i.test(userAgent);
 
+    // 📊 REQUEST LOGGING: Registrar metadata de cada request (solo usuarios autenticados, no bots)
+    if (!isBot && req.auth?.user?.id) {
+        const start = Date.now()
+        // Log básico de pathname + userId para analytics de navegación
+        const pathname = req.nextUrl.pathname
+        // Solo registrar páginas principales, no assets ni API routes
+        if (pathname.startsWith('/') && !pathname.startsWith('/api') && !pathname.startsWith('/_next')) {
+            try {
+                // Fire-and-forget: no bloquear la request
+                fetch(`${req.nextUrl.origin}/api/analytics/track`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        eventType: 'PAGE_VIEW',
+                        entityType: 'APP',
+                        metadata: {
+                            url: pathname,
+                            userId: req.auth.user.id,
+                            timestamp: new Date().toISOString()
+                        }
+                    })
+                }).catch(() => {})
+            } catch {
+                // Fail silently
+            }
+        }
+    }
+
     // 🔧 FIX: Redirect www to non-www (Google Search Console redirect error)
     // Skip for bots to avoid redirect loops or issues with crawlers
     if (req.nextUrl.hostname === 'www.carmatchapp.net' && !isBot) {

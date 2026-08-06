@@ -1,11 +1,12 @@
 // 🛡️ PROHIBIDO MODIFICAR SIN ORDEN EXPLÍCITA DEL USUARIO (Ver PROJECT_RULES.md)
 // ⚠️ CRITICAL WARNING: FILE PROTECTED BY PROJECT RULES.
-// DO NOT MODIFY THIS FILE WITHOUT EXPLICIT USER INSTRUCTION.
 
 
 import { NextResponse } from 'next/server';
 import { interpretSearchQuery } from '@/lib/ai/searchInterpreter';
 import { checkRateLimit, RATE_LIMITS } from '@/lib/rate-limit';
+import { prisma } from '@/lib/db';
+import { auth } from '@/lib/auth';
 
 export const runtime = 'nodejs';
 
@@ -26,6 +27,34 @@ export async function POST(req: Request) {
         }
 
         const filters = await interpretSearchQuery(query, context || 'MARKET', city);
+
+        // 📊 ALMACENAR BÚSQUEDA: Registrar métrica de búsqueda con filtros completos
+        try {
+            const session = await auth()
+            await prisma.searchMetric.create({
+                data: {
+                    query,
+                    category: context || 'MARKET',
+                    latitude: 0,
+                    longitude: 0,
+                    userId: session?.user?.id || null,
+                    brand: filters.brand || null,
+                    model: filters.model || null,
+                    minPrice: filters.minPrice ? Number(filters.minPrice) : null,
+                    maxPrice: filters.maxPrice ? Number(filters.maxPrice) : null,
+                    minYear: filters.minYear || null,
+                    maxYear: filters.maxYear || null,
+                    vehicleType: filters.vehicleType || null,
+                    color: filters.color || null,
+                    fuel: filters.fuel || null,
+                    transmission: filters.transmission || null,
+                    cylinders: filters.cylinders || null,
+                    features: filters.features || []
+                }
+            })
+        } catch {
+            // Fail silently — analytics no debe bloquear la búsqueda
+        }
 
         return NextResponse.json(filters);
     } catch (error) {

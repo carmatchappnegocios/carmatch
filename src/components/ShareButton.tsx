@@ -32,6 +32,21 @@ export default function ShareButton({ title, text, url, variant = 'full', classN
             absoluteUrl = `${window.location.origin}${url}`
         }
 
+        // 📊 REGISTRAR EVENTO: Share
+        try {
+            await fetch('/api/analytics/track', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    eventType: 'SHARE',
+                    entityType: 'VEHICLE',
+                    metadata: { title, url: absoluteUrl, timestamp: new Date().toISOString() }
+                })
+            })
+        } catch {
+            // Fail silently
+        }
+
         const shareData = {
             title: title,
             text: text,

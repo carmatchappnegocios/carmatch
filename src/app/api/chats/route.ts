@@ -229,6 +229,23 @@ export async function POST(request: NextRequest) {
                     }
                 }
             })
+
+            // 📊 REGISTRAR EVENTO: Chat creado
+            try {
+                const { trackChatEvent } = await import('@/lib/tracking')
+                await trackChatEvent({
+                    eventType: 'CHAT_CREATED',
+                    userId: user.id,
+                    chatId: chat.id,
+                    metadata: {
+                        vehicleId,
+                        vehicleTitle: vehicle.title,
+                        sellerId: vehicle.userId
+                    }
+                })
+            } catch {
+                // Fail silently
+            }
         }
 
         return NextResponse.json(chat)

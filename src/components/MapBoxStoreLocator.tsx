@@ -321,6 +321,27 @@ export default function MapBoxStoreLocator({
                 const coordinates = (feature.geometry as any).coordinates.slice()
                 const props = feature.properties as any
 
+                // 📊 REGISTRAR EVENTO: Pin clickeado en mapa
+                try {
+                    fetch('/api/analytics/track', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            eventType: 'MAP_PIN_CLICKED',
+                            entityType: 'BUSINESS',
+                            entityId: props.id,
+                            metadata: {
+                                name: props.name,
+                                category: props.category,
+                                city: props.city,
+                                timestamp: new Date().toISOString()
+                            }
+                        })
+                    })
+                } catch {
+                    // Fail silently
+                }
+
                 while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
                     coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
                 }

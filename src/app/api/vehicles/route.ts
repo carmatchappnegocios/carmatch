@@ -306,6 +306,30 @@ export async function POST(request: NextRequest) {
             userAgent: request.headers.get('user-agent') || undefined
         })
 
+        // 📊 REGISTRAR EVENTO: Publicación creada
+        try {
+            const { trackListingEvent } = await import('@/lib/tracking')
+            await trackListingEvent({
+                eventType: 'LISTING_CREATED',
+                userId: user.id,
+                entityId: vehicle.id,
+                entityType: 'VEHICLE',
+                metadata: {
+                    brand: finalBrand,
+                    model: finalModel,
+                    year: finalYear,
+                    price: parseFloat(price),
+                    city,
+                    isFreePublication,
+                    isFirstVehicle,
+                    lifetimeCount,
+                    moderationStatus
+                }
+            })
+        } catch {
+            // Fail silently
+        }
+
         // 🌍 FRONTERA DIGITAL: Detectar país en segundo plano y actualizar
         if (latitude && longitude) {
             // No bloqueamos la respuesta, lo hacemos async

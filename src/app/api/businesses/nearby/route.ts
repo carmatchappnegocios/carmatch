@@ -4,6 +4,7 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
+import { auth } from '@/lib/auth'
 
 export async function GET(request: NextRequest) {
     try {
@@ -95,13 +96,14 @@ export async function GET(request: NextRequest) {
         // Guardamos data estratégica para el futuro
         const saveAnalytics = async () => {
             try {
-                // Check if user ID is available (would need auth/session here, but let's keep it anonymous or basic for now to avoid complexity in this step)
+                const session = await auth()
                 await prisma.searchMetric.create({
                     data: {
                         query: category || 'exploration',
                         category: category || null,
                         latitude: lat,
                         longitude: lng,
+                        userId: session?.user?.id || null,
                         createdAt: new Date(),
                     }
                 })
