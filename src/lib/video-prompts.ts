@@ -313,7 +313,7 @@ function generateTextOverlay(villain: VillainData, hero: HeroData): string {
     return `${villain.viralHook} -> ${villain.villainName} ATACA -> ${hero.name.toUpperCase()} RESCATA -> CARMATCH: TU SOLUCION -> DESCARGA GRATIS`
 }
 
-function generateSegmentacion(scene: Scene, emotion: Emotion): { edad: string; ubicacion: string; plataformas: string; intereses: string } {
+function generateSegmentacion(scene: Scene, villain: Villain): { edad: string; ubicacion: string; plataformas: string; intereses: string } {
     const edadMap: Record<Scene, string> = {
         'taller': '25-55', 'carretera': '20-50', 'gasolinera': '20-55', 'casa': '28-55',
         'escuela': '28-55', 'centro': '18-45', 'playa': '20-45', 'montana': '22-50',
@@ -335,7 +335,7 @@ function generateSegmentacion(scene: Scene, emotion: Emotion): { edad: string; u
         edad: edadMap[scene],
         ubicacion: 'Mexico',
         plataformas: 'TikTok, Instagram Reels, YouTube Shorts, Facebook Reels',
-        intereses: interesesMap[Object.keys(villains).find(k => villains[k as Villain].villainName === villain.villainName) as Villain] || 'Autos, CarMatch'
+        intereses: interesesMap[villain]
     }
 }
 
@@ -383,7 +383,7 @@ export function generateVideoPrompt(
         duration,
         platform,
         scheduledTime,
-        segmentacion: generateSegmentacion(sceneKey, emotionKey)
+        segmentacion: generateSegmentacion(sceneKey, villainKey)
     }
 }
 
