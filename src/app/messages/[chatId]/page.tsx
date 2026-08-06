@@ -85,7 +85,8 @@ export default function ChatPage({
             socket.emit('join-room', `chat:${chatId}`)
 
             // Listen for new messages
-            socket.on('new-message', (message: Message) => {
+            socket.on('new-message', (...args: unknown[]) => {
+                const message = args[0] as Message
                 setMessages(prev => {
                     // Avoid duplicates
                     if (prev.find(m => m.id === message.id)) return prev
