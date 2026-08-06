@@ -24,8 +24,19 @@ export const metadata = {
     openGraph: {
         title: "Map Store | Encuentra Servicios Automotrices Cerca de Ti",
         description: "El directorio más completo de talleres y servicios mecánicos en tiempo real. ¡Encuentra ayuda ahora mismo!",
+        url: "https://www.carmatchapp.net/map",
+        siteName: "CarMatch",
         images: [{ url: "/portada_1024x500.png?v=23", width: 1024, height: 500, alt: "CarMatch" }],
-    }
+    },
+    twitter: {
+        card: 'summary_large_image' as const,
+        title: "Map Store | Encuentra Servicios Automotrices",
+        description: "El directorio más completo de talleres y servicios mecánicos en tiempo real.",
+        images: ["/portada_1024x500.png?v=23"],
+    },
+    alternates: {
+        canonical: 'https://www.carmatchapp.net/map',
+    },
 }
 
 export default async function MapPage() {

@@ -29,7 +29,7 @@ export default async function AuthPage() {
     return (
         <>
             {/* 🛡️ Secondary viewport enforcement for redirect cycles */}
-            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover" />
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover" />
             <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-background"><div className="w-8 h-8 border-4 border-primary-500 border-t-transparent rounded-full animate-spin"></div></div>}>
                 <AuthPageContent />
             </Suspense>

@@ -205,7 +205,7 @@ export default async function CityPage({
         "itemListElement": items.slice(0, 10).map((v, index) => ({
             "@type": "ListItem",
             "position": index + 1,
-            "url": `https://carmatchapp.net/comprar/${v.brand}-${v.model}-${v.year}-${v.city}-${v.id}`.toLowerCase(),
+            "url": `https://www.carmatchapp.net/comprar/${v.brand}-${v.model}-${v.year}-${v.city}-${v.id}`.toLowerCase(),
             "name": `${v.brand} ${v.model} ${v.year}`
         }))
     }

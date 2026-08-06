@@ -10,7 +10,7 @@ import { prisma } from '@/lib/db'
 import { generateVehicleSlug, generateBusinessSlug } from '@/lib/slug'
 
 // URL Base del sitio
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://carmatchapp.net'
+const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://www.carmatchapp.net'
 
 // 🌎 Ciudades globales para SEO (pre-rendered URLs aunque no haya vehículos aún)
 const GLOBAL_CITY_SLUGS = [
@@ -153,7 +153,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         '/terms',
         '/privacy',
         '/publishing-rules',
-        '/auth',
         '/market?category=Automóvil',
         '/market?category=Motocicleta',
         '/market?category=Camión',
@@ -168,6 +167,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         '/autos/Jeep',
         '/autos/BMW',
         '/autos/Mercedes-Benz',
+        '/autos/cluster/4x4-todo-terreno',
+        '/autos/cluster/electricos-y-hibridos',
+        '/autos/cluster/blindados-seguridad',
     ].map((route) => ({
         url: `${BASE_URL}${route}`,
         lastModified: new Date(),

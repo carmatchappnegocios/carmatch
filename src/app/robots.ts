@@ -30,7 +30,7 @@ export default function robots(): MetadataRoute.Robots {
                 disallow: ['/admin/', '/api/', '/messages/', '/settings/'],
             }
         ],
-        sitemap: 'https://carmatchapp.net/sitemap.xml',
-        host: 'https://carmatchapp.net'
+        sitemap: 'https://www.carmatchapp.net/sitemap.xml',
+        host: 'https://www.carmatchapp.net'
     }
 }

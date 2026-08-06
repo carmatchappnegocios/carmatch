@@ -38,7 +38,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             title,
             description,
             type: 'website',
-        }
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title,
+            description,
+        },
+        alternates: {
+            canonical: `https://www.carmatchapp.net/negocios/${encodeURIComponent(decodedCity.toLowerCase())}/${encodeURIComponent(decodedCat.toLowerCase())}`,
+        },
     }
 }
 
@@ -71,7 +79,7 @@ export default async function LocalDirectoryPage({ params }: Props) {
                 "name": b.name,
                 "address": b.address,
                 "image": b.images[0] || undefined,
-                "url": `https://carmatchapp.net/business/${b.id}`
+                "url": `https://www.carmatchapp.net/negocio/${generateBusinessSlug(b.name, b.city || '')}-${b.id}`
             }
         }))
     }

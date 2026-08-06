@@ -94,13 +94,13 @@ export default async function MiniWebPage({ params, searchParams }: Props) {
             "addressRegion": business.state || undefined,
             "addressCountry": business.country || "MX"
         },
-        "url": `https://carmatch.mx/${slug}`,
+        "url": `https://www.carmatchapp.net/${slug}`,
         "knowsAbout": business.services,
         // Contact details omitted as per privacy request (Registered users only)
         "provider": {
             "@type": "Organization",
             "name": "CarMatch",
-            "url": "https://carmatch.mx"
+            "url": "https://www.carmatchapp.net"
         }
     }
 

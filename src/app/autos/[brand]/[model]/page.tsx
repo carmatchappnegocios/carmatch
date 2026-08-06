@@ -21,7 +21,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {
         title,
         description: `Encuentra las mejores ofertas de ${brandName} ${modelName} en México. Compara precios, años y specs técnicas. Compra segura y trato directo en CarMatch.`,
-        keywords: [`${brandName} ${modelName} precio`, `${modelName} usado`, `comprar ${modelName} mexico`]
+        keywords: [`${brandName} ${modelName} precio`, `${modelName} usado`, `comprar ${modelName} mexico`],
+        openGraph: {
+            title,
+            description: `Encuentra las mejores ofertas de ${brandName} ${modelName} en México.`,
+            url: `https://www.carmatchapp.net/autos/${encodeURIComponent(brandName)}/${encodeURIComponent(modelName)}`,
+            siteName: 'CarMatch',
+            type: 'website',
+        },
+        twitter: {
+            card: 'summary_large_image' as const,
+            title,
+            description: `Encuentra las mejores ofertas de ${brandName} ${modelName} en México.`,
+        },
+        alternates: {
+            canonical: `https://www.carmatchapp.net/autos/${encodeURIComponent(brandName)}/${encodeURIComponent(modelName)}`,
+        },
     }
 }
 
