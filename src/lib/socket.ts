@@ -5,14 +5,14 @@
 
 import { io, Socket } from "socket.io-client";
 
-let socket: Socket | null = null;
+let socketInstance: Socket | null = null;
 
 function getSocket(): Socket {
-    if (socket && socket.connected) return socket;
+    if (socketInstance && socketInstance.connected) return socketInstance;
 
-    if (!socket) {
+    if (!socketInstance) {
         const url = typeof window !== 'undefined' ? window.location.origin : '';
-        socket = io(url, {
+        socketInstance = io(url, {
             autoConnect: false,
             reconnection: true,
             reconnectionDelay: 1000,
@@ -21,12 +21,12 @@ function getSocket(): Socket {
             transports: ['websocket', 'polling'],
         });
 
-        socket.on('connect_error', () => {
+        socketInstance.on('connect_error', () => {
             // Silently handle connection errors — polling fallback will work
         });
     }
 
-    return socket;
+    return socketInstance;
 }
 
 // Export a compatible API that matches the old stub interface
