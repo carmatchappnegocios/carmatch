@@ -134,6 +134,7 @@ export default function FooterSEO() {
                                 <li><Link href="/market" className="text-slate-400 hover:text-white text-xs block bg-white/5 px-3 py-1.5 rounded-lg hover:bg-white/10 transition w-fit">Marketplace Global</Link></li>
                                 <li><Link href="/map" className="text-slate-400 hover:text-white text-xs block bg-white/5 px-3 py-1.5 rounded-lg hover:bg-white/10 transition w-fit mt-1">MapStore 24/7</Link></li>
                                 <li><Link href="/swipe" className="text-slate-400 hover:text-white text-xs block bg-primary-600/20 text-primary-400 px-3 py-1.5 rounded-lg hover:bg-primary-600/30 transition w-fit mt-1 border border-primary-500/20">CarMatch Swipe</Link></li>
+                                <li><Link href="/blog" className="text-slate-400 hover:text-white text-xs block bg-white/5 px-3 py-1.5 rounded-lg hover:bg-white/10 transition w-fit mt-1">Blog Automotriz</Link></li>
                             </ul>
                         </div>
                     </div>

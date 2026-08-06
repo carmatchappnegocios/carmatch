@@ -177,6 +177,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 1.0,
     }))
 
+    // Blog posts
+    const { blogPosts } = await import('@/data/blog-posts')
+    const blogUrls = blogPosts.map(post => ({
+        url: `${BASE_URL}/blog/${post.slug}`,
+        lastModified: new Date(post.updatedAt),
+        changeFrequency: 'weekly' as const,
+        priority: 0.8,
+    }))
+
     return [
         ...staticRoutes,
         ...globalCityUrls,
@@ -185,5 +194,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ...cityVehicleUrls,
         ...vehicleUrls,
         ...businessUrls,
+        ...blogUrls,
     ]
 }
