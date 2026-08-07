@@ -36,6 +36,7 @@ import {
     Rocket,
     MapPin,
     DollarSign,
+    CheckCircle2,
 } from 'lucide-react'
 import dynamic from 'next/dynamic'
 
