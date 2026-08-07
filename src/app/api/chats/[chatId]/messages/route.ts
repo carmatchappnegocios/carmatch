@@ -81,6 +81,9 @@ export async function POST(
             data: { updatedAt: new Date() }
         })
 
+        // TODO: Crear notificación para el otro usuario
+        const receiverId = chat.buyerId === user.id ? chat.sellerId : chat.buyerId
+
         // 📊 REGISTRAR EVENTO: Mensaje enviado
         try {
             const { trackChatEvent } = await import('@/lib/tracking')
@@ -98,8 +101,6 @@ export async function POST(
             // Fail silently
         }
 
-        // TODO: Crear notificación para el otro usuario
-        const receiverId = chat.buyerId === user.id ? chat.sellerId : chat.buyerId
         await upsertNotification({
             userId: receiverId,
             fromUserId: user.id,
