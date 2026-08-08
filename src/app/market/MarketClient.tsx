@@ -155,7 +155,8 @@ export default function MarketClient({
 
     // Ubicación Activa
     const activeLocation = manualLocation || location
-    const displayCity = activeLocation?.city || activeLocation?.state || (locationLoading ? t('common.loading') : t('market.radius_unknown'))
+    const rawCity = activeLocation?.city || activeLocation?.state || ''
+    const displayCity = rawCity ? (() => { try { return decodeURIComponent(rawCity) } catch { return rawCity } })() : (locationLoading ? t('common.loading') : t('market.radius_unknown'))
     const userCountry = normalizeCountryCode(activeLocation?.countryCode || activeLocation?.country)
     const containerRef = useRef<HTMLElement | null>(null)
 
@@ -249,9 +250,10 @@ export default function MarketClient({
     useEffect(() => {
         // 🔄 URL -> Context Synchronization
         const syncUrlCity = async () => {
-            if (searchParams.city && (!manualLocation || manualLocation.city !== searchParams.city)) {
+            const decodedCity = (() => { try { return searchParams.city ? decodeURIComponent(searchParams.city) : '' } catch { return searchParams.city || '' } })()
+            if (decodedCity && (!manualLocation || manualLocation.city !== decodedCity)) {
                 try {
-                    const loc = await searchCity(searchParams.city)
+                    const loc = await searchCity(decodedCity)
                     if (loc) {
                         setManualLocation(loc)
                         setTierIndex(0)
