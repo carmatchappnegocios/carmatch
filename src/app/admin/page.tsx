@@ -30,6 +30,7 @@ import {
     RefreshCw,
     Coins,
     Megaphone,
+    Video,
     Globe,
     Zap,
     Palette,
@@ -53,7 +54,7 @@ import { testGeminiHealth, AiHealthReport } from '@/app/admin/actions/ai-health-
 import { scoutGlobalStations } from '@/app/admin/actions/scout-actions'
 import { toast } from "sonner"
 
-type AdminView = 'overview' | 'users' | 'inventory' | 'map-store' | 'intelligence' | 'reports' | 'logs' | 'ai-hub' | 'costs' | 'marketing' | 'more'
+type AdminView = 'overview' | 'users' | 'inventory' | 'map-store' | 'intelligence' | 'reports' | 'logs' | 'ai-hub' | 'costs' | 'marketing' | 'videos' | 'more'
 
 const AdminSidebar = dynamic<any>(() => import('@/components/admin/AdminSidebar'), { ssr: false })
 
@@ -203,6 +204,7 @@ function AdminPanelContent() {
         { id: 'ai-hub', icon: Cpu, label: 'AI Hub' },
         { id: 'costs', icon: DollarSign, label: 'Gastos' },
         { id: 'marketing', icon: Megaphone, label: 'Marketing' },
+        { id: 'videos', icon: Video, label: 'Videos' },
         { id: 'reports', icon: Flag, label: 'Reportes', badge: stats.reports?.filter((r: any) => r.status === 'PENDING').length || 0 },
         { id: 'logs', icon: Terminal, label: 'Registros' },
     ]
@@ -250,6 +252,7 @@ function AdminPanelContent() {
                             {activeView === 'ai-hub' && <AiHubTab />}
                             {activeView === 'costs' && <CostsTab />}
                             {activeView === 'marketing' && <MarketingTab />}
+                            {activeView === 'videos' && <VideoPromptsTab />}
 
                             {activeView === 'reports' && <ReportsTab reports={stats.reports} />}
                             {activeView === 'logs' && <LogsTab logs={stats.logs} />}
@@ -286,7 +289,6 @@ function MarketingTab() {
             </div>
 
             <FacebookAdsTab />
-            <VideoPromptsTab />
         </div>
     )
 }
