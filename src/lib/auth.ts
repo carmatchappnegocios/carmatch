@@ -16,16 +16,6 @@ export const {
     adapter: PrismaAdapter(prisma),
     callbacks: {
         async signIn({ user, account, profile }) {
-            // Block check: prevent blocked users from signing in
-            if (user?.email) {
-                const blocked = await prisma.blockedIdentity.findFirst({
-                    where: { blockedByEmail: user.email.toLowerCase().trim() }
-                })
-                if (blocked) {
-                    return false // Deny sign-in
-                }
-            }
-
             // Account linking: if Google user's email matches a credential user, link the account
             if (account?.provider === "google" && user?.email) {
                 const normalizedEmail = user.email.toLowerCase().trim()
