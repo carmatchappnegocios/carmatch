@@ -12,6 +12,7 @@
     "lang": "es-MX",
     "prefer_related_applications": false,
     "dir": "ltr",
+    "image_url": "https://www.carmatchapp.net/portada_1024x500.png?v=23",
     "display_override": [
         "standalone",
         "minimal-ui",

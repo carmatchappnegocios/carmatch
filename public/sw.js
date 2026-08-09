@@ -7,9 +7,9 @@ const PRE_CACHE_RESOURCES = [
     '/market',
     '/swipe',
     '/map',
-    '/favicon-v19.png',
+    '/favicon-v20.png',
     '/icon-192-v20.png',
-    '/logo-v19.png'
+    '/icon-192-v20.png'
 ];
 
 self.addEventListener('install', (event) => {
@@ -103,8 +103,8 @@ self.addEventListener('push', function (event) {
 
             const options = {
                 body: data.body,
-                icon: data.icon || '/maskable-192-v19.png?v=21',
-                badge: '/favicon-v19.png?v=21',
+                icon: data.icon || '/maskable-192-v20.png?v=22',
+                badge: '/favicon-v20.png?v=22',
                 vibrate: data.vibrate || (isSafetyCheck ? [500, 100, 500, 100, 500] : [100, 50, 100]),
 
                 data: {
@@ -134,7 +134,7 @@ self.addEventListener('push', function (event) {
             const options = {
                 body: 'Tienes una nueva actualización.',
                 icon: '/icon-192-v20.png?v=22',
-                badge: '/favicon-v19.png?v=21',
+                badge: '/favicon-v20.png?v=22',
                 tag: 'fallback-notification',
                 renotify: true
             }

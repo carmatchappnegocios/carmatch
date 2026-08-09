@@ -127,6 +127,7 @@ export default function RootLayout({
     return (
         <html lang="es" className="dark" style={{ colorScheme: 'dark' }} suppressHydrationWarning>
             <head>
+                <link rel="apple-touch-icon" href="/icon-192-v20.png?v=22" />
             </head>
             <body className={`${inter.className} min-h-screen-safe bg-[#0f172a]`}>
                 <GoogleAnalytics />
