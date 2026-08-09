@@ -43,28 +43,33 @@ export const {
 
                     if (!hasGoogleAccount) {
                         // Link the Google account to the existing user
-                        await prisma.account.create({
-                            data: {
-                                userId: existingUser.id,
-                                type: account.type,
-                                provider: account.provider,
-                                providerAccountId: account.providerAccountId,
-                                access_token: account.access_token,
-                                token_type: account.token_type,
-                                scope: account.scope,
-                                id_token: account.id_token,
-                                session_state: typeof account.session_state === 'string' ? account.session_state : null,
-                            },
-                        })
+                        try {
+                            await prisma.account.create({
+                                data: {
+                                    userId: existingUser.id,
+                                    type: account.type,
+                                    provider: account.provider,
+                                    providerAccountId: account.providerAccountId,
+                                    access_token: account.access_token,
+                                    token_type: account.token_type,
+                                    scope: account.scope,
+                                    id_token: account.id_token,
+                                    session_state: typeof account.session_state === 'string' ? account.session_state : null,
+                                },
+                            })
 
-                        // Update user with Google profile info if missing
-                        await prisma.user.update({
-                            where: { id: existingUser.id },
-                            data: {
-                                image: existingUser.image || (profile as any)?.picture || user.image,
-                                emailVerified: existingUser.emailVerified || new Date(),
-                            },
-                        })
+                            // Update user with Google profile info if missing
+                            await prisma.user.update({
+                                where: { id: existingUser.id },
+                                data: {
+                                    image: existingUser.image || (profile as any)?.picture || user.image,
+                                    emailVerified: existingUser.emailVerified || new Date(),
+                                },
+                            })
+                        } catch (linkError) {
+                            console.error('[Auth] Failed to link Google account:', linkError)
+                            // Continue anyway - user can still sign in, account linking is best-effort
+                        }
 
                         // Return the existing user (not the new one from Google)
                         user.id = existingUser.id

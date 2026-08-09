@@ -76,6 +76,46 @@ export default function AuthPageContent() {
                         </div>
                     )}
 
+                    {error === "OAuthCallback" && (
+                        <div className="mb-6 bg-red-500/10 border border-red-500/20 rounded-2xl p-4 flex flex-col items-center text-center">
+                            <AlertTriangle className="text-red-400 mb-2" size={24} />
+                            <p className="text-red-400 font-bold text-sm">Error de Autenticación</p>
+                            <p className="text-gray-300 text-xs mt-1">
+                                Hubo un problema con la autenticación de Google. Intenta de nuevo o usa tu correo y contraseña.
+                            </p>
+                        </div>
+                    )}
+
+                    {error === "Configuration" && (
+                        <div className="mb-6 bg-red-500/10 border border-red-500/20 rounded-2xl p-4 flex flex-col items-center text-center">
+                            <AlertTriangle className="text-red-400 mb-2" size={24} />
+                            <p className="text-red-400 font-bold text-sm">Error de Configuración</p>
+                            <p className="text-gray-300 text-xs mt-1">
+                                Hay un problema de configuración. Por favor intenta más tarde o usa tu correo y contraseña.
+                            </p>
+                        </div>
+                    )}
+
+                    {error === "AccessDenied" && (
+                        <div className="mb-6 bg-red-500/10 border border-red-500/20 rounded-2xl p-4 flex flex-col items-center text-center">
+                            <AlertTriangle className="text-red-400 mb-2" size={24} />
+                            <p className="text-red-400 font-bold text-sm">Acceso Denegado</p>
+                            <p className="text-gray-300 text-xs mt-1">
+                                No se pudo completar el inicio de sesión. Verifica que estés usando la cuenta correcta de Google.
+                            </p>
+                        </div>
+                    )}
+
+                    {error === "OAuthAccountNotLinked" && (
+                        <div className="mb-6 bg-yellow-500/10 border border-yellow-500/20 rounded-2xl p-4 flex flex-col items-center text-center">
+                            <AlertTriangle className="text-yellow-400 mb-2" size={24} />
+                            <p className="text-yellow-400 font-bold text-sm">Cuenta No Vinculada</p>
+                            <p className="text-gray-300 text-xs mt-1">
+                                Este correo ya está registrado. Inicia sesión con tu correo y contraseña, luego puedes vincular Google desde tu perfil.
+                            </p>
+                        </div>
+                    )}
+
                             <AuthButtons />
                             <p className="mt-8 text-center text-xs text-text-secondary font-sans leading-relaxed">
                                 {t('auth.agree_terms')}{" "}
