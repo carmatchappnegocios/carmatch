@@ -52,20 +52,6 @@ export async function POST(request: NextRequest) {
             })
         )
 
-        // Block by each IP
-        for (const ip of ips) {
-            blocks.push(
-                prisma.blockedIdentity.create({
-                    data: {
-                        blockedUserId: targetUserId,
-                        blockedByIp: ip,
-                        reason,
-                        blockedBy: session.user.id
-                    }
-                })
-            )
-        }
-
         await Promise.all(blocks)
 
         // Also deactivate the user
@@ -76,7 +62,7 @@ export async function POST(request: NextRequest) {
 
         return NextResponse.json({
             success: true,
-            message: `Usuario bloqueado. ${ips.length} IPs bloqueadas.`,
+            message: `Usuario bloqueado.`,
             blocksCreated: blocks.length
         })
     } catch (error) {
