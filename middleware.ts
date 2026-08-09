@@ -38,7 +38,7 @@ export default auth((req) => {
     // 🔧 FIX: Redirect www to non-www (Google Search Console redirect error)
     // Skip for bots to avoid redirect loops or issues with crawlers
     // Skip for auth callbacks to prevent OAuth state/cookie loss during redirect
-    const isAuthCallback = pathname.startsWith('/api/auth/')
+    const isAuthCallback = req.nextUrl.pathname.startsWith('/api/auth/')
     if (req.nextUrl.hostname === 'www.carmatchapp.net' && !isBot && !isAuthCallback) {
         const newUrl = req.nextUrl.clone()
         newUrl.hostname = 'carmatchapp.net'
