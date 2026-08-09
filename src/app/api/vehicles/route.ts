@@ -82,37 +82,7 @@ export async function POST(request: NextRequest) {
         // El primero es GRATIS DE VERDAD (6 Meses)
         let isFirstVehicle = (user.lifetimeVehicleCount || 0) === 0
 
-        // Importar utilidades de hash
-        const crypto = await import('crypto')
-
         const isAdmin = user.isAdmin || session.user.email === process.env.ADMIN_EMAIL
-
-        // 🔍 Validar duplicados de contenido (Mismo carro republicado?)
-        const contentHash = crypto.createHash('sha256').update(
-            `${brand}|${model}|${parseInt(year)}|${body.color}|${body.vehicleType}`
-        ).digest('hex')
-
-        // 🔍 Validar duplicados de contenido (Mismo carro republicado?)
-        let isFraudulentRetry = false
-
-        if (!isFirstVehicle && !isAdmin && !isFraudulentRetry) {
-            const recentDuplicates = await prisma.vehicle.findFirst({
-                where: {
-                    userId: user.id,
-                    searchIndex: contentHash,
-                    createdAt: { gte: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000) }
-                }
-            })
-
-            if (recentDuplicates) {
-                console.log(`🛡️ Fraude detectado: Republicación de ${brand} ${model}. Strike +1`)
-                isFraudulentRetry = true
-                await prisma.user.update({
-                    where: { id: user.id },
-                    data: { fraudStrikes: { increment: 1 } }
-                })
-            }
-        }
 
         // 🔄 REGLAS FINALES DE MONETIZACIÓN (HISTÓRICAS) ═══
         // Rule 1: First vehicle ever is FREE for 6 months
@@ -234,18 +204,15 @@ export async function POST(request: NextRequest) {
                     moderationStatus: moderationStatus,
                     isFreePublication: isFreePublication,
                     publishedAt: now,
-                    expiresAt: expiresAt,
-                    searchIndex: contentHash
+                    expiresAt: expiresAt
                 }
             });
 
             // 3. Incrementar contador histórico de forma segura
-            if (!isFraudulentRetry) {
-                await tx.user.update({
-                    where: { id: user.id },
-                    data: { lifetimeVehicleCount: { increment: 1 } }
-                });
-            }
+            await tx.user.update({
+                where: { id: user.id },
+                data: { lifetimeVehicleCount: { increment: 1 } }
+            });
 
             return newVehicle;
         });
@@ -399,7 +366,7 @@ export async function POST(request: NextRequest) {
                 title: vehicle.title,
                 moderationStatus: 'APPROVED',
                 // Indicar al frontend si se publicó activo o requiere pago
-                status: (isFraudulentRetry || isPermanentlyRestricted) ? 'INACTIVE' : 'ACTIVE',
+                status: isPermanentlyRestricted ? 'INACTIVE' : 'ACTIVE',
                 message: successMessage
             }
         }, { status: 201 })
