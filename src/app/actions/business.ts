@@ -18,6 +18,7 @@ export async function registerBusiness(formData: FormData) {
     const description = formData.get('description') as string
     const phone = formData.get('phone') as string
     const address = formData.get('address') as string
+    const city = formData.get('city') as string || ''
     const lat = parseFloat(formData.get('latitude') as string)
     const lng = parseFloat(formData.get('longitude') as string)
 
@@ -68,6 +69,7 @@ export async function registerBusiness(formData: FormData) {
                 description,
                 phone,
                 address,
+                city,
                 latitude: lat,
                 longitude: lng,
                 isActive: true,
