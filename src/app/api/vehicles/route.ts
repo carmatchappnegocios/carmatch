@@ -82,62 +82,18 @@ export async function POST(request: NextRequest) {
         // El primero es GRATIS DE VERDAD (6 Meses)
         let isFirstVehicle = (user.lifetimeVehicleCount || 0) === 0
 
-        // Importar utilidades de huella digital
-        const { savePublicationFingerprint, validatePublicationFingerprint, generateVehicleHash } = await import('@/lib/validateFingerprint')
-
-        // Huella Backend: IP + DeviceHash (si viene) + GPS
-        const clientIp = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown'
-
-        let deviceHash = 'unknown'
-        const rawFingerprint = body.deviceFingerprint
-        if (rawFingerprint) {
-            if (typeof rawFingerprint === 'string') {
-                deviceHash = rawFingerprint
-            } else if (typeof rawFingerprint === 'object' && rawFingerprint.visitorId) {
-                deviceHash = rawFingerprint.visitorId
-            }
-        }
+        // Importar utilidades de hash
+        const crypto = await import('crypto')
 
         const isAdmin = user.isAdmin || session.user.email === process.env.ADMIN_EMAIL
 
         // 🔍 Validar duplicados de contenido (Mismo carro republicado?)
-        const contentHash = generateVehicleHash({
-            brand: brand,
-            model: model,
-            year: parseInt(year),
-            color: body.color,
-            vehicleType: body.vehicleType
-        })
+        const contentHash = crypto.createHash('sha256').update(
+            `${brand}|${model}|${parseInt(year)}|${body.color}|${body.vehicleType}`
+        ).digest('hex')
 
-        // 🛡️ VALIDAR HUELLA DIGITAL GLOBAL (Detecta fraude de varios correos en mismo cel)
+        // 🔍 Validar duplicados de contenido (Mismo carro republicado?)
         let isFraudulentRetry = false
-        let fraudReason = ''
-
-        if (deviceHash !== 'unknown' && !isAdmin) {
-            const globalFraudCheck = await validatePublicationFingerprint({
-                userId: user.id,
-                publicationType: 'VEHICLE',
-                latitude: body.latitude || 0,
-                longitude: body.longitude || 0,
-                deviceHash: deviceHash,
-                ipAddress: clientIp,
-                vehicleHash: contentHash
-            })
-
-            if (globalFraudCheck.isFraud) {
-                console.log(`🛡️ Seguridad: Fraude Global detectado. Razón: ${globalFraudCheck.reason}`)
-                isFraudulentRetry = true
-                fraudReason = globalFraudCheck.reason
-
-                // Si es fraude de múltiples cuentas, aplicar strike inmediatamente
-                await prisma.user.update({
-                    where: { id: user.id },
-                    data: { fraudStrikes: { increment: 2 } } // Doble penalización por engaño multi-cuenta
-                })
-            }
-        }
-
-
 
         if (!isFirstVehicle && !isAdmin && !isFraudulentRetry) {
             const recentDuplicates = await prisma.vehicle.findFirst({
@@ -293,18 +249,6 @@ export async function POST(request: NextRequest) {
 
             return newVehicle;
         });
-
-        // 🛡️ GUARDAR HUELLA DIGITAL (Backend only)
-        await savePublicationFingerprint({
-            userId: user.id,
-            publicationType: 'VEHICLE',
-            publicationId: vehicle.id,
-            latitude: latitude ? parseFloat(latitude) : 0,
-            longitude: longitude ? parseFloat(longitude) : 0,
-            ipAddress: clientIp,
-            deviceHash: deviceHash,
-            userAgent: request.headers.get('user-agent') || undefined
-        })
 
         // 📊 REGISTRAR EVENTO: Publicación creada
         try {

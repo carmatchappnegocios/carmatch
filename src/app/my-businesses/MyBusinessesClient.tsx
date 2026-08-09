@@ -12,7 +12,6 @@ import { useLanguage } from '@/contexts/LanguageContext'
 import { useRouter, useSearchParams } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import { CATEGORY_COLORS, CATEGORY_EMOJIS, SERVICES_BY_CATEGORY, BUSINESS_CATEGORIES } from '@/lib/businessCategories'
-import { generateDeviceFingerprint } from '@/lib/fingerprint'
 import ConfirmationModal from '@/components/ConfirmationModal'
 import { AlertTriangle, Clock, MapPin, Phone, Globe, Trash2, Edit, AlertCircle, Plus, Sparkles, ChevronRight, X, Image as ImageIcon, Briefcase, Info, CheckCircle, Pause, CreditCard, Play, ShieldCheck } from 'lucide-react'
 import CategoryIcon from '@/components/CategoryIcon'
@@ -381,12 +380,6 @@ export default function MyBusinessesClient() {
             // Concatenate Address
             const fullAddress = `${street} ${streetNumber}, ${colony}, ${city}, ${state}`.replace(/, ,/g, ',').trim()
 
-            // 🛡️ CAPTURAR HUELLA DIGITAL
-            const fingerprintData = await generateDeviceFingerprint()
-            const fingerprint = {
-                deviceHash: fingerprintData?.visitorId || 'unknown'
-            }
-
             const formData = new FormData(formElement)
             const businessData = {
                 id: editingBusinessId,
@@ -417,7 +410,6 @@ export default function MyBusinessesClient() {
                 hasHomeService,
                 isSafeMeetingPoint,
                 hours,
-                fingerprint // 🛡️ Enviar huella
             }
 
 

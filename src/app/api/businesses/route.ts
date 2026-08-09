@@ -93,46 +93,7 @@ export async function POST(request: NextRequest) {
 
         const isAdmin = userExists.isAdmin || session.user.email === process.env.ADMIN_EMAIL
 
-        // 🛡️ VALIDAR HUELLA DIGITAL (Detectar duplicados/fraude ANTES de cobrar)
-        const { validatePublicationFingerprint, savePublicationFingerprint } = await import('@/lib/validateFingerprint')
-
-        const clientIp = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown'
-        let deviceHash = 'unknown'
-        const rawFingerprint = body.deviceFingerprint
-
-        if (rawFingerprint) {
-            if (typeof rawFingerprint === 'string') {
-                deviceHash = rawFingerprint
-            } else if (typeof rawFingerprint === 'object' && rawFingerprint.visitorId) {
-                deviceHash = rawFingerprint.visitorId
-            }
-        }
-
         let isFraudulentRetry = false
-        let fraudReason = ''
-
-        if (deviceHash !== 'unknown' && !isAdmin) {
-            const globalFraudCheck = await validatePublicationFingerprint({
-                userId: session.user.id,
-                publicationType: 'BUSINESS',
-                latitude: typeof latitude === 'string' ? parseFloat(latitude) : Number(latitude),
-                longitude: typeof longitude === 'string' ? parseFloat(longitude) : Number(longitude),
-                deviceHash: deviceHash,
-                ipAddress: clientIp
-            })
-
-            if (globalFraudCheck.isFraud) {
-                console.log(`🛡️ Seguridad: Fraude Global detectado en Negocio. Razón: ${globalFraudCheck.reason}`)
-                isFraudulentRetry = true
-                fraudReason = globalFraudCheck.reason
-
-                // Aplicar strike por intento de duplicar beneficios de negocio
-                await prisma.user.update({
-                    where: { id: session.user.id },
-                    data: { fraudStrikes: { increment: 1 } }
-                })
-            }
-        }
 
         // Obtener créditos desde el objeto user cargado previamente
         const hasCredits = (userExists.credits || 0) >= 1
@@ -251,18 +212,6 @@ export async function POST(request: NextRequest) {
             include: {
                 user: { select: { name: true, image: true } }
             }
-        })
-
-        // 🛡️ GUARDAR HUELLA después de crear
-        await savePublicationFingerprint({
-            userId: session.user.id,
-            publicationType: 'BUSINESS',
-            publicationId: business.id,
-            latitude: business.latitude,
-            longitude: business.longitude,
-            ipAddress: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown',
-            deviceHash: deviceHash,
-            userAgent: request.headers.get('user-agent') || undefined
         })
 
         // 📈 INCREMENTAR CONTADOR HISTÓRICO DE NEGOCIOS

@@ -38,7 +38,6 @@ model User {
   buyerChats              Chat[]                    @relation("BuyerChats")
   sellerChats             Chat[]                    @relation("SellerChats")
   creditTransactions      CreditTransaction[]
-  fingerprints            DigitalFingerprint[]
   dislikes                Dislike[]
   fakeNotifCounters       FakeNotificationCounter[]
   favorites               Favorite[]
@@ -46,7 +45,6 @@ model User {
   notifications           Notification[]
   payments                Payment[]
   paymentMethods          PaymentMethod[]
-  publicationFingerprints PublicationFingerprint[]
   pushSubscriptions       PushSubscription[]
   reportsMade             Report[]                  @relation("Reporter")
   reportsReceived         Report[]                  @relation("ReportedUser")
@@ -371,41 +369,6 @@ model BusinessFavorite {
   @@unique([userId, businessId])
   @@index([userId])
   @@index([businessId])
-}
-
-model DigitalFingerprint {
-  id         String   @id @default(cuid())
-  userId     String
-  ipAddress  String
-  userAgent  String?
-  createdAt  DateTime @default(now())
-  deviceHash String   @unique
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-  @@index([deviceHash])
-  @@index([ipAddress])
-}
-
-model PublicationFingerprint {
-  id              String   @id @default(cuid())
-  userId          String
-  publicationType String
-  publicationId   String
-  latitude        Float
-  longitude       Float
-  ipAddress       String
-  deviceHash      String
-  userAgent       String?
-  createdAt       DateTime @default(now())
-  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-  @@index([publicationType])
-  @@index([latitude, longitude])
-  @@index([deviceHash])
-  @@index([ipAddress])
-  @@index([publicationId])
 }
 
 model Payment {

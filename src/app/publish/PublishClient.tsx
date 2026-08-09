@@ -10,7 +10,6 @@ import Header from '@/components/Header'
 import GPSCaptureStep from '@/components/GPSCaptureStep'
 import ImageUploadStep from '@/components/ImageUploadStep'
 import { useLanguage } from '@/contexts/LanguageContext'
-import { generateDeviceFingerprint } from '@/lib/fingerprint'
 import PortalAnimation from '@/components/PortalAnimation'
 import ConfirmationModal from '@/components/ConfirmationModal'
 import VehicleTypeSelector from '@/components/VehicleTypeSelector'
@@ -731,7 +730,6 @@ export default function PublishClient() {
                 return
             }
 
-            const deviceFP = await generateDeviceFingerprint()
             // 🧪 Helper para parsear números seguros
             const parseN = (val: string) => {
                 if (!val) return null
@@ -774,35 +772,10 @@ export default function PublishClient() {
                 axles: parseN(axles),
             }
 
-            if (deviceFP) {
-                const fraudCheck = await fetch('/api/fraud/check', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        deviceFingerprint: deviceFP,
-                        images: finalImages,
-                        vehicleData,
-                        gpsLocation: { latitude, longitude },
-                        currentVehicleId: editId,
-                        useCredit
-                    })
-                })
-                const fraudResult = await fraudCheck.json()
-
-                // Redirigir si ya existe
-                if (fraudResult.action === 'REDIRECT') {
-                    setRedirectUrl(fraudResult.redirectTo)
-                    setShowPortal(true)
-                    setLoading(false)
-                    setTimeout(() => router.push(fraudResult.redirectTo), 2000)
-                    return
-                }
-            }
-
             const response = await fetch(editId ? `/api/vehicles/${editId}` : '/api/vehicles', {
                 method: editId ? 'PATCH' : 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ...vehicleData, deviceFingerprint: deviceFP, useCredit }),
+                body: JSON.stringify({ ...vehicleData, useCredit }),
             })
 
             if (!response.ok) {

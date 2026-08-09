@@ -21,11 +21,3 @@ export async function comparePassword(
 ): Promise<boolean> {
     return bcrypt.compare(password, hashedPassword)
 }
-
-/**
- * Generate a random fingerprint for anti-fraud
- */
-export function generateFingerprint(ip: string, userAgent: string): string {
-    const data = `${ip}-${userAgent}-${Date.now()}`
-    return bcrypt.hashSync(data, 10)
-}

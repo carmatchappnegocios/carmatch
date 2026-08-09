@@ -37,15 +37,7 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'Usuario no encontrado' }, { status: 404 })
         }
 
-        // Get all IPs from this user's fingerprints
-        const fingerprints = await prisma.digitalFingerprint.findMany({
-            where: { userId: targetUserId },
-            select: { ipAddress: true }
-        })
-
-        const ips = [...new Set(fingerprints.map(f => f.ipAddress))]
-
-        // Create blocked identity records for email and IPs
+        // Create blocked identity records for email
         const blocks = []
 
         // Block by email

@@ -5,7 +5,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "@/lib/db"
 import { comparePassword } from "@/lib/password"
 import { validateAndNormalizeEmail } from "@/lib/email-validation"
-import { cookies } from "next/headers"
+
 
 export const {
     handlers,
@@ -188,29 +188,6 @@ export const {
                         data: { isAdmin: true }
                     })
                 }
-            }
-
-            // Device fingerprint linking
-            try {
-                const cookieStore = await cookies()
-                const deviceHash = cookieStore.get('device-fingerprint')?.value
-                if (deviceHash && user.id) {
-                    await prisma.digitalFingerprint.upsert({
-                        where: { deviceHash },
-                        update: {
-                            userId: user.id,
-                            userAgent: cookieStore.get('user-agent')?.value || 'Server-Side Update'
-                        },
-                        create: {
-                            deviceHash,
-                            userId: user.id,
-                            ipAddress: 'detected-on-signin',
-                            userAgent: 'Server-Side Created'
-                        }
-                    })
-                }
-            } catch (error) {
-                console.error("❌ Error vinculando huella en evento signIn:", error)
             }
         }
     },

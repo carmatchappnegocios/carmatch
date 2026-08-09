@@ -13,7 +13,6 @@ import { Logo } from "@/components/Logo"
 import { useLanguage } from "@/contexts/LanguageContext"
 import AuthButtons from "./AuthButtons"
 import { getWeightedHomePath } from "@/lib/navigation"
-import { generateDeviceFingerprint } from "@/lib/fingerprint"
 import { useState } from "react"
 import { AlertTriangle, LogIn } from "lucide-react"
 

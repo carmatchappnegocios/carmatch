@@ -25,12 +25,6 @@ export async function registerBusiness(formData: FormData) {
         throw new Error('Missing required fields')
     }
 
-    const deviceFingerprintRaw = formData.get('deviceFingerprint') as string
-    let deviceFingerprint: any = null
-    try {
-        deviceFingerprint = deviceFingerprintRaw ? JSON.parse(deviceFingerprintRaw) : null
-    } catch (e) { console.error('Error parsing FP', e) }
-
     try {
         // 1. Check if user has existing businesses
         const existingCount = await prisma.business.count({
@@ -40,27 +34,7 @@ export async function registerBusiness(formData: FormData) {
         let expiresAt = new Date()
         let isFree = false
 
-        // 🛡️ ANTI-FRAUDE: Verificar también por Huella Digital si está disponible (suponiendo campo en DB)
-        let isFirstBusiness = existingCount === 0
-
-        if (isFirstBusiness && deviceFingerprint) {
-            try {
-                // Buscamos si esta huella ya registró un negocio gratis antes
-                const existingWithFingerprint = await (prisma.business as any).count({
-                    where: {
-                        fingerprint: deviceFingerprint, // Requiere col 'fingerprint'
-                        isFreePublication: true
-                    }
-                })
-
-                if (existingWithFingerprint > 0) {
-                    console.log(`🛡️ Fraude negocio: Fingerprint ya usó prueba gratis.`)
-                    isFirstBusiness = false
-                }
-            } catch (e) {
-                console.warn('⚠️ No se pudo verificar fingerprint negocio en DB', e)
-            }
-        }
+        const isFirstBusiness = existingCount === 0
 
         if (isFirstBusiness) {
             // First business: Free for 1 MONTH (User Request)
@@ -99,8 +73,6 @@ export async function registerBusiness(formData: FormData) {
                 isActive: true,
                 isFreePublication: isFree,
                 expiresAt: expiresAt,
-                // Guardar fingerprint si es posible (cast para evitar error TS si falta en tipos)
-                ...(deviceFingerprint ? { fingerprint: deviceFingerprint } : {}) as any
             }
         })
 
