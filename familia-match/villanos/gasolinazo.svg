@@ -1,0 +1,11 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="400" fill="#1a1a2e"/>
+  <path d="M120 200 Q120 180 140 170 L160 160 Q180 150 200 150 Q220 150 240 160 L260 170 Q280 180 280 200 L280 320 Q280 340 260 350 L140 350 Q120 340 120 320 Z" fill="#15803d"/>
+  <ellipse cx="200" cy="120" rx="50" ry="55" fill="#C4A882"/>
+  <path d="M150 100 Q150 60 200 55 Q250 60 250 100 L250 90 Q250 70 200 65 Q150 70 150 90 Z" fill="#14532d"/>
+  <ellipse cx="180" cy="115" rx="7" ry="5" fill="#15803d"/>
+  <ellipse cx="220" cy="115" rx="7" ry="5" fill="#15803d"/>
+  <path d="M175 145 Q200 135 225 145" fill="none" stroke="#15803d" stroke-width="3"/>
+  <text x="200" y="375" font-family="Arial, sans-serif" font-size="18" fill="#22c55e" text-anchor="middle" font-weight="bold">GASOLINAZO</text>
+  <text x="200" y="395" font-family="Arial, sans-serif" font-size="12" fill="#a0aec0" text-anchor="middle">Don Gasolina</text>
+</svg>

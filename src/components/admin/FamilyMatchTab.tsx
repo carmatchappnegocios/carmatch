@@ -162,6 +162,19 @@ const characters: Character[] = [
     }
 ]
 
+const villains = [
+    { id: 'el-bache', name: 'El Bache', realName: 'Don Bacho', problem: 'Destruye suspensiones, llantas, rines. $2,000-$5,000 de reparación', hero: 'Don Match', svg: '/familia-match/villanos/el-bache.svg' },
+    { id: 'la-agencia', name: 'La Agencia', realName: 'Don Comisión', problem: 'Comisiones del 15-30%, presión para comprar', hero: 'Car-mela', svg: '/familia-match/villanos/la-agencia.svg' },
+    { id: 'mecanico-tranero', name: 'Mecánico Trantero', realName: 'Don Trantero', problem: 'Cobra de más, no arregla nada, repuestos usados', hero: 'Don Match', svg: '/familia-match/villanos/mecanico-tranero.svg' },
+    { id: 'estafa-odometro', name: 'Estafa Odómetro', realName: 'Don Kilometraje', problem: 'Kilometraje falsificado, venden chatarra', hero: 'Matchy', svg: '/familia-match/villanos/estafa-odometro.svg' },
+    { id: 'vendedor-informal', name: 'Vendedor Informal', realName: 'Don Informal', problem: 'Problemas ocultos, sin garantía, desaparece', hero: 'Car-mela', svg: '/familia-match/villanos/vendedor-informal.svg' },
+    { id: 'perfiles-falsos', name: 'Perfiles Falsos', realName: 'Don Perfil', problem: 'Estafadores en Marketplace, fotos de stock', hero: 'Matchy', svg: '/familia-match/villanos/perfiles-falsos.svg' },
+    { id: 'gasolinazo', name: 'Gasolinazo', realName: 'Don Gasolina', problem: 'Gasolina cara + auto gastón = bolsillo vacío', hero: 'Car-litos', svg: '/familia-match/villanos/gasolinazo.svg' },
+    { id: 'multa-sorpresa', name: 'Multa Sorpresa', realName: 'Don Multa', problem: 'Multas que no esperabas, infracciones invisibles', hero: 'Car-mela', svg: '/familia-match/villanos/multa-sorpresa.svg' },
+    { id: 'robo-auto', name: 'Robo Auto', realName: 'Don Ratero', problem: 'Robo vehicular, inseguridad, pérdida total', hero: 'Car-litos', svg: '/familia-match/villanos/robo-auto.svg' },
+    { id: 'seguro-caro', name: 'Seguro Caro', realName: 'Don Seguro', problem: 'Seguros abusivos, cobertura mínima', hero: 'Car-mela', svg: '/familia-match/villanos/seguro-caro.svg' },
+]
+
 export default function FamilyMatchTab() {
     const [expandedId, setExpandedId] = useState<string | null>(null)
     const [copiedPrompt, setCopiedPrompt] = useState<string | null>(null)
@@ -346,6 +359,36 @@ export default function FamilyMatchTab() {
                         )}
                     </div>
                 ))}
+            </div>
+
+            {/* Villains Section */}
+            <div className="mt-8">
+                <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-500 to-purple-600 flex items-center justify-center">
+                        <span className="text-xl">😈</span>
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-black tracking-tight">Los Villanos</h3>
+                        <p className="text-zinc-500 text-sm">Los enemigos de la Familia Match</p>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    {villains.map((villain) => (
+                        <div key={villain.id} className="bg-[#09090b] border border-white/5 rounded-xl p-4 text-center hover:border-red-500/30 transition">
+                            <div className="w-16 h-16 mx-auto rounded-full overflow-hidden border-2 border-red-500/30 mb-3">
+                                <img src={villain.svg} alt={villain.name} className="w-full h-full object-cover" />
+                            </div>
+                            <p className="font-bold text-sm text-red-400">{villain.name}</p>
+                            <p className="text-zinc-500 text-xs mt-1">{villain.realName}</p>
+                            <p className="text-zinc-600 text-[10px] mt-2 line-clamp-2">{villain.problem}</p>
+                            <div className="mt-2 flex items-center justify-center gap-1">
+                                <span className="text-[10px] text-zinc-600">Derrota:</span>
+                                <span className="text-[10px] text-primary-400 font-medium">{villain.hero}</span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     )
