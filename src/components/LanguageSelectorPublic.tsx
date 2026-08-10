@@ -8,7 +8,7 @@ import { useLanguage } from '@/contexts/LanguageContext'
 import { useState, useEffect, useRef } from 'react'
 
 const LANGUAGES = [
-    { code: 'es', name: 'Español', flag: '🇪🇸' },
+    { code: 'es', name: 'Español', flag: '🇲🇽' },
     { code: 'en', name: 'English', flag: '🇺🇸' },
     { code: 'pt', name: 'Português', flag: '🇧🇷' },
     { code: 'fr', name: 'Français', flag: '🇫🇷' },
