@@ -1,0 +1,38 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="400" fill="#0f172a"/>
+  
+  <!-- Body - Navy Blue Jacket (fitted) -->
+  <path d="M130 200 Q130 185 150 175 L170 165 Q185 158 200 158 Q215 158 230 165 L250 175 Q270 185 270 200 L270 310 Q270 330 250 340 L150 340 Q130 330 130 310 Z" fill="#0f172a"/>
+  
+  <!-- Orange Logo on Jacket -->
+  <circle cx="155" cy="215" r="12" fill="#FF6B2C"/>
+  <path d="M149 215 L155 209 L161 215 L155 221 Z" fill="#0f172a"/>
+  
+  <!-- Head -->
+  <ellipse cx="200" cy="115" rx="45" ry="50" fill="#C4A882"/>
+  
+  <!-- Hair - Long brown wavy -->
+  <path d="M155 95 Q155 55 200 50 Q245 55 245 95 L245 140 Q245 150 240 155 L240 130 Q240 100 200 95 Q160 100 160 130 L160 155 Q155 150 155 140 Z" fill="#5D4037"/>
+  <path d="M155 130 Q150 140 145 155" fill="none" stroke="#5D4037" stroke-width="8" stroke-linecap="round"/>
+  <path d="M245 130 Q250 140 255 155" fill="none" stroke="#5D4037" stroke-width="8" stroke-linecap="round"/>
+  
+  <!-- Eyes -->
+  <ellipse cx="182" cy="110" rx="7" ry="5" fill="#8B7355"/>
+  <ellipse cx="218" cy="110" rx="7" ry="5" fill="#8B7355"/>
+  <circle cx="184" cy="108" r="2" fill="#fff"/>
+  <circle cx="220" cy="108" r="2" fill="#fff"/>
+  
+  <!-- Eyelashes -->
+  <path d="M175 105 L177 103" fill="none" stroke="#3d2914" stroke-width="1.5"/>
+  <path d="M225 105 L223 103" fill="none" stroke="#3d2914" stroke-width="1.5"/>
+  
+  <!-- Warm Smile -->
+  <path d="M178 130 Q200 148 222 130" fill="none" stroke="#C4A882" stroke-width="3" stroke-linecap="round"/>
+  
+  <!-- Name -->
+  <text x="200" y="370" font-family="Arial, sans-serif" font-size="24" fill="#FF6B2C" text-anchor="middle" font-weight="bold">CAR-MELA</text>
+  
+  <!-- Age -->
+  <text x="200" y="390" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0" text-anchor="middle">42 años</text>
+</svg>

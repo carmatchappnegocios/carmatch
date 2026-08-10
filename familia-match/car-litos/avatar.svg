@@ -1,0 +1,42 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="400" fill="#0f172a"/>
+  
+  <!-- Body - Navy Blue Bomber Jacket -->
+  <path d="M120 195 Q120 175 145 165 L170 155 Q188 148 200 148 Q212 148 230 155 L255 165 Q280 175 280 195 L280 315 Q280 340 255 350 L145 350 Q120 340 120 315 Z" fill="#0f172a"/>
+  
+  <!-- Orange Logo on Jacket -->
+  <circle cx="152" cy="210" r="12" fill="#FF6B2C"/>
+  <path d="M146 210 L152 204 L158 210 L152 216 Z" fill="#0f172a"/>
+  
+  <!-- Head -->
+  <ellipse cx="200" cy="110" rx="43" ry="48" fill="#C4A882"/>
+  
+  <!-- Hair - Short textured black -->
+  <path d="M157 92 Q157 52 200 47 Q243 52 243 92 L243 85 Q243 60 200 55 Q157 60 157 85 Z" fill="#1a1a1a"/>
+  
+  <!-- Hair texture spikes -->
+  <path d="M170 55 L172 48 L174 55" fill="#1a1a1a"/>
+  <path d="M185 52 L187 44 L189 52" fill="#1a1a1a"/>
+  <path d="M200 50 L202 42 L204 50" fill="#1a1a1a"/>
+  <path d="M215 52 L217 44 L219 52" fill="#1a1a1a"/>
+  <path d="M230 55 L232 48 L234 55" fill="#1a1a1a"/>
+  
+  <!-- Orange streak -->
+  <path d="M215 52 L217 44 L219 52" fill="#FF6B2C"/>
+  
+  <!-- Eyes - bright, energetic -->
+  <ellipse cx="182" cy="105" rx="8" ry="6" fill="#3d2914"/>
+  <ellipse cx="218" cy="105" rx="8" ry="6" fill="#3d2914"/>
+  <circle cx="184" cy="103" r="2" fill="#fff"/>
+  <circle cx="220" cy="103" r="2" fill="#fff"/>
+  
+  <!-- Mischievous Smile -->
+  <path d="M178 128 Q200 145 222 128" fill="none" stroke="#C4A882" stroke-width="3" stroke-linecap="round"/>
+  
+  <!-- Name -->
+  <text x="200" y="370" font-family="Arial, sans-serif" font-size="22" fill="#EF4444" text-anchor="middle" font-weight="bold">CAR-LITOS</text>
+  
+  <!-- Age -->
+  <text x="200" y="390" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0" text-anchor="middle">18 años</text>
+</svg>

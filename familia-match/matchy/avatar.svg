@@ -1,0 +1,39 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="400" fill="#0f172a"/>
+  
+  <!-- Body - Navy Blue Jacket (oversized) -->
+  <path d="M115 195 Q115 175 140 165 L165 155 Q185 148 200 148 Q215 148 235 155 L260 165 Q285 175 285 195 L285 315 Q285 340 260 350 L140 350 Q115 340 115 315 Z" fill="#0f172a"/>
+  
+  <!-- Orange Logo on Jacket -->
+  <circle cx="150" cy="210" r="12" fill="#FF6B2C"/>
+  <path d="M144 210 L150 204 L156 210 L150 216 Z" fill="#0f172a"/>
+  
+  <!-- Head -->
+  <ellipse cx="200" cy="110" rx="42" ry="47" fill="#C4A882"/>
+  
+  <!-- Hair - Long straight black -->
+  <path d="M158 90 Q158 50 200 45 Q242 50 242 90 L242 150 Q242 160 238 165 L238 120 Q238 95 200 90 Q162 95 162 120 L162 165 Q158 160 158 150 Z" fill="#1a1a1a"/>
+  
+  <!-- Purple highlight streak -->
+  <path d="M170 70 Q175 60 180 70 L178 120 Q175 125 172 120 Z" fill="#8B5CF6"/>
+  
+  <!-- Eyes - larger, expressive -->
+  <ellipse cx="182" cy="105" rx="9" ry="7" fill="#3d2914"/>
+  <ellipse cx="218" cy="105" rx="9" ry="7" fill="#3d2914"/>
+  <circle cx="184" cy="103" r="2.5" fill="#fff"/>
+  <circle cx="220" cy="103" r="2.5" fill="#fff"/>
+  
+  <!-- Eyeliner -->
+  <path d="M173 102 L175 100" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+  <path d="M227 102 L225 100" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+  
+  <!-- Joyful Smile -->
+  <path d="M180 125 Q200 142 220 125" fill="none" stroke="#C4A882" stroke-width="3" stroke-linecap="round"/>
+  
+  <!-- Name -->
+  <text x="200" y="370" font-family="Arial, sans-serif" font-size="24" fill="#8B5CF6" text-anchor="middle" font-weight="bold">MATCHY</text>
+  
+  <!-- Age -->
+  <text x="200" y="390" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0" text-anchor="middle">20 años</text>
+</svg>
