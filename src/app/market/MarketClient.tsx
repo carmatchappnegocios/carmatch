@@ -665,11 +665,11 @@ export default function MarketClient({
                                                     </Link>
 
                                                     {isBusiness ? (
-                                                        <p className="text-[9px] font-bold text-primary-400 uppercase mb-1">
+                                                        <p className="text-[10px] font-bold text-primary-400 uppercase mb-1">
                                                             {item.category}
                                                         </p>
                                                     ) : (
-                                                        <div className="flex items-center gap-1.5 text-[9px] md:text-xs text-text-secondary">
+                                                        <div className="flex items-center gap-1.5 text-[10px] md:text-xs text-text-secondary">
                                                             <span>{item.year}</span>
                                                             <span>•</span>
                                                             <span>{formatNumber(item.mileage || 0, locale)}</span>
@@ -683,7 +683,7 @@ export default function MarketClient({
                                                                     ? `/map-store?id=${item.id}`
                                                                     : `/vehicle/${item.id}${item.isBoosted && activeLocation?.city ? `?contextCity=${encodeURIComponent(activeLocation.city)}` : ''}`
                                                                 }
-                                                                className="text-[9px] md:text-xs text-text-secondary bg-surface-highlight px-1.5 py-0.5 rounded hover:bg-surface-highlight/80 transition"
+                                                                className="text-[10px] md:text-xs text-text-secondary bg-surface-highlight px-1.5 py-0.5 rounded hover:bg-surface-highlight/80 transition"
                                                             >
                                                                 {item.transmission}
                                                             </Link>
@@ -693,7 +693,7 @@ export default function MarketClient({
                                                                 ? `/map-store?id=${item.id}`
                                                                 : `/comprar/${generateVehicleSlug(item.brand || '', item.model || '', item.year || 0, item.city)}-${item.id}${item.isBoosted && activeLocation?.city ? `?contextCity=${encodeURIComponent(activeLocation.city)}` : ''}`
                                                             }
-                                                            className="text-[9px] md:text-xs text-text-secondary bg-surface-highlight px-1.5 py-0.5 rounded hover:bg-surface-highlight/80 transition"
+                                                            className="text-[10px] md:text-xs text-text-secondary bg-surface-highlight px-1.5 py-0.5 rounded hover:bg-surface-highlight/80 transition"
                                                         >
                                                             {/* 📍 ADMIN DYNAMIC LOCATION: Override city if it's an admin post */}
                                                             {item.isBoosted && activeLocation?.city ? activeLocation.city : item.city}

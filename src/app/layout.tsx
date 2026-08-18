@@ -144,7 +144,7 @@ export default function RootLayout({
                     {/* <ResponsiveViewportFix /> */}
                     <RestoringSessionOverlay />
                     <RestoreSessionModal />
-                    {/* <CookieConsentBanner /> */}
+                    <CookieConsentBanner />
 
                     <BetaSessionTracker />
                     <GlobalSOSWatcher />

@@ -150,7 +150,7 @@ export default function AdminHeatMap({ data }: { data: IntelligenceData }) {
                         </div>
                         <div className="flex flex-col">
                             <span className="text-[11px] font-black text-white uppercase tracking-tighter">Demanda (Búsquedas)</span>
-                            <span className="text-[9px] font-bold text-white/40 uppercase italic">Zonas Calientes</span>
+                            <span className="text-[10px] font-bold text-white/40 uppercase italic">Zonas Calientes</span>
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
@@ -159,7 +159,7 @@ export default function AdminHeatMap({ data }: { data: IntelligenceData }) {
                         </div>
                         <div className="flex flex-col">
                             <span className="text-[11px] font-black text-white uppercase tracking-tighter">Oferta (Socios)</span>
-                            <span className="text-[9px] font-bold text-white/40 uppercase italic">Negocios Existentes</span>
+                            <span className="text-[10px] font-bold text-white/40 uppercase italic">Negocios Existentes</span>
                         </div>
                     </div>
                 </div>

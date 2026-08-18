@@ -125,7 +125,7 @@ export default function ContentCalendarTab() {
           </div>
         </div>
         <div className="flex flex-col items-end gap-1 min-w-[140px]">
-          <span className="text-[9px] font-black text-zinc-500 uppercase tracking-widest">{done.size} / 30 videos</span>
+          <span className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">{done.size} / 30 videos</span>
           <div className="w-full bg-white/5 rounded-full h-2">
             <div className="bg-orange-500 h-2 rounded-full transition-all" style={{ width: `${progress}%` }} />
           </div>
@@ -139,7 +139,7 @@ export default function ContentCalendarTab() {
           <button onClick={() => toggleWeek(week.n)} className="w-full flex justify-between items-center p-5 text-left">
             <div>
               <span className="text-xs font-black uppercase tracking-widest text-orange-400">{week.label}</span>
-              <p className="text-[9px] text-zinc-600 mt-0.5 italic">Estrategia semanal de crecimiento acelerado</p>
+              <p className="text-[10px] text-zinc-600 mt-0.5 italic">Estrategia semanal de crecimiento acelerado</p>
             </div>
             {openWeeks.has(week.n) ? <ChevronUp className="w-4 h-4 text-zinc-600" /> : <ChevronDown className="w-4 h-4 text-zinc-600" />}
           </button>
@@ -160,8 +160,8 @@ export default function ContentCalendarTab() {
                       </button>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
-                          <span className="text-[9px] font-black text-zinc-500 uppercase">Día {day.day}</span>
-                          <span className="text-[8px] font-bold text-orange-500 bg-orange-500/10 px-2 py-0.5 rounded-full uppercase">Pippit</span>
+                          <span className="text-[10px] font-black text-zinc-500 uppercase">Día {day.day}</span>
+                          <span className="text-[10px] font-bold text-orange-500 bg-orange-500/10 px-2 py-0.5 rounded-full uppercase">Pippit</span>
                         </div>
                         <p className={`text-sm font-bold mt-0.5 truncate ${isDone ? 'line-through text-zinc-600' : 'text-zinc-200'}`}>
                           {day.theme}
@@ -171,7 +171,7 @@ export default function ContentCalendarTab() {
                         <button
                           onClick={() => handleGenerate(day.day, day.theme)}
                           disabled={isGenerating}
-                          className="flex items-center gap-1.5 px-4 py-2 bg-orange-500 hover:bg-orange-400 disabled:opacity-50 rounded-xl text-[9px] font-black text-white uppercase tracking-widest transition-all"
+                          className="flex items-center gap-1.5 px-4 py-2 bg-orange-500 hover:bg-orange-400 disabled:opacity-50 rounded-xl text-[10px] font-black text-white uppercase tracking-widest transition-all"
                         >
                           {isGenerating ? <Loader2 className="w-3 h-3 animate-spin" /> : <Zap className="w-3 h-3" />}
                           {isGenerating ? 'Generando...' : 'Generar'}
@@ -185,12 +185,12 @@ export default function ContentCalendarTab() {
                         {/* Pippit Prompt */}
                         <div className="space-y-2">
                           <div className="flex justify-between items-center">
-                            <span className="text-[9px] font-black text-orange-400 uppercase tracking-widest flex items-center gap-2">
+                            <span className="text-[10px] font-black text-orange-400 uppercase tracking-widest flex items-center gap-2">
                               <Video className="w-3 h-3" /> Prompt para Pippit (Video)
                             </span>
                             <button
                               onClick={() => copy(result.pippit_prompt, `p${day.day}`)}
-                              className={`text-[9px] font-black uppercase px-3 py-1 rounded-lg transition-all ${copiedId === `p${day.day}` ? 'bg-green-500 text-white' : 'bg-white/10 text-white hover:bg-white/20'}`}
+                              className={`text-[10px] font-black uppercase px-3 py-1 rounded-lg transition-all ${copiedId === `p${day.day}` ? 'bg-green-500 text-white' : 'bg-white/10 text-white hover:bg-white/20'}`}
                             >
                               {copiedId === `p${day.day}` ? 'Copiado!' : 'Copiar Prompt'}
                             </button>
@@ -205,7 +205,7 @@ export default function ContentCalendarTab() {
                           {Object.entries(result.platforms).map(([plat, text]: any) => (
                             <div key={plat} className="bg-white/5 p-3 rounded-xl border border-white/5 space-y-2">
                               <div className="flex justify-between items-center">
-                                <span className="text-[8px] font-black text-zinc-500 uppercase tracking-widest">{plat}</span>
+                                <span className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">{plat}</span>
                                 <button onClick={() => copy(text, `${plat}${day.day}`)} className="text-zinc-600 hover:text-white transition-colors">
                                   {copiedId === `${plat}${day.day}` ? <CheckCircle2 className="w-3 h-3 text-green-500" /> : <Copy className="w-3 h-3" />}
                                 </button>
@@ -215,7 +215,7 @@ export default function ContentCalendarTab() {
                           ))}
                         </div>
 
-                        <div className="flex items-center gap-2 text-[8px] font-black text-zinc-600 uppercase italic">
+                        <div className="flex items-center gap-2 text-[10px] font-black text-zinc-600 uppercase italic">
                            <Share2 className="w-3 h-3" /> Sube este video hoy para maximizar el K-Factor de crecimiento.
                         </div>
                       </div>

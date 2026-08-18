@@ -6,6 +6,7 @@ import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 import { generateSlug } from '@/lib/slug'
 import { NextRequest, NextResponse } from 'next/server'
+import { isEmailVerified } from '@/lib/email-verified'
 
 /**
  * POST /api/businesses
@@ -21,6 +22,14 @@ export async function POST(request: NextRequest) {
             return NextResponse.json(
                 { error: 'No autenticado' },
                 { status: 401 }
+            )
+        }
+
+        // Email verification required for creating businesses
+        if (!await isEmailVerified(session.user.id)) {
+            return NextResponse.json(
+                { error: 'Debes verificar tu email antes de crear un negocio' },
+                { status: 403 }
             )
         }
 

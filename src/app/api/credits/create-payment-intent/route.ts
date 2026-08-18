@@ -6,6 +6,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { prisma } from '@/lib/db'
 import { auth } from '@/lib/auth'
+import { checkRateLimit } from '@/lib/rate-limit'
 
 // Inicializar Stripe con la clave secreta (desde .env)
 
@@ -21,6 +22,11 @@ export async function POST(request: NextRequest) {
         const session = await auth()
         if (!session?.user?.id || !session?.user?.email) {
             return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
+        }
+
+        const rateLimit = checkRateLimit(`credits:checkout:${session.user.id}`, { windowMs: 60000, max: 5 })
+        if (!rateLimit.allowed) {
+            return NextResponse.json({ error: 'Demasiadas solicitudes. Intenta de nuevo más tarde.' }, { status: 429 })
         }
 
         const { country, quantity } = await request.json()

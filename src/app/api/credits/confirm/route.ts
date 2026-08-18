@@ -6,6 +6,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { prisma } from '@/lib/db'
 import { auth } from '@/lib/auth'
+import { checkRateLimit } from '@/lib/rate-limit'
 
 
 export async function POST(request: NextRequest) {
@@ -18,6 +19,11 @@ export async function POST(request: NextRequest) {
         const session = await auth()
         if (!session?.user?.id) {
             return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
+        }
+
+        const rateLimit = checkRateLimit(`credits:confirm:${session.user.id}`, { windowMs: 60000, max: 10 })
+        if (!rateLimit.allowed) {
+            return NextResponse.json({ error: 'Demasiadas solicitudes. Intenta de nuevo más tarde.' }, { status: 429 })
         }
 
         const { paymentIntentId, sessionId } = await request.json()

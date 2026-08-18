@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { revalidatePath } from 'next/cache'
 import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/db'
+import { isEmailVerified } from '@/lib/email-verified'
 
 /**
  * 🛠️ Helpers para parseo robusto de tipos
@@ -42,6 +43,14 @@ export async function POST(request: NextRequest) {
             return NextResponse.json(
                 { error: 'Usuario no encontrado' },
                 { status: 404 }
+            )
+        }
+
+        // Email verification required for publishing
+        if (!await isEmailVerified(user.id)) {
+            return NextResponse.json(
+                { error: 'Debes verificar tu email antes de publicar' },
+                { status: 403 }
             )
         }
 

@@ -74,8 +74,6 @@ export async function robustUploadToCloudinary(url: string, folder: string = 'ca
 
     for (let i = 0; i < retries; i++) {
         try {
-            console.log(`[CLOUDINARY] Intento ${i + 1}/${retries} para: ${currentUrl.substring(0, 100)}...`);
-
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 60000); // 60 seconds timeout (Increased for Flux)
 
@@ -116,19 +114,15 @@ export async function robustUploadToCloudinary(url: string, folder: string = 'ca
                     } else {
                         currentUrl += `&seed=${newSeed}`;
                     }
-                    console.log(`[CLOUDINARY] Cambiando seed para forzar regeneración: ${newSeed}`);
-
                     await new Promise(r => setTimeout(r, (i + 1) * 3000)); // Esperar cada vez más
                     continue;
                 }
                 throw new Error('Image too small (likely blocked or empty)');
             }
 
-            console.log(`[CLOUDINARY] Buffer válido detectado (${buffer.length} bytes). Subiendo...`);
             const bufferRes = await uploadBufferToCloudinary(buffer, folder);
 
             if (bufferRes.success) {
-                console.log(`[CLOUDINARY] ✅ Subida exitosa: ${bufferRes.secure_url}`);
                 return bufferRes;
             }
 

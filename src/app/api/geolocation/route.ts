@@ -99,7 +99,6 @@ export async function GET(request: NextRequest) {
                 try {
                     const aiParsed = await parseAddressWithAI(query, biasLat, biasLng);
                     if (aiParsed && aiParsed.full_search_query) {
-                        console.log(`🤖 AI Refined Address: "${query}" -> "${aiParsed.full_search_query}"`);
                         finalQuery = aiParsed.full_search_query;
                     }
                 } catch (e) {
@@ -130,7 +129,6 @@ export async function GET(request: NextRequest) {
 
                     // FALLBACK: Si falló AI, intentar con RAW previo
                     if (!features && finalQuery !== query) {
-                        console.log(`🔄 Mapbox Fallback: AI failed, trying raw query "${query}"`);
                         features = await searchWithMapbox(query)
                     }
 
@@ -199,7 +197,6 @@ export async function GET(request: NextRequest) {
 
                 // FALLBACK: Si falló AI, intentar con RAW previo
                 if (!nomData && finalQuery !== query) {
-                    console.log(`🔄 Nominatim Fallback: AI failed, trying raw query "${query}"`);
                     nomData = await searchWithNominatim(query)
                 }
 

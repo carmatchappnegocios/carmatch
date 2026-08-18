@@ -37,12 +37,10 @@ export async function sendPushNotification(subscription: any, payload: PushPaylo
     } catch (error) {
         // 🛡️ Si la suscripción ha expirado o es inválida (Error 410 Gone o 404), la eliminamos de la base de datos
         if (error instanceof Error && ((error as any).statusCode === 410 || (error as any).statusCode === 404)) {
-            console.log(`[PUSH] Subscripción expirada (${(error as any).statusCode}), eliminando endpoint: ${subscription.endpoint}`)
             try {
                 await prisma.pushSubscription.deleteMany({
                     where: { endpoint: subscription.endpoint }
                 })
-                console.log('[PUSH] Subscripción eliminada correctamente de la DB')
             } catch (dbError) {
                 console.error('[PUSH] Error al intentar eliminar subscripción de la DB:', dbError)
             }
@@ -57,21 +55,15 @@ export async function sendPushNotification(subscription: any, payload: PushPaylo
  */
 export async function sendPushToUser(userId: string, payload: PushPayload) {
     try {
-        console.log(`[PUSH] Buscando suscripciones para usuario: ${userId}`)
-
         const subscriptions = await prisma.pushSubscription.findMany({
             where: { userId }
         })
 
-        console.log(`[PUSH] Encontradas ${subscriptions.length} suscripciones`)
-
         if (subscriptions.length === 0) {
-            console.log(`[PUSH] ⚠️ Usuario ${userId} no tiene dispositivos suscritos a notificaciones push`)
             return false
         }
 
         const promises = subscriptions.map(async (sub, index) => {
-            console.log(`[PUSH] Enviando notificación a dispositivo ${index + 1}/${subscriptions.length}`)
             const pushConfig = {
                 endpoint: sub.endpoint,
                 keys: {
@@ -80,12 +72,10 @@ export async function sendPushToUser(userId: string, payload: PushPayload) {
                 }
             }
             const result = await sendPushNotification(pushConfig, payload)
-            console.log(`[PUSH] Resultado dispositivo ${index + 1}: ${result ? '✓ enviado' : '✗ falló'}`)
             return result
         })
 
         await Promise.all(promises)
-        console.log(`[PUSH] ✓ Proceso completado para usuario ${userId}`)
         return true
     } catch (error) {
         console.error('[PUSH] ✗ Error in sendPushToUser:', error)

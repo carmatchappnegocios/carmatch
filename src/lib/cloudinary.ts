@@ -44,7 +44,6 @@ export async function uploadToCloudinary(file: File): Promise<string> {
             fileType: 'image/webp'  // 💰 WebP 30% más ligero que JPEG
         }
         processedFile = await imageCompression(file, options)
-        console.log(`💰 Imagen comprimida: ${(file.size / 1024).toFixed(0)}KB → ${(processedFile.size / 1024).toFixed(0)}KB`)
     } catch (error) {
         console.warn('⚠️ Error comprimiendo imagen, usando original:', error)
     }
@@ -61,8 +60,6 @@ export async function uploadToCloudinary(file: File): Promise<string> {
 
     for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
         try {
-            console.log(`🚀 Subida a Proxy (Intento ${attempt}/${MAX_RETRIES})...`)
-
             const response = await fetch('/api/upload', {
                 method: 'POST',
                 body: formData,
@@ -80,7 +77,6 @@ export async function uploadToCloudinary(file: File): Promise<string> {
             }
 
             const data: CloudinaryUploadResponse = await response.json()
-            console.log('✅ Subida exitosa a Cloudinary')
             return data.secure_url
 
         } catch (error: any) {

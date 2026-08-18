@@ -54,8 +54,6 @@ export async function analyzeImage(
   type: 'VEHICLE' | 'BUSINESS' = 'VEHICLE',
   contextHint?: string // 🧠 Contexto opcional: "Jeep Wrangler 2020", "Taller Juan", etc.
 ): Promise<ImageAnalysisResult> {
-  console.log(`🤖 [${type}] Iniciando análisis con Gemini Vision... (Contexto: ${contextHint || 'Ninguno'})`);
-
   // 🚀 TODO: Integrar orquestador para pre-validación de imágenes con heurísticas visuales básicas
   // Por ahora mantenemos el sistema de rotación Bi-Turbo (Pro/Flash) que ya funciona en producción
 
@@ -166,8 +164,6 @@ RESPONDE SOLO EL JSON.
         // Primer intento: Flash-8B (rápido y económico)
         // Segundo intento (solo si hubo error técnico): Flash estándar
         const modelToUse = i === 0 ? geminiFlash8B : geminiFlash;
-        const modelLabel = i === 0 ? 'FLASH-8B' : 'FLASH';
-        console.log(`🤖 [IA] Intento técnico ${i + 1}/${maxTechnicalRetries} usando ${modelLabel}`);
         result = await modelToUse.generateContent([prompt, imagePart]);
 
       } catch (genError) {
@@ -181,8 +177,6 @@ RESPONDE SOLO EL JSON.
 
       const response = await result.response;
       const text = response.text();
-
-      console.log("🤖 Respuesta Raw Gemini:", text);
 
       const firstBrace = text.indexOf('{');
       const lastBrace = text.lastIndexOf('}');
@@ -211,7 +205,6 @@ RESPONDE SOLO EL JSON.
         // No hay segunda opinión, no hay modo tolerante, no hay reintento por contenido.
         // Esta es la única regla: motor + ruedas = válido. Todo lo demás = rechazado.
         if (parsedResult && parsedResult.valid === false) {
-          console.log(`🚫 CarMatch: Imagen rechazada por la IA (${parsedResult.reason || 'No es un vehículo motorizado terrestre'}).`);
           return parsedResult; // Rechazo definitivo, sin más intentos
         }
 
@@ -295,8 +288,6 @@ export async function analyzeMultipleImages(
   type: 'VEHICLE' | 'BUSINESS' = 'VEHICLE',
   context?: { brand?: string, model?: string, year?: string }
 ): Promise<ImageAnalysisResult> {
-  console.log(`🤖 AI Contextual: Analizando ${images.length} imágenes...`);
-
   const vehicleContextPrompt = context?.brand
     ? `\nGUÍA DE CONTEXTO: El usuario dice tener un ${context.brand} ${context.model || ''} ${context.year || ''}.
        Usa esto para ayudarte a identificar si es un vehículo real, pero sé FLEXIBLE.
@@ -374,8 +365,6 @@ export async function analyzeMultipleImages(
 
   // 🚀 REGLA RUBEN: PARA VEHÍCULOS, LA PORTADA SE ANALIZA PRIMERO Y MANDA
   if (type === 'VEHICLE' && images.length > 0) {
-    console.log("🛡️ Seguridad CarMatch: Aplicando análisis secuencial (Portada Primero)");
-
     try {
       // 1. ANALIZAR PORTADA (Index 0)
       const contextHint = context?.brand ? `${context.brand} ${context.model || ''} ${context.year || ''}`.trim() : undefined;
@@ -465,7 +454,6 @@ isValid: false) ═══
 
       let galleryResultRaw;
       try {
-        console.log(`🤖 Analizando galería (${galleryImages.length} fotos) con referencia visual de portada...`);
         galleryResultRaw = await geminiFlash.generateContent([galleryPrompt, ...imageParts]);
       } catch (galleryError) {
         console.warn("⚠️ Falló análisis de galería, intentando con respaldo...");
@@ -565,7 +553,6 @@ isValid: false) ═══
   const msg = lastError?.message?.toLowerCase() || '';
 
   // ❌ FAIL-CLOSED PROFESIONAL (15 INTENTOS)
-  console.error("⚠️ ERROR TÉCNICO MÚLTIPLE DEFINITIVO (15 INTENTOS) - RECHAZANDO GALERÍA");
   return {
     valid: false,
     reason: "No pudimos completar la verificación técnica profunda. Intenta de nuevo con una conexión más estable o fotos más claras.",
@@ -583,7 +570,6 @@ async function processGeminiResponse(response: any): Promise<ImageAnalysisResult
   }
 
   const text = response.text();
-  console.log("🤖 Respuesta Gemini (Bulk):", text);
 
   const match = text.match(/\{[\s\S]*\}/);
   if (!match) {
@@ -626,8 +612,6 @@ export interface ContentModerationResult {
 }
 
 export async function moderateUserContent(imageBase64: string): Promise<ContentModerationResult> {
-  console.log('🛡️ Moderando contenido de imagen con Gemini Vision...');
-
   const prompt = `
     Analiza esta imagen ESTRICTAMENTE para moderación de contenido en una plataforma pública familiar(fotos de perfil de usuario y negocios).
     
@@ -674,8 +658,6 @@ export async function moderateUserContent(imageBase64: string): Promise<ContentM
 
     if (!parsed.isAppropriate) {
       console.warn(`❌ Imagen rechazada por moderación: ${parsed.category} - ${parsed.reason}`);
-    } else {
-      console.log('✅ Imagen aprobada por moderación');
     }
 
     return parsed;

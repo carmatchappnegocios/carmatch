@@ -210,7 +210,7 @@ export default function CostsTab() {
             gratis: { label: 'Gratis', cls: 'bg-green-500/20 text-green-400' },
         }
         const c = map[cycle] || map.gratis
-        return <span className={`text-[9px] font-black px-2 py-0.5 rounded-full ${c.cls}`}>{c.label}</span>
+        return <span className={`text-[10px] font-black px-2 py-0.5 rounded-full ${c.cls}`}>{c.label}</span>
     }
 
     return (
@@ -229,14 +229,14 @@ export default function CostsTab() {
             {/* Totals Banner */}
             <div className="grid grid-cols-2 gap-3">
                 <div className="bg-gradient-to-br from-emerald-900/30 to-teal-900/20 border border-emerald-500/20 p-5 rounded-3xl">
-                    <p className="text-[9px] font-black text-emerald-400 uppercase tracking-[0.2em] mb-1">Gasto Mensual Est.</p>
+                    <p className="text-[10px] font-black text-emerald-400 uppercase tracking-[0.2em] mb-1">Gasto Mensual Est.</p>
                     <p className="text-3xl font-black italic text-white">${totalMensual.toFixed(0)}</p>
-                    <p className="text-[9px] text-zinc-500 mt-1">MXN / mes</p>
+                    <p className="text-[10px] text-zinc-500 mt-1">MXN / mes</p>
                 </div>
                 <div className="bg-gradient-to-br from-orange-900/30 to-red-900/20 border border-orange-500/20 p-5 rounded-3xl">
-                    <p className="text-[9px] font-black text-orange-400 uppercase tracking-[0.2em] mb-1">Gasto Anual Est.</p>
+                    <p className="text-[10px] font-black text-orange-400 uppercase tracking-[0.2em] mb-1">Gasto Anual Est.</p>
                     <p className="text-3xl font-black italic text-white">${totalAnual.toFixed(0)}</p>
-                    <p className="text-[9px] text-zinc-500 mt-1">MXN / año</p>
+                    <p className="text-[10px] text-zinc-500 mt-1">MXN / año</p>
                 </div>
             </div>
 
@@ -292,7 +292,7 @@ export default function CostsTab() {
                                 <div className="space-y-3 border-t border-white/5 pt-4">
                                     <div className="grid grid-cols-2 gap-3">
                                         <div>
-                                            <label className="text-[9px] font-black text-zinc-500 uppercase tracking-widest block mb-1">Costo MXN</label>
+                                            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest block mb-1">Costo MXN</label>
                                             <input
                                                 type="number"
                                                 value={editValues.costMXN ?? ''}
@@ -301,7 +301,7 @@ export default function CostsTab() {
                                             />
                                         </div>
                                         <div>
-                                            <label className="text-[9px] font-black text-zinc-500 uppercase tracking-widest block mb-1">Próximo Pago</label>
+                                            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest block mb-1">Próximo Pago</label>
                                             <input
                                                 type="date"
                                                 value={editValues.nextPayment ?? ''}
@@ -311,7 +311,7 @@ export default function CostsTab() {
                                         </div>
                                     </div>
                                     <div>
-                                        <label className="text-[9px] font-black text-zinc-500 uppercase tracking-widest block mb-1">Notas</label>
+                                        <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest block mb-1">Notas</label>
                                         <input
                                             type="text"
                                             value={editValues.notes ?? ''}
@@ -337,7 +337,7 @@ export default function CostsTab() {
                             ) : (
                                 <div className="grid grid-cols-2 gap-3 border-t border-white/5 pt-4">
                                     <div>
-                                        <p className="text-[9px] font-black text-zinc-500 uppercase tracking-widest mb-1">Costo</p>
+                                        <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-1">Costo</p>
                                         <p className="text-lg font-black italic text-white">
                                             {service.costMXN === 0
                                                 ? <span className="text-emerald-400 text-sm">Sin costo</span>
@@ -346,7 +346,7 @@ export default function CostsTab() {
                                         </p>
                                     </div>
                                     <div>
-                                        <p className="text-[9px] font-black text-zinc-500 uppercase tracking-widest mb-1">Vencimiento</p>
+                                        <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-1">Vencimiento</p>
                                         {daysLeft !== null ? (
                                             <p className={`text-sm font-black ${daysLeft <= 7 ? 'text-red-400' : daysLeft <= 30 ? 'text-orange-400' : 'text-zinc-300'}`}>
                                                 {daysLeft > 0 ? `${daysLeft} días` : '¡Vencido!'}
@@ -356,7 +356,7 @@ export default function CostsTab() {
                                         )}
                                     </div>
                                     <div className="col-span-2">
-                                        <p className="text-[9px] font-black text-zinc-600 uppercase tracking-widest mb-0.5">Notas</p>
+                                        <p className="text-[10px] font-black text-zinc-600 uppercase tracking-widest mb-0.5">Notas</p>
                                         <p className="text-[10px] text-zinc-400">{service.notes}</p>
                                     </div>
                                 </div>
@@ -366,7 +366,7 @@ export default function CostsTab() {
                 })}
             </div>
 
-            <p className="text-center text-[9px] text-zinc-600 font-bold uppercase tracking-widest pb-4">
+            <p className="text-center text-[10px] text-zinc-600 font-bold uppercase tracking-widest pb-4">
                 Datos actualizados manualmente · Usa el ícono ✏️ para editar
             </p>
         </div>

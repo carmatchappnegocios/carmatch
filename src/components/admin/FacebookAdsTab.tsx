@@ -491,12 +491,12 @@ export default function FacebookAdsTab() {
                                     >
                                         <div className="flex-1 min-w-0">
                                             <div className="flex items-center gap-2 mb-1">
-                                                <span className={`text-[9px] font-black px-2 py-0.5 rounded border ${categoryColors[prompt.category]}`}>
+                                                <span className={`text-[10px] font-black px-2 py-0.5 rounded border ${categoryColors[prompt.category]}`}>
                                                     {prompt.category.toUpperCase()}
                                                 </span>
                                                 <span className="text-zinc-600 text-[10px]">{characters[prompt.character].name}</span>
                                                 {isPublished && (
-                                                    <span className="text-[9px] font-black px-2 py-0.5 rounded bg-green-500/20 text-green-400">
+                                                    <span className="text-[10px] font-black px-2 py-0.5 rounded bg-green-500/20 text-green-400">
                                                         PUBLICADO
                                                     </span>
                                                 )}

@@ -164,7 +164,7 @@ export const MarketChat: React.FC<MarketChatProps> = ({
                                 {m.role === 'assistant' && (
                                     <div className="flex items-center gap-1.5 mb-1 opacity-50">
                                         <Bot size={12} className="text-blue-300" />
-                                        <span className="text-[9px] font-black uppercase tracking-widest">{t('market.filters.ia') || 'Asesor'}</span>
+                                        <span className="text-[10px] font-black uppercase tracking-widest">{t('market.filters.ia') || 'Asesor'}</span>
                                     </div>
                                 )}
                                 {m.content}

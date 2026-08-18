@@ -375,9 +375,9 @@ export default function AppointmentModal({ onClose, onSubmit, chatId, initialApp
                                                         <div className="flex items-center gap-2 flex-wrap">
                                                             <span className="font-bold text-sm text-text-primary truncate">{s.name}</span>
                                                             {s.type === 'safe_point' ? (
-                                                                <span className="text-[9px] bg-primary-500/20 text-primary-400 px-1.5 py-0.5 rounded-full font-bold uppercase shrink-0">PUNTO SEGURO</span>
+                                                                <span className="text-[10px] bg-primary-500/20 text-primary-400 px-1.5 py-0.5 rounded-full font-bold uppercase shrink-0">PUNTO SEGURO</span>
                                                             ) : s.typeLabel ? (
-                                                                <span className="text-[9px] bg-surface-highlight text-text-secondary px-1.5 py-0.5 rounded-full font-bold uppercase shrink-0 border border-white/5">{s.typeLabel}</span>
+                                                                <span className="text-[10px] bg-surface-highlight text-text-secondary px-1.5 py-0.5 rounded-full font-bold uppercase shrink-0 border border-white/5">{s.typeLabel}</span>
                                                             ) : null}
                                                         </div>
                                                         <div className="text-[11px] text-text-secondary truncate mt-0.5">{s.address}</div>

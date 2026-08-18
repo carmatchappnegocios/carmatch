@@ -1476,7 +1476,7 @@ export default function PublishClient() {
                                                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                                                 />
                                                 {index === 0 && (
-                                                    <div className="absolute top-1 left-1 px-1.5 py-0.5 bg-primary-700 text-[9px] font-black text-white rounded-md shadow-lg border border-primary-600">
+                                                    <div className="absolute top-1 left-1 px-1.5 py-0.5 bg-primary-700 text-[10px] font-black text-white rounded-md shadow-lg border border-primary-600">
                                                         PORTADA
                                                     </div>
                                                 )}

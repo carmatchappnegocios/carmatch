@@ -194,7 +194,6 @@ export default function MyBusinessesClient() {
     // Auto-detectar ubicación GPS cuando se abre el formulario de crear negocio
     useEffect(() => {
         if (showForm && !editingBusinessId && !latitude) {
-            console.log('🌍 Auto-detectando ubicación GPS para nuevo negocio...')
             detectLocation()
         }
     }, [showForm, editingBusinessId])

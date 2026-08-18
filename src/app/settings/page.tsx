@@ -376,12 +376,12 @@ export default function SettingsPage() {
                                             {t('settings.gps_realtime')}
                                             {/* Badge de estado */}
                                             {preciseLocationEnabled && gpsPermission === 'granted' && (
-                                                <span className="text-[9px] font-black uppercase tracking-widest bg-green-500/20 text-green-400 border border-green-500/30 px-2 py-0.5 rounded-full">
+                                                <span className="text-[10px] font-black uppercase tracking-widest bg-green-500/20 text-green-400 border border-green-500/30 px-2 py-0.5 rounded-full">
                                                      {t('settings.gps_active_badge')}
                                                  </span>
                                             )}
                                             {gpsPermission === 'denied' && (
-                                                <span className="text-[9px] font-black uppercase tracking-widest bg-red-500/10 text-red-400 border border-red-500/20 px-2 py-0.5 rounded-full">
+                                                <span className="text-[10px] font-black uppercase tracking-widest bg-red-500/10 text-red-400 border border-red-500/20 px-2 py-0.5 rounded-full">
                                                      {t('settings.gps_blocked_badge')}
                                                  </span>
                                             )}

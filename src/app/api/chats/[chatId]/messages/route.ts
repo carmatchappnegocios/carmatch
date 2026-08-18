@@ -7,6 +7,9 @@ import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 import { sendPushToUser } from '@/lib/pushService'
 import { upsertNotification } from '@/lib/notifications-service'
+import { checkRateLimit } from '@/lib/rate-limit'
+import { escapeHtml } from '@/lib/sanitize'
+import { isEmailVerified } from '@/lib/email-verified'
 
 // POST /api/chats/[chatId]/messages - Enviar un mensaje
 export async function POST(
@@ -27,7 +30,18 @@ export async function POST(
             return NextResponse.json({ error: 'Usuario no encontrado' }, { status: 404 })
         }
 
+        // Email verification required for messaging
+        if (!await isEmailVerified(user.id)) {
+            return NextResponse.json({ error: 'Debes verificar tu email para enviar mensajes' }, { status: 403 })
+        }
+
         const { chatId } = await params
+
+        const rateLimit = checkRateLimit(`chat:message:${user.id}:${chatId}`, { windowMs: 60000, max: 30 })
+        if (!rateLimit.allowed) {
+            return NextResponse.json({ error: 'Demasiados mensajes. Intenta de nuevo más tarde.' }, { status: 429 })
+        }
+
         const body = await request.json()
         const { content } = body
 
@@ -35,7 +49,9 @@ export async function POST(
             return NextResponse.json({ error: 'El mensaje no puede estar vacío' }, { status: 400 })
         }
 
-        if (content.length > 5000) {
+        const sanitizedContent = escapeHtml(content.trim())
+
+        if (sanitizedContent.length > 5000) {
             return NextResponse.json({ error: 'El mensaje no puede exceder 5000 caracteres' }, { status: 400 })
         }
 
@@ -66,7 +82,7 @@ export async function POST(
             data: {
                 chatId,
                 senderId: user.id,
-                content: content.trim()
+                content: sanitizedContent
             },
             include: {
                 sender: {

@@ -77,7 +77,7 @@ export default function AdminSidebar({ activeView, setActiveView, menuItems, use
                     </div>
                     <div className="min-w-0">
                         <p className="text-xs font-black text-white truncate">{userName || 'Administrator'}</p>
-                        <p className="text-[9px] font-bold text-zinc-600 truncate uppercase tracking-widest">Master Access</p>
+                        <p className="text-[10px] font-bold text-zinc-600 truncate uppercase tracking-widest">Master Access</p>
                     </div>
                 </div>
             </div>

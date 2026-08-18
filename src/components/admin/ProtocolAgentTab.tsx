@@ -102,7 +102,7 @@ export default function ProtocolAgentTab({ prefilledTopic, onTopicConsumed }: Pr
         </div>
         <div className="flex items-center gap-2 bg-black/40 px-4 py-2 rounded-full border border-white/5">
           <div className="w-2 h-2 bg-green-500 rounded-full animate-ping" />
-          <span className="text-[9px] font-black text-zinc-400 uppercase tracking-widest">Ready</span>
+          <span className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Ready</span>
         </div>
       </div>
 
@@ -110,7 +110,7 @@ export default function ProtocolAgentTab({ prefilledTopic, onTopicConsumed }: Pr
       {!protocolData && !loading && (
         <div className="space-y-3 animate-in fade-in duration-1000">
           <div className="flex items-center gap-2 px-1">
-            <span className="text-[8px] font-black text-zinc-600 uppercase tracking-widest italic">
+            <span className="text-[10px] font-black text-zinc-600 uppercase tracking-widest italic">
               {dynamicMissions.length > 0 ? 'Trending Topics' : 'Loading topics...'}
             </span>
           </div>
@@ -123,7 +123,7 @@ export default function ProtocolAgentTab({ prefilledTopic, onTopicConsumed }: Pr
               >
                 <div className="flex items-center gap-2 mb-2">
                   <Zap className="w-3 h-3 text-purple-500" />
-                  <span className="text-[7px] font-black text-zinc-600 uppercase tracking-widest">{s.type}</span>
+                  <span className="text-[10px] font-black text-zinc-600 uppercase tracking-widest">{s.type}</span>
                 </div>
                 <p className="text-[10px] font-bold text-zinc-400 group-hover:text-white transition-colors uppercase leading-tight italic">
                   {s.label}
@@ -212,7 +212,7 @@ export default function ProtocolAgentTab({ prefilledTopic, onTopicConsumed }: Pr
                 </span>
                 <button
                   onClick={copyAllImagePrompts}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-xl font-black text-[9px] uppercase tracking-widest transition-all ${
+                  className={`flex items-center gap-2 px-4 py-2 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all ${
                     copiedId === 'all_images' ? 'bg-green-500 text-white' : 'bg-purple-500 hover:bg-purple-400 text-white'
                   }`}
                 >
@@ -236,8 +236,8 @@ export default function ProtocolAgentTab({ prefilledTopic, onTopicConsumed }: Pr
                           <div>
                             <span className="text-[11px] font-black text-white uppercase tracking-widest">{meta.label}</span>
                             <div className="flex items-center gap-2 mt-0.5">
-                              <span className="text-[8px] font-bold text-zinc-600 bg-white/5 px-2 py-0.5 rounded">{promptData.aspect_ratio}</span>
-                              <span className="text-[8px] font-bold text-zinc-600">{promptData.platform}</span>
+                              <span className="text-[10px] font-bold text-zinc-600 bg-white/5 px-2 py-0.5 rounded">{promptData.aspect_ratio}</span>
+                              <span className="text-[10px] font-bold text-zinc-600">{promptData.platform}</span>
                             </div>
                           </div>
                         </div>
@@ -286,7 +286,7 @@ export default function ProtocolAgentTab({ prefilledTopic, onTopicConsumed }: Pr
               {Object.entries(protocolData.copy).filter(([k]) => k !== 'hook').map(([platform, text]: any) => (
                 <div key={platform} className="bg-black/40 border border-white/5 rounded-2xl p-5 space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-[9px] font-black text-zinc-500 uppercase tracking-widest italic">{platform.replace('caption_', '')}</span>
+                    <span className="text-[10px] font-black text-zinc-500 uppercase tracking-widest italic">{platform.replace('caption_', '')}</span>
                     <button onClick={() => copy(text, platform)}>
                       {copiedId === platform ? <CheckCircle2 className="w-3 h-3 text-green-500" /> : <Copy className="w-3 h-3 text-zinc-500 hover:text-white" />}
                     </button>
@@ -308,7 +308,7 @@ export default function ProtocolAgentTab({ prefilledTopic, onTopicConsumed }: Pr
                         <Share2 className="w-4 h-4 text-orange-400" />
                         <span className="text-[11px] font-black text-orange-400 uppercase tracking-widest">Pippit/CapCut Prompt</span>
                       </div>
-                      <p className="text-[9px] text-orange-700 uppercase tracking-widest">Copy + Paste into Pippit</p>
+                      <p className="text-[10px] text-orange-700 uppercase tracking-widest">Copy + Paste into Pippit</p>
                     </div>
                     <button
                       onClick={() => copy(protocolData.video_prompt.pippit, 'pippit')}
@@ -326,7 +326,7 @@ export default function ProtocolAgentTab({ prefilledTopic, onTopicConsumed }: Pr
               {protocolData.video_prompt.voiceover && (
                 <div className="bg-black/40 border border-white/5 rounded-2xl p-5 space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-[9px] font-black text-zinc-500 uppercase tracking-widest">Voiceover Script</span>
+                    <span className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Voiceover Script</span>
                     <button onClick={() => copy(protocolData.video_prompt.voiceover, 'voiceover')}>
                       {copiedId === 'voiceover' ? <CheckCircle2 className="w-3 h-3 text-green-500" /> : <Copy className="w-3 h-3 text-zinc-500 hover:text-white" />}
                     </button>
@@ -337,7 +337,7 @@ export default function ProtocolAgentTab({ prefilledTopic, onTopicConsumed }: Pr
 
               {protocolData.storyboard && (
                 <div className="bg-black/40 border border-white/5 rounded-2xl p-5 space-y-4">
-                  <span className="text-[9px] font-black text-zinc-500 uppercase tracking-widest">Storyboard</span>
+                  <span className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Storyboard</span>
                   <div className="space-y-3">
                     {protocolData.storyboard.map((step: any, i: number) => (
                       <div key={i} className="flex gap-3 items-start">
@@ -345,8 +345,8 @@ export default function ProtocolAgentTab({ prefilledTopic, onTopicConsumed }: Pr
                         <div className="flex-1 space-y-1">
                           <p className="text-[11px] text-zinc-400 leading-tight italic">{step.visual}</p>
                           <div className="flex gap-2">
-                            <span className="text-[8px] font-bold text-zinc-600 bg-white/5 px-2 py-0.5 rounded">{step.duration}</span>
-                            {step.overlay && <span className="text-[8px] font-bold text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded">{step.overlay}</span>}
+                            <span className="text-[10px] font-bold text-zinc-600 bg-white/5 px-2 py-0.5 rounded">{step.duration}</span>
+                            {step.overlay && <span className="text-[10px] font-bold text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded">{step.overlay}</span>}
                           </div>
                         </div>
                       </div>

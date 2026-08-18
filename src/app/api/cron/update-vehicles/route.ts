@@ -18,8 +18,6 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    console.log('🤖 [AUTO-UPDATE] Iniciando actualización automática de vehículos...')
-
     let brandsAdded = 0
     let modelsAdded = 0
     let typesAdded = 0
@@ -29,7 +27,6 @@ export async function GET(request: NextRequest) {
         // El modelo se maneja automáticamente a través de safeGenerateContent
 
         // PASO 1: Descubrir nuevas marcas
-        console.log('📡 Paso 1/3: Buscando nuevas marcas...')
         try {
             brandsAdded = await discoverNewBrands()
         } catch (error: any) {
@@ -38,7 +35,6 @@ export async function GET(request: NextRequest) {
         }
 
         // PASO 2: Descubrir nuevos modelos
-        console.log('📡 Paso 2/3: Buscando nuevos modelos...')
         try {
             modelsAdded = await discoverNewModels()
         } catch (error: any) {
@@ -47,7 +43,6 @@ export async function GET(request: NextRequest) {
         }
 
         // PASO 3: Descubrir nuevos tipos
-        console.log('📡 Paso 3/3: Buscando nuevos tipos de vehículos...')
         try {
             typesAdded = await discoverNewVehicleTypes()
         } catch (error: any) {
@@ -73,12 +68,6 @@ export async function GET(request: NextRequest) {
                 }
             }
         })
-
-        console.log('✨ [AUTO-UPDATE] Completado!')
-        console.log(`  📊 Nuevas marcas: ${brandsAdded}`)
-        console.log(`  📊 Nuevos modelos: ${modelsAdded}`)
-        console.log(`  📊 Nuevos tipos: ${typesAdded}`)
-        console.log(`  ⏱️ Tiempo: ${executionTime}ms`)
 
         return NextResponse.json({
             success: true,

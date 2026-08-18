@@ -192,7 +192,6 @@ export function LocationProvider({
                 if (typeof window !== 'undefined') {
                     localStorage.setItem('carmatch_last_detected_location', JSON.stringify(locationData))
                 }
-                console.log(`📍 [IP Location] Detected: ${locationData.city}, ${locationData.country}`)
             } catch (e) {
                 console.warn('⚠️ IP detection failed. Using cached or defaulting to Mexico...')
                 // 🛡️ FALLBACK FINAL: Si la IP falla también, al menos no bloqueamos
@@ -231,7 +230,6 @@ export function LocationProvider({
                                 longitude: position.coords.longitude
                             })
                         })
-                        console.log('[LOCATION] Periodic sync to server OK')
                     } catch (e) {
                         console.warn('[LOCATION] Periodic sync failed:', e)
                     }

@@ -389,7 +389,7 @@ export default function Header() {
                                                 initial={{ opacity: 0, x: -5 }}
                                                 animate={{ opacity: 1, x: 0 }}
                                                 exit={{ opacity: 0, x: 5 }}
-                                                className={`block text-white/90 font-bold text-[9px] md:text-[10px] uppercase tracking-wide leading-tight text-right max-w-[120px] md:max-w-[250px] mb-0.5 ${pathname === '/swipe' ? 'hidden sm:block' : ''}`}
+                                                className={`block text-white/90 font-bold text-[10px] md:text-[10px] uppercase tracking-wide leading-tight text-right max-w-[120px] md:max-w-[250px] mb-0.5 ${pathname === '/swipe' ? 'hidden sm:block' : ''}`}
                                             >
                                                 {(ctas[ctaIndex] || "").split(' | ')[0]}
                                             </motion.div>

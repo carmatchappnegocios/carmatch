@@ -428,8 +428,8 @@ function ReportChat({ reportId }: { reportId: string }) {
                                     : 'bg-surface border border-surface-highlight text-text-primary rounded-tl-none'
                                     }`}>
                                     <div className="flex items-center gap-2 mb-1 opacity-70">
-                                        <span className="font-black uppercase text-[8px]">{msg.sender.isAdmin ? 'ADMINISTRADOR' : 'TU'}</span>
-                                        <span className="text-[8px]">{new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                                        <span className="font-black uppercase text-[10px]">{msg.sender.isAdmin ? 'ADMINISTRADOR' : 'TU'}</span>
+                                        <span className="text-[10px]">{new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                                     </div>
                                     <p className="leading-relaxed">{msg.content}</p>
                                 </div>

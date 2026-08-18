@@ -389,12 +389,12 @@ function AiHealthWidget() {
                         <div>
                             <h3 className="text-sm font-black text-red-400 uppercase tracking-widest flex items-center gap-2">
                                 ⚠️ Falla Crítica de IA
-                                <span className="text-[8px] bg-red-500 text-white px-1.5 py-0.5 rounded uppercase">{report.status}</span>
+                                <span className="text-[10px] bg-red-500 text-white px-1.5 py-0.5 rounded uppercase">{report.status}</span>
                             </h3>
                             <p className="text-[11px] font-bold text-white mt-1">{report.message}</p>
                             <p className="text-[10px] text-red-200/70 mt-0.5 leading-tight">{report.details}</p>
                             <div className="flex items-center gap-2 mt-2">
-                                <span className="text-[8px] px-2 py-0.5 bg-black/30 rounded text-red-300 font-mono">Modelo: {report.versionTested}</span>
+                                <span className="text-[10px] px-2 py-0.5 bg-black/30 rounded text-red-300 font-mono">Modelo: {report.versionTested}</span>
                             </div>
                         </div>
                     </div>
@@ -421,13 +421,13 @@ function AiHealthWidget() {
                         <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
                         IA Operativa
                     </h4>
-                    <p className="text-[9px] text-zinc-500 mt-0.5">Modelos 2.0 respondiendo en {report.latencyMs}ms</p>
+                    <p className="text-[10px] text-zinc-500 mt-0.5">Modelos 2.0 respondiendo en {report.latencyMs}ms</p>
                 </div>
             </div>
             <button 
                 onClick={checkHealth}
                 disabled={loading}
-                className="text-[9px] font-bold text-zinc-500 hover:text-white flex items-center gap-1 transition-colors px-2 py-1 rounded hover:bg-white/5"
+                className="text-[10px] font-bold text-zinc-500 hover:text-white flex items-center gap-1 transition-colors px-2 py-1 rounded hover:bg-white/5"
             >
                 <RefreshCw className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
                 {loading ? 'Testeando...' : 'Test Manual'}
@@ -556,12 +556,12 @@ function OverviewTab({ stats, handleRunAnalyst, isAnalyzing, aiAnalysis }: any) 
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                         {aiAnalysis.businessOppotunities?.map((opp: any, i: number) => (
                                             <div key={i} className="bg-green-500/5 border border-green-500/10 p-4 rounded-2xl relative overflow-hidden group hover:border-green-500/30 transition-all">
-                                                <div className="absolute top-0 right-0 p-2 bg-green-500 text-[8px] font-black text-black rounded-bl-xl shadow-lg">
+                                                <div className="absolute top-0 right-0 p-2 bg-green-500 text-[10px] font-black text-black rounded-bl-xl shadow-lg">
                                                     {opp.roiScore}% ROI
                                                 </div>
                                                 <p className="text-xs font-black text-white mb-1 uppercase tracking-tight">{opp.title}</p>
                                                 <p className="text-[10px] text-green-400 font-bold mb-2 uppercase tracking-widest">{opp.location}</p>
-                                                <p className="text-[9px] text-text-secondary leading-tight italic line-clamp-2">"{opp.reason}"</p>
+                                                <p className="text-[10px] text-text-secondary leading-tight italic line-clamp-2">"{opp.reason}"</p>
                                             </div>
                                         ))}
                                     </div>
@@ -589,7 +589,7 @@ function OverviewTab({ stats, handleRunAnalyst, isAnalyzing, aiAnalysis }: any) 
                                     }`} />
                                 <div>
                                     <p className="text-xs font-bold text-text-primary line-clamp-1">{log.message}</p>
-                                    <p className="text-[9px] text-text-secondary mt-1 uppercase tracking-tighter opacity-60">
+                                    <p className="text-[10px] text-text-secondary mt-1 uppercase tracking-tighter opacity-60">
                                         {new Date(log.createdAt).toLocaleTimeString()} • {log.source || 'SYS'}
                                     </p>
                                 </div>
@@ -648,7 +648,7 @@ function BetaTimeCard({ betaToday }: { betaToday: { maxDuration: number; lastPin
         return (
             <div className="bg-red-500/5 border border-red-500/20 rounded-2xl p-3 flex items-center justify-between">
                 <div>
-                    <span className="text-[9px] font-black uppercase text-zinc-500 tracking-[0.2em]">Tiempo Máx. Continuo Hoy</span>
+                    <span className="text-[10px] font-black uppercase text-zinc-500 tracking-[0.2em]">Tiempo Máx. Continuo Hoy</span>
                     <p className="text-xs font-black text-red-400 mt-0.5">Sin actividad hoy</p>
                 </div>
                 <div className="w-2 h-2 rounded-full bg-red-500" />
@@ -663,16 +663,16 @@ function BetaTimeCard({ betaToday }: { betaToday: { maxDuration: number; lastPin
     return (
         <div className={`rounded-2xl p-3 flex items-center justify-between border ${isGood ? 'bg-emerald-500/5 border-emerald-500/20' : 'bg-amber-500/5 border-amber-500/20'}`}>
             <div>
-                <span className="text-[9px] font-black uppercase text-zinc-500 tracking-[0.2em]">Tiempo Hoy (Beta)</span>
+                <span className="text-[10px] font-black uppercase text-zinc-500 tracking-[0.2em]">Tiempo Hoy (Beta)</span>
                 <div className="flex items-center gap-2 mt-0.5">
                     <p className={`text-sm font-black italic ${isGood ? 'text-emerald-400' : 'text-amber-400'}`}>
                         {formatDuration(betaToday.maxDuration)}
                     </p>
-                    {isGood && <span className="text-[8px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded font-black">✓ CUMPLE</span>}
+                    {isGood && <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded font-black">✓ CUMPLE</span>}
                 </div>
                 <div className="flex items-center gap-2 mt-1">
-                    <p className="text-[9px] text-zinc-600">Última vez: {lastSeen}</p>
-                    <span className={`text-[8px] font-bold px-1.5 rounded ${isAndroid ? 'bg-zinc-800 text-zinc-400' : 'bg-red-500 text-white'}`}>
+                    <p className="text-[10px] text-zinc-600">Última vez: {lastSeen}</p>
+                    <span className={`text-[10px] font-bold px-1.5 rounded ${isAndroid ? 'bg-zinc-800 text-zinc-400' : 'bg-red-500 text-white'}`}>
                         {betaToday.deviceOS || 'Unknown'} {isAndroid ? '📱' : '❌'}
                     </span>
                 </div>
@@ -736,14 +736,14 @@ function UsersTab({ users }: { users: any[] }) {
                                     <p className="text-xs text-zinc-500 truncate">{user.email}</p>
                                 </div>
                             </div>
-                            <div className={`px-3 py-1 rounded-full text-[9px] font-black tracking-widest ${user.isAdmin ? 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30' : 'bg-blue-500/20 text-blue-400 border border-blue-500/30'}`}>
+                            <div className={`px-3 py-1 rounded-full text-[10px] font-black tracking-widest ${user.isAdmin ? 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30' : 'bg-blue-500/20 text-blue-400 border border-blue-500/30'}`}>
                                 {user.isAdmin ? 'MASTER' : 'SOCIO'}
                             </div>
                         </div>
 
                         <div className="grid grid-cols-2 gap-4">
                             <div className="bg-white/[0.03] rounded-2xl p-4 border border-white/5 flex flex-col gap-1">
-                                <span className="text-[9px] font-black uppercase text-zinc-500 tracking-[0.2em]">Créditos</span>
+                                <span className="text-[10px] font-black uppercase text-zinc-500 tracking-[0.2em]">Créditos</span>
                                 <div className="flex items-center gap-3">
                                     <span className={`text-xl font-black italic ${user.credits > 0 ? 'text-amber-400' : 'text-zinc-600'}`}>
                                         {user.credits}
@@ -761,7 +761,7 @@ function UsersTab({ users }: { users: any[] }) {
                             </div>
 
                             <div className="bg-white/[0.03] rounded-2xl p-4 border border-white/5 flex flex-col gap-1">
-                                <span className="text-[9px] font-black uppercase text-zinc-500 tracking-[0.2em]">Status</span>
+                                <span className="text-[10px] font-black uppercase text-zinc-500 tracking-[0.2em]">Status</span>
                                 <div className={`flex items-center gap-2 text-[11px] font-black tracking-tighter ${user.isActive ? 'text-green-500' : 'text-red-500'}`}>
                                     <div className={`w-2 h-2 rounded-full ${user.isActive ? 'bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)]' : 'bg-red-500'}`} />
                                     {user.isActive ? 'ACTIVO' : 'BLOQUEADO'}
@@ -774,7 +774,7 @@ function UsersTab({ users }: { users: any[] }) {
 
                         <div className="flex items-center justify-between pt-4 border-t border-white/5">
                             <div className="flex flex-col">
-                                <span className="text-[8px] font-black text-zinc-600 uppercase tracking-widest">Desde</span>
+                                <span className="text-[10px] font-black text-zinc-600 uppercase tracking-widest">Desde</span>
                                 <span className="text-[10px] font-bold text-zinc-400">{new Date(user.createdAt).toLocaleDateString()}</span>
                             </div>
                             <div className="flex gap-2">
@@ -871,10 +871,10 @@ function InventoryTab({ vehicles }: { vehicles: any[] }) {
                             </div>
                             <div className="flex-1 min-w-0 py-1">
                                 <div className="flex items-center justify-between mb-1">
-                                    <span className={`text-[8px] font-black px-2 py-0.5 rounded-full ${vehicle.status === 'ACTIVE' ? 'bg-green-500/10 text-green-500' : 'bg-amber-500/10 text-amber-500'}`}>
+                                    <span className={`text-[10px] font-black px-2 py-0.5 rounded-full ${vehicle.status === 'ACTIVE' ? 'bg-green-500/10 text-green-500' : 'bg-amber-500/10 text-amber-500'}`}>
                                         {vehicle.status}
                                     </span>
-                                    <span className="text-[9px] font-bold text-zinc-600 truncate max-w-[80px]">{vehicle.city || 'N/A'}</span>
+                                    <span className="text-[10px] font-bold text-zinc-600 truncate max-w-[80px]">{vehicle.city || 'N/A'}</span>
                                 </div>
                                 <h4 className="font-black text-sm text-white line-clamp-1 leading-tight">{vehicle.title}</h4>
                                 <p className="text-[10px] text-zinc-500 truncate mt-0.5 flex items-center gap-1">
@@ -943,20 +943,20 @@ function ReportsTab({ reports }: { reports: any[] }) {
                                     className={`w-full text-left p-4 hover:bg-white/5 transition-colors group ${selectedReportId === report.id ? 'bg-white/5' : ''}`}
                                 >
                                     <div className="flex justify-between items-start mb-1">
-                                        <span className={`text-[9px] font-black uppercase tracking-widest ${report.status === 'PENDING' ? 'text-red-500' : 'text-green-500'}`}>
+                                        <span className={`text-[10px] font-black uppercase tracking-widest ${report.status === 'PENDING' ? 'text-red-500' : 'text-green-500'}`}>
                                             {report.status}
                                         </span>
-                                        <span className="text-[9px] text-text-secondary">{new Date(report.createdAt).toLocaleDateString()}</span>
+                                        <span className="text-[10px] text-text-secondary">{new Date(report.createdAt).toLocaleDateString()}</span>
                                     </div>
                                     <h4 className="font-bold text-sm line-clamp-1 group-hover:text-primary-400">
                                         {report.vehicle?.title || report.business?.name || 'Usuario/Otro'}
                                     </h4>
                                     <p className="text-[10px] text-text-secondary truncate mt-0.5">{report.reason}</p>
                                     <div className="flex items-center gap-2 mt-3">
-                                        <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-[9px] font-bold">
+                                        <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-[10px] font-bold">
                                             {report.reporter?.name?.[0] || 'I'}
                                         </div>
-                                        <span className="text-[9px] text-text-secondary truncate">por {report.reporter?.name || 'Invitado'}</span>
+                                        <span className="text-[10px] text-text-secondary truncate">por {report.reporter?.name || 'Invitado'}</span>
                                     </div>
                                 </button>
                             ))}
@@ -1022,12 +1022,12 @@ function ReportsTab({ reports }: { reports: any[] }) {
 
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
-                                        <label className="text-[9px] font-black text-text-secondary uppercase block mb-1">Reportero</label>
+                                        <label className="text-[10px] font-black text-text-secondary uppercase block mb-1">Reportero</label>
                                         <p className="text-sm font-bold">{selectedReport.reporter?.name || 'Invitado'}</p>
                                         <p className="text-[10px] text-text-secondary truncate">{selectedReport.reporter?.email || 'Sin correo'}</p>
                                     </div>
                                     <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
-                                        <label className="text-[9px] font-black text-text-secondary uppercase block mb-1">Objetivo del reporte</label>
+                                        <label className="text-[10px] font-black text-text-secondary uppercase block mb-1">Objetivo del reporte</label>
                                         <p className="text-sm font-bold truncate">{selectedReport.vehicle?.title || selectedReport.business?.name || 'Usuario'}</p>
                                         <p className="text-[10px] text-primary-400">{selectedReport.vehicleId ? 'Vehículo' : selectedReport.businessId ? 'Negocio' : 'Perfil'}</p>
                                     </div>
@@ -1134,8 +1134,8 @@ function ReportChat({ reportId }: { reportId: string }) {
                                     : 'bg-white/5 border border-white/10 text-text-primary rounded-tl-none'
                                     }`}>
                                     <div className="flex items-center gap-2 mb-1 opacity-70">
-                                        <span className="font-black uppercase text-[8px]">{msg.sender?.name || 'Invitado'}</span>
-                                        <span className="text-[8px]">{new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                                        <span className="font-black uppercase text-[10px]">{msg.sender?.name || 'Invitado'}</span>
+                                        <span className="text-[10px]">{new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                                     </div>
                                     <p className="leading-relaxed">{msg.content}</p>
                                 </div>
@@ -1161,7 +1161,7 @@ function ReportChat({ reportId }: { reportId: string }) {
                         {sending ? <RefreshCw className="w-4 h-4 animate-spin text-white" /> : <ChevronRight className="w-4 h-4 text-white" />}
                     </button>
                 </div>
-                <p className="text-[8px] text-text-secondary mt-2 italic text-center opacity-50">
+                <p className="text-[10px] text-text-secondary mt-2 italic text-center opacity-50">
                     * Tu respuesta llegará al "Centro de Reportes" del usuario.
                 </p>
             </form>
@@ -1251,7 +1251,7 @@ function AdminReportAction2({ reportId, action, label, primary, danger }: any) {
         <button
             onClick={handleAction}
             disabled={loading}
-            className={`px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${danger
+            className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${danger
                 ? 'bg-red-600 text-white hover:bg-red-500 shadow-lg shadow-red-900/20'
                 : primary
                     ? 'bg-primary-600 text-white hover:bg-primary-500 shadow-lg shadow-primary-900/20'
@@ -1288,7 +1288,7 @@ function AdminGenericAction({ apiPath, method, body, label, danger }: any) {
         <button
             onClick={handleAction}
             disabled={loading}
-            className={`px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${danger
+            className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${danger
                 ? 'text-red-500 hover:bg-red-500/10'
                 : 'text-text-secondary hover:text-white bg-white/5 hover:bg-white/10'
                 } disabled:opacity-50`}

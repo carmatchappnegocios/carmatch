@@ -86,7 +86,6 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                 try {
                     const parsed = JSON.parse(cached)
                     setDynamicBusinesses(parsed)
-                    console.log('📦 Cargado MapStore desde cache offline')
                 } catch (e) {
                     console.error('Error parsing map cache', e)
                 }
@@ -397,7 +396,6 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                                         onResultsFound={(results) => {
                                             // Deep Search results handling
                                             if (results && results.length > 0) {
-                                                console.log("📍 Deep Search Items Found:", results.length)
                                                 // Podríamos resaltar estos negocios específicamente en el mapa
                                             }
                                         }}

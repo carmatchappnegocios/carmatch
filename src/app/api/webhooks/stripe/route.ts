@@ -87,7 +87,29 @@ export async function POST(request: NextRequest) {
                     )
                 }
             } else if (metadata?.type === 'BUSINESS_SUBSCRIPTION_MONTHLY') {
-                console.log(`🏢 Suscripción completada para negocio: ${metadata.businessId}`)
+                const businessId = metadata.businessId
+                if (businessId && businessId !== 'pending') {
+                    const expiresAt = new Date()
+                    expiresAt.setMonth(expiresAt.getMonth() + 1)
+
+                    await prisma.business.update({
+                        where: { id: businessId },
+                        data: {
+                            isActive: true,
+                            isFreePublication: false,
+                            expiresAt
+                        }
+                    })
+
+                    await prisma.systemLog.create({
+                        data: {
+                            level: 'SUCCESS',
+                            source: 'StripeWebhook',
+                            message: `🏢 Suscripción activada para negocio: ${businessId}`,
+                            metadata: { businessId, userId: metadata.userId, expiresAt: expiresAt.toISOString() }
+                        }
+                    })
+                }
             }
         }
 
@@ -140,6 +162,51 @@ export async function POST(request: NextRequest) {
         // ❌ ELIMINADO: payment_intent.succeeded — causaba RIESGO DE DOBLE CRÉDITO.
         // checkout.session.completed ya maneja tarjeta.
         // checkout.session.async_payment_succeeded ya maneja SPEI/OXXO.
+
+        // ✅ CASO 4: Suscripción cancelada o expirada
+        if (event.type === 'customer.subscription.deleted') {
+            const subscription = event.data.object as Stripe.Subscription
+            const businessId = subscription.metadata?.businessId
+
+            if (businessId) {
+                await prisma.business.update({
+                    where: { id: businessId },
+                    data: { isActive: false }
+                }).catch(() => {})
+
+                await prisma.systemLog.create({
+                    data: {
+                        level: 'WARN',
+                        source: 'StripeWebhook',
+                        message: `🏢 Suscripción cancelada: negocio ${businessId}`,
+                        metadata: { businessId, subscriptionId: subscription.id }
+                    }
+                })
+            }
+        }
+
+        // ✅ CASO 5: Pago de suscripción fallido
+        if (event.type === 'invoice.payment_failed') {
+            const invoice = event.data.object as Stripe.Invoice
+            const subscriptionId = typeof invoice.subscription === 'string' ? invoice.subscription : invoice.subscription?.id
+
+            if (subscriptionId) {
+                const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', { apiVersion: STRIPE_API_VERSION })
+                const subscription = await stripe.subscriptions.retrieve(subscriptionId)
+                const businessId = subscription.metadata?.businessId
+
+                if (businessId) {
+                    await prisma.systemLog.create({
+                        data: {
+                            level: 'WARN',
+                            source: 'StripeWebhook',
+                            message: `⚠️ Pago de suscripción fallido: negocio ${businessId}`,
+                            metadata: { businessId, subscriptionId, invoiceId: invoice.id }
+                        }
+                    })
+                }
+            }
+        }
 
     } catch (error) {
         console.error('Error procesando el evento de webhook:', error)
