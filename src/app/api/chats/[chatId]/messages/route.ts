@@ -165,6 +165,10 @@ export async function GET(
         }
 
         const { chatId } = await params
+
+        // Check if we should mark messages as read (only when user opens chat actively)
+        const markAsRead = request.nextUrl.searchParams.get('markAsRead') === 'true'
+
         // Verificar que el chat existe y el usuario es parte de él
         const chat = await prisma.chat.findUnique({
             where: { id: chatId }
@@ -209,15 +213,18 @@ export async function GET(
             }))
         ].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
 
-        // Marcar mensajes como leídos
-        const unreadMessages = await prisma.message.updateMany({
-            where: {
-                chatId,
-                senderId: { not: user.id },
-                isRead: false
-            },
-            data: { isRead: true }
-        })
+        // Marcar mensajes como leídos (solo cuando el usuario abre el chat activamente)
+        let unreadMessages = { count: 0 }
+        if (markAsRead) {
+            unreadMessages = await prisma.message.updateMany({
+                where: {
+                    chatId,
+                    senderId: { not: user.id },
+                    isRead: false
+                },
+                data: { isRead: true }
+            })
+        }
 
         // 📊 REGISTRAR EVENTO: Mensajes leídos (solo si había mensajes sin leer)
         if (unreadMessages.count > 0) {

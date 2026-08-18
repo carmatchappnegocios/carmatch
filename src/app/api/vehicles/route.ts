@@ -364,7 +364,7 @@ export async function POST(request: NextRequest) {
             vehicle: {
                 id: vehicle.id,
                 title: vehicle.title,
-                moderationStatus: 'APPROVED',
+                moderationStatus: vehicle.moderationStatus,
                 // Indicar al frontend si se publicó activo o requiere pago
                 status: isPermanentlyRestricted ? 'INACTIVE' : 'ACTIVE',
                 message: successMessage

@@ -80,7 +80,12 @@ export default auth((req) => {
     if ((authRoutes.some(route => pathname.startsWith(route)) || pathname === "/") && isLoggedIn && !isBot) {
         const callbackUrl = req.nextUrl.searchParams.get('callbackUrl')
         if (callbackUrl) {
-            return Response.redirect(new URL(decodeURIComponent(callbackUrl), req.url))
+            // 🛡️ Security: Only allow relative paths to prevent open redirect phishing
+            const decoded = decodeURIComponent(callbackUrl)
+            if (decoded.startsWith('/') && !decoded.includes('://') && !decoded.startsWith('//')) {
+                return Response.redirect(new URL(decoded, req.url))
+            }
+            // If callbackUrl contains domain or protocol, ignore it and redirect to market
         }
 
         // Random redirect for logged-in users, with /market as the base destination

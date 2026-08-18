@@ -57,7 +57,7 @@ export const metadata: Metadata = {
         "vender carro sin intermediarios", "marketplace autos confiable", 
         "comprar carro particular", "autos usados certificados"
     ],
-    manifest: "/app-v1.webmanifest",
+    manifest: "/site.webmanifest",
     authors: [{ name: "CarMatch" }],
     creator: "CarMatch",
     publisher: "CarMatch",

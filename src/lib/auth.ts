@@ -93,11 +93,31 @@ export const {
                 token.id = user.id
                 // @ts-ignore
                 token.isAdmin = !!user.isAdmin
+                // Store lastPasswordChange to invalidate tokens after password change
+                // @ts-ignore
+                token.lastPasswordChange = (user as any).lastPasswordChange?.getTime() || null
             }
             if (trigger === "update") {
                 if (session?.image) token.picture = session.image
                 if (session?.name) token.name = session.name
             }
+
+            // Validate token against lastPasswordChange (token invalidation on password change)
+            if (token.id && token.lastPasswordChange) {
+                const dbUser = await prisma.user.findUnique({
+                    where: { id: token.id as string },
+                    select: { lastPasswordChange: true }
+                })
+                if (dbUser?.lastPasswordChange) {
+                    const tokenTime = (token.iat as number) * 1000 // iat is in seconds
+                    const passwordChangeTime = dbUser.lastPasswordChange.getTime()
+                    if (passwordChangeTime > tokenTime) {
+                        // Token was issued before password change - invalidate
+                        return {} as Record<string, unknown>
+                    }
+                }
+            }
+
             return token
         },
         async redirect({ url, baseUrl }) {
@@ -151,6 +171,7 @@ export const {
                     email: user.email,
                     name: user.name,
                     image: user.image,
+                    lastPasswordChange: user.lastPasswordChange,
                 }
             },
         }),

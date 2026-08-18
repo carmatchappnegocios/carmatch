@@ -37,46 +37,37 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'La Mini-Web ya está activa para este negocio' }, { status: 400 })
         }
 
-        // 2. Verificar créditos (PAGO ÚNICO: 20 CRÉDITOS)
-        const user = await prisma.user.findUnique({
-            where: { id: session.user.id },
-            select: { credits: true }
-        })
-
-        if (!user || user.credits < 20) {
+        // 2. Verificar créditos y activar con transacción atómica
+        try {
+            await prisma.$transaction([
+                // Atomic: only decrement if credits >= 20
+                prisma.$executeRaw`UPDATE "User" SET credits = credits - 20 WHERE id = ${session.user.id} AND credits >= 20`,
+                // Activar Mini-Web
+                prisma.business.update({
+                    where: { id: businessId },
+                    data: { hasMiniWeb: true }
+                }),
+                // Registrar transacción
+                prisma.creditTransaction.create({
+                    data: {
+                        userId: session.user.id,
+                        amount: -20,
+                        description: `Activación de Mini-Web Premium: ${business.name}`,
+                        details: {
+                            action: 'ACTIVATE_MINIWEB',
+                            businessId,
+                            businessName: business.name
+                        }
+                    }
+                })
+            ])
+        } catch {
             return NextResponse.json({
                 error: 'Créditos insuficientes',
                 required: 20,
                 current: user?.credits || 0
             }, { status: 402 })
         }
-
-        // 3. Procesar activación con transacción
-        await prisma.$transaction([
-            // Descontar créditos
-            prisma.user.update({
-                where: { id: session.user.id },
-                data: { credits: { decrement: 20 } }
-            }),
-            // Activar Mini-Web
-            prisma.business.update({
-                where: { id: businessId },
-                data: { hasMiniWeb: true }
-            }),
-            // Registrar transacción
-            prisma.creditTransaction.create({
-                data: {
-                    userId: session.user.id,
-                    amount: -20,
-                    description: `Activación de Mini-Web Premium: ${business.name}`,
-                    details: {
-                        action: 'ACTIVATE_MINIWEB',
-                        businessId,
-                        businessName: business.name
-                    }
-                }
-            })
-        ])
 
         return NextResponse.json({
             success: true,

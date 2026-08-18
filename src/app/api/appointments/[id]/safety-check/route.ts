@@ -50,8 +50,33 @@ export async function POST(
                 }
             })
         } else if (action === 'SOS') {
-            // Activar protocolo SOS inmediatamente
-            // Redirigimos la lógica al endpoint de SOS o la ejecutamos aquí
+            // Activar protocolo SOS - crear SOSAlert real
+            const chat = await prisma.chat.findUnique({
+                where: { id: appointment.chatId },
+                include: { buyer: true, seller: true }
+            })
+            
+            if (chat) {
+                const isBuyer = chat.buyerId === session.user.id
+                const victim = isBuyer ? chat.buyer : chat.seller
+                const counterpart = isBuyer ? chat.seller : chat.buyer
+
+                await prisma.sOSAlert.create({
+                    data: {
+                        victimId: victim.id,
+                        counterpartId: counterpart.id,
+                        chatId: appointment.chatId,
+                        appointmentId: id,
+                        victimLat: victim.lastLatitude,
+                        victimLng: victim.lastLongitude,
+                        counterpartLat: counterpart.lastLatitude,
+                        counterpartLng: counterpart.lastLongitude,
+                        status: 'ACTIVE',
+                        expiresAt: new Date(Date.now() + 48 * 60 * 60 * 1000)
+                    }
+                })
+            }
+
             await prisma.appointment.update({
                 where: { id },
                 data: {
@@ -59,7 +84,6 @@ export async function POST(
                     monitoringActive: false
                 }
             })
-            // Nota: El Service Worker disparará el trigger de SOS en la UI o llamará al endpoint de SOS
         }
 
         return NextResponse.json({ success: true })

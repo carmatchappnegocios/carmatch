@@ -93,57 +93,57 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'Usuario no encontrado' }, { status: 404 })
         }
 
-        // Verificar si ya existe
-        const existingFavorite = await prisma.favorite.findUnique({
-            where: {
-                userId_vehicleId: {
-                    userId: user.id,
-                    vehicleId
-                }
-            }
-        })
+        // 🛡️ Race condition fix: Use transaction with atomic operations
+        if (action === 'toggle' || action === 'add') {
+            try {
+                // Try to create - if unique constraint fails, it means it already exists
+                await prisma.favorite.create({
+                    data: {
+                        userId: user.id,
+                        vehicleId
+                    }
+                })
 
-        if (existingFavorite) {
-            if (action === 'add') {
+                // Notificación al dueño del vehículo
+                await notifyRealFavorite(user.id, vehicleId, 'vehicle')
+
                 return NextResponse.json({
                     isFavorited: true,
-                    message: 'Ya está en favoritos'
+                    message: 'Agregado a favoritos'
                 })
-            }
-
-            // Eliminar (Unlike) si es toggle o remove
-            await prisma.favorite.delete({
-                where: {
-                    id: existingFavorite.id
+            } catch (error: unknown) {
+                // Unique constraint violation = already favorited
+                if (error instanceof Error && error.message.includes('Unique constraint')) {
+                    if (action === 'add') {
+                        return NextResponse.json({
+                            isFavorited: true,
+                            message: 'Ya está en favoritos'
+                        })
+                    }
+                    // Toggle: remove it
+                    await prisma.favorite.deleteMany({
+                        where: {
+                            userId: user.id,
+                            vehicleId
+                        }
+                    })
+                    return NextResponse.json({
+                        isFavorited: false,
+                        message: 'Eliminado de favoritos'
+                    })
                 }
-            })
-
-            return NextResponse.json({
-                isFavorited: false,
-                message: 'Eliminado de favoritos'
-            })
-        } else {
-            if (action === 'remove') {
-                return NextResponse.json({
-                    isFavorited: false,
-                    message: 'No estaba en favoritos'
-                })
+                throw error
             }
-
-            // Crear (Like)
-            await prisma.favorite.create({
-                data: {
+        } else if (action === 'remove') {
+            const deleted = await prisma.favorite.deleteMany({
+                where: {
                     userId: user.id,
                     vehicleId
                 }
             })
-
-            // Notificación al dueño del vehículo
-            await notifyRealFavorite(user.id, vehicleId, 'vehicle')
-
             return NextResponse.json({
-                isFavorited: true,
-                message: 'Agregado a favoritos'
+                isFavorited: false,
+                message: deleted.count > 0 ? 'Eliminado de favoritos' : 'No estaba en favoritos'
             })
         }
 

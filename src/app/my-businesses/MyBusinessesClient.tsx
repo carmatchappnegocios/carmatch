@@ -1007,7 +1007,7 @@ export default function MyBusinessesClient() {
                                                 Sin foto
                                             </div>
                                         )}
-                                        <div className="flex items-center gap-1.5">
+                                        <div className="absolute top-2 left-2 z-20 flex items-center gap-1.5 px-2 py-1 bg-black/60 rounded-full text-white text-xs font-medium">
                                             {business.status === 'ACTIVE' ? <CheckCircle size={14} /> : <Pause size={14} />}
                                             {business.status === 'ACTIVE' ? t('business.status_active') : t('business.status_inactive')}
                                         </div>

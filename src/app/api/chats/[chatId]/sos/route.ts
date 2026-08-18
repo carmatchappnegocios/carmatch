@@ -6,6 +6,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 import { sendPushToUser } from '@/lib/pushService'
+import { checkRateLimit, RATE_LIMITS } from '@/lib/rate-limit'
 
 // POST /api/chats/[chatId]/sos - Activar alerta de emergencia
 export async function POST(
@@ -15,6 +16,15 @@ export async function POST(
     try {
         const session = await auth()
         if (!session?.user?.id) return NextResponse.json({ error: 'No autenticado' }, { status: 401 })
+
+        // 🛡️ Rate limiting: Max 3 SOS per hour per user
+        const rateLimitKey = `sos:${session.user.id}`
+        const rateLimit = checkRateLimit(rateLimitKey, { windowMs: 60 * 60 * 1000, max: 3 })
+        if (!rateLimit.allowed) {
+            return NextResponse.json({ 
+                error: 'Límite de alertas alcanzado. Intenta de nuevo más tarde.' 
+            }, { status: 429 })
+        }
 
         const { chatId } = await params
         const body = await request.json()
@@ -40,6 +50,23 @@ export async function POST(
         const user = isBuyer ? chat.buyer : chat.seller
         const otherUser = isBuyer ? chat.seller : chat.buyer
         const trustedContact = user.trustedContact
+
+        // Check if user already has an active SOS (only 1 at a time)
+        if (!isTest) {
+            const existingActiveSOS = await prisma.sOSAlert.findFirst({
+                where: {
+                    victimId: user.id,
+                    status: 'ACTIVE',
+                    expiresAt: { gt: new Date() }
+                }
+            })
+            if (existingActiveSOS) {
+                return NextResponse.json({ 
+                    error: 'Ya tienes una alerta SOS activa.',
+                    existingAlertId: existingActiveSOS.id
+                }, { status: 409 })
+            }
+        }
 
         // 0. Crear registro oficial de Alerta SOS (Marcado como TEST si aplica)
         const sosAlert = await prisma.sOSAlert.create({
@@ -83,8 +110,8 @@ export async function POST(
             renotify: true
         })
 
-        // 3. Notificar al contacto de confianza
-        if (trustedContact) {
+        // 3. Notificar al contacto de confianza (solo si ha aceptado ser contacto)
+        if (trustedContact && (user as unknown as { trustedContactAccepted?: boolean }).trustedContactAccepted) {
             const trackingUrl = `/emergency/${sosAlert.id}`
 
             await sendPushToUser(trustedContact.id, {

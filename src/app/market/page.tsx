@@ -546,7 +546,8 @@ export default async function MarketPage({
                 take: 0
             }
         },
-        orderBy
+        orderBy,
+        take: 100 // Limit results to prevent abuse
     })
 
     const vehiclesWithFavoriteStatus = vehicles.map(vehicle => ({

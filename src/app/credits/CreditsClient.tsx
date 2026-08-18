@@ -70,10 +70,10 @@ export default function CreditsClient({ user }: CreditsClientProps) {
                     if (res.ok && data.success) {
                         setModalConfig({
                             isOpen: true,
-                            title: '¡Operación Exitosa! 🎉',
-                            message: `Se han actualizado los servicios de tu cuenta correctamente.`,
+                            title: t('credits.success_title'),
+                            message: t('credits.success_message'),
                             variant: 'credit',
-                            confirmLabel: 'Entendido',
+                            confirmLabel: t('credits.understood'),
                             showCancel: false,
                             onConfirm: () => {
                                 setModalConfig(prev => ({ ...prev, isOpen: false }))
@@ -84,10 +84,10 @@ export default function CreditsClient({ user }: CreditsClientProps) {
                     } else {
                         setModalConfig({
                             isOpen: true,
-                            title: 'Problema con la transacción',
-                            message: data.error || 'Hubo un problema al verificar la actualización. Por favor, contacta a soporte.',
+                            title: t('credits.transaction_problem'),
+                            message: data.error || t('credits.transaction_problem_message'),
                             variant: 'danger',
-                            confirmLabel: 'Cerrar',
+                            confirmLabel: t('credits.close'),
                             showCancel: false,
                             onConfirm: () => setModalConfig(prev => ({ ...prev, isOpen: false }))
                         })
@@ -141,8 +141,8 @@ export default function CreditsClient({ user }: CreditsClientProps) {
             } else {
                 setModalConfig({
                     isOpen: true,
-                    title: 'Error de Conexión',
-                    message: `No se pudo iniciar el proceso: ${data.error || 'Error desconocido'}`,
+                    title: t('credits.connection_error'),
+                    message: `${t('credits.connection_error_message')}: ${data.error || 'Error'}`,
                     variant: 'danger',
                     showCancel: false,
                     onConfirm: () => setModalConfig(prev => ({ ...prev, isOpen: false }))
@@ -152,8 +152,8 @@ export default function CreditsClient({ user }: CreditsClientProps) {
         } catch (error: any) {
             setModalConfig({
                 isOpen: true,
-                title: 'Error de Red',
-                message: `No pudimos conectar con el servidor.`,
+                title: t('credits.network_error'),
+                message: t('credits.network_error_message'),
                 variant: 'danger',
                 showCancel: false,
                 onConfirm: () => setModalConfig(prev => ({ ...prev, isOpen: false }))
@@ -174,8 +174,8 @@ export default function CreditsClient({ user }: CreditsClientProps) {
                                 <BadgeCheck size={32} />
                             </div>
                             <div>
-                                <h1 className="text-2xl font-bold text-text-primary">Estado de Cuenta</h1>
-                                <p className="text-text-secondary text-sm">Información de membresía y servicios</p>
+                                <h1 className="text-2xl font-bold text-text-primary">{t('credits.account_status')}</h1>
+                                <p className="text-text-secondary text-sm">{t('credits.membership_info')}</p>
                             </div>
                         </div>
 
@@ -183,7 +183,7 @@ export default function CreditsClient({ user }: CreditsClientProps) {
                             <div className="flex items-center justify-between p-4 bg-surface-highlight/30 rounded-2xl border border-white/5">
                                 <div className="flex items-center gap-3">
                                     <UserIcon size={20} className="text-text-secondary" />
-                                    <span className="text-text-primary font-medium">Usuario</span>
+                                    <span className="text-text-primary font-medium">{t('credits.user')}</span>
                                 </div>
                                 <span className="text-text-secondary font-bold">{user.name}</span>
                             </div>
@@ -191,17 +191,17 @@ export default function CreditsClient({ user }: CreditsClientProps) {
                             <div className="flex items-center justify-between p-4 bg-surface-highlight/30 rounded-2xl border border-white/5">
                                 <div className="flex items-center gap-3">
                                     <ShieldCheck size={20} className="text-green-500" />
-                                    <span className="text-text-primary font-medium">Nivel de Cuenta</span>
+                                    <span className="text-text-primary font-medium">{t('credits.account_level')}</span>
                                 </div>
                                 <span className="px-3 py-1 bg-green-500/10 text-green-400 rounded-full text-xs font-bold uppercase border border-green-500/20">
-                                    Verificado
+                                    {t('credits.verified')}
                                 </span>
                             </div>
 
                             <div className="flex items-center justify-between p-4 bg-surface-highlight/30 rounded-2xl border border-white/5">
                                 <div className="flex items-center gap-3">
                                     <Clock size={20} className="text-text-secondary" />
-                                    <span className="text-text-primary font-medium">Antigüedad</span>
+                                    <span className="text-text-primary font-medium">{t('credits.since')}</span>
                                 </div>
                                 <span className="text-text-secondary">
                                     {new Date(user.createdAt).toLocaleDateString(locale === 'es' ? 'es-MX' : 'en-US', { month: 'long', year: 'numeric' })}
@@ -211,8 +211,7 @@ export default function CreditsClient({ user }: CreditsClientProps) {
 
                         <div className="mt-12 pt-8 border-t border-surface-highlight/50">
                             <p className="text-center text-xs text-text-secondary leading-relaxed">
-                                Para cambios en tu plan de servicios o soporte técnico especializado, 
-                                contacta directamente a un asesor de CarMatch.
+                                {t('credits.support_text')}
                             </p>
                         </div>
                     </div>
@@ -225,7 +224,7 @@ export default function CreditsClient({ user }: CreditsClientProps) {
                     title={modalConfig.title}
                     message={modalConfig.message}
                     variant={modalConfig.variant}
-                    confirmLabel={modalConfig.confirmLabel || 'Aceptar'}
+                    confirmLabel={modalConfig.confirmLabel || t('credits.accept')}
                 />
             </div>
         )
@@ -241,15 +240,15 @@ export default function CreditsClient({ user }: CreditsClientProps) {
                     >
                         <ShieldCheck size={24} />
                     </button>
-                    <h1 className="text-2xl md:text-3xl font-bold text-text-primary">Actualización de Servicios</h1>
+                    <h1 className="text-2xl md:text-3xl font-bold text-text-primary">{t('credits.service_update')}</h1>
                 </div>
 
                 <div className="bg-gradient-to-r from-slate-800 to-slate-900 rounded-2xl p-8 mb-8 text-white shadow-xl relative overflow-hidden border border-white/5">
                     <div className="relative z-10">
-                        <p className="text-white/60 font-medium mb-1 uppercase tracking-wider text-xs">Créditos de Publicación</p>
+                        <p className="text-white/60 font-medium mb-1 uppercase tracking-wider text-xs">{t('credits.publication_credits')}</p>
                         <div className="text-5xl font-black flex items-baseline gap-2">
                             {user.credits}
-                            <span className="text-lg font-normal opacity-60">CarMatch Coins</span>
+                            <span className="text-lg font-normal opacity-60">{t('credits.coins_name')}</span>
                         </div>
                     </div>
                     <div className="absolute -right-10 -bottom-20 w-64 h-64 bg-primary-500/5 rounded-full blur-3xl"></div>
@@ -262,11 +261,11 @@ export default function CreditsClient({ user }: CreditsClientProps) {
                         </div>
                     ) : pricing ? (
                         <div className="bg-surface rounded-2xl border border-surface-highlight p-8 shadow-lg">
-                            <h2 className="text-2xl font-bold text-text-primary mb-6">Obtener CarMatch Coins</h2>
+                            <h2 className="text-2xl font-bold text-text-primary mb-6">{t('credits.get_coins')}</h2>
 
                             <div className="mb-6">
                                 <label className="block text-sm font-bold text-text-primary mb-3">
-                                    Selecciona la cantidad:
+                                    {t('credits.select_quantity')}
                                 </label>
                                 <div className="flex items-center gap-4">
                                     <button
@@ -310,7 +309,7 @@ export default function CreditsClient({ user }: CreditsClientProps) {
                             <div className="bg-surface-highlight/30 rounded-2xl p-6 mb-6 border border-white/5">
                                 <div className="flex justify-between items-center">
                                     <div>
-                                        <p className="text-sm text-text-secondary mb-1">Inversión Total</p>
+                                        <p className="text-sm text-text-secondary mb-1">{t('credits.total_investment')}</p>
                                         <p className="text-4xl font-black text-text-primary">
                                             ${total.toFixed(2)} <span className="text-lg font-bold">{pricing.currency}</span>
                                         </p>
@@ -319,7 +318,7 @@ export default function CreditsClient({ user }: CreditsClientProps) {
                                         <div className="w-12 h-12 bg-amber-500/10 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-1">
                                             <BadgeCheck size={24} />
                                         </div>
-                                        <p className="text-xs font-bold text-text-secondary uppercase">Seguro</p>
+                                        <p className="text-xs font-bold text-text-secondary uppercase">{t('credits.secure')}</p>
                                     </div>
                                 </div>
                             </div>
@@ -329,16 +328,16 @@ export default function CreditsClient({ user }: CreditsClientProps) {
                                 className="w-full py-4 bg-primary-600 hover:bg-primary-700 text-white font-black rounded-2xl text-lg transition shadow-xl shadow-primary-900/30 flex items-center justify-center gap-3 active:scale-[0.98]"
                             >
                                 <CreditCard size={24} />
-                                Continuar con el pago
+                                {t('credits.continue_payment')}
                             </button>
 
                             <p className="text-[10px] text-text-secondary text-center mt-6 uppercase tracking-widest font-bold opacity-40">
-                                Transacción Encriptada SSL • Stripe Secure
+                                {t('credits.ssl_secure')}
                             </p>
                         </div>
                     ) : (
                         <div className="text-center py-12 text-text-secondary bg-surface rounded-2xl border border-surface-highlight">
-                            No se pudieron cargar los servicios. Por favor intenta más tarde.
+                            {t('credits.load_error')}
                         </div>
                     )}
                 </div>
@@ -351,17 +350,17 @@ export default function CreditsClient({ user }: CreditsClientProps) {
                         <div className="w-20 h-20 bg-primary-500/10 text-primary-500 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl">
                             🔒
                         </div>
-                        <h3 className="text-2xl font-bold text-text-primary mb-4">Plataforma Segura</h3>
+                        <h3 className="text-2xl font-bold text-text-primary mb-4">{t('credits.secure_platform')}</h3>
                         <p className="text-text-secondary mb-8 text-sm leading-relaxed">
-                            Hemos abierto la pasarela de pago en una ventana nueva para proteger tus datos bancarios.
+                            {t('credits.bridge_message')}
                             <br /><br />
-                            Una vez completado, tus servicios se actualizarán automáticamente aquí.
+                            {t('credits.bridge_message_2')}
                         </p>
                         <button
                             onClick={() => setShowBridgeModal(false)}
                             className="w-full py-4 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-2xl transition shadow-lg"
                         >
-                            Volver a CarMatch
+                            {t('credits.back_to_carmatch')}
                         </button>
                     </div>
                 </div>
@@ -374,7 +373,7 @@ export default function CreditsClient({ user }: CreditsClientProps) {
                 title={modalConfig.title}
                 message={modalConfig.message}
                 variant={modalConfig.variant}
-                confirmLabel={modalConfig.confirmLabel || 'Aceptar'}
+                confirmLabel={modalConfig.confirmLabel || t('credits.accept')}
                 showCancel={modalConfig.showCancel}
             />
         </div>

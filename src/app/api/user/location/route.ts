@@ -119,20 +119,31 @@ export async function GET(req: Request) {
             return new NextResponse('Target ID required', { status: 400 })
         }
 
-        // Security check: Ensure there is an active chat or appointment between these users
-        // For strict security, we should check if there's an ACTIVE appointment.
-        // For the purpose of this implementation (Safety Mode), we'll allow it if they have a chat history.
-        const chatExists = await prisma.chat.findFirst({
+        // Security check: Only allow location access with active appointment OR active SOS alert
+        // This prevents location tracking without a legitimate safety context
+        const activeAppointment = await prisma.appointment.findFirst({
             where: {
+                status: { in: ['CONFIRMED', 'IN_PROGRESS', 'EMERGENCY'] },
                 OR: [
-                    { buyerId: session.user.id, sellerId: targetUserId },
-                    { sellerId: session.user.id, buyerId: targetUserId }
+                    { chat: { buyerId: session.user.id, sellerId: targetUserId } },
+                    { chat: { sellerId: session.user.id, buyerId: targetUserId } }
                 ]
             }
         })
 
-        if (!chatExists) {
-            return new NextResponse('Forbidden: No relationship found', { status: 403 })
+        const activeSOS = await prisma.sOSAlert.findFirst({
+            where: {
+                status: 'ACTIVE',
+                expiresAt: { gte: new Date() },
+                OR: [
+                    { victimId: session.user.id, counterpartId: targetUserId },
+                    { victimId: targetUserId, counterpartId: session.user.id }
+                ]
+            }
+        })
+
+        if (!activeAppointment && !activeSOS) {
+            return new NextResponse('Forbidden: No active appointment or SOS alert', { status: 403 })
         }
 
         const targetUser = await prisma.user.findUnique({

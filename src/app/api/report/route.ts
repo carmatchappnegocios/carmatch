@@ -5,6 +5,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/db'
+import { checkRateLimit } from '@/lib/rate-limit'
 
 /**
  * REPORT SYSTEM: Reportar publicaciones ofensivas o fraudulentas.
@@ -22,6 +23,13 @@ export async function POST(request: NextRequest) {
         }
 
         const reporterId = session.user.id
+
+        // Rate limiting: max 10 reports per day per user
+        const rateLimit = checkRateLimit(`report:${reporterId}`, { windowMs: 24 * 60 * 60 * 1000, max: 10 })
+        if (!rateLimit.allowed) {
+            return NextResponse.json({ error: 'Límite de reportes alcanzado. Intenta de nuevo mañana.' }, { status: 429 })
+        }
+
         const body = await request.json()
         const { reason, description, imageUrl, vehicleId, businessId, targetUserId } = body
 

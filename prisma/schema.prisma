@@ -10,55 +10,58 @@ datasource db {
 }
 
 model User {
-  id                      String                    @id @default(cuid())
-  email                   String                    @unique
-  emailVerified           DateTime?
-  name                    String?
-  image                   String?
-  password                String?
-  phone                   String?
-  city                    String?
-  credits                 Int                       @default(0)
-  isActive                Boolean                   @default(true)
-  createdAt               DateTime                  @default(now())
-  updatedAt               DateTime                  @updatedAt
-  lastLatitude            Float?
-  lastLongitude           Float?
-  lastLocationUpdate      DateTime?
-  isAdmin                 Boolean                   @default(false)
-  fraudStrikes            Int                       @default(0)
-  lifetimeBusinessCount   Int                       @default(0)
-  lifetimeVehicleCount    Int                       @default(0)
-  trustedContactId        String?
-  country                 String?                   @default("MX")
-  accounts                Account[]
-  analyticsEvents         AnalyticsEvent[]
-  businesses              Business[]
-  businessFavorites       BusinessFavorite[]
-  buyerChats              Chat[]                    @relation("BuyerChats")
-  sellerChats             Chat[]                    @relation("SellerChats")
-  creditTransactions      CreditTransaction[]
-  dislikes                Dislike[]
-  fakeNotifCounters       FakeNotificationCounter[]
-  favorites               Favorite[]
-  sentMessages            Message[]
-  notifications           Notification[]
-  payments                Payment[]
-  paymentMethods          PaymentMethod[]
-  pushSubscriptions       PushSubscription[]
-  reportsMade             Report[]                  @relation("Reporter")
-  reportsReceived         Report[]                  @relation("ReportedUser")
-  reportMessages          ReportMessage[]
-  counterpartAlerts       SOSAlert[]                @relation("CounterpartAlerts")
-  victimAlerts            SOSAlert[]                @relation("VictimAlerts")
-  locationLogs            LocationLog[]
-  sessions                Session[]
-  betaSessions            BetaSession[]
-  studioConversations     StudioConversation[]
-  studioMessages          StudioMessage[]
-  trustedContact          User?                     @relation("TrustedContact", fields: [trustedContactId], references: [id])
-  trustedBy               User[]                    @relation("TrustedContact")
-  vehicles                Vehicle[]
+  id                    String                    @id @default(cuid())
+  email                 String                    @unique
+  emailVerified         DateTime?
+  name                  String?
+  image                 String?
+  password              String?
+  phone                 String?
+  city                  String?
+  credits               Int                       @default(0)
+  isActive              Boolean                   @default(true)
+  createdAt             DateTime                  @default(now())
+  updatedAt             DateTime                  @updatedAt
+  lastLatitude          Float?
+  lastLongitude         Float?
+  lastLocationUpdate    DateTime?
+  isAdmin               Boolean                   @default(false)
+  fraudStrikes          Int                       @default(0)
+  lifetimeBusinessCount Int                       @default(0)
+  lifetimeVehicleCount  Int                       @default(0)
+  trustedContactId      String?
+  trustedContactAccepted Boolean                  @default(false)
+  lastPasswordChange    DateTime?
+  country               String?                   @default("MX")
+  accounts              Account[]
+  analyticsEvents       AnalyticsEvent[]
+  businesses            Business[]
+  businessFavorites     BusinessFavorite[]
+  businessReviews       BusinessReview[]
+  buyerChats            Chat[]                    @relation("BuyerChats")
+  sellerChats           Chat[]                    @relation("SellerChats")
+  creditTransactions    CreditTransaction[]
+  dislikes              Dislike[]
+  fakeNotifCounters     FakeNotificationCounter[]
+  favorites             Favorite[]
+  sentMessages          Message[]
+  notifications         Notification[]
+  payments              Payment[]
+  paymentMethods        PaymentMethod[]
+  pushSubscriptions     PushSubscription[]
+  reportsMade           Report[]                  @relation("Reporter")
+  reportsReceived       Report[]                  @relation("ReportedUser")
+  reportMessages        ReportMessage[]
+  counterpartAlerts     SOSAlert[]                @relation("CounterpartAlerts")
+  victimAlerts          SOSAlert[]                @relation("VictimAlerts")
+  locationLogs          LocationLog[]
+  sessions              Session[]
+  betaSessions          BetaSession[]
+  studioConversations   StudioConversation[]
+  studioMessages        StudioMessage[]
+  trustedContact        User?                     @relation("TrustedContact", fields: [trustedContactId], references: [id])
+  trustedBy             User[]                    @relation("TrustedContact")
+  vehicles              Vehicle[]
 
   @@index([email])
   @@index([city])
@@ -278,6 +281,7 @@ model Business {
   user                User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
   analytics           BusinessAnalytics?
   favorites           BusinessFavorite[]
+  reviews             BusinessReview[]
   notificationLogs    BusinessNotificationLog[]
   views               BusinessView[]
   notifications       Notification[]
@@ -369,6 +373,24 @@ model BusinessFavorite {
   @@unique([userId, businessId])
   @@index([userId])
   @@index([businessId])
+}
+
+model BusinessReview {
+  id         String   @id @default(cuid())
+  userId     String
+  businessId String
+  rating     Int
+  comment    String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, businessId])
+  @@index([userId])
+  @@index([businessId])
+  @@index([rating])
+  @@index([createdAt])
 }
 
 model Payment {
@@ -484,7 +506,7 @@ model SimulatedMetric {
 }
 
 model Appointment {
-  id                  String    @id @default(cuid())
+  id                  String        @id @default(cuid())
   chatId              String
   proposerId          String
   date                DateTime
@@ -493,10 +515,10 @@ model Appointment {
   latitude            Float?
   longitude           Float?
   status              String
-  createdAt           DateTime  @default(now())
-  updatedAt           DateTime  @updatedAt
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
   lastSafetyCheck     DateTime?
-  monitoringActive    Boolean   @default(false)
+  monitoringActive    Boolean       @default(false)
   missedResponseCount Int           @default(0)
   notifiedMilestones  String[]
   buyerArrived        Boolean       @default(false)
@@ -511,12 +533,12 @@ model Appointment {
 }
 
 model SOSAlert {
-  id             String   @id @default(cuid())
+  id             String        @id @default(cuid())
   victimId       String
   counterpartId  String?
   chatId         String
   appointmentId  String?
-  status         String   @default("ACTIVE")
+  status         String        @default("ACTIVE")
   victimLat      Float?
   victimLng      Float?
   counterpartLat Float?
@@ -1034,19 +1056,19 @@ enum PostStatus {
 }
 
 model LocationLog {
-  id             String       @id @default(cuid())
-  userId         String
-  appointmentId  String?
-  sosAlertId     String?
-  latitude       Float
-  longitude      Float
-  batteryLevel   Float?
-  recordedAt     DateTime     @default(now())
+  id            String   @id @default(cuid())
+  userId        String
+  appointmentId String?
+  sosAlertId    String?
+  latitude      Float
+  longitude     Float
+  batteryLevel  Float?
+  recordedAt    DateTime @default(now())
 
-  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  appointment    Appointment? @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
-  sosAlert       SOSAlert?    @relation(fields: [sosAlertId], references: [id], onDelete: Cascade)
-  
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  appointment Appointment? @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+  sosAlert    SOSAlert?    @relation(fields: [sosAlertId], references: [id], onDelete: Cascade)
+
   @@index([userId, recordedAt])
   @@index([sosAlertId])
   @@index([appointmentId])
@@ -1055,10 +1077,10 @@ model LocationLog {
 model BetaSession {
   id             String   @id @default(cuid())
   userId         String
-  date           String   // "2026-04-21"
+  date           String // "2026-04-21"
   sessionStart   DateTime @default(now())
   lastPing       DateTime @default(now())
-  maxDuration    Int      @default(0)    // segundos, sesión continua actual
+  maxDuration    Int      @default(0) // segundos, sesión continua actual
   completedToday Boolean  @default(false) // true cuando llega a 240s continuos
   deviceOS       String   @default("Unknown")
   user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -1069,13 +1091,13 @@ model BetaSession {
 }
 
 model BlockedIdentity {
-  id            String   @id @default(cuid())
-  blockedUserId String
+  id             String   @id @default(cuid())
+  blockedUserId  String
   blockedByEmail String?
-  blockedByIp   String?
-  reason        String
-  blockedAt     DateTime @default(now())
-  blockedBy     String   // admin userId who performed the block
+  blockedByIp    String?
+  reason         String
+  blockedAt      DateTime @default(now())
+  blockedBy      String // admin userId who performed the block
 
   @@index([blockedUserId])
   @@index([blockedByEmail])

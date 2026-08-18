@@ -139,6 +139,13 @@ export default function BusinessRegisterPage() {
             return
         }
 
+        // Validate Mexican phone format (10 digits, starts with 10-19)
+        const phoneDigits = formData.phone.replace(/\D/g, '')
+        if (phoneDigits.length !== 10 || !/^[1-9]/.test(phoneDigits)) {
+            toast.error('El teléfono debe tener 10 dígitos (ej: 6561234567)')
+            return
+        }
+
         setLoading(true)
 
         try {
@@ -158,7 +165,7 @@ export default function BusinessRegisterPage() {
             }
 
             // 1. Registrar Negocio
-            const res = await fetch('/api/business/register', {
+            const res = await fetch('/api/businesses', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)

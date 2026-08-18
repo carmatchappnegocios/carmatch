@@ -41,39 +41,36 @@ export async function POST(request: NextRequest) {
 
             if (needsNewPeriod) {
                 // REQUIERE CRÉDITO - Nuevo período de 30 días
-                if (!user || user.credits < 1) {
+                // Use atomic transaction to prevent race conditions
+                const expiresAt = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000)
+
+                try {
+                    await prisma.$transaction([
+                        // Atomic: only decrement if credits >= 1
+                        prisma.$executeRaw`UPDATE "User" SET credits = credits - 1 WHERE id = ${user.id} AND credits >= 1`,
+                        prisma.creditTransaction.create({
+                            data: {
+                                userId: user.id,
+                                amount: -1,
+                                description: `Activación de negocio: ${business.name}`,
+                                relatedId: id,
+                                details: { action: 'ACTIVATE_BUSINESS', businessId: id }
+                            }
+                        }),
+                        prisma.business.update({
+                            where: { id },
+                            data: {
+                                isActive: true,
+                                expiresAt: expiresAt
+                            }
+                        })
+                    ])
+                } catch {
                     return NextResponse.json({
                         error: 'Necesitas 1 crédito para activar este negocio',
                         needCredits: true
                     }, { status: 402 })
                 }
-
-                // Calcular nueva fecha de expiración (30 días)
-                const expiresAt = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000)
-
-                // Descontar crédito + activar + setear expiración + registrar transacción
-                await prisma.$transaction([
-                    prisma.user.update({
-                        where: { id: user.id },
-                        data: { credits: { decrement: 1 } }
-                    }),
-                    prisma.creditTransaction.create({
-                        data: {
-                            userId: user.id,
-                            amount: -1,
-                            description: `Activación de negocio: ${business.name}`,
-                            relatedId: id,
-                            details: { action: 'ACTIVATE_BUSINESS', businessId: id }
-                        }
-                    }),
-                    prisma.business.update({
-                        where: { id },
-                        data: {
-                            isActive: true,
-                            expiresAt: expiresAt
-                        }
-                    })
-                ])
 
                 return NextResponse.json({
                     success: true,

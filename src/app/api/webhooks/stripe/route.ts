@@ -162,40 +162,42 @@ async function processCreditPurchase(
     userId: string, credits: number, transactionId: string,
     amount: number, currency: string, description: string = 'Compra de créditos'
 ) {
-    // 🛡️ Idempotencia: Si ya se procesó, salir silenciosamente
-    const existing = await prisma.payment.findUnique({
-        where: { transactionId }
-    })
-    if (existing) {
-        console.log(`[StripeWebhook] Pago ${transactionId} ya procesado. Saliendo.`)
-        return;
+    // 🛡️ Idempotencia: Use database unique constraint to prevent race conditions
+    // Instead of check-then-create (TOCTOU), we create directly and catch duplicate errors
+    try {
+        await prisma.$transaction([
+            prisma.payment.create({
+                data: {
+                    userId,
+                    amount,
+                    currency: currency.toUpperCase(),
+                    transactionId,
+                    status: 'COMPLETED',
+                    creditsAdded: credits
+                }
+            }),
+            prisma.user.update({
+                where: { id: userId },
+                data: { credits: { increment: credits } }
+            }),
+            prisma.creditTransaction.create({
+                data: {
+                    userId,
+                    amount: credits,
+                    description,
+                    relatedId: transactionId,
+                    details: { gateway: 'stripe', amount, currency }
+                }
+            })
+        ])
+    } catch (error: unknown) {
+        // If unique constraint violation, payment was already processed (race condition)
+        if (error instanceof Error && error.message.includes('Unique constraint')) {
+            console.log(`[StripeWebhook] Pago ${transactionId} ya procesado (race condition). Saliendo.`)
+            return
+        }
+        throw error // Re-throw other errors
     }
-
-    await prisma.$transaction([
-        prisma.payment.create({
-            data: {
-                userId,
-                amount,
-                currency: currency.toUpperCase(),
-                transactionId,
-                status: 'COMPLETED',
-                creditsAdded: credits
-            }
-        }),
-        prisma.user.update({
-            where: { id: userId },
-            data: { credits: { increment: credits } }
-        }),
-        prisma.creditTransaction.create({
-            data: {
-                userId,
-                amount: credits,
-                description,
-                relatedId: transactionId,
-                details: { gateway: 'stripe', amount, currency }
-            }
-        })
-    ])
 
     await prisma.systemLog.create({
         data: {

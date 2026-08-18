@@ -3,6 +3,7 @@ import { prisma } from "@/lib/db"
 import { hashPassword } from "@/lib/password"
 import { validateAndNormalizeEmail } from "@/lib/email-validation"
 import { checkRateLimit, RATE_LIMITS } from "@/lib/rate-limit"
+import { escapeHtml } from "@/lib/sanitize"
 
 function getIpFromHeaders(request: Request): string {
     return request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
@@ -88,12 +89,12 @@ export async function POST(request: Request) {
         // Hash password
         const hashedPassword = await hashPassword(password)
 
-        // Create user with normalized email
+        // Create user with normalized email (sanitize name to prevent XSS)
         const user = await prisma.user.create({
             data: {
                 email: normalizedEmail,
                 password: hashedPassword,
-                name: name?.trim() || normalizedEmail.split("@")[0],
+                name: escapeHtml(name?.trim()) || normalizedEmail.split("@")[0],
             },
         })
 

@@ -56,6 +56,11 @@ export function validateAndNormalizeEmail(email: string): EmailValidationResult 
         return { valid: false, normalized, error: 'Dominio inválido' }
     }
 
+    // Check for disposable email domains
+    if (isDisposableEmail(normalized)) {
+        return { valid: false, normalized, error: 'No se permiten emails desechables' }
+    }
+
     return { valid: true, normalized }
 }
 
