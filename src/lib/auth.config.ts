@@ -15,7 +15,7 @@ export const authConfig: NextAuthConfig = {
     },
     session: {
         strategy: "jwt",
-        maxAge: 30 * 24 * 60 * 60,
+        maxAge: 7 * 24 * 60 * 60,
     },
     callbacks: {
         async authorized({ auth, request: { nextUrl } }) {
@@ -76,6 +76,8 @@ export const authConfig: NextAuthConfig = {
                 token.id = user.id
                 // @ts-ignore
                 token.isAdmin = !!user.isAdmin
+                // @ts-ignore
+                token.lastPasswordChange = (user as any).lastPasswordChange?.getTime() || null
             }
             if (trigger === "update") {
                 if (session?.image) token.picture = session.image

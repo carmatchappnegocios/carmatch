@@ -32,6 +32,10 @@ export async function POST(request: NextRequest) {
             useCredit
         } = body
 
+        if (!images || !Array.isArray(images) || images.length === 0) {
+            return NextResponse.json({ error: 'Se requiere al menos una imagen' }, { status: 400 });
+        }
+
         // 1. Generar huella única del vehículo
         const priceRange = normalizePriceRange(vehicleData.price);
         const coverImageHash = await hashImageUrl(images[0]);

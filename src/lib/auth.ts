@@ -103,17 +103,24 @@ export const {
             }
 
             // Validate token against lastPasswordChange (token invalidation on password change)
+            // Only check every ~1 hour by comparing iat gap instead of querying DB on every request
             if (token.id && token.lastPasswordChange) {
-                const dbUser = await prisma.user.findUnique({
-                    where: { id: token.id as string },
-                    select: { lastPasswordChange: true }
-                })
-                if (dbUser?.lastPasswordChange) {
-                    const tokenTime = (token.iat as number) * 1000 // iat is in seconds
-                    const passwordChangeTime = dbUser.lastPasswordChange.getTime()
-                    if (passwordChangeTime > tokenTime) {
-                        // Token was issued before password change - invalidate
-                        return {} as Record<string, unknown>
+                const now = Math.floor(Date.now() / 1000)
+                const iat = (token.iat as number) || 0
+                const hourInSeconds = 3600
+                // Only query DB if token is older than 1 hour or no iat
+                if (now - iat > hourInSeconds || iat === 0) {
+                    const dbUser = await prisma.user.findUnique({
+                        where: { id: token.id as string },
+                        select: { lastPasswordChange: true }
+                    })
+                    if (dbUser?.lastPasswordChange) {
+                        const tokenTime = iat * 1000
+                        const passwordChangeTime = dbUser.lastPasswordChange.getTime()
+                        if (passwordChangeTime > tokenTime) {
+                            // Token was issued before password change - invalidate
+                            return {} as Record<string, unknown>
+                        }
                     }
                 }
             }

@@ -49,7 +49,17 @@ export async function PATCH(request: NextRequest) {
             return NextResponse.json({ error: 'Alerta no encontrada' }, { status: 404 })
         }
 
-        // Only victim or counterpart can resolve/cancel
+        // Verify alert is still ACTIVE
+        if (alert.status !== 'ACTIVE') {
+            return NextResponse.json({ error: 'La alerta ya no está activa' }, { status: 400 })
+        }
+
+        // Only victim can cancel (counterpart might be the aggressor)
+        if (action === 'cancel' && alert.victimId !== session.user.id) {
+            return NextResponse.json({ error: 'Solo la víctima puede cancelar la alerta' }, { status: 403 })
+        }
+
+        // Only victim or counterpart can resolve
         if (alert.victimId !== session.user.id && alert.counterpartId !== session.user.id) {
             return NextResponse.json({ error: 'No autorizado' }, { status: 403 })
         }

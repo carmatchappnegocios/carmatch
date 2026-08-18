@@ -98,6 +98,7 @@ export default function ReportBusinessModal({ businessId, businessName, onClose,
                     onClick={onClose}
                     className="absolute top-4 right-4 text-text-secondary hover:text-white transition"
                     disabled={loading}
+                    aria-label="Cerrar"
                 >
                     <X size={20} />
                 </button>

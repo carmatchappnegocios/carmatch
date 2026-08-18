@@ -6,14 +6,14 @@ export async function POST(req: Request) {
   try {
     const session = await auth();
     if (!session?.user?.id) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return NextResponse.json({ error: 'No autenticado' }, { status: 401 });
     }
 
     const body = await req.json();
     const { latitude, longitude, batteryLevel, appointmentId, sosAlertId } = body;
 
     if (!latitude || !longitude) {
-      return new NextResponse("Missing coordinates", { status: 400 });
+      return NextResponse.json({ error: 'Faltan coordenadas' }, { status: 400 });
     }
 
     if (appointmentId) {

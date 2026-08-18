@@ -261,7 +261,7 @@ export default function SOSComponent({ isActive, otherUserId, onEndMeeting, chat
                             <h2 className="font-bold text-xl flex items-center gap-2">
                                 {t('sos.emergency_modal_title')}
                             </h2>
-                            <button onClick={() => setShowSOSModal(false)} className="text-white/80 hover:text-white">✕</button>
+                            <button onClick={() => setShowSOSModal(false)} className="text-white/80 hover:text-white" aria-label="Cerrar">✕</button>
                         </div>
 
                         <div className="flex-1 bg-gray-100 relative">

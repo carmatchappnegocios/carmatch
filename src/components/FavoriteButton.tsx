@@ -62,7 +62,7 @@ export default function FavoriteButton({
 
     // Base width/height only if not showing text
     const iconOnlyClasses = {
-        sm: 'w-8 h-8',
+        sm: 'w-10 h-10',
         md: 'w-10 h-10',
         lg: 'w-12 h-12'
     }

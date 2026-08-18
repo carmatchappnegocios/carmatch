@@ -233,6 +233,7 @@ model Vehicle {
   @@index([price])
   @@index([latitude, longitude])
   @@index([status, createdAt])
+  @@index([status, expiresAt])
   @@index([status, price])
   @@index([status, year])
   @@index([model])
@@ -292,6 +293,7 @@ model Business {
   @@index([city])
   @@index([latitude, longitude])
   @@index([isActive])
+  @@index([isActive, expiresAt])
   @@index([expiresAt])
   @@index([slug])
 }
@@ -336,6 +338,7 @@ model Favorite {
 
   @@unique([userId, vehicleId])
   @@index([userId])
+  @@index([vehicleId])
 }
 
 model Dislike {
@@ -475,6 +478,8 @@ model Notification {
   vehicle    Vehicle?  @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+  @@index([userId, type])
+  @@index([userId, isRead])
   @@index([isRead])
   @@index([createdAt])
 }
@@ -547,9 +552,14 @@ model SOSAlert {
   isFalseAlarm   Boolean       @default(false)
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
-  counterpart    User?         @relation("CounterpartAlerts", fields: [counterpartId], references: [id])
-  victim         User          @relation("VictimAlerts", fields: [victimId], references: [id])
+  counterpart    User?         @relation("CounterpartAlerts", fields: [counterpartId], references: [id], onDelete: SetNull)
+  victim         User          @relation("VictimAlerts", fields: [victimId], references: [id], onDelete: Cascade)
   locationLogs   LocationLog[]
+
+  @@index([victimId])
+  @@index([counterpartId])
+  @@index([status])
+  @@index([chatId])
 }
 
 model PaymentMethod {
@@ -742,10 +752,10 @@ model Report {
   imageUrl     String?
   createdAt    DateTime        @default(now())
   updatedAt    DateTime        @updatedAt
-  business     Business?       @relation(fields: [businessId], references: [id])
+  business     Business?       @relation(fields: [businessId], references: [id], onDelete: Cascade)
   reporter     User?           @relation("Reporter", fields: [reporterId], references: [id], onDelete: Cascade)
-  targetUser   User?           @relation("ReportedUser", fields: [targetUserId], references: [id])
-  vehicle      Vehicle?        @relation(fields: [vehicleId], references: [id])
+  targetUser   User?           @relation("ReportedUser", fields: [targetUserId], references: [id], onDelete: SetNull)
+  vehicle      Vehicle?        @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
   messages     ReportMessage[]
 
   @@index([reporterId])
@@ -760,7 +770,7 @@ model ReportMessage {
   content   String
   createdAt DateTime @default(now())
   report    Report   @relation(fields: [reportId], references: [id], onDelete: Cascade)
-  sender    User?    @relation(fields: [senderId], references: [id])
+  sender    User?    @relation(fields: [senderId], references: [id], onDelete: SetNull)
 
   @@index([reportId])
   @@index([senderId])

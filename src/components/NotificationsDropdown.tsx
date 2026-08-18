@@ -137,7 +137,8 @@ export default function NotificationsDropdown({ isOpen, onClose }: Notifications
                     <h3 className="text-lg font-bold text-text-primary">{t('notifications.title')}</h3>
                     <button
                         onClick={onClose}
-                        className="w-8 h-8 rounded-full hover:bg-surface-highlight transition flex items-center justify-center"
+                        className="w-10 h-10 rounded-full hover:bg-surface-highlight transition flex items-center justify-center"
+                        aria-label="Cerrar"
                     >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

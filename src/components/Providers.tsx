@@ -3,6 +3,7 @@
 import { SessionProvider } from "next-auth/react"
 import { LanguageProvider } from "@/contexts/LanguageContext"
 import { LocationProvider } from "@/contexts/LocationContext"
+import { DataSaverProvider } from "@/contexts/DataSaverContext"
 import dynamic from "next/dynamic"
 
 import QueryProvider from "./QueryProvider"
@@ -19,12 +20,14 @@ export default function Providers({ children }: { children: React.ReactNode }) {
             <SessionProvider refetchOnWindowFocus={false}>
                 <LanguageProvider>
                     <LocationProvider>
-                        <RegisterSW />
-                        <PushNotificationRequest />
-                        {/* <HistoryShield /> */}
-                        {children}
-                        {/* <GlobalLocationGate /> */}
-                        <AIChatbot />
+                        <DataSaverProvider>
+                            <RegisterSW />
+                            <PushNotificationRequest />
+                            {/* <HistoryShield /> */}
+                            {children}
+                            {/* <GlobalLocationGate /> */}
+                            <AIChatbot />
+                        </DataSaverProvider>
                     </LocationProvider>
                 </LanguageProvider>
             </SessionProvider>

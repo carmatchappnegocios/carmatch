@@ -116,7 +116,7 @@ body {
   position: relative;
   width: 20px;
   height: 20px;
-  z-index: 99999 !important;
+  z-index: 50 !important;
 }
 
 .user-location-pulse {
@@ -126,7 +126,7 @@ body {
   border-radius: 50%;
   background: rgba(59, 130, 246, 0.3);
   animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  z-index: 99998 !important;
+  z-index: 49 !important;
 }
 
 .user-location-dot {
@@ -140,7 +140,7 @@ body {
   background: #3b82f6;
   border: 2px solid white;
   box-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
-  z-index: 99999 !important;
+  z-index: 50 !important;
 }
 
 @keyframes pulse-ring {

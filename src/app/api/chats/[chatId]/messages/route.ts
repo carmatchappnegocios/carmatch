@@ -35,6 +35,10 @@ export async function POST(
             return NextResponse.json({ error: 'El mensaje no puede estar vacío' }, { status: 400 })
         }
 
+        if (content.length > 5000) {
+            return NextResponse.json({ error: 'El mensaje no puede exceder 5000 caracteres' }, { status: 400 })
+        }
+
         // Verificar que el chat existe y el usuario es parte de él
         const chat = await prisma.chat.findUnique({
             where: { id: chatId },

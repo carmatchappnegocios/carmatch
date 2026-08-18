@@ -14,43 +14,41 @@ export default function RegisterSW() {
     const { t } = useLanguage()
 
     useEffect(() => {
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker
-                .register('/sw.js')
-                .then((registration) => {
-                    console.log('✅ Service Worker registrado:', registration.scope)
+        if (!('serviceWorker' in navigator)) return
 
-                    // Detectar nueva versión
-                    registration.addEventListener('updatefound', () => {
-                        const newWorker = registration.installing
-                        if (!newWorker) return
+        let intervalId: ReturnType<typeof setInterval> | null = null
 
-                        newWorker.addEventListener('statechange', () => {
-                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                // Nueva versión disponible
-                                setWaitingWorker(newWorker)
-                                setShowUpdatePrompt(true)
-                            }
-                        })
+        navigator.serviceWorker
+            .register('/sw.js')
+            .then((registration) => {
+                // Detectar nueva versión
+                registration.addEventListener('updatefound', () => {
+                    const newWorker = registration.installing
+                    if (!newWorker) return
+
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            setWaitingWorker(newWorker)
+                            setShowUpdatePrompt(true)
+                        }
                     })
-
-                    // Revisar actualizaciones cada 1 hora
-                    setInterval(() => {
-                        registration.update()
-                    }, 60 * 60 * 1000)
-                })
-                .catch((error) => {
-                    console.error('❌ Error al registrar Service Worker:', error)
                 })
 
-            // Detectar cuando el Service Worker toma control
-            let refreshing = false
-            navigator.serviceWorker.addEventListener('controllerchange', () => {
-                if (!refreshing) {
-                    refreshing = true
-                    window.location.reload()
-                }
+                // Revisar actualizaciones cada 1 hora
+                intervalId = setInterval(() => {
+                    registration.update()
+                }, 60 * 60 * 1000)
             })
+            .catch(() => {})
+
+        const handleControllerChange = () => {
+            window.location.reload()
+        }
+        navigator.serviceWorker.addEventListener('controllerchange', handleControllerChange)
+
+        return () => {
+            if (intervalId) clearInterval(intervalId)
+            navigator.serviceWorker.removeEventListener('controllerchange', handleControllerChange)
         }
     }, [])
 

@@ -162,7 +162,7 @@ export const MapStoreChat: React.FC<MapStoreChatProps> = ({
                                             setInputValue(suggestion)
                                             inputRef.current?.focus()
                                         }}
-                                        className="text-[9px] bg-amber-500/10 hover:bg-amber-500/30 border border-amber-500/20 px-3 py-1.5 rounded-full text-amber-100 transition-all transform hover:scale-105 active:scale-95 uppercase font-black tracking-widest"
+                                        className="text-xs bg-amber-500/10 hover:bg-amber-500/30 border border-amber-500/20 px-3 py-1.5 rounded-full text-amber-100 transition-all transform hover:scale-105 active:scale-95 uppercase font-black tracking-widest"
                                     >
                                         {suggestion}
                                     </button>

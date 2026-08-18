@@ -33,10 +33,6 @@
             "schedule": "0 9 * * *"
         },
         {
-            "path": "/api/cron/engagement",
-            "schedule": "0 20 * * *"
-        },
-        {
             "path": "/api/cron/update-vehicles",
             "schedule": "0 0 * * 0"
         },

@@ -11,7 +11,7 @@ import Providers from "@/components/Providers";
 import MobileNav from "@/components/MobileNav";
 import OpenInBrowserBanner from "@/components/OpenInBrowserBanner";
 // import { ResponsiveViewportFix } from "./responsive-viewport-fix";
-import Header from "@/components/Header";
+import dynamic from "next/dynamic";
 import RestoringSessionOverlay from "@/components/RestoringSessionOverlay";
 import RestoreSessionModal from "@/components/RestoreSessionModal";
 import { Toaster } from "sonner";
@@ -22,6 +22,8 @@ import CookieConsentBanner from "@/components/CookieConsentBanner";
 import FooterSEO from "@/components/FooterSEO";
 import BetaSessionTracker from "@/components/BetaSessionTracker";
 import GlobalSOSWatcher from "@/components/GlobalSOSWatcher";
+
+const Header = dynamic(() => import("@/components/Header"), { ssr: false });
 
 
 const inter = Inter({ subsets: ["latin"] });

@@ -173,7 +173,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     }, [translations, locale])
 
     return (
-        <LanguageContext.Provider value={{ locale, setLocale, t, isLoading }}>
+        <LanguageContext.Provider value={useMemo(() => ({ locale, setLocale, t, isLoading }), [locale, setLocale, t, isLoading])}>
             {isLoading ? <div className="min-h-screen bg-black" /> : children}
         </LanguageContext.Provider>
     )

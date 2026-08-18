@@ -18,8 +18,8 @@ export async function POST(request: NextRequest) {
 
         const { quantity, country = 'MX' } = await request.json()
 
-        if (!quantity || quantity < 1) {
-            return NextResponse.json({ error: 'Cantidad inválida' }, { status: 400 })
+        if (!quantity || quantity < 1 || !Number.isInteger(quantity) || quantity > 1000) {
+            return NextResponse.json({ error: 'Cantidad inválida (1-1000)' }, { status: 400 })
         }
 
         // █▓▒░ PROHIBIDO MODIFICAR ESTOS PRECIOS SIN CONSULTA PREVIA ░▒▓█

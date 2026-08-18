@@ -810,7 +810,8 @@
         "interested": "interesados",
         "share_text": "¡Mira este {title} en CarMatch Social!",
         "seller": "Vendedor",
-        "verified_seller": "Vendedor verificado"
+        "verified_seller": "Vendedor verificado",
+        "contact_seller": "Contactar Vendedor"
     },
     "favorites": {
         "like": "Me gusta",
@@ -1683,5 +1684,10 @@
         "bridge_message": "Hemos abierto la pasarela de pago en una ventana nueva para proteger tus datos bancarios.",
         "bridge_message_2": "Una vez completado, tus servicios se actualizarán automáticamente aquí.",
         "back_to_carmatch": "Volver a CarMatch"
+    },
+    "not_found": {
+        "title": "404",
+        "message": "Esta página no existe o fue movida.",
+        "go_home": "Ir al Market"
     }
 }

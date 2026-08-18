@@ -50,11 +50,10 @@ export async function GET(request: NextRequest) {
                     OR: [
                         { name: { contains: searchQuery, mode: 'insensitive' } },
                         { description: { contains: searchQuery, mode: 'insensitive' } },
-                        { services: { hasSome: [searchQuery] } }, // Direct hit in array
+                        { services: { hasSome: [searchQuery] } },
                         {
-                            // Support for partial service match if using a plain text search across all fields
                             services: {
-                                isEmpty: false // Just a placeholder to ensure it's not ignored
+                                isEmpty: false
                             }
                         }
                     ]
@@ -94,13 +93,33 @@ export async function GET(request: NextRequest) {
                         name: true,
                         image: true
                     }
+                },
+                reviews: {
+                    select: {
+                        rating: true
+                    }
                 }
             },
-            take: 300 // Limit results per chunk to keep browser response snappy
+            take: 300
+        })
+
+        // Calcular promedio de ratings para cada negocio
+        const businessesWithRatings = businesses.map(business => {
+            const reviews = business.reviews
+            const reviewCount = reviews.length
+            const averageRating = reviewCount > 0
+                ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviewCount
+                : null
+            return {
+                ...business,
+                averageRating,
+                reviewCount,
+                reviews: undefined // No enviar las reseñas completas en el listado
+            }
         })
 
         return NextResponse.json({
-            businesses: serializeDecimal(businesses)
+            businesses: serializeDecimal(businessesWithRatings)
         })
 
     } catch (error) {

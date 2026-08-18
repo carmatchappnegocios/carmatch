@@ -141,7 +141,7 @@ export const MarketChat: React.FC<MarketChatProps> = ({
                                             setInputValue(suggestion)
                                             inputRef.current?.focus()
                                         }}
-                                        className="text-[9px] bg-blue-600/20 hover:bg-blue-600/40 border border-blue-500/30 px-3 py-1.5 rounded-full text-white transition-all transform hover:scale-105 active:scale-95 uppercase font-black tracking-tight"
+                                        className="text-xs bg-blue-600/20 hover:bg-blue-600/40 border border-blue-500/30 px-3 py-1.5 rounded-full text-white transition-all transform hover:scale-105 active:scale-95 uppercase font-black tracking-tight"
                                     >
                                         {suggestion}
                                     </button>

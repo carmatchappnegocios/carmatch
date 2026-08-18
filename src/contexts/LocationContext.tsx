@@ -1,6 +1,6 @@
 "use client"
 
-import React, { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react'
+import React, { createContext, useContext, useEffect, useState, useCallback, useRef, useMemo } from 'react'
 import { getUserLocation, getLocationFromIP, reverseGeocode, LocationData } from '@/lib/geolocation'
 
 interface LocationContextType {
@@ -246,21 +246,21 @@ export function LocationProvider({
     // Si el usuario selecciona manualmente una ciudad, usar esa
     const effectiveLocation = manualLocation || location
 
+    const contextValue = useMemo(() => ({
+        location: effectiveLocation,
+        loading,
+        initializing,
+        error,
+        manualLocation,
+        setManualLocation,
+        refreshLocation: () => fetchLocation(true),
+        preciseLocationEnabled,
+        setPreciseLocationEnabled,
+        gpsPermission,
+    }), [effectiveLocation, loading, initializing, error, manualLocation, setManualLocation, fetchLocation, preciseLocationEnabled, setPreciseLocationEnabled, gpsPermission])
+
     return (
-        <LocationContext.Provider
-            value={{
-                location: effectiveLocation,
-                loading,
-                initializing,
-                error,
-                manualLocation,
-                setManualLocation,
-                refreshLocation: () => fetchLocation(true),
-                preciseLocationEnabled,
-                setPreciseLocationEnabled,
-                gpsPermission,
-            }}
-        >
+        <LocationContext.Provider value={contextValue}>
             {children}
         </LocationContext.Provider>
     )

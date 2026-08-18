@@ -14,6 +14,7 @@ import ShareButton from '@/components/ShareButton'
 import { MapPin, Clock, Phone, Navigation, ArrowLeft, Star, ShieldCheck, Edit3, CreditCard, Play, Pause, Calendar, BadgeCheck } from 'lucide-react'
 import ConfirmationModal from '@/components/ConfirmationModal'
 import OpeningHoursDisplay from '@/components/OpeningHoursDisplay'
+import ReviewList from '@/components/ReviewList'
 
 interface BusinessDetailProps {
     business: {
@@ -348,6 +349,15 @@ export default function BusinessDetailClient({ business, currentUserId }: Busine
                                 </p>
                             </div>
                         )}
+
+                        {/* Reviews Section */}
+                        <div className="bg-surface border border-surface-highlight rounded-3xl p-6 shadow-xl">
+                            <ReviewList
+                                businessId={business.id}
+                                businessName={business.name}
+                                currentUserId={currentUserId || undefined}
+                            />
+                        </div>
 
                         {/* CTA Desktop */}
                         <div className="hidden lg:block">

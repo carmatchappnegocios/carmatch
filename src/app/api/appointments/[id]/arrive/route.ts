@@ -9,7 +9,7 @@ export async function POST(
   try {
     const session = await auth();
     if (!session?.user?.id) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return NextResponse.json({ error: 'No autenticado' }, { status: 401 });
     }
 
     const { id: appointmentId } = await params;

@@ -37,6 +37,14 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'Faltan datos requeridos (motivo)' }, { status: 400 })
         }
 
+        if (reason.length > 200) {
+            return NextResponse.json({ error: 'El motivo no puede exceder 200 caracteres' }, { status: 400 })
+        }
+
+        if (description && description.length > 1000) {
+            return NextResponse.json({ error: 'La descripción no puede exceder 1000 caracteres' }, { status: 400 })
+        }
+
         const report = await prisma.report.create({
             data: {
                 reporterId: reporterId,

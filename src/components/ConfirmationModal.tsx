@@ -143,6 +143,7 @@ export default function ConfirmationModal({
                 <button
                     onClick={onClose}
                     className="absolute top-4 right-4 p-2 text-text-secondary hover:text-text-primary transition-colors bg-background/20 rounded-full"
+                    aria-label="Cerrar"
                 >
                     <X size={20} />
                 </button>

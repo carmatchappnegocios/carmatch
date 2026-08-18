@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { analyzeMultipleImages } from '@/lib/ai/imageAnalyzer'
 import { checkRateLimit, RATE_LIMITS } from '@/lib/rate-limit'
+import { auth } from '@/lib/auth'
 
 /**
  * Convierte una URL de imagen a base64
@@ -54,6 +55,11 @@ async function urlToBase64(url: string): Promise<string> {
  */
 export async function POST(request: NextRequest) {
     try {
+        const session = await auth()
+        if (!session?.user?.id) {
+            return NextResponse.json({ error: 'No autenticado' }, { status: 401 })
+        }
+
         const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown'
         const rl = checkRateLimit(`ai-validate:${ip}`, RATE_LIMITS.aiValidate)
         if (!rl.allowed) {

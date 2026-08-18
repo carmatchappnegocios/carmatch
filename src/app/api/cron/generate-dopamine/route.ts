@@ -11,84 +11,83 @@ import { upsertNotification } from '@/lib/notifications-service'
 export const dynamic = 'force-dynamic'
 
 export async function GET(request: NextRequest) {
-    // ... (auth check remains the same)
-    const authHeader = request.headers.get('authorization')
-    if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-
-    const currentMonth = new Date().getMonth() + 1
-
-    // 2. Obtener negocios activos
-    const businesses = await prisma.business.findMany({
-        where: { isActive: true },
-        include: { analytics: true }
-    })
-
-    let generatedCount = 0
-
-    for (const business of businesses) {
-        // ... (analytics logic remains the same)
-        let analytics = (business as any).analytics
-        if (!analytics) {
-            analytics = await prisma.businessAnalytics.create({
-                data: { businessId: business.id, currentMonth }
-            })
+    try {
+        const authHeader = request.headers.get('authorization')
+        if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
         }
 
-        if (analytics.currentMonth !== currentMonth) {
-            analytics = await prisma.businessAnalytics.update({
-                where: { id: analytics.id },
-                data: { monthlyFakeCount: 0, currentMonth }
-            })
-        }
+        const currentMonth = new Date().getMonth() + 1
 
-        if (analytics.monthlyFakeCount >= 150) continue
-        if (Math.random() > 0.7) continue
+        const businesses = await prisma.business.findMany({
+            where: { isActive: true },
+            include: { analytics: true }
+        })
 
-        const count = Math.floor(Math.random() * 3) + 1 // 1 a 3
+        let generatedCount = 0
 
-        for (let i = 0; i < count; i++) {
-            const message = generateDopamineMessage(business as any)
+        for (const business of businesses) {
+            let analytics = (business as any).analytics
+            if (!analytics) {
+                analytics = await prisma.businessAnalytics.create({
+                    data: { businessId: business.id, currentMonth }
+                })
+            }
 
-            // Crear notificación usando el servicio de upsert
-            await upsertNotification({
-                userId: business.userId,
-                type: 'BUSINESS_ACTIVITY',
-                title: '📊 Actividad en tu negocio',
-                message,
-                link: `/business/${business.id}`,
-                isFake: true,
-                businessId: business.id
-            })
+            if (analytics.currentMonth !== currentMonth) {
+                analytics = await prisma.businessAnalytics.update({
+                    where: { id: analytics.id },
+                    data: { monthlyFakeCount: 0, currentMonth }
+                })
+            }
 
-            // Log de la notificación ficticia
-            await prisma.businessNotificationLog.create({
-                data: {
-                    businessId: business.id,
-                    type: 'FAKE',
+            if (analytics.monthlyFakeCount >= 150) continue
+            if (Math.random() > 0.7) continue
+
+            const count = Math.floor(Math.random() * 3) + 1
+
+            for (let i = 0; i < count; i++) {
+                const message = generateDopamineMessage(business as any)
+
+                await upsertNotification({
+                    userId: business.userId,
+                    type: 'BUSINESS_ACTIVITY',
+                    title: '📊 Actividad en tu negocio',
                     message,
-                    category: 'DOPAMINE'
-                }
-            })
+                    link: `/business/${business.id}`,
+                    isFake: true,
+                    businessId: business.id
+                })
 
-            // Actualizar contadores
-            await prisma.businessAnalytics.update({
-                where: { businessId: business.id },
-                data: {
-                    monthlyFakeCount: { increment: 1 },
-                    lastFakeNotification: new Date(),
-                    fakeViews: { increment: 1 } // Simulamos views también para consistencia
-                }
-            })
+                await prisma.businessNotificationLog.create({
+                    data: {
+                        businessId: business.id,
+                        type: 'FAKE',
+                        message,
+                        category: 'DOPAMINE'
+                    }
+                })
 
-            generatedCount++
+                await prisma.businessAnalytics.update({
+                    where: { businessId: business.id },
+                    data: {
+                        monthlyFakeCount: { increment: 1 },
+                        lastFakeNotification: new Date(),
+                        fakeViews: { increment: 1 }
+                    }
+                })
+
+                generatedCount++
+            }
         }
-    }
 
-    return NextResponse.json({
-        success: true,
-        generated: generatedCount,
-        timestamp: new Date().toISOString()
-    })
+        return NextResponse.json({
+            success: true,
+            generated: generatedCount,
+            timestamp: new Date().toISOString()
+        })
+    } catch (error) {
+        console.error('Error in generate-dopamine:', error)
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+    }
 }

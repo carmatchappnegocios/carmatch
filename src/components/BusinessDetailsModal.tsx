@@ -88,6 +88,7 @@ export default function BusinessDetailsModal({ business, onClose, categoryColor 
             <button
                 onClick={onClose}
                 className="sticky top-0 ml-auto z-10 w-10 h-10 bg-black/70 text-white rounded-full flex items-center justify-center hover:bg-black transition backdrop-blur-md shadow-lg mb-2 shrink-0"
+                aria-label="Cerrar"
             >
                 ✕
             </button>
@@ -134,7 +135,7 @@ export default function BusinessDetailsModal({ business, onClose, categoryColor 
                                         {business.images.map((_, idx) => (
                                             <div
                                                 key={idx}
-                                                className={`w - 2 h - 2 rounded - full transition - all shadow - sm ${idx === currentImageIndex ? 'bg-white w-6' : 'bg-white/50'} `}
+                                                className={`w-2 h-2 rounded-full transition-all shadow-sm ${idx === currentImageIndex ? 'bg-white w-6' : 'bg-white/50'}`}
                                             />
                                         ))}
                                     </div>

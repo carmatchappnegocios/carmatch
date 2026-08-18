@@ -33,7 +33,7 @@ export default function SimpleLineChart({ data, color = '#3b82f6', height = 60, 
     return (
         <div className="flex flex-col gap-2">
             {label && <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">{label}</p>}
-            <div className={`relative w-full overflow-hidden rounded-xl bg-${color.replace('#', '')}/5`} style={{ height }}>
+            <div className="relative w-full overflow-hidden rounded-xl" style={{ height, backgroundColor: `${color}0d` }}>
                 <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="w-full h-full">
                     {/* Gradient Fill */}
                     <defs>

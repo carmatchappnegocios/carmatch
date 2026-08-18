@@ -13,6 +13,7 @@ import { useRouter, useSearchParams } from "next/navigation"
 import EditProfileModal from "@/components/EditProfileModal"
 import ReportImageButton from "@/components/ReportImageButton"
 import { Flag, MessageSquare, AlertCircle, ChevronRight, RefreshCw, Headset, ShieldCheck } from "lucide-react"
+import UserBadges from "@/components/UserBadges"
 
 interface ProfileClientProps {
     user: any // Typed as any to match the dynamic prisma include structure for now
@@ -129,6 +130,10 @@ export default function ProfileClient({ user, isOwner, vehiclesToShow }: Profile
                                     <p className="text-text-secondary text-xs sm:text-sm">
                                         {t('profile.member_since')} {formattedDate}
                                     </p>
+                                    {/* Badges */}
+                                    <div className="mt-2">
+                                        <UserBadges user={user} />
+                                    </div>
                                 </div>
 
 

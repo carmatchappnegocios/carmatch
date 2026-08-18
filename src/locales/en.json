@@ -810,7 +810,8 @@
         "interested": "interested",
         "share_text": "Check out this {title} on CarMatch Social!",
         "seller": "Seller",
-        "verified_seller": "Verified Seller"
+        "verified_seller": "Verified Seller",
+        "contact_seller": "Contact Seller"
     },
     "favorites": {
         "like": "Like",
@@ -1683,5 +1684,10 @@
         "bridge_message": "We have opened the payment gateway in a new window to protect your banking data.",
         "bridge_message_2": "Once completed, your services will be updated automatically here.",
         "back_to_carmatch": "Back to CarMatch"
+    },
+    "not_found": {
+        "title": "404",
+        "message": "This page doesn't exist or was moved.",
+        "go_home": "Go to Market"
     }
 }

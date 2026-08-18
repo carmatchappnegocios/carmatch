@@ -104,21 +104,6 @@ export async function POST(request: Request) {
             // Fail silently
         }
 
-        // 2. Notificar al otro usuario vía Push
-        const chat = await prisma.chat.findUnique({
-            where: { id: chatId },
-            select: { buyerId: true, sellerId: true }
-        })
-
-        if (chat) {
-            const receiverId = chat.buyerId === session.user.id ? chat.sellerId : chat.buyerId
-            await sendPushToUser(receiverId, {
-                title: '📅 Nueva cita propuesta',
-                body: `${session.user.name} ha propuesto una reunión en ${location}`,
-                url: `/messages/${chatId}`
-            })
-        }
-
         return NextResponse.json(appointment)
     } catch (error) {
         console.error('Error creating appointment:', error)

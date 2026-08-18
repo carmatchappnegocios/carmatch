@@ -68,17 +68,38 @@ export async function GET(request: NextRequest) {
                 address: true,
                 phone: true,
                 hours: true,
+                is24Hours: true,
                 user: {
                     select: {
                         name: true,
                         image: true
                     }
+                },
+                reviews: {
+                    select: {
+                        rating: true
+                    }
                 }
             }
         })
 
+        // Calcular promedio de ratings para cada negocio
+        const businessesWithRatings = allBusinesses.map(business => {
+            const reviews = business.reviews
+            const reviewCount = reviews.length
+            const averageRating = reviewCount > 0
+                ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviewCount
+                : null
+            return {
+                ...business,
+                averageRating,
+                reviewCount,
+                reviews: undefined
+            }
+        })
+
         // Filtrar por distancia (Haversine simple)
-        const nearbyBusinesses = allBusinesses.filter(business => {
+        const nearbyBusinesses = businessesWithRatings.filter(business => {
             const R = 6371 // Radio de la tierra en km
             const dLat = (business.latitude - lat) * Math.PI / 180
             const dLon = (business.longitude - lng) * Math.PI / 180

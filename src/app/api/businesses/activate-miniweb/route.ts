@@ -64,8 +64,7 @@ export async function POST(request: NextRequest) {
         } catch {
             return NextResponse.json({
                 error: 'Créditos insuficientes',
-                required: 20,
-                current: user?.credits || 0
+                required: 20
             }, { status: 402 })
         }
 

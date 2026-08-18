@@ -23,7 +23,9 @@ interface BusinessListCardProps {
         latitude: number
         longitude: number
         images: string[]
-        distance?: string // Opcional, calculado si hay ubicación
+        distance?: string
+        averageRating?: number | null
+        reviewCount?: number
     }
     isActive?: boolean
     onClick?: () => void
@@ -35,9 +37,9 @@ export default function BusinessListCard({ business, isActive, onClick }: Busine
     const status = getBusinessStatus(business.hours || null, business.is24Hours)
     const categoryData = BUSINESS_CATEGORIES.find(c => c.id === business.category)
 
-    // Simular rating para estética tipo Google
-    const rating = (Math.random() * (5 - 4) + 4).toFixed(1)
-    const totalReviews = Math.floor(Math.random() * 500) + 10
+    // Usar ratings reales o fallback a 0
+    const rating = business.averageRating || 0
+    const totalReviews = business.reviewCount || 0
 
     const handleDirections = (e: React.MouseEvent) => {
         e.stopPropagation()
@@ -67,13 +69,19 @@ export default function BusinessListCard({ business, isActive, onClick }: Busine
                     </h3>
 
                     <div className="flex items-center gap-1 mt-0.5">
-                        <span className="text-sm font-bold text-amber-500">{rating}</span>
-                        <div className="flex">
-                            {[1, 2, 3, 4, 5].map((s) => (
-                                <Star key={s} size={12} fill={s <= Math.floor(Number(rating)) ? "currentColor" : "none"} className="text-amber-500" />
-                            ))}
-                        </div>
-                        <span className="text-xs text-text-secondary">({totalReviews})</span>
+                        {rating > 0 ? (
+                            <>
+                                <span className="text-sm font-bold text-amber-500">{rating.toFixed(1)}</span>
+                                <div className="flex">
+                                    {[1, 2, 3, 4, 5].map((s) => (
+                                        <Star key={s} size={12} fill={s <= Math.round(rating) ? "currentColor" : "none"} className="text-amber-500" />
+                                    ))}
+                                </div>
+                                <span className="text-xs text-text-secondary">({totalReviews})</span>
+                            </>
+                        ) : (
+                            <span className="text-xs text-text-secondary">Sin reseñas</span>
+                        )}
                     </div>
 
                     <p className="text-sm text-text-secondary mt-1 flex items-center gap-1">
