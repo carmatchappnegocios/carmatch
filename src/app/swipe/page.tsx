@@ -63,7 +63,7 @@ export default async function SwipePage() {
         : null
 
     const currentUserId = currentUser?.id || 'guest'
-    const isAdmin = currentUser?.isAdmin || currentUser?.email === process.env.ADMIN_EMAIL
+    const isAdmin = currentUser?.isAdmin || session?.user?.email === process.env.ADMIN_EMAIL
 
     // Obtener vehículos ACTIVOS
     const vehiclesWhere: any = {
