@@ -11,7 +11,6 @@ import Providers from "@/components/Providers";
 import MobileNav from "@/components/MobileNav";
 import OpenInBrowserBanner from "@/components/OpenInBrowserBanner";
 // import { ResponsiveViewportFix } from "./responsive-viewport-fix";
-import dynamic from "next/dynamic";
 import RestoringSessionOverlay from "@/components/RestoringSessionOverlay";
 import RestoreSessionModal from "@/components/RestoreSessionModal";
 import { Toaster } from "sonner";
@@ -22,8 +21,7 @@ import CookieConsentBanner from "@/components/CookieConsentBanner";
 import FooterSEO from "@/components/FooterSEO";
 import BetaSessionTracker from "@/components/BetaSessionTracker";
 import GlobalSOSWatcher from "@/components/GlobalSOSWatcher";
-
-const Header = dynamic(() => import("@/components/Header"), { ssr: false });
+import DynamicHeader from "@/components/DynamicHeader";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -151,7 +149,7 @@ export default function RootLayout({
                     {/* 📱 Native Body Scroll Architecture: Standard Mobile Web Pattern */}
                     <div className="flex flex-col min-h-screen w-full relative bg-slate-950">
                         {/* Header: Sticky at top, scrolls with page */}
-                        <Header />
+                        <DynamicHeader />
 
                         {/* MainContent Area: Natural body scroll, no clipping */}
                         <main className="flex-1 flex flex-col pb-[80px] md:pb-0 relative z-10 bg-background overflow-x-hidden">
