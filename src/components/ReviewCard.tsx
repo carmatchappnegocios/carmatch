@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { Star, MoreVertical, Pencil, Trash2 } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 import RatingDisplay from './RatingDisplay'
@@ -56,7 +57,7 @@ export default function ReviewCard({ review, currentUserId, onUpdate, onDelete }
                 <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-surface-highlight flex items-center justify-center overflow-hidden">
                         {review.user.image ? (
-                            <img src={review.user.image} alt="" className="w-full h-full object-cover" />
+                            <Image src={review.user.image} alt="" width={40} height={40} unoptimized className="w-full h-full object-cover" />
                         ) : (
                             <span className="text-surface-textSecondary font-medium">
                                 {review.user.name?.charAt(0) || '?'}

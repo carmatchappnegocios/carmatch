@@ -76,7 +76,7 @@ export const MarketChat: React.FC<MarketChatProps> = ({
                 messagesToAdd.push({ role: 'assistant', content: data.nextQuestion })
             } else {
                 if (messagesToAdd.length === 0) {
-                    messagesToAdd.push({ role: 'assistant', content: "¡Hecho! He filtrado los resultados para ti. 🚗✨" })
+                    messagesToAdd.push({ role: 'assistant', content: t('market.chat_done') || "¡Hecho! He filtrado los resultados para ti. 🚗✨" })
                 }
                 setTurnCount(0)
             }
@@ -98,17 +98,17 @@ export const MarketChat: React.FC<MarketChatProps> = ({
 
         } catch (error) {
             console.error('Market Chat Error:', error)
-            setMessages(prev => [...prev, { role: 'assistant', content: "Ups, algo salió mal. ¿Podrías decirme de nuevo qué buscas?" }])
+            setMessages(prev => [...prev, { role: 'assistant', content: t('market.chat_error') || "Ups, algo salió mal. ¿Podrías decirme de nuevo qué buscas?" }])
         } finally {
             setIsTyping(false)
         }
     }
 
     const suggestions = [
-        "Camioneta familiar",
-        "Primer carro barato",
-        "Pickup 4x4 diesel",
-        "Auto para Uber"
+        t('market.chat_suggestion_1') || "Camioneta familiar",
+        t('market.chat_suggestion_2') || "Primer carro barato",
+        t('market.chat_suggestion_3') || "Pickup 4x4 diesel",
+        t('market.chat_suggestion_4') || "Auto para Uber"
     ]
 
     return (

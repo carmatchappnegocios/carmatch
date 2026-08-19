@@ -81,17 +81,17 @@ export default function SettingsPage() {
 
     const subscribe = useCallback(async () => {
         if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
-            toast.error('Tu navegador no soporta notificaciones push.')
+            toast.error(t('notifications.browser_not_supported'))
             return
         }
         if (!VAPID_KEY) {
-            toast.error('Error de configuración. Las notificaciones no están disponibles.')
+            toast.error(t('notifications.save_error'))
             return
         }
         try {
             const perm = await Notification.requestPermission()
             if (perm !== 'granted') {
-                toast.error('Permiso de notificaciones denegado.')
+                toast.error(t('notifications.browser_not_supported'))
                 return
             }
             let reg = await getSWRegistration()
@@ -115,7 +115,7 @@ export default function SettingsPage() {
                 }).catch(() => {})
                 setIsSubscribed(true)
                 setPushPermission('granted')
-                toast.success('¡Notificaciones Activadas!')
+                toast.success(t('notifications.activate_title'))
                 return
             }
 
@@ -133,10 +133,10 @@ export default function SettingsPage() {
             if (!res.ok) throw new Error(`Backend error: ${res.status}`)
             setIsSubscribed(true)
             setPushPermission('granted')
-            toast.success('¡Notificaciones Activadas!')
+            toast.success(t('notifications.activate_title'))
         } catch (error: any) {
             console.error('[PUSH] Error:', error)
-            toast.error(`Error: ${error.message || 'Error activando notificaciones.'}`)
+            toast.error(t('notifications.activate_error'))
         }
     }, [])
 
@@ -155,10 +155,10 @@ export default function SettingsPage() {
             }
             setIsSubscribed(false)
             setPushPermission('default')
-            toast.success('Notificaciones desactivadas')
+            toast.success(t('notifications.deactivate_title') || t('settings.deactivate'))
         } catch (error) {
             console.error('[PUSH] Error:', error)
-            toast.error('Error desactivando notificaciones.')
+            toast.error(t('notifications.activate_error'))
         }
     }, [])
 

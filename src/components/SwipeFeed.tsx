@@ -8,6 +8,7 @@ import { motion, useMotionValue, useTransform, PanInfo, AnimatePresence } from '
 import { X as XIcon, ThumbsUp, MapPin, Plus, ArrowRight } from 'lucide-react'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import ContactButton from './ContactButton'
 import ShareButton from './ShareButton'
 import ReportImageButton from './ReportImageButton'
@@ -212,7 +213,7 @@ function SwipeCard({ item, onSwipe, isTop, exitX }: SwipeCardProps) {
                                     : 'border-white/10 opacity-50 grayscale hover:grayscale-0 hover:opacity-100'
                                 }`}
                             >
-                                <img src={img} className="w-full h-full object-cover" alt={`Gallery ${idx}`} draggable={false} />
+                                <Image src={img} width={180} height={120} unoptimized className="w-full h-full object-cover" alt={`Gallery ${idx}`} draggable={false} />
                             </button>
                         ))}
                     </div>
@@ -232,7 +233,7 @@ function SwipeCard({ item, onSwipe, isTop, exitX }: SwipeCardProps) {
                                 : 'border-white/5 opacity-40 grayscale hover:grayscale-0 hover:opacity-100 hover:scale-[1.02]'
                             }`}
                         >
-                            <img src={img} className="w-full h-full object-cover" alt={`Gallery ${idx}`} draggable={false} />
+                            <Image src={img} width={240} height={135} unoptimized className="w-full h-full object-cover" alt={`Gallery ${idx}`} draggable={false} />
                         </button>
                     ))}
                 </div>

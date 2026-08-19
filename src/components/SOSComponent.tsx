@@ -274,7 +274,7 @@ export default function SOSComponent({ isActive, otherUserId, onEndMeeting, chat
                                     <SOSMap
                                         lat={otherUserLocation.lastLatitude}
                                         lng={otherUserLocation.lastLongitude}
-                                        name={otherUserLocation.name || 'Contraparte'}
+                                        name={otherUserLocation.name || t('sos.counterpart')}
                                         lastUpdate={otherUserLocation.lastLocationUpdate}
                                         locale={locale}
                                     />
@@ -336,6 +336,7 @@ export default function SOSComponent({ isActive, otherUserId, onEndMeeting, chat
 }
 
 function SOSMap({ lat, lng, name, lastUpdate, locale }: { lat: number, lng: number, name: string, lastUpdate: string, locale: string }) {
+    const { t } = useLanguage()
     const mapContainer = useRef<HTMLDivElement>(null)
     const map = useRef<mapboxgl.Map | null>(null)
 
@@ -358,12 +359,12 @@ function SOSMap({ lat, lng, name, lastUpdate, locale }: { lat: number, lng: numb
         el.className = 'sos-marker'
         el.innerHTML = '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" class="text-red-600 animate-pulse"><circle cx="12" cy="12" r="10" fill="currentColor" fill-opacity="0.3"/><circle cx="12" cy="12" r="6" fill="currentColor" stroke="white" stroke-width="2"/></svg>'
 
-        const formattedDate = lastUpdate ? new Date(lastUpdate).toLocaleString(locale === 'es' ? 'es-MX' : 'en-US') : 'Ubicación actual'
+        const formattedDate = lastUpdate ? new Date(lastUpdate).toLocaleString(locale === 'es' ? 'es-MX' : 'en-US') : t('sos.current_location')
 
         const popup = new mapboxgl.Popup({ offset: 25 })
             .setHTML(`
                 <div class="p-2">
-                    <strong class="block text-red-600">Ubicación de ${name}</strong>
+                    <strong class="block text-red-600">${t('sos.location_of')} ${name}</strong>
                     <span class="text-xs text-gray-500">${formattedDate}</span>
                 </div>
             `)

@@ -52,7 +52,7 @@ export default function ReportBusinessModal({ businessId, businessName, onClose,
 
             if (!res.ok) {
                 const data = await res.json()
-                throw new Error(data.error || 'Error al enviar reporte')
+                throw new Error(data.error || t('map_store.report.error_send'))
             }
 
             setSubmitted(true)

@@ -6,6 +6,7 @@
 
 import { Logo } from "@/components/Logo"
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
 import { useRef, useEffect, useState, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -449,7 +450,7 @@ export default function Header() {
                                     className="flex items-center gap-2 hover:bg-surface-highlight px-2 py-1.5 rounded-lg transition"
                                 >
                                     {session.user?.image ? (
-                                        <img src={session.user.image} alt={t('common.user')} className="w-8 h-8 rounded-lg object-cover" />
+                                        <Image src={session.user.image} alt={t('common.user')} width={32} height={32} unoptimized className="w-8 h-8 rounded-lg object-cover" />
                                     ) : (
                                         <div className="w-8 h-8 bg-primary-700 rounded-lg flex items-center justify-center text-sm font-bold text-white">
                                             {session.user?.name?.[0]?.toUpperCase()}

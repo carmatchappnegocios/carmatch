@@ -53,7 +53,7 @@ interface BusinessDetailsModalProps {
     categoryEmoji?: string
 }
 
-export default function BusinessDetailsModal({ business, onClose, categoryColor = '#3b82f6', categoryEmoji = '🔧' }: BusinessDetailsModalProps) {
+export default function BusinessDetailsModal({ business, onClose, categoryColor = '#0ea5e9', categoryEmoji = '🔧' }: BusinessDetailsModalProps) {
     const { t } = useLanguage()
     const [currentImageIndex, setCurrentImageIndex] = useState(0)
     const [showReportModal, setShowReportModal] = useState(false)

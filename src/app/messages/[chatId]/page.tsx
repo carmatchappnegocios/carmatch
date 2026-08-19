@@ -5,6 +5,7 @@
 'use client'
 
 import { useState, useEffect, useRef, use } from 'react'
+import Image from 'next/image'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -368,7 +369,7 @@ export default function ChatPage({
                                 <div className="flex items-center gap-3">
                                     <div className="w-10 h-10 rounded-xl bg-surface-highlight flex items-center justify-center overflow-hidden shrink-0">
                                         {chat.vehicle.user.image ? (
-                                            <img src={chat.vehicle.user.image} alt="" className="w-full h-full object-contain" />
+                                            <Image src={chat.vehicle.user.image} alt="" width={40} height={40} unoptimized className="w-full h-full object-contain" />
                                         ) : (
                                             <span className="text-lg font-bold text-text-secondary uppercase">{(chat.vehicle.user.name || '?')[0]}</span>
                                         )}

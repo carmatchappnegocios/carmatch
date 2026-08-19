@@ -4,6 +4,7 @@
 
 import { prisma } from "@/lib/db"
 import { Metadata } from 'next'
+import Image from 'next/image'
 
 import { Check, X, ShieldCheck, Zap, Info, ArrowLeft } from 'lucide-react'
 import Link from "next/link"
@@ -117,7 +118,7 @@ export default async function ComparativePage({ params }: Props) {
                     {activeVehicles.map((vehicle, idx) => (
                         <div key={vehicle.id} className="space-y-6">
                             <div className="aspect-square rounded-[2rem] overflow-hidden bg-surface-highlight border border-white/5 relative group shadow-2xl">
-                                <img src={vehicle.images[0]} alt={vehicle.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                                <Image src={vehicle.images[0]} alt={vehicle.title} width={400} height={400} unoptimized className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-6">
                                     <h2 className="text-2xl font-black text-white leading-tight">{vehicle.brand} {vehicle.model}</h2>
                                     <p className="text-primary-400 font-black text-xl">${vehicle.price.toLocaleString()} {vehicle.currency}</p>

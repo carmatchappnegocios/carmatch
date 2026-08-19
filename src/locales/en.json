@@ -310,6 +310,12 @@
         "generate_money_title": "MAKE MONEY\nWITH YOURS!",
         "convert_to_money": "Turn your car into money",
         "which_one": "Which one do you mean?",
+        "chat_suggestion_1": "Family van",
+        "chat_suggestion_2": "First cheap car",
+        "chat_suggestion_3": "4x4 diesel pickup",
+        "chat_suggestion_4": "Car for Uber",
+        "chat_done": "Done! I've filtered the results for you. 🚗✨",
+        "chat_error": "Oops, something went wrong. Could you tell me again what you're looking for?",
         "filters": {
             "title": "Find your ideal vehicle",
             "clear": "Clear Filters",
@@ -566,7 +572,8 @@
             "inactive": "Inactive"
         },
         "user_id": "User ID",
-        "edit_profile": "Edit Profile"
+        "edit_profile": "Edit Profile",
+        "rejected_vehicles": "Rejected by an Advisor - Enter to auto-correct data"
     },
     "business": {
         "title": "My Businesses",
@@ -979,7 +986,8 @@
         "browser_not_supported": "Your browser doesn't support push notifications",
         "timeout": "Request timed out",
         "save_error": "Error saving subscription",
-        "activate_error": "Error enabling notifications"
+        "activate_error": "Error enabling notifications",
+        "deactivate_title": "Notifications disabled"
     },
     "messages": {
         "loading_chat": "Loading chat...",
@@ -1172,7 +1180,8 @@
             "sending": "Sending...",
             "helper_text": "* The business will be hidden immediately while the administrator reviews your report.",
             "success_title": "Report Sent!",
-            "success_msg": "Thank you for your report. The business has been hidden for review."
+            "success_msg": "Thank you for your report. The business has been hidden for review.",
+            "error_send": "Error sending report. Please try again."
         }
     },
     "business_details": {
@@ -1626,7 +1635,9 @@
         "tracking_id": "Tracking ID",
         "coordinates": "Exact Coordinates",
         "call_911": "📞 CALL POLICE (911)",
-        "location_not_found": "Trying to get exact location..."
+        "location_not_found": "Trying to get exact location...",
+        "current_location": "Current location",
+        "location_of": "Location of"
     },
     "appointments": {
         "proposal_title": "Appointment Proposal",
@@ -1786,7 +1797,10 @@
         "reason.harassment": "Harassment / Hate",
         "reason.spam": "Spam / Fraud",
         "reason.not_real": "Not a real vehicle / business",
-        "reason.other": "Other"
+        "reason.other": "Other",
+        "chat_start": "Start a conversation with an administrator about your report.",
+        "admin": "ADMIN",
+        "you": "YOU"
     },
     "credits": {
         "success_title": "Success! 🎉",

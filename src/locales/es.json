@@ -307,6 +307,12 @@
         "generate_money_title": "¡GENERA DINERO\nCON EL TUYO!",
         "convert_to_money": "Convierte tu auto en dinero",
         "which_one": "¿A cuál te refieres?",
+        "chat_suggestion_1": "Camioneta familiar",
+        "chat_suggestion_2": "Primer carro barato",
+        "chat_suggestion_3": "Pickup 4x4 diesel",
+        "chat_suggestion_4": "Auto para Uber",
+        "chat_done": "¡Hecho! He filtrado los resultados para ti. 🚗✨",
+        "chat_error": "Ups, algo salió mal. ¿Podrías decirme de nuevo qué buscas?",
         "filters": {
             "title": "Busca tu vehículo ideal",
             "clear": "Limpiar Filtros",
@@ -566,7 +572,8 @@
             "inactive": "Inactivo"
         },
         "user_id": "ID de Usuario",
-        "edit_profile": "Editar Perfil"
+        "edit_profile": "Editar Perfil",
+        "rejected_vehicles": "Rechazado por un Asesor - Entra para corregir datos automáticamente"
     },
     "business": {
         "title": "Mis Negocios",
@@ -979,7 +986,8 @@
         "browser_not_supported": "Tu navegador no soporta notificaciones push",
         "timeout": "Tiempo de espera agotado",
         "save_error": "Error al guardar la suscripción",
-        "activate_error": "Error al activar las notificaciones"
+        "activate_error": "Error al activar las notificaciones",
+        "deactivate_title": "Notificaciones desactivadas"
     },
     "messages": {
         "loading_chat": "Cargando conversación...",
@@ -1204,7 +1212,8 @@
             "sending": "Enviando...",
             "helper_text": "* El negocio será ocultado inmediatamente mientras el administrador revisa tu reporte.",
             "success_title": "¡Reporte Enviado!",
-            "success_msg": "Gracias por tu reporte. El negocio ha sido ocultado para revisión."
+            "success_msg": "Gracias por tu reporte. El negocio ha sido ocultado para revisión.",
+            "error_send": "Error al enviar reporte. Por favor intenta de nuevo."
         }
     },
     "business_details": {
@@ -1626,7 +1635,9 @@
         "tracking_id": "ID Rastreo",
         "coordinates": "Coordenadas Exactas",
         "call_911": "📞 LLAMAR A LA POLICÍA (911)",
-        "location_not_found": "Intentando obtener ubicación exacta..."
+        "location_not_found": "Intentando obtener ubicación exacta...",
+        "current_location": "Ubicación actual",
+        "location_of": "Ubicación de"
     },
     "appointments": {
         "proposal_title": "Propuesta de Cita",
@@ -1786,7 +1797,10 @@
         "reason.harassment": "Acoso / Odio",
         "reason.spam": "Spam / Estafa",
         "reason.not_real": "No es un vehículo / negocio real",
-        "reason.other": "Otro"
+        "reason.other": "Otro",
+        "chat_start": "Inicia una conversación con un administrador sobre tu reporte.",
+        "admin": "ADMINISTRADOR",
+        "you": "TU"
     },
     "credits": {
         "success_title": "¡Operación Exitosa! 🎉",

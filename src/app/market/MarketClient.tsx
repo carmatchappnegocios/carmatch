@@ -620,7 +620,7 @@ export default function MarketClient({
                                                         ? `/map-store?id=${item.id}`
                                                         : `/comprar/${generateVehicleSlug(item.brand || item.title, item.model || '', item.year || 0, item.city)}-${item.id}${item.isBoosted && activeLocation?.city ? `?contextCity=${encodeURIComponent(activeLocation.city)}` : ''}`
                                                     }
-                                                    className="block relative aspect-[4/3] bg-gray-800 group-hover:opacity-95 transition-opacity"
+                                                    className="block relative aspect-[4/3] bg-surface group-hover:opacity-95 transition-opacity"
                                                 >
                                                     {item.images && item.images[0] ? (
                                                         <img

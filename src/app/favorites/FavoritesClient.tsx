@@ -5,6 +5,7 @@
 'use client'
 
 import Link from "next/link"
+import Image from "next/image"
 import Header from "@/components/Header"
 import FavoriteButton from "@/components/FavoriteButton"
 import { useLanguage } from "@/contexts/LanguageContext"
@@ -306,7 +307,7 @@ export default function FavoritesClient({ favorites }: { favorites: FavoriteVehi
                                         .filter(f => selectedIds.includes(f.vehicle.id))
                                         .map(f => (
                                             <div key={f.vehicle.id} className="w-10 h-10 rounded-full border-2 border-surface overflow-hidden bg-black/40">
-                                                <img src={f.vehicle.images[0]} alt="" className="w-full h-full object-cover" />
+                                                <Image src={f.vehicle.images[0]} alt="" width={40} height={40} unoptimized className="w-full h-full object-cover" />
                                             </div>
                                         ))
                                     }

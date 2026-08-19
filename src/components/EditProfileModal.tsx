@@ -3,6 +3,7 @@
 // DO NOT MODIFY THIS FILE WITHOUT EXPLICIT USER INSTRUCTION.
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { useSession } from 'next-auth/react'
@@ -198,7 +199,7 @@ export default function EditProfileModal({ isOpen, onClose, currentUser, userVeh
                                                     : 'border-transparent hover:border-surface-highlight'
                                                     }`}
                                             >
-                                                <img src={vehicle.images[0]} alt={vehicle.title} className="w-full h-full object-cover" />
+                                                <Image src={vehicle.images[0]} alt={vehicle.title} width={80} height={80} unoptimized className="w-full h-full object-cover" />
                                             </button>
                                         )
                                     ))}
@@ -339,7 +340,7 @@ export default function EditProfileModal({ isOpen, onClose, currentUser, userVeh
                                             >
                                                 <div className="flex items-center gap-3 flex-1 w-full">
                                                     {user.image ? (
-                                                        <img src={user.image} className="w-10 h-10 rounded-full object-cover bg-surface" alt="" />
+                                                        <Image src={user.image} width={40} height={40} unoptimized className="w-10 h-10 rounded-full object-cover bg-surface" alt="" />
                                                     ) : (
                                                         <div className="w-10 h-10 rounded-full bg-primary-500/20 flex items-center justify-center text-xs font-bold text-primary-400">
                                                             {user.name[0].toUpperCase()}

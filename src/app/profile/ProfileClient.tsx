@@ -253,7 +253,7 @@ export default function ProfileClient({ user, isOwner, vehiclesToShow }: Profile
                                                             <div className="flex flex-col gap-1 mt-2">
 
                                                                 {vehicle.moderationStatus === 'REJECTED' && (
-                                                                    <p className="text-[10px] text-red-400 font-bold uppercase tracking-wider">⚠️ Rechazado por un Asesor - Entra para corregir datos automáticamente</p>
+                                                                    <p className="text-[10px] text-red-400 font-bold uppercase tracking-wider">⚠️ {t('profile.rejected_vehicles') || 'Rechazado por un Asesor - Entra para corregir datos automáticamente'}</p>
                                                                 )}
                                                             </div>
                                                         )}
@@ -280,7 +280,7 @@ export default function ProfileClient({ user, isOwner, vehiclesToShow }: Profile
                                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                                                 </svg>
-                                                                Gestionar
+                                                                {t('common2.edit')}
                                                             </Link>
                                                         </div>
                                                     ) : null}
@@ -354,6 +354,7 @@ function PaginationControls({
 }
 
 function ReportChat({ reportId }: { reportId: string }) {
+    const { t } = useLanguage()
     const [messages, setMessages] = useState<any[]>([])
     const [newMessage, setNewMessage] = useState("")
     const [loading, setLoading] = useState(true)
@@ -406,7 +407,7 @@ function ReportChat({ reportId }: { reportId: string }) {
         }
     }
 
-    if (loading) return <div className="flex-1 flex items-center justify-center text-xs opacity-50">Cargando conversación...</div>
+    if (loading) return <div className="flex-1 flex items-center justify-center text-xs opacity-50">{t('common2.loading')}</div>
 
     return (
         <>
@@ -416,7 +417,7 @@ function ReportChat({ reportId }: { reportId: string }) {
                         <div className="p-4 bg-primary-400/10 rounded-full">
                             <Headset className="w-8 h-8 text-primary-400" />
                         </div>
-                        <p className="text-[10px] font-bold text-center">Inicia una conversación con un administrador sobre tu reporte.</p>
+                        <p className="text-[10px] font-bold text-center">{t('report.chat_start') || 'Inicia una conversación con un administrador sobre tu reporte.'}</p>
                     </div>
                 ) : (
                     messages.map((msg) => {
@@ -428,7 +429,7 @@ function ReportChat({ reportId }: { reportId: string }) {
                                     : 'bg-surface border border-surface-highlight text-text-primary rounded-tl-none'
                                     }`}>
                                     <div className="flex items-center gap-2 mb-1 opacity-70">
-                                        <span className="font-black uppercase text-[10px]">{msg.sender.isAdmin ? 'ADMINISTRADOR' : 'TU'}</span>
+                                        <span className="font-black uppercase text-[10px]">{msg.sender.isAdmin ? (t('report.admin') || 'ADMINISTRADOR') : (t('report.you') || 'TU')}</span>
                                         <span className="text-[10px]">{new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                                     </div>
                                     <p className="leading-relaxed">{msg.content}</p>
@@ -444,7 +445,7 @@ function ReportChat({ reportId }: { reportId: string }) {
                     <input
                         value={newMessage}
                         onChange={(e) => setNewMessage(e.target.value)}
-                        placeholder="Escribe un mensaje..."
+                        placeholder={t('messages.write_message') || "Escribe un mensaje..."}
                         className="flex-1 bg-background border border-surface-highlight rounded-xl px-4 py-2 text-xs focus:outline-none focus:border-primary-500 transition-colors"
                         disabled={sending}
                     />

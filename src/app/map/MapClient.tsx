@@ -324,7 +324,7 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                     {!showSidebar && (
                         <button
                             onClick={() => setShowSidebar(true)}
-                            className="w-fit px-5 py-2.5 bg-[#1a243d]/90 backdrop-blur-md text-white/80 rounded-full shadow-xl font-bold uppercase tracking-wider border border-white/10 flex items-center gap-2 active:scale-95 hover:bg-[#1a243d] transition-all"
+                            className="w-fit px-5 py-2.5 bg-surface/90 backdrop-blur-md text-white/80 rounded-full shadow-xl font-bold uppercase tracking-wider border border-white/10 flex items-center gap-2 active:scale-95 hover:bg-surface transition-all"
                         >
                             <Settings2 size={18} />
                             <span className="text-xs">{t('map_store.show_filters')}</span>
@@ -344,7 +344,7 @@ export default function MapClient({ businesses, user }: MapClientProps) {
 
                     {/* Filter Panel (Sidebar Content) */}
                     <div className={`
-                        relative h-full w-[85%] max-w-[340px] lg:w-full bg-[#1a243d]/95 backdrop-blur-2xl border-r border-white/10 shadow-[20px_0_50px_rgba(0,0,0,0.4)] lg:shadow-none flex flex-col transition-transform duration-300 ease-out transform pointer-events-auto
+                        relative h-full w-[85%] max-w-[340px] lg:w-full bg-surface/95 backdrop-blur-2xl border-r border-white/10 shadow-[20px_0_50px_rgba(0,0,0,0.4)] lg:shadow-none flex flex-col transition-transform duration-300 ease-out transform pointer-events-auto
                         ${showSidebar ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
                     `}>
                         <div className="flex-1 overflow-y-auto custom-scrollbar p-0 flex flex-col h-full bg-transparent">
