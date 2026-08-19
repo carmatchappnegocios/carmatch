@@ -185,7 +185,7 @@ export default function MyBusinessesClient() {
 
         } catch (error) {
             console.error('Error GPS:', error)
-            setGpsError('No se pudo detectar ubicación. Intenta de nuevo.')
+            setGpsError(t('business.gps_error'))
         } finally {
             setGpsLoading(false)
         }
@@ -261,7 +261,7 @@ export default function MyBusinessesClient() {
                     if (data.street) setStreet(data.street)
                     if (data.city) setCity(data.city)
                 } else {
-                    toast.error('No encontramos esa ubicación. Intenta ser más específico.')
+                    toast.error(t('business.location_not_found'))
                 }
             }
         } catch (error) {
@@ -424,11 +424,11 @@ export default function MyBusinessesClient() {
                 resetForm()
             } else {
                 const data = await res.json()
-                toast.error(data.error || 'Error al guardar negocio')
+                toast.error(data.error || t('business.save_error'))
             }
         } catch (error) {
             console.error('Error saving business:', error)
-            toast.error('Error de conexión al guardar negocio')
+            toast.error(t('business.save_connection_error'))
         } finally {
             setFormLoading(false)
         }
@@ -451,11 +451,11 @@ export default function MyBusinessesClient() {
                 fetchBusinesses()
                 setBusinessToDelete(null)
             } else {
-                toast.error('Error al eliminar negocio')
+                toast.error(t('business.delete_error'))
             }
         } catch (error) {
             console.error('Error deleting business:', error)
-            toast.error('Error al eliminar negocio')
+            toast.error(t('business.delete_error'))
         } finally {
             setIsDeleting(false)
         }
@@ -485,11 +485,11 @@ export default function MyBusinessesClient() {
                     setShowSuccessModal(true)
                 }
             } else {
-                toast.error(data.error || 'Error al cambiar estado')
+                toast.error(data.error || t('business.status_error'))
             }
         } catch (error) {
             console.error('Error toggling status:', error)
-            toast.error('Error al cambiar estado')
+            toast.error(t('business.status_error'))
         }
     }
 
@@ -542,7 +542,7 @@ export default function MyBusinessesClient() {
                                 {/* Category Selection (Define el color) */}
                                 <div className="bg-surface-highlight/30 p-4 rounded-xl border border-primary-700/20 mb-4">
                                     <label className="block text-sm font-bold text-primary-500 mb-2">
-                                        1. Primero selecciona el Tipo de Negocio
+                                        {t('business.step_category_first')}
                                     </label>
                                     <select
                                         name="category"
@@ -551,7 +551,7 @@ export default function MyBusinessesClient() {
                                         onChange={handleCategoryChange}
                                         className="w-full px-4 py-3 bg-background border-2 border-primary-700/50 rounded-lg text-text-primary focus:border-primary-700 outline-none font-medium text-sm md:text-base max-h-60"
                                     >
-                                        <option value="">Selecciona una categoría...</option>
+                                        <option value="">{t('business.category_placeholder')}</option>
                                         {/* Dynamic category list from taxonomy - Sorted Alphabetically by Translation */}
                                         {[...BUSINESS_CATEGORIES]
                                             .filter(cat => !cat.isPublic)
@@ -567,13 +567,13 @@ export default function MyBusinessesClient() {
                                 <div className="space-y-3">
                                     <p className="text-xs text-text-secondary hidden md:flex items-center gap-2">
                                         <span>💡</span>
-                                        Usa <strong>"Mi Ubicación"</strong> o busca la ciudad/calle. <span className="text-primary-400">El mapa es lo más preciso.</span>
+                                        {t('business.location_hint_text')}
                                     </p>
 
                                     {/* Global Search Bar */}
                                     <div className="md:col-span-6 mb-4">
                                         <label className="block text-sm font-medium text-text-primary mb-2">
-                                            🔍 Buscar Ubicación Exacta
+                                            {t('business.search_exact_location')}
                                         </label>
                                         <GlobalAddressSearch
                                             proximity={viewCenter}
@@ -595,7 +595,7 @@ export default function MyBusinessesClient() {
                                     {/* Address Summary */}
                                     <div className="md:col-span-6 bg-surface-highlight/30 p-3 rounded-lg border border-surface-highlight flex items-center justify-between">
                                         <div>
-                                            <p className="text-xs text-text-secondary uppercase font-bold tracking-wider mb-1">Dirección Detectada (Automática)</p>
+                                            <p className="text-xs text-text-secondary uppercase font-bold tracking-wider mb-1">{t('business.detected_address')}</p>
                                             <p className="text-text-primary text-sm font-medium">
                                                 {street} {streetNumber}, {colony}, {city}
                                             </p>
@@ -606,7 +606,7 @@ export default function MyBusinessesClient() {
                                             disabled={gpsLoading}
                                             className="text-xs text-primary-400 hover:text-primary-300 font-bold flex items-center gap-1 bg-surface px-3 py-2 rounded-lg border border-primary-900/30"
                                         >
-                                            {gpsLoading ? '⏳' : '📍 Actualizar con mi GPS'}
+                                            {gpsLoading ? '⏳' : t('business.update_gps')}
                                         </button>
                                     </div>
                                 </div>
@@ -644,23 +644,23 @@ export default function MyBusinessesClient() {
                                 {/* CONTACT INFO SECTION */}
                                 <div className="md:col-span-2 space-y-6 bg-surface-highlight/10 p-4 rounded-xl border border-surface-highlight">
                                     <h3 className="text-lg font-bold text-text-primary border-b border-surface-highlight pb-2">
-                                        📞 Contacto y Redes
+                                        {t('business.contact_section')}
                                     </h3>
 
                                     {/* Main Phone */}
                                     <div>
-                                        <PhoneInput
-                                            label="Teléfono Principal"
-                                            value={phone}
-                                            onChange={setPhone}
-                                            required
-                                            name="phone"
-                                        />
+                                            <PhoneInput
+                                                label={t('business.main_phone')}
+                                                value={phone}
+                                                onChange={setPhone}
+                                                required
+                                                name="phone"
+                                            />
                                     </div>
 
                                     {/* Additional Phones */}
                                     <div className="space-y-3">
-                                        <label className="block text-sm font-medium text-text-primary">Teléfonos Adicionales (Opcional)</label>
+                                        <label className="block text-sm font-medium text-text-primary">{t('business.additional_phones')}</label>
                                         <div className="space-y-2">
                                             {additionalPhones.map((p, idx) => (
                                                 <div key={idx} className="flex gap-2 animate-fade-in">
@@ -672,7 +672,7 @@ export default function MyBusinessesClient() {
                                                                 newPhones[idx] = val;
                                                                 setAdditionalPhones(newPhones);
                                                             }}
-                                                            placeholder={`Teléfono ${idx + 2}`}
+                                                            placeholder={`${t('business.phone_number')} ${idx + 2}`}
                                                         />
                                                     </div>
                                                     <button
@@ -690,7 +690,7 @@ export default function MyBusinessesClient() {
                                                     onClick={() => setAdditionalPhones(prev => [...prev, ''])}
                                                     className="w-full py-2 border-2 border-dashed border-surface-highlight rounded-lg text-text-secondary text-sm hover:border-primary-700/50 hover:text-primary-400 transition flex items-center justify-center gap-2"
                                                 >
-                                                    + Agregar otro teléfono
+                                                    {t('business.add_phone')}
                                                 </button>
                                             )}
                                         </div>
@@ -701,19 +701,19 @@ export default function MyBusinessesClient() {
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div>
                                             <PhoneInput
-                                                label="WhatsApp (Opcional)"
+                                                label={t('business.whatsapp_optional')}
                                                 value={whatsapp}
                                                 onChange={setWhatsapp}
-                                                placeholder="Para mensajería..."
+                                                placeholder={t('business.messaging_placeholder')}
                                                 name="whatsapp"
                                             />
                                         </div>
                                         <div>
                                             <PhoneInput
-                                                label="Telegram (Opcional)"
+                                                label={t('business.telegram_optional')}
                                                 value={telegram}
                                                 onChange={setTelegram}
-                                                placeholder="Para mensajería..."
+                                                placeholder={t('business.messaging_placeholder')}
                                                 name="telegram"
                                             />
                                         </div>
@@ -722,7 +722,7 @@ export default function MyBusinessesClient() {
                                     {/* Social Media & Web */}
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div>
-                                            <label className="block text-sm font-medium text-text-primary mb-1">🌐 Sitio Web (Opcional)</label>
+                                            <label className="block text-sm font-medium text-text-primary mb-1">{t('business.website_optional')}</label>
                                             <input
                                                 value={website}
                                                 onChange={(e) => setWebsite(e.target.value)}
@@ -731,34 +731,34 @@ export default function MyBusinessesClient() {
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-sm font-medium text-text-primary mb-1">📘 Facebook (Opcional)</label>
+                                            <label className="block text-sm font-medium text-text-primary mb-1">{t('business.facebook_optional')}</label>
                                             <input
                                                 value={facebook}
                                                 onChange={(e) => setFacebook(e.target.value)}
-                                                placeholder="Link a perfil/página"
+                                                placeholder={t('business.facebook_placeholder')}
                                                 className="w-full px-4 py-3 bg-background border border-surface-highlight rounded-lg outline-none focus:border-primary-500 text-sm"
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-sm font-medium text-text-primary mb-1">📷 Instagram (Opcional)</label>
+                                            <label className="block text-sm font-medium text-text-primary mb-1">{t('business.instagram_optional')}</label>
                                             <input
                                                 value={instagram}
                                                 onChange={(e) => setInstagram(e.target.value)}
-                                                placeholder="@usuario o link"
+                                                placeholder={t('business.instagram_placeholder')}
                                                 className="w-full px-4 py-3 bg-background border border-surface-highlight rounded-lg outline-none focus:border-primary-500 text-sm"
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-sm font-medium text-text-primary mb-1">🎵 TikTok (Opcional)</label>
+                                            <label className="block text-sm font-medium text-text-primary mb-1">{t('business.tiktok_optional')}</label>
                                             <input
                                                 value={tiktok}
                                                 onChange={(e) => setTiktok(e.target.value)}
-                                                placeholder="@usuario"
+                                                placeholder={t('business.tiktok_placeholder')}
                                                 className="w-full px-4 py-3 bg-background border border-surface-highlight rounded-lg outline-none focus:border-primary-500 text-sm"
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-sm font-medium text-text-primary mb-1">⏰ Horario de Atención (Opcional)</label>
+                                            <label className="block text-sm font-medium text-text-primary mb-1">{t('business.hours_optional')}</label>
                                             <div className="mt-1">
                                                 <OpeningHoursEditor
                                                     value={hours}
@@ -770,7 +770,7 @@ export default function MyBusinessesClient() {
                                 </div>
 
                                 <div className="md:col-span-2">
-                                    <label className="block text-sm font-medium text-text-primary mb-2">{t('business.description_label')} (Opcional)</label>
+                                    <label className="block text-sm font-medium text-text-primary mb-2">{t('business.description_optional')}</label>
                                     <textarea
                                         name="description"
                                         defaultValue={getBusinessValue('description' as any)}
@@ -785,7 +785,7 @@ export default function MyBusinessesClient() {
                                     <div className="bg-primary-900/10 p-5 rounded-2xl border border-primary-500/20">
                                         <div className="flex items-center gap-2 mb-4">
                                             <ShieldCheck size={18} className="text-primary-400" />
-                                            <h4 className="text-sm font-black uppercase tracking-widest text-primary-400">Punto de Encuentro Seguro</h4>
+                                            <h4 className="text-sm font-black uppercase tracking-widest text-primary-400">{t('business.safe_meeting_point')}</h4>
                                         </div>
 
                                         <label className="flex items-start gap-4 p-4 bg-background/40 hover:bg-background/60 rounded-xl cursor-pointer transition-all border border-transparent hover:border-primary-500/30 group">
@@ -799,12 +799,12 @@ export default function MyBusinessesClient() {
                                             </div>
                                             <div className="flex-1">
                                                 <div className="flex items-center gap-2 mb-1">
-                                                    <span className="text-sm font-black text-text-primary uppercase tracking-tight">Ofrecer mi local como punto seguro</span>
+                                                    <span className="text-sm font-black text-text-primary uppercase tracking-tight">{t('business.offer_local_safe')}</span>
                                                     <Sparkles size={14} className="text-primary-500 animate-pulse" />
                                                 </div>
                                                 <p className="text-xs text-text-secondary leading-relaxed">
-                                                    Permite que compradores y vendedores usen tu negocio como punto de reunión verificado.
-                                                    <span className="text-primary-400/80 ml-1 font-medium">Esto aumenta la visibilidad de tu local y atrae potenciales clientes.</span>
+                                                    {t('business.safe_meeting_desc')}
+                                                    <span className="text-primary-400/80 ml-1 font-medium">{t('business.safe_meeting_benefit')}</span>
                                                 </p>
                                             </div>
                                         </label>
@@ -822,7 +822,7 @@ export default function MyBusinessesClient() {
                                                 <Clock size={16} />
                                             </div>
                                             <div className="flex-1">
-                                                <span className={`text-xs font-bold uppercase tracking-tight ${is24Hours ? 'text-blue-400' : 'text-text-secondary'}`}>Servicio 24 Horas</span>
+                                                <span className={`text-xs font-bold uppercase tracking-tight ${is24Hours ? 'text-blue-400' : 'text-text-secondary'}`}>{t('business.service_24h')}</span>
                                             </div>
                                         </label>
 
@@ -837,7 +837,7 @@ export default function MyBusinessesClient() {
                                                 <AlertCircle size={16} />
                                             </div>
                                             <div className="flex-1">
-                                                <span className={`text-xs font-bold uppercase tracking-tight ${hasEmergencyService ? 'text-red-400' : 'text-text-secondary'}`}>Emergencia</span>
+                                                <span className={`text-xs font-bold uppercase tracking-tight ${hasEmergencyService ? 'text-red-400' : 'text-text-secondary'}`}>{t('business.emergency_service')}</span>
                                             </div>
                                         </label>
 
@@ -852,14 +852,14 @@ export default function MyBusinessesClient() {
                                                 <Briefcase size={16} />
                                             </div>
                                             <div className="flex-1">
-                                                <span className={`text-xs font-bold uppercase tracking-tight ${hasHomeService ? 'text-green-400' : 'text-text-secondary'}`}>A domicilio</span>
+                                                <span className={`text-xs font-bold uppercase tracking-tight ${hasHomeService ? 'text-green-400' : 'text-text-secondary'}`}>{t('business.home_service')}</span>
                                             </div>
                                         </label>
                                     </div>
                                 </div>
 
                                 <div className="md:col-span-2">
-                                    <label className="block text-sm font-medium text-text-primary mb-3">{t('business.services_label')} (Opcional)</label>
+                                    <label className="block text-sm font-medium text-text-primary mb-3">{t('business.services_optional')}</label>
 
                                     {!currentCategory ? (
                                         <p className="text-sm text-text-secondary italic">{t('business.select_category_helper')}</p>
@@ -882,14 +882,14 @@ export default function MyBusinessesClient() {
                                     {/* Custom Service Input */}
                                     <div className="mt-4 pt-4 border-t border-surface-highlight/30">
                                         <label className="block text-sm font-medium text-text-primary mb-2">
-                                            ✨ ¿Ofreces otro servicio? (Agrégalo aquí)
+                                            {t('business.offer_other_service')}
                                         </label>
                                         <div className="flex gap-2">
                                             <input
                                                 type="text"
                                                 id="custom-service-input"
                                                 className="flex-1 px-4 py-2 bg-background border border-surface-highlight rounded-lg text-text-primary text-sm focus:border-primary-500 outline-none"
-                                                placeholder="Ej. Restauración de Volantes..."
+                                                placeholder={t('business.custom_service_placeholder')}
                                                 onKeyDown={(e) => {
                                                     if (e.key === 'Enter') {
                                                         e.preventDefault();
@@ -914,7 +914,7 @@ export default function MyBusinessesClient() {
                                                 }}
                                                 className="px-4 py-2 bg-surface-highlight hover:bg-surface-highlight/80 text-primary-400 font-bold rounded-lg border border-primary-900/30"
                                             >
-                                                + Agregar
+                                                {t('business.add_service')}
                                             </button>
                                         </div>
                                     </div>
@@ -931,7 +931,7 @@ export default function MyBusinessesClient() {
                                         setImages(newImages)
                                     }}
                                     maxImages={1}
-                                    label="Foto de Portada (Opcional)"
+                                    label={t('business.cover_photo')}
                                     required={false}
                                     imageType="business" // 🛡️ Moderación de negocio activada
                                 />
@@ -943,14 +943,14 @@ export default function MyBusinessesClient() {
                                     onClick={resetForm}
                                     className="px-6 py-3 bg-surface-highlight text-text-primary rounded-lg hover:bg-surface transition"
                                 >
-                                    Cancelar
+                                    {t('business.cancel')}
                                 </button>
                                 <button
                                     type="submit"
                                     disabled={formLoading || !latitude}
                                     className="px-6 py-3 bg-primary-700 text-text-primary rounded-lg hover:bg-primary-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
-                                    {formLoading ? 'Guardando...' : (editingBusinessId ? 'Actualizar Negocio' : 'Crear Negocio')}
+                                    {formLoading ? t('business.saving') : (editingBusinessId ? t('business.update_business') : t('business.create_business'))}
                                 </button>
                             </div>
                         </form>
@@ -1003,7 +1003,7 @@ export default function MyBusinessesClient() {
                                             </>
                                         ) : (
                                             <div className="w-full h-full flex items-center justify-center text-text-secondary">
-                                                Sin foto
+                                                {t('business.no_photo')}
                                             </div>
                                         )}
                                         <div className="absolute top-2 left-2 z-20 flex items-center gap-1.5 px-2 py-1 bg-black/60 rounded-full text-white text-xs font-medium">
@@ -1020,7 +1020,7 @@ export default function MyBusinessesClient() {
                                         </div>
                                         {business.expiresAt && (
                                             <div className="mt-2 text-xs font-medium text-text-secondary bg-surface-highlight/30 px-2 py-1 rounded inline-block">
-                                                📅 Vence: {new Date(business.expiresAt).toLocaleDateString('es-MX', {
+                                                {t('business.expires')} {new Date(business.expiresAt).toLocaleDateString('es-MX', {
                                                     day: 'numeric',
                                                     month: 'long',
                                                     year: 'numeric'
@@ -1042,7 +1042,7 @@ export default function MyBusinessesClient() {
                                                 <><Pause size={16} className="mr-1" /> {t('business.deactivate')}</>
                                             ) : (
                                                 (business.expiresAt && new Date(business.expiresAt) < new Date()) || !business.expiresAt ? (
-                                                    <><Play size={16} className="mr-1" /> Reactivar</>
+                                                    <><Play size={16} className="mr-1" /> {t('business.reactivate')}</>
                                                 ) : (
                                                     <><Play size={16} className="mr-1" /> {t('business.activate')}</>
                                                 )
@@ -1052,12 +1052,12 @@ export default function MyBusinessesClient() {
                                             onClick={() => handleEdit(business)}
                                             className="flex-1 py-2 bg-surface-highlight text-text-primary rounded-lg text-sm hover:bg-surface transition"
                                         >
-                                            Editar
+                                            {t('business.edit')}
                                         </button>
                                         <button
                                             onClick={() => handleDelete(business.id)}
                                             className="px-3 py-2 bg-red-900/20 text-red-400 rounded-lg text-sm hover:bg-red-900/30 transition flex items-center justify-center"
-                                            title="Eliminar"
+                                            title={t('business.delete')}
                                         >
                                             <Trash2 size={16} />
                                         </button>
@@ -1075,10 +1075,10 @@ export default function MyBusinessesClient() {
             <ConfirmationModal
                 isOpen={showNoCreditsModal}
                 onClose={() => setShowNoCreditsModal(false)}
-                title="Protocolo de Seguridad"
-                message="Para activar funciones avanzadas es necesario completar el protocolo de validación. ¿Deseas continuar?"
+                title={t('business.security_protocol_title')}
+                message={t('business.security_protocol_msg')}
                 variant="info"
-                confirmLabel="Continuar"
+                confirmLabel={t('business.security_protocol_confirm')}
                 onConfirm={() => router.push('/credits?action=topup')}
             />
 
@@ -1086,10 +1086,10 @@ export default function MyBusinessesClient() {
             <ConfirmationModal
                 isOpen={showSuccessModal}
                 onClose={() => setShowSuccessModal(false)}
-                title="¡Operación Exitosa!"
-                message="Tu negocio ya está visible para todos en el mapa y la red."
+                title={t('business.success_title')}
+                message={t('business.success_msg')}
                 variant="success"
-                confirmLabel="Excelente"
+                confirmLabel={t('business.success_confirm')}
                 showCancel={false}
                 onConfirm={() => setShowSuccessModal(false)}
             />
@@ -1098,11 +1098,11 @@ export default function MyBusinessesClient() {
             <ConfirmationModal
                 isOpen={!!businessToDelete}
                 onClose={() => setBusinessToDelete(null)}
-                title="¿Eliminar Negocio?"
-                message="Esta acción no se puede deshacer. ¿Estás seguro de que quieres eliminar este negocio permanentemente?"
+                title={t('business.delete_title')}
+                message={t('business.delete_msg')}
                 variant="danger"
-                confirmLabel="Eliminar Definitivamente"
-                cancelLabel="Cancelar"
+                confirmLabel={t('business.delete_confirm_btn')}
+                cancelLabel={t('business.cancel')}
                 onConfirm={confirmDelete}
                 isLoading={isDeleting}
             />

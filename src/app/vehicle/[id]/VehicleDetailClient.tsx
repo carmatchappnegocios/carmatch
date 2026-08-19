@@ -194,7 +194,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                             {vehicle.expiresAt && (
                                 <div className={`flex items-center gap-1.5 text-xs font-bold ${(isExpired && vehicle.status !== 'ACTIVE') ? 'text-red-400' : 'text-text-secondary'}`}>
                                     <Calendar size={14} />
-                                    {(isExpired && vehicle.status !== 'ACTIVE') ? 'Expirado el: ' : 'Vence el: '}
+                                    {(isExpired && vehicle.status !== 'ACTIVE') ? t('vehicle.detail.expired_on') : t('vehicle.detail.expires_on')}
                                     {new Date(vehicle.expiresAt).toLocaleDateString(locale === 'es' ? 'es-MX' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric' })}
                                 </div>
                             )}
@@ -207,7 +207,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                             className="flex flex-col items-center justify-center p-3 rounded-2xl bg-surface-highlight hover:bg-surface-highlight/80 text-text-primary transition border border-white/5 gap-1 group"
                         >
                             <Edit3 size={20} className="text-primary-400 group-hover:scale-110 transition" />
-                            <span className="text-[10px] font-bold uppercase tracking-tighter">Editar</span>
+                            <span className="text-[10px] font-bold uppercase tracking-tighter">{t('vehicle.detail.edit')}</span>
                         </Link>
 
                         {vehicle.status !== 'ACTIVE' && needsCreditToActivate && !isSold && (
@@ -215,7 +215,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                 action="activate-credit"
                                 vehicleId={vehicle.id}
                                 icon={<Play size={20} />}
-                                label="Reactivar"
+                                label={t('vehicle.detail.reactivate')}
                                 variant="credit"
                             />
                         )}
@@ -225,7 +225,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                 action="activate"
                                 vehicleId={vehicle.id}
                                 icon={<Play size={20} />}
-                                label="Activar"
+                                label={t('vehicle.detail.activate')}
                                 variant="success"
                             />
                         )}
@@ -235,7 +235,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                 action="pause"
                                 vehicleId={vehicle.id}
                                 icon={<Pause size={20} />}
-                                label="Pausar"
+                                label={t('vehicle.detail.pause')}
                                 variant="neutral"
                             />
                         )}
@@ -245,7 +245,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                 action="sold"
                                 vehicleId={vehicle.id}
                                 icon={<BadgeCheck size={20} />}
-                                label="Marcado como vendido"
+                                label={t('vehicle.detail.mark_sold')}
                                 variant="sold"
                             />
                         )}
@@ -254,7 +254,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                             action="delete"
                             vehicleId={vehicle.id}
                             icon={<Trash2 size={20} />}
-                            label="Eliminar"
+                            label={t('vehicle.detail.delete')}
                             variant="danger"
                         />
                     </div>
@@ -279,7 +279,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                     {isOwner && (
                         <div className="bg-primary-700/10 text-primary-400 px-4 py-1.5 rounded-xl border border-primary-700/30 flex items-center gap-2 lg:hidden">
                             <BadgeCheck size={16} />
-                            <span className="text-xs font-black uppercase tracking-widest">Mi Publicación</span>
+                            <span className="text-xs font-black uppercase tracking-widest">{t('vehicle.detail.my_listing')}</span>
                         </div>
                     )}
                 </div>
@@ -386,7 +386,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                             setShowFullImage(false);
                                         }}
                                         className="text-white hover:text-red-400 p-3 bg-slate-900/80 border border-white/20 rounded-full backdrop-blur-md transition-all active:scale-95 flex items-center justify-center cursor-pointer shadow-2xl"
-                                        title="Cerrar vista completa"
+                                        title={t('vehicle.detail.close_fullscreen')}
                                     >
                                         <X size={32} strokeWidth={3} />
                                     </button>
@@ -490,13 +490,13 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                     <div className="flex flex-wrap items-center gap-2 mb-2">
                                         <p className="text-primary-400 font-bold text-sm tracking-wider uppercase">
                                             {vehicle.condition === 'Nuevo' || vehicle.condition === 'NEW' ? t('vehicle.condition_new') :
-                                                vehicle.condition === 'Seminuevo (Casi Nuevo)' || vehicle.condition === 'Seminuevo' ? 'Seminuevo' :
+                                                vehicle.condition === 'Seminuevo (Casi Nuevo)' || vehicle.condition === 'Seminuevo' ? t('vehicle.detail.condition_like_new') :
                                                     t('vehicle.condition_used')} · {vehicle.year}
                                         </p>
                                         {(vehicle.moderationStatus === 'APPROVED' || (vehicle.status === 'ACTIVE' && vehicle.moderationStatus !== 'REJECTED')) && (
                                             <span className="flex items-center gap-1.5 px-3 py-1 bg-primary-600/10 text-primary-400 border border-primary-500/20 text-[10px] font-black uppercase tracking-wider rounded-md backdrop-blur-sm">
                                                 <BadgeCheck size={12} className="text-primary-400" />
-                                                CarMatch Verificado
+                                                {t('vehicle.detail.verified_badge')}
                                             </span>
                                         )}
                                     </div>
@@ -523,7 +523,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                         vehicleId={vehicle.id}
                                         vehicleTitle={vehicle.title}
                                         status={vehicle.status as any}
-                                        label="Mandar Mensaje al Vendedor"
+                                        label={t('vehicle.detail.contact_seller_btn')}
                                         className="w-full text-lg py-4 shadow-lg shadow-primary-900/20 active:scale-[0.98] transition-all"
                                     />
                                 )}
@@ -556,7 +556,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                                     className="text-xs text-red-500/60 hover:text-red-500 font-bold uppercase tracking-widest text-center py-2 transition-colors flex items-center justify-center gap-1.5"
                                                 >
                                                     <AlertTriangle size={12} />
-                                                    Reportar esta publicación
+                                                    {t('vehicle.detail.report_listing')}
                                                 </button>
                                                 {/* Hidden trigger for the report modal */}
                                                 <div className="hidden">
@@ -578,7 +578,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                 <DetailItem icon={<Fuel size={20} />} label={t('publish.labels.fuel')} value={vehicle.fuel || 'N/A'} />
                                 <DetailItem
                                     icon={<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>}
-                                    label="Motor"
+                                    label={t('publish.labels.engine')}
                                     value={(() => {
                                         const engine = vehicle.engine || '';
                                         const disp = vehicle.displacement;
@@ -592,20 +592,20 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
 
                             {/* Ficha Técnica Extra */}
                             <div className="border-t border-surface-highlight pt-6 mb-8">
-                                <h3 className="text-lg font-bold text-text-primary mb-4">Especificaciones</h3>
+                                <h3 className="text-lg font-bold text-text-primary mb-4">{t('vehicle.detail.specifications')}</h3>
                                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                    <DetailItem icon={<CheckCircle2 size={18} />} label="Transmisión" value={vehicle.transmission || 'N/A'} />
-                                    <DetailItem icon={<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-2v2" /></svg>} label="Color" value={vehicle.color || 'N/A'} />
-                                    <DetailItem icon={<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>} label="Puertas" value={vehicle.doors?.toString() || 'N/A'} />
-                                    <DetailItem icon={<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" /></svg>} label="Categoría" value={vehicle.vehicleType || 'N/A'} />
+                                    <DetailItem icon={<CheckCircle2 size={18} />} label={t('publish.labels.transmission')} value={vehicle.transmission || 'N/A'} />
+                                    <DetailItem icon={<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-2v2" /></svg>} label={t('publish.labels.color')} value={vehicle.color || 'N/A'} />
+                                    <DetailItem icon={<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>} label={t('vehicle.detail.doors')} value={vehicle.doors?.toString() || 'N/A'} />
+                                    <DetailItem icon={<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" /></svg>} label={t('vehicle.detail.category')} value={vehicle.vehicleType || 'N/A'} />
 
-                                    <DetailItem icon={<CheckCircle2 size={18} />} label="Condición" value={vehicle.condition || 'N/A'} />
+                                    <DetailItem icon={<CheckCircle2 size={18} />} label={t('publish.labels.condition')} value={vehicle.condition || 'N/A'} />
 
                                     {/* 🏎️ ESPECIFICACIONES AVANZADAS (NUEVAS) */}
                                     {vehicle.displacement && (
                                         <DetailItem
                                             icon={<Settings2 size={18} />}
-                                            label="Cilindraje"
+                                            label={t('vehicle.detail.displacement')}
                                             value={vehicle.displacement > 100 ? `${vehicle.displacement} cc` : `${vehicle.displacement}L`}
                                         />
                                     )}
@@ -613,7 +613,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                     {vehicle.hp && (
                                         <DetailItem
                                             icon={<Zap size={18} />}
-                                            label="Potencia"
+                                            label={t('vehicle.detail.power')}
                                             value={`${vehicle.hp} HP`}
                                         />
                                     )}
@@ -621,7 +621,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                     {vehicle.torque && (
                                         <DetailItem
                                             icon={<Activity size={18} />}
-                                            label="Torque"
+                                            label={t('vehicle.detail.torque')}
                                             value={vehicle.torque}
                                         />
                                     )}
@@ -629,7 +629,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                     {vehicle.cylinders && (
                                         <DetailItem
                                             icon={<CircleDot size={18} />}
-                                            label="Cilindros"
+                                            label={t('vehicle.detail.cylinders')}
                                             value={vehicle.cylinders.toString()}
                                         />
                                     )}
@@ -637,7 +637,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                     {vehicle.aspiration && (
                                         <DetailItem
                                             icon={<Wind size={18} />}
-                                            label="Aspiración"
+                                            label={t('vehicle.detail.aspiration')}
                                             value={vehicle.aspiration}
                                         />
                                     )}
@@ -645,7 +645,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                     {vehicle.batteryCapacity && (
                                         <DetailItem
                                             icon={<BatteryCharging size={18} />}
-                                            label="Batería"
+                                            label={t('vehicle.detail.battery')}
                                             value={`${vehicle.batteryCapacity} kWh`}
                                         />
                                     )}
@@ -653,7 +653,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                     {vehicle.range && (
                                         <DetailItem
                                             icon={<Route size={18} />}
-                                            label="Rango Eléctrico"
+                                            label={t('vehicle.detail.electric_range')}
                                             value={`${vehicle.range} km`}
                                         />
                                     )}
@@ -661,7 +661,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                     {vehicle.weight && (
                                         <DetailItem
                                             icon={<Weight size={18} />}
-                                            label="Peso"
+                                            label={t('vehicle.detail.weight')}
                                             value={`${vehicle.weight} kg`}
                                         />
                                     )}
@@ -669,7 +669,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                     {vehicle.axles && (
                                         <DetailItem
                                             icon={<Truck size={18} />}
-                                            label="Ejes"
+                                            label={t('vehicle.detail.axles')}
                                             value={vehicle.axles.toString()}
                                         />
                                     )}
@@ -677,7 +677,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                     {vehicle.cargoCapacity && (
                                         <DetailItem
                                             icon={<Container size={18} />}
-                                            label="Carga"
+                                            label={t('vehicle.detail.cargo')}
                                             value={`${vehicle.cargoCapacity} kg`}
                                         />
                                     )}
@@ -685,21 +685,21 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                     {vehicle.traction && (
                                         <DetailItem
                                             icon={<Settings2 size={18} />}
-                                            label="Tracción"
+                                            label={t('vehicle.detail.traction')}
                                             value={vehicle.traction}
                                         />
                                     )}
                                     {vehicle.passengers && (
                                         <DetailItem
                                             icon={<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>}
-                                            label="Pasajeros"
+                                            label={t('vehicle.detail.passengers')}
                                             value={vehicle.passengers.toString()}
                                         />
                                     )}
                                     {vehicle.operatingHours && (
                                         <DetailItem
                                             icon={<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>}
-                                            label="Horas de Uso"
+                                            label={t('vehicle.detail.operating_hours')}
                                             value={`${formatNumber(vehicle.operatingHours, locale)} hrs`}
                                         />
                                     )}
@@ -710,8 +710,8 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                             {vehicle.features && vehicle.features.length > 0 && (
                                 <div className="border-t border-surface-highlight pt-6 mb-8 border-2 border-primary-500/50 rounded-2xl p-5 bg-primary-500/5">
                                     <h3 className="text-xl font-bold text-text-primary mb-4 font-outfit flex items-center gap-2">
-                                        <svg className="w-5 h-5 text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
-                                        Equipamiento
+                                    <svg className="w-5 h-5 text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
+                                    {t('vehicle.detail.equipment')}
                                     </h3>
                                     <div className="flex flex-wrap gap-2">
                                         {vehicle.features.map((feature, idx) => (
@@ -736,7 +736,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                 <div className="border-t border-surface-highlight pt-8 mt-4">
                                     <h3 className="text-xl font-bold text-text-primary mb-6 font-outfit flex items-center gap-2">
                                         <ShieldCheck size={22} className="text-primary-400" />
-                                        Información del Vendedor
+                                        {t('vehicle.detail.seller_info')}
                                     </h3>
                                     <div className="bg-surface-highlight/20 border border-white/5 rounded-3xl p-6 transition-all hover:bg-surface-highlight/30">
                                         <div className="flex items-center justify-between">
@@ -769,8 +769,8 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                                     </p>
                                                     <p className="text-sm text-text-secondary font-medium">{t('vehicle.verified_seller')}</p>
                                                     <div className="flex items-center gap-4 mt-2">
-                                                        <span className="text-xs px-2.5 py-1 bg-green-500/10 text-green-400 rounded-lg border border-green-500/20 font-bold uppercase tracking-tight">Active Now</span>
-                                                        <span className="text-xs text-primary-400 font-bold">Ver Perfil Completo →</span>
+                                                        <span className="text-xs px-2.5 py-1 bg-green-500/10 text-green-400 rounded-lg border border-green-500/20 font-bold uppercase tracking-tight">{t('vehicle.detail.active_now')}</span>
+                                                        <span className="text-xs text-primary-400 font-bold">{t('vehicle.detail.view_full_profile')}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -784,7 +784,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                 <div className="border-t border-surface-highlight pt-12 mt-8">
                                     <h3 className="text-2xl font-black text-text-primary mb-6 font-outfit flex items-center gap-3">
                                         <Sparkles size={24} className="text-primary-400" />
-                                        También te podría interesar
+                                        {t('vehicle.detail.related_title')}
                                     </h3>
                                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                                         {relatedVehicles.map((rv: any) => (
@@ -827,6 +827,7 @@ function OwnerActionButton({ action, vehicleId, icon, label, variant }: {
     label: string,
     variant: 'ia' | 'credit' | 'success' | 'neutral' | 'sold' | 'danger'
 }) {
+    const { t } = useLanguage()
     const [loading, setLoading] = useState(false)
     const [modal, setModal] = useState<{
         isOpen: boolean;
@@ -885,10 +886,10 @@ function OwnerActionButton({ action, vehicleId, icon, label, variant }: {
             if (res.ok) {
                 setModal({
                     isOpen: true,
-                    title: '¡Éxito!',
-                    message: `La acción "${label}" se ha realizado correctamente.`,
+                    title: t('vehicle.detail.modal.success_title'),
+                    message: t('vehicle.detail.modal.success_message'),
                     variant: 'success',
-                    confirmLabel: 'Aceptar',
+                    confirmLabel: t('vehicle.detail.modal.accept'),
 
                     onConfirm: () => {
                         if (action === 'delete') {
@@ -903,10 +904,10 @@ function OwnerActionButton({ action, vehicleId, icon, label, variant }: {
 
                 setModal({
                     isOpen: true,
-                    title: isInsufficientCredits ? 'Actualización Requerida' : 'Error',
-                    message: isInsufficientCredits ? 'Para continuar con esta acción es necesario actualizar tu plan de servicios.' : (data.error || 'No se pudo completar la acción. Inténtalo de nuevo más tarde.'),
+                    title: isInsufficientCredits ? t('vehicle.detail.modal.update_required_title') : t('vehicle.detail.modal.error'),
+                    message: isInsufficientCredits ? t('vehicle.detail.modal.update_required_message') : (data.error || t('vehicle.detail.modal.generic_error')),
                     variant: isInsufficientCredits ? 'credit' : 'danger',
-                    confirmLabel: isInsufficientCredits ? 'Continuar' : 'Entendido',
+                    confirmLabel: isInsufficientCredits ? t('vehicle.detail.modal.continue') : t('vehicle.detail.modal.understood'),
                     onConfirm: isInsufficientCredits ? () => router.push('/credits?action=topup') : () => setModal(prev => ({ ...prev, isOpen: false })),
                 })
             }
@@ -914,10 +915,10 @@ function OwnerActionButton({ action, vehicleId, icon, label, variant }: {
             console.error(e)
             setModal({
                 isOpen: true,
-                title: 'Error de Conexión',
-                message: 'Ocurrió un error técnico al procesar tu solicitud. Revisa tu conexión de internet.',
+                title: t('vehicle.detail.modal.connection_error_title'),
+                message: t('vehicle.detail.modal.connection_error_message'),
                 variant: 'danger',
-                confirmLabel: 'Aceptar',
+                confirmLabel: t('vehicle.detail.modal.accept'),
                 onConfirm: () => setModal(prev => ({ ...prev, isOpen: false }))
             })
         } finally {
@@ -928,31 +929,31 @@ function OwnerActionButton({ action, vehicleId, icon, label, variant }: {
     const handleClick = () => {
         if (action === 'edit') return // Handled by Link
 
-        let title = '¿Estás seguro?'
-        let message = `¿Deseas ${label.toLowerCase()} esta publicación?`
+        let title = t('vehicle.detail.modal.confirm_title')
+        let message = t('vehicle.detail.modal.confirm_message', { action: label.toLowerCase() })
         let variant: 'info' | 'danger' | 'success' | 'credit' = 'info'
-        let confirmLabel = 'Confirmar'
+        let confirmLabel = t('vehicle.detail.modal.confirm')
 
         if (action === 'ai-fix') {
-            title = 'Corrección Automática'
-            message = '¿Deseas corregir los datos de tu vehículo automáticamente según las fotos y activarlo ahora?'
+            title = t('vehicle.detail.modal.ai_fix_title')
+            message = t('vehicle.detail.modal.ai_fix_message')
             variant = 'info'
         }
         if (action === 'activate-credit') {
-            title = 'Reactivar Publicación'
-            message = '¿Deseas reactivar esta publicación? Esto la mantendrá visible para otros usuarios por 30 días.'
+            title = t('vehicle.detail.modal.reactivate_title')
+            message = t('vehicle.detail.modal.reactivate_message')
             variant = 'info'
-            confirmLabel = 'Reactivar'
+            confirmLabel = t('vehicle.detail.modal.reactivate_confirm')
         }
         if (action === 'sold') {
             variant = 'success'
-            confirmLabel = 'Marcar como Vendido'
+            confirmLabel = t('vehicle.detail.modal.mark_sold_confirm')
         }
-        if (action === 'delete') { // Added delete action logic
-            title = '¿Eliminar Vehículo?'
-            message = 'Esta acción es permanente y no se puede deshacer. ¿Seguro que quieres eliminar este vehículo?'
+        if (action === 'delete') {
+            title = t('vehicle.detail.modal.delete_title')
+            message = t('vehicle.detail.modal.delete_message')
             variant = 'danger'
-            confirmLabel = 'Sí, Eliminar'
+            confirmLabel = t('vehicle.detail.modal.delete_confirm')
         }
 
         setModal({

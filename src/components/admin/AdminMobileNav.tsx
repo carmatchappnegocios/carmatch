@@ -53,7 +53,7 @@ export default function AdminMobileNav({ activeView, setActiveView, menuItems }:
                             />
                         )}
                         <Icon className={`w-6 h-6 ${isActive ? 'stroke-[2.5px]' : 'stroke-[1.5px]'}`} />
-                        {/* <span className="text-[9px] font-medium">{isMenu ? 'Menú' : item?.label}</span> */}
+                        {/* <span className="text-[10px] font-medium">{isMenu ? 'Menú' : item?.label}</span> */}
                     </button>
                 )
             })}

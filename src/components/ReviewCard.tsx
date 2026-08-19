@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Star, MoreVertical, Pencil, Trash2 } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 import RatingDisplay from './RatingDisplay'
 
 interface Review {
@@ -24,6 +25,7 @@ interface ReviewCardProps {
 }
 
 export default function ReviewCard({ review, currentUserId, onUpdate, onDelete }: ReviewCardProps) {
+    const { t } = useLanguage()
     const [showMenu, setShowMenu] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
     const [editRating, setEditRating] = useState(review.rating)
@@ -31,7 +33,7 @@ export default function ReviewCard({ review, currentUserId, onUpdate, onDelete }
 
     const isAuthor = currentUserId === review.user.id
     const date = new Date(review.createdAt)
-    const timeAgo = getTimeAgo(date)
+    const timeAgo = getTimeAgo(date, t)
 
     const handleSave = () => {
         if (onUpdate) {
@@ -41,7 +43,7 @@ export default function ReviewCard({ review, currentUserId, onUpdate, onDelete }
     }
 
     const handleDelete = () => {
-        if (onDelete && confirm('¿Eliminar esta reseña?')) {
+        if (onDelete && confirm(t('reviewCard.confirmDelete'))) {
             onDelete(review.id)
         }
         setShowMenu(false)
@@ -62,7 +64,7 @@ export default function ReviewCard({ review, currentUserId, onUpdate, onDelete }
                         )}
                     </div>
                     <div>
-                        <p className="font-medium text-surface-text">{review.user.name || 'Anónimo'}</p>
+                        <p className="font-medium text-surface-text">{review.user.name || t('reviewCard.anonymous')}</p>
                         <p className="text-xs text-surface-textTertiary">{timeAgo}</p>
                     </div>
                 </div>
@@ -81,13 +83,13 @@ export default function ReviewCard({ review, currentUserId, onUpdate, onDelete }
                                     onClick={() => { setIsEditing(true); setShowMenu(false) }}
                                     className="w-full px-3 py-2 text-left text-sm hover:bg-surface-highlight flex items-center gap-2"
                                 >
-                                    <Pencil size={14} /> Editar
+                                    <Pencil size={14} /> {t('reviewCard.edit')}
                                 </button>
                                 <button
                                     onClick={handleDelete}
                                     className="w-full px-3 py-2 text-left text-sm hover:bg-surface-highlight text-red-500 flex items-center gap-2"
                                 >
-                                    <Trash2 size={14} /> Eliminar
+                                    <Trash2 size={14} /> {t('reviewCard.delete')}
                                 </button>
                             </div>
                         )}
@@ -120,7 +122,7 @@ export default function ReviewCard({ review, currentUserId, onUpdate, onDelete }
                     <textarea
                         value={editComment}
                         onChange={(e) => setEditComment(e.target.value)}
-                        placeholder="Escribe tu reseña..."
+                        placeholder={t('reviewCard.writeReview')}
                         className="w-full p-3 bg-surface-background border border-surface-border rounded-lg text-surface-text placeholder-surface-textTertiary resize-none"
                         rows={3}
                     />
@@ -129,13 +131,13 @@ export default function ReviewCard({ review, currentUserId, onUpdate, onDelete }
                             onClick={() => setIsEditing(false)}
                             className="px-3 py-1.5 text-sm text-surface-textSecondary hover:bg-surface-highlight rounded-lg"
                         >
-                            Cancelar
+                            {t('reviewCard.cancel')}
                         </button>
                         <button
                             onClick={handleSave}
                             className="px-3 py-1.5 text-sm bg-primary-600 text-white rounded-lg hover:bg-primary-700"
                         >
-                            Guardar
+                            {t('reviewCard.save')}
                         </button>
                     </div>
                 </div>
@@ -148,17 +150,17 @@ export default function ReviewCard({ review, currentUserId, onUpdate, onDelete }
     )
 }
 
-function getTimeAgo(date: Date): string {
+function getTimeAgo(date: Date, t: (key: string) => string): string {
     const now = new Date()
     const diffMs = now.getTime() - date.getTime()
     const diffMins = Math.floor(diffMs / 60000)
     const diffHours = Math.floor(diffMins / 60)
     const diffDays = Math.floor(diffHours / 24)
 
-    if (diffMins < 1) return 'ahora mismo'
-    if (diffMins < 60) return `hace ${diffMins} min`
-    if (diffHours < 24) return `hace ${diffHours}h`
-    if (diffDays < 7) return `hace ${diffDays}d`
-    if (diffDays < 30) return `hace ${Math.floor(diffDays / 7)} sem`
-    return date.toLocaleDateString('es-MX', { day: 'numeric', month: 'short' })
+    if (diffMins < 1) return t('reviewCard.timeAgo.justNow')
+    if (diffMins < 60) return t('reviewCard.timeAgo.minutesAgo').replace('{n}', String(diffMins))
+    if (diffHours < 24) return t('reviewCard.timeAgo.hoursAgo').replace('{n}', String(diffHours))
+    if (diffDays < 7) return t('reviewCard.timeAgo.daysAgo').replace('{n}', String(diffDays))
+    if (diffDays < 30) return t('reviewCard.timeAgo.weeksAgo').replace('{n}', String(Math.floor(diffDays / 7)))
+    return date.toLocaleDateString(undefined, { day: 'numeric', month: 'short' })
 }

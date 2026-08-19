@@ -9,11 +9,9 @@ import { checkRateLimit } from '@/lib/rate-limit'
 
 export async function GET(req: NextRequest) {
     const session = await auth()
-    if (!session?.user?.id) {
-        return NextResponse.json({ error: 'No autenticado' }, { status: 401 })
-    }
+    const userId = session?.user?.id || req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'anonymous'
 
-    const rl = checkRateLimit(`map-search:${session.user.id}`, { windowMs: 60000, max: 30 })
+    const rl = checkRateLimit(`map-search:${userId}`, { windowMs: 60000, max: 30 })
     if (!rl.allowed) {
         return NextResponse.json({ error: 'Demasiadas peticiones' }, { status: 429 })
     }

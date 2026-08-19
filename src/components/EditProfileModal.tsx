@@ -86,7 +86,7 @@ export default function EditProfileModal({ isOpen, onClose, currentUser, userVeh
                 <button
                     onClick={onClose}
                     className="absolute top-4 right-4 text-text-secondary hover:text-text-primary"
-                    aria-label="Cerrar"
+                    aria-label={t('edit_profile.close')}
                 >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -158,7 +158,7 @@ export default function EditProfileModal({ isOpen, onClose, currentUser, userVeh
                                         <div className="relative w-full max-w-xs aspect-video rounded-xl overflow-hidden shadow-lg border-2 border-surface-highlight bg-surface mx-auto">
                                             <img
                                                 src={`/defaults/avatars/car_${((currentUser.name?.charCodeAt(0) || 0) % 6) + 1}.png`}
-                                                alt="Avatar temporal"
+                                                alt={t('edit_profile.temp_avatar')}
                                                 className="w-full h-full object-cover opacity-90"
                                             />
                                             <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-t from-black/80 via-transparent to-transparent">
@@ -224,7 +224,7 @@ export default function EditProfileModal({ isOpen, onClose, currentUser, userVeh
                         {/* Mostrar ID para compartir */}
                         <div className="bg-background/50 border border-surface-highlight rounded-lg p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                             <div className="flex flex-col overflow-hidden">
-                                <span className="text-[10px] text-text-secondary uppercase font-bold tracking-wider truncate">Tu Código de Perfil</span>
+                                <span className="text-[10px] text-text-secondary uppercase font-bold tracking-wider truncate">{t('edit_profile.profile_code')}</span>
                                 <span className="text-xs font-mono text-primary-400 truncate">{currentUser.id}</span>
                             </div>
                             <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
@@ -235,22 +235,22 @@ export default function EditProfileModal({ isOpen, onClose, currentUser, userVeh
                                     }}
                                     className="px-3 py-2 bg-surface hover:bg-surface-highlight border border-surface-highlight rounded-lg text-[10px] font-bold text-text-primary transition flex items-center justify-center min-w-[60px]"
                                 >
-                                    Copiar
+                                    {t('edit_profile.copy_code')}
                                 </button>
                                 <button
                                     type="button"
                                     onClick={async () => {
                                         if (currentUser.id) {
                                             const shareData = {
-                                                title: 'Mi Código CarMatch Social',
-                                                text: `Agrégame como tu contacto de confianza en CarMatch Social. Mi código es: ${currentUser.id}`,
+                                                title: t('edit_profile.my_carmatch_code'),
+                                                text: t('edit_profile.share_trusted_text', { id: currentUser.id }),
                                             }
                                             try {
                                                 if (navigator.share) {
                                                     await navigator.share(shareData)
                                                 } else {
                                                     navigator.clipboard.writeText(shareData.text)
-                                                    toast('Código copiado al portapapeles')
+                                                    toast(t('edit_profile.code_copied'))
                                                 }
                                             } catch (err) {
                                                 console.error('Error sharing:', err)
@@ -260,7 +260,7 @@ export default function EditProfileModal({ isOpen, onClose, currentUser, userVeh
                                     className="px-3 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-[10px] font-bold transition flex items-center gap-1.5 shadow-lg shadow-primary-900/20"
                                 >
                                     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg>
-                                    Compartir
+                                    {t('edit_profile.share')}
                                 </button>
                             </div>
                         </div>
@@ -274,7 +274,7 @@ export default function EditProfileModal({ isOpen, onClose, currentUser, userVeh
                                         </svg>
                                     </div>
                                     <div>
-                                        <span className="block text-xs text-primary-300 font-bold uppercase tracking-wider">Contacto Confirmado</span>
+                                        <span className="block text-xs text-primary-300 font-bold uppercase tracking-wider">{t('edit_profile.confirmed_contact')}</span>
                                         <span className="text-base font-bold text-text-primary">{trustedContactName}</span>
                                     </div>
                                 </div>
@@ -292,12 +292,12 @@ export default function EditProfileModal({ isOpen, onClose, currentUser, userVeh
                         ) : (
                             <div className="space-y-2">
                                 <label className="text-[10px] font-bold text-text-secondary uppercase tracking-wider block">
-                                    Agrega a tu Contacto de Confianza
+                                    {t('edit_profile.add_trusted_contact')}
                                 </label>
                                 <div className="relative">
                                     <input
                                         type="text"
-                                        placeholder="Pega aquí el código que te enviaron..."
+                                        placeholder={t('edit_profile.paste_code_placeholder')}
                                         className="w-full bg-background border border-surface-highlight rounded-xl px-4 py-3 pl-10 text-sm text-text-primary outline-none focus:border-primary-500 transition placeholder:text-text-secondary/50"
                                         value={searchQuery}
                                         onChange={async (e) => {
@@ -347,7 +347,7 @@ export default function EditProfileModal({ isOpen, onClose, currentUser, userVeh
                                                     )}
                                                     <div>
                                                         <span className="block text-sm font-bold text-text-primary">{user.name}</span>
-                                                        <span className="block text-xs text-text-secondary">Usuario CarMatch Social</span>
+                                                        <span className="block text-xs text-text-secondary">{t('edit_profile.carmatch_user')}</span>
                                                     </div>
                                                 </div>
 
@@ -368,7 +368,7 @@ export default function EditProfileModal({ isOpen, onClose, currentUser, userVeh
                                     </div>
                                 )}
                                 <p className="text-[10px] text-text-secondary italic">
-                                    * Solo puedes tener 1 contacto de confianza activo. Este contacto recibirá tu ubicación cuando confirmes una cita segura.
+                                    {t('edit_profile.trusted_contact_limit')}
                                 </p>
                             </div>
                         )}

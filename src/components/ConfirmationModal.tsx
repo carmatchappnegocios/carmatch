@@ -6,6 +6,7 @@
 
 import { useEffect, useState } from 'react'
 import { AlertCircle, CheckCircle2, Info, X, CreditCard } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface ConfirmationModalProps {
     isOpen: boolean
@@ -30,14 +31,17 @@ export default function ConfirmationModal({
     onConfirm,
     title,
     message,
-    confirmLabel = 'Confirmar',
-    cancelLabel = 'Cancelar',
+    confirmLabel,
+    cancelLabel,
     variant = 'info',
     showCancel = true,
     isLoading = false,
     secondaryAction
 }: ConfirmationModalProps) {
+    const { t } = useLanguage()
     const [mounted, setMounted] = useState(false)
+    confirmLabel = confirmLabel ?? t('confirmation_modal.confirm')
+    cancelLabel = cancelLabel ?? t('confirmation_modal.cancel')
 
     useEffect(() => {
         setMounted(true)
@@ -143,7 +147,7 @@ export default function ConfirmationModal({
                 <button
                     onClick={onClose}
                     className="absolute top-4 right-4 p-2 text-text-secondary hover:text-text-primary transition-colors bg-background/20 rounded-full"
-                    aria-label="Cerrar"
+                    aria-label={t('confirmation_modal.close')}
                 >
                     <X size={20} />
                 </button>
