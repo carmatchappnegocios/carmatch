@@ -88,3 +88,38 @@ export async function PATCH(request: NextRequest) {
         return NextResponse.json({ error: 'Error interno' }, { status: 500 })
     }
 }
+
+// DELETE: Eliminar una alerta SOS resuelta/cancelada
+export async function DELETE(request: NextRequest) {
+    try {
+        const session = await auth()
+        if (!session?.user?.id) return NextResponse.json({ error: 'No autenticado' }, { status: 401 })
+
+        const { alertId } = await request.json()
+
+        if (!alertId) {
+            return NextResponse.json({ error: 'alertId requerido' }, { status: 400 })
+        }
+
+        const alert = await prisma.sOSAlert.findUnique({ where: { id: alertId } })
+
+        if (!alert) {
+            return NextResponse.json({ error: 'Alerta no encontrada' }, { status: 404 })
+        }
+
+        if (alert.victimId !== session.user.id && alert.counterpartId !== session.user.id) {
+            return NextResponse.json({ error: 'No autorizado' }, { status: 403 })
+        }
+
+        if (alert.status === 'ACTIVE') {
+            return NextResponse.json({ error: 'No se puede eliminar una alerta activa. Resuélvela primero.' }, { status: 400 })
+        }
+
+        await prisma.sOSAlert.delete({ where: { id: alertId } })
+
+        return NextResponse.json({ success: true })
+    } catch (error) {
+        console.error('Error deleting SOS:', error)
+        return NextResponse.json({ error: 'Error interno' }, { status: 500 })
+    }
+}
