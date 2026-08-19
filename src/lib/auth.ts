@@ -119,7 +119,7 @@ export const {
                         const passwordChangeTime = dbUser.lastPasswordChange.getTime()
                         if (passwordChangeTime > tokenTime) {
                             // Token was issued before password change - invalidate
-                            return {} as Record<string, unknown>
+                            return null
                         }
                     }
                 }
