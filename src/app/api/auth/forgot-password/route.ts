@@ -3,19 +3,7 @@ import crypto from 'crypto'
 import { prisma } from '@/lib/db'
 import { validateAndNormalizeEmail } from '@/lib/email-validation'
 import { checkRateLimit } from '@/lib/rate-limit'
-
-// TODO: For production, move this to the database (e.g., a PasswordResetToken table)
-// or add passwordResetToken and passwordResetExpiry fields to the User model.
-// This in-memory store only works for single-instance development.
-interface PasswordResetEntry {
-    token: string
-    userId: string
-    expiresAt: number
-}
-
-const passwordResetTokens = new Map<string, PasswordResetEntry>()
-
-const TOKEN_EXPIRY_MS = 60 * 60 * 1000 // 1 hour
+import { passwordResetTokens, TOKEN_EXPIRY_MS } from '@/lib/password-reset-tokens'
 
 export async function POST(request: Request) {
     try {
@@ -104,5 +92,3 @@ export async function POST(request: Request) {
         )
     }
 }
-
-export { passwordResetTokens }

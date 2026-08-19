@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import { hashPassword } from '@/lib/password'
 import { checkRateLimit } from '@/lib/rate-limit'
-import { passwordResetTokens } from '../forgot-password/route'
+import { passwordResetTokens } from '@/lib/password-reset-tokens'
 
 function getIpFromHeaders(request: Request): string {
     return request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
