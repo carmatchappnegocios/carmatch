@@ -26,7 +26,11 @@ export async function POST(request: NextRequest) {
             include: { businesses: true }
         })
 
-        const business = user?.businesses.find(b => b.id === id)
+        if (!user) {
+            return NextResponse.json({ error: 'User not found' }, { status: 404 })
+        }
+
+        const business = user.businesses.find(b => b.id === id)
 
         if (!business) {
             return NextResponse.json({ error: 'Business not found or unauthorized' }, { status: 404 })
