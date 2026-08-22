@@ -10,6 +10,7 @@ export default function MapError({
     reset: () => void
 }) {
     Sentry.captureException(error)
+    console.error('[MAP ERROR BOUNDARY]', error?.message || error)
 
     return (
         <div className="min-h-[60vh] flex items-center justify-center bg-background px-4">

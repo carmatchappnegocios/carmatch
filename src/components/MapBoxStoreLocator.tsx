@@ -56,6 +56,7 @@ export default function MapBoxStoreLocator({
     const mapContainer = useRef<HTMLDivElement>(null)
     const map = useRef<mapboxgl.Map | null>(null)
     const [mapLoaded, setMapLoaded] = useState(false)
+    const [mapError, setMapError] = useState<string | null>(null)
 
     // Default: Neutral Center (Fallback if everything fails)
     // Usamos un centro de México para que no aparezca en el mar o en LA por error
@@ -77,7 +78,9 @@ export default function MapBoxStoreLocator({
             ? [initialLocation.longitude, initialLocation.latitude]
             : [DEFAULT_LNG, DEFAULT_LAT]
 
-        const newMap = new mapboxgl.Map({
+        let newMap: mapboxgl.Map
+        try {
+        newMap = new mapboxgl.Map({
             container: mapContainer.current,
             style: 'mapbox://styles/mapbox/outdoors-v12',
             center: center,
@@ -89,6 +92,12 @@ export default function MapBoxStoreLocator({
             refreshExpiredTiles: false,
             trackResize: true,
         })
+        } catch (e) {
+            console.error('[MAP] Failed to initialize Mapbox map:', e)
+            setMapError('No se pudo inicializar el mapa. Verifica tu conexión o el token de Mapbox.')
+            setMapLoaded(true)
+            return
+        }
 
         newMap.addControl(new mapboxgl.NavigationControl(), 'top-right')
 
@@ -192,7 +201,7 @@ export default function MapBoxStoreLocator({
         if (!map.current || !mapLoaded) return
 
         const mapInstance = map.current
-        const features = businesses
+        const features = (businesses || [])
             .filter(b => b.latitude && b.longitude)
             .map(b => ({
                 type: 'Feature',
@@ -230,9 +239,18 @@ export default function MapBoxStoreLocator({
         if (!mapInstance.hasImage('pin')) {
             const pinImg = new window.Image(384, 512)
             pinImg.onload = () => {
-                if (!mapInstance.hasImage('pin')) {
-                    mapInstance.addImage('pin', pinImg, { sdf: true })
+                try {
+                    if (!mapInstance.hasImage('pin')) {
+                        mapInstance.addImage('pin', pinImg, { sdf: true })
+                        // 🔥 FORZAR REDIBUJADO: la capa se montó antes de tener el ícono
+                        mapInstance.triggerRepaint()
+                    }
+                } catch (e) {
+                    console.error('[MAP] Failed to add pin image:', e)
                 }
+            }
+            pinImg.onerror = (e) => {
+                console.error('[MAP] Failed to load pin SVG:', e)
             }
             pinImg.src = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 384 512'%3E%3Cpath fill='%23fff' d='M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z'/%3E%3C/svg%3E"
         }
@@ -427,8 +445,21 @@ export default function MapBoxStoreLocator({
 
     return (
         <div className="w-full h-full relative bg-gray-900">
-            <div ref={mapContainer} className="w-full h-full" />
-            {!mapLoaded && (
+            {mapError ? (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/50 z-10 backdrop-blur-sm px-6">
+                    <div className="text-center max-w-sm">
+                        <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-red-500/10 flex items-center justify-center">
+                            <svg className="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                            </svg>
+                        </div>
+                        <p className="text-sm text-white/80">{mapError}</p>
+                    </div>
+                </div>
+            ) : (
+                <div ref={mapContainer} className="w-full h-full" />
+            )}
+            {!mapLoaded && !mapError && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/50 z-10 backdrop-blur-sm">
                     <div className="flex flex-col items-center gap-2">
                         <div className="w-8 h-8 border-4 border-primary-500 border-t-transparent rounded-full animate-spin"></div>

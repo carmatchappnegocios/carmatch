@@ -172,6 +172,16 @@ export default function MapClient({ businesses, user }: MapClientProps) {
 
     const [isAnalyzing, setIsAnalyzing] = useState(false)
 
+    // 🔧 Estabilizar referencias para evitar re-ejecución innecesaria del effect del mapa
+    const categoryColors = useMemo(
+        () => CATEGORIES.reduce((acc, cat) => ({ ...acc, [cat.id]: cat.color }), {}),
+        []
+    )
+    const categoryEmojis = useMemo(
+        () => CATEGORIES.reduce((acc, cat) => ({ ...acc, [cat.id]: cat.icon }), {}),
+        []
+    )
+
 
 
 
@@ -309,12 +319,12 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                 <div className="absolute inset-0 lg:relative lg:flex-1 lg:inset-auto z-0 order-2">
                     <MapBoxStoreLocator
                         businesses={filteredBusinesses}
-                        categoryColors={CATEGORIES.reduce((acc, cat) => ({ ...acc, [cat.id]: cat.color }), {})}
-                        categoryEmojis={CATEGORIES.reduce((acc, cat) => ({ ...acc, [cat.id]: cat.icon }), {})}
                         initialLocation={location ? { latitude: location.latitude, longitude: location.longitude } : undefined}
                         onBoundsChange={handleBoundsChange}
                         highlightCategories={searchSuccess ? selectedCategories : []}
                         preciseLocationEnabled={preciseLocationEnabled}
+                        categoryColors={categoryColors}
+                        categoryEmojis={categoryEmojis}
                     />
                 </div>
 
