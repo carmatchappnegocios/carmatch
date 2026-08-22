@@ -135,6 +135,7 @@ export default function MapBoxStoreLocator({
             }
 
             newMap.on('moveend', reportBounds)
+            newMap.on('dragstart', () => { userMovedRef.current = true })
             setTimeout(reportBounds, 1000)
         })
 
@@ -176,7 +177,8 @@ export default function MapBoxStoreLocator({
     }, [])
 
     const lastFlyToRef = useRef<{ lat: number; lng: number } | null>(null)
-    const didFitBoundsRef = useRef(false)
+    const userMovedRef = useRef(false)
+    const didSafetyFitRef = useRef(false)
 
     // 📍 Re-centrar mapa cuando cambia la ubicación (Manual o GPS)
     useEffect(() => {
@@ -443,20 +445,28 @@ export default function MapBoxStoreLocator({
             });
         }
 
-        // 🔧 FIT BOUNDS: Solo si NO hay ubicación válida del usuario (caso raro),
-        // centramos en todos los negocios para que algo se vea. Si hay ubicación
-        // (GPS/IP), el mapa se queda centrado en el usuario y los negocios cercanos
-        // cargan vía el API de bounds (no arrastramos la vista a todo México).
-        if (!didFitBoundsRef.current && features.length > 0 && !initialLocation) {
+        // 🔧 RED DE SEGURIDAD: garantizar que SIEMPRE haya negocios visibles.
+        // Si la vista actual del usuario no contiene ningún negocio (ej. el mapa
+        // inició en el centro DEFAULT mientras resuelve el GPS, o una zona sin
+        // negocios), hacemos fitBounds a TODOS los negocios. Si la vista YA tiene
+        // negocios (el usuario está sobre su zona), respetamos su ubicación y no ajustamos.
+        // No re-ajustamos si el usuario paneó manualmente (userMovedRef).
+        if (features.length > 0 && !didSafetyFitRef.current && !userMovedRef.current) {
             try {
-                const bounds = new mapboxgl.LngLatBounds()
-                features.forEach((f: any) => bounds.extend(f.geometry.coordinates as [number, number]))
-                if (!bounds.isEmpty()) {
-                    mapInstance.fitBounds(bounds, { padding: 60, maxZoom: 14, duration: 0 })
-                    didFitBoundsRef.current = true
+                const view = mapInstance.getBounds()
+                const anyInView = features.some((f: any) =>
+                    view.contains(f.geometry.coordinates as [number, number])
+                )
+                if (!anyInView) {
+                    const bounds = new mapboxgl.LngLatBounds()
+                    features.forEach((f: any) => bounds.extend(f.geometry.coordinates as [number, number]))
+                    if (!bounds.isEmpty()) {
+                        mapInstance.fitBounds(bounds, { padding: 60, maxZoom: 14, duration: 0 })
+                        didSafetyFitRef.current = true
+                    }
                 }
             } catch (e) {
-                console.error('[MAP] fitBounds failed:', e)
+                console.error('[MAP] safety fitBounds failed:', e)
             }
         }
     }, [businesses, mapLoaded, categoryColors, t])
