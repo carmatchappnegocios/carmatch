@@ -319,7 +319,7 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                 <div className="absolute inset-0 lg:relative lg:flex-1 lg:inset-auto z-0 order-2">
                     <MapBoxStoreLocator
                         businesses={filteredBusinesses}
-                        initialLocation={location ? { latitude: location.latitude, longitude: location.longitude } : undefined}
+                        initialLocation={location && (location.latitude !== 0 || location.longitude !== 0) ? { latitude: location.latitude, longitude: location.longitude } : undefined}
                         onBoundsChange={handleBoundsChange}
                         highlightCategories={searchSuccess ? selectedCategories : []}
                         preciseLocationEnabled={preciseLocationEnabled}

@@ -176,6 +176,7 @@ export default function MapBoxStoreLocator({
     }, [])
 
     const lastFlyToRef = useRef<{ lat: number; lng: number } | null>(null)
+    const didFitBoundsRef = useRef(false)
 
     // 📍 Re-centrar mapa cuando cambia la ubicación (Manual o GPS)
     useEffect(() => {
@@ -440,6 +441,21 @@ export default function MapBoxStoreLocator({
                     }
                 }
             });
+        }
+
+        // 🔧 FIT BOUNDS: Garantizar que los pines sean visibles al cargar,
+        // sin importar la detección de ubicación (evita mapa centrado en el océano 0,0).
+        if (!didFitBoundsRef.current && features.length > 0) {
+            try {
+                const bounds = new mapboxgl.LngLatBounds()
+                features.forEach((f: any) => bounds.extend(f.geometry.coordinates as [number, number]))
+                if (!bounds.isEmpty()) {
+                    mapInstance.fitBounds(bounds, { padding: 60, maxZoom: 14, duration: 0 })
+                    didFitBoundsRef.current = true
+                }
+            } catch (e) {
+                console.error('[MAP] fitBounds failed:', e)
+            }
         }
     }, [businesses, mapLoaded, categoryColors, t])
 

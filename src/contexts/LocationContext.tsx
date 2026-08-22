@@ -194,8 +194,16 @@ export function LocationProvider({
                 }
             } catch (e) {
                 console.warn('⚠️ IP detection failed. Using cached or defaulting to Mexico...')
-                // 🛡️ FALLBACK FINAL: Si la IP falla también, al menos no bloqueamos
-                setLocation(prev => prev || { latitude: 0, longitude: 0, city: undefined, country: 'Mexico', countryCode: 'MX' })
+                // 🛡️ FALLBACK FINAL: Si la IP falla también, centramos en México (Cd. Juárez)
+                // NUNCA (0,0) porque eso centra el mapa en el océano y oculta todos los negocios.
+                setLocation(prev => prev || {
+                    latitude: 31.6904,
+                    longitude: -106.4245,
+                    city: 'Ciudad Juárez',
+                    state: 'Chihuahua',
+                    country: 'México',
+                    countryCode: 'MX'
+                })
             } finally {
                 setLoading(false) // ✅ Siempre liberar el loading al terminar IP
             }
