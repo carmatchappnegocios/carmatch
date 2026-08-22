@@ -53,7 +53,7 @@ async function searchCity(query: string) {
 export default function MapClient({ businesses, user }: MapClientProps) {
     const { t } = useLanguage()
     // 🔥 USANDO CONTEXTO GLOBAL
-    const { location, loading, initializing, error, refreshLocation, setManualLocation, preciseLocationEnabled } = useLocation()
+    const { location, loading, initializing, error, refreshLocation, setManualLocation, manualLocation, gpsPermission, preciseLocationEnabled } = useLocation()
     const { openModal } = useRestoreSessionModal()
     const searchParams = useSearchParams()
     const [selectedCategories, setSelectedCategories] = useState<string[]>([])
@@ -78,6 +78,16 @@ export default function MapClient({ businesses, user }: MapClientProps) {
             localStorage.setItem('carmatch_map_cache', JSON.stringify(businesses))
         }
     }, [businesses])
+
+    // 🛰️ GPS PRIORITARIO: Al abrir el mapa, usar la ubicación REAL del usuario (GPS)
+    // en vez de la IP (imprecisa). Si el usuario deniega GPS, getUserLocation cae a IP.
+    useEffect(() => {
+        if (!manualLocation && gpsPermission !== 'denied') {
+            refreshLocation()
+        }
+    // Solo al montar del mapa
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     useEffect(() => {
         if ((!businesses || businesses.length === 0) && !navigator.onLine) {

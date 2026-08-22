@@ -443,9 +443,11 @@ export default function MapBoxStoreLocator({
             });
         }
 
-        // 🔧 FIT BOUNDS: Garantizar que los pines sean visibles al cargar,
-        // sin importar la detección de ubicación (evita mapa centrado en el océano 0,0).
-        if (!didFitBoundsRef.current && features.length > 0) {
+        // 🔧 FIT BOUNDS: Solo si NO hay ubicación válida del usuario (caso raro),
+        // centramos en todos los negocios para que algo se vea. Si hay ubicación
+        // (GPS/IP), el mapa se queda centrado en el usuario y los negocios cercanos
+        // cargan vía el API de bounds (no arrastramos la vista a todo México).
+        if (!didFitBoundsRef.current && features.length > 0 && !initialLocation) {
             try {
                 const bounds = new mapboxgl.LngLatBounds()
                 features.forEach((f: any) => bounds.extend(f.geometry.coordinates as [number, number]))
