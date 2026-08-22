@@ -454,6 +454,7 @@ export default function MapBoxStoreLocator({
         if (features.length > 0 && !didSafetyFitRef.current && !userMovedRef.current) {
             try {
                 const view = mapInstance.getBounds()
+                if (!view) return
                 const anyInView = features.some((f: any) =>
                     view.contains(f.geometry.coordinates as [number, number])
                 )
