@@ -445,29 +445,18 @@ export default function MapBoxStoreLocator({
             });
         }
 
-        // 🔧 RED DE SEGURIDAD: garantizar que SIEMPRE haya negocios visibles.
-        // Si la vista actual del usuario no contiene ningún negocio (ej. el mapa
-        // inició en el centro DEFAULT mientras resuelve el GPS, o una zona sin
-        // negocios), hacemos fitBounds a TODOS los negocios. Si la vista YA tiene
-        // negocios (el usuario está sobre su zona), respetamos su ubicación y no ajustamos.
-        // No re-ajustamos si el usuario paneó manualmente (userMovedRef).
-        if (features.length > 0 && !didSafetyFitRef.current && !userMovedRef.current) {
+        // 🔧 FIT BOUNDS: Centrar en todos los negocios una sola vez para garantizar
+        // que siempre sean visibles al cargar el mapa.
+        if (features.length > 0 && !didSafetyFitRef.current) {
             try {
-                const view = mapInstance.getBounds()
-                if (!view) return
-                const anyInView = features.some((f: any) =>
-                    view.contains(f.geometry.coordinates as [number, number])
-                )
-                if (!anyInView) {
-                    const bounds = new mapboxgl.LngLatBounds()
-                    features.forEach((f: any) => bounds.extend(f.geometry.coordinates as [number, number]))
-                    if (!bounds.isEmpty()) {
-                        mapInstance.fitBounds(bounds, { padding: 60, maxZoom: 14, duration: 0 })
-                        didSafetyFitRef.current = true
-                    }
+                const bounds = new mapboxgl.LngLatBounds()
+                features.forEach((f: any) => bounds.extend(f.geometry.coordinates as [number, number]))
+                if (!bounds.isEmpty()) {
+                    mapInstance.fitBounds(bounds, { padding: 60, maxZoom: 14, duration: 0 })
+                    didSafetyFitRef.current = true
                 }
             } catch (e) {
-                console.error('[MAP] safety fitBounds failed:', e)
+                console.error('[MAP] fitBounds failed:', e)
             }
         }
     }, [businesses, mapLoaded, categoryColors, t])

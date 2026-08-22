@@ -64,6 +64,10 @@ export default function MapClient({ businesses, user }: MapClientProps) {
     const [cityInput, setCityInput] = useState('')
     const [stateInput, setStateInput] = useState('')
     const [countryInput, setCountryInput] = useState('')
+    const [showLocationPrompt, setShowLocationPrompt] = useState(() => {
+        if (typeof window === 'undefined') return false
+        return localStorage.getItem('carmatch_location_prompt_dismissed') !== '1'
+    })
 
     const [searchSuccess, setSearchSuccess] = useState(false)
     const [hasSearched, setHasSearched] = useState(false)
@@ -78,16 +82,6 @@ export default function MapClient({ businesses, user }: MapClientProps) {
             localStorage.setItem('carmatch_map_cache', JSON.stringify(businesses))
         }
     }, [businesses])
-
-    // 🛰️ GPS PRIORITARIO: Al abrir el mapa, usar la ubicación REAL del usuario (GPS)
-    // en vez de la IP (imprecisa). Si el usuario deniega GPS, getUserLocation cae a IP.
-    useEffect(() => {
-        if (!manualLocation && gpsPermission !== 'denied') {
-            refreshLocation()
-        }
-    // Solo al montar del mapa
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
     useEffect(() => {
         if ((!businesses || businesses.length === 0) && !navigator.onLine) {
@@ -338,6 +332,41 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                     />
                 </div>
 
+                {/* 📍 GPS PROMPT BANNER */}
+                {showLocationPrompt && gpsPermission !== 'granted' && (
+                    <div className="absolute top-20 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-md">
+                        <div className="bg-surface/95 backdrop-blur-md border border-white/10 rounded-2xl p-4 shadow-2xl">
+                            <div className="flex items-start gap-3">
+                                <div className="text-2xl shrink-0 mt-0.5">📍</div>
+                                <div className="flex-1 min-w-0">
+                                    <p className="text-white font-bold text-sm">¿Quieres ver negocios cerca de ti?</p>
+                                    <p className="text-white/60 text-xs mt-1">Activa tu ubicación para encontrar talleres, refaccionarias y servicios en tu zona.</p>
+                                    <div className="flex gap-2 mt-3">
+                                        <button
+                                            onClick={() => {
+                                                refreshLocation()
+                                                setShowLocationPrompt(false)
+                                                localStorage.setItem('carmatch_location_prompt_dismissed', '1')
+                                            }}
+                                            className="flex-1 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-xs font-bold rounded-lg transition"
+                                        >
+                                            Usar mi ubicación
+                                        </button>
+                                        <button
+                                            onClick={() => {
+                                                setShowLocationPrompt(false)
+                                                localStorage.setItem('carmatch_location_prompt_dismissed', '1')
+                                            }}
+                                            className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white/70 text-xs font-bold rounded-lg transition"
+                                        >
+                                            Usar mi ciudad
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 {/* 📱 BOTONES FLOTANTES (MAPA - MOBILE ONLY) */}
                 <div className="absolute top-6 left-6 z-30 flex flex-col gap-3 lg:hidden">
