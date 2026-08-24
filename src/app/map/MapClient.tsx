@@ -333,7 +333,7 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                 </div>
 
                 {/* 📍 GPS PROMPT BANNER */}
-                {showLocationPrompt && gpsPermission !== 'granted' && (
+                {showLocationPrompt && (
                     <div className="absolute top-20 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-md">
                         <div className="bg-surface/95 backdrop-blur-md border border-white/10 rounded-2xl p-4 shadow-2xl">
                             <div className="flex items-start gap-3">
