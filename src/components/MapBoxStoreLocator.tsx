@@ -428,7 +428,7 @@ export default function MapBoxStoreLocator({
 
         // 🔧 FIT BOUNDS: Centrar en todos los negocios una sola vez para garantizar
         // que siempre sean visibles al cargar el mapa.
-        if (features.length > 0 && !didSafetyFitRef.current) {
+        if (features.length > 0 && !didSafetyFitRef.current && !initialLocation) {
             console.log('🗺️ [MAP] fitBounds running with', features.length, 'features')
             try {
                 const bounds = new mapboxgl.LngLatBounds()
