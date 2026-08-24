@@ -8,20 +8,32 @@ import { useEffect, useState } from 'react'
 import { Cookie, X } from 'lucide-react'
 import Link from 'next/link'
 import { useLanguage } from '@/contexts/LanguageContext'
+import { useLocation } from '@/contexts/LocationContext'
+
+const EU_EEA_GB = new Set([
+    'AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU',
+    'IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES',
+    'SE','GB','IS','LI','NO'
+])
 
 export default function CookieConsentBanner() {
     const [showBanner, setShowBanner] = useState(false)
     const { t } = useLanguage()
+    const { location } = useLocation()
 
     useEffect(() => {
-        // Check if user already accepted cookies
         const hasConsented = localStorage.getItem('cookieConsent')
-        if (!hasConsented) {
-            // Show banner after 2 seconds
-            const timer = setTimeout(() => setShowBanner(true), 2000)
-            return () => clearTimeout(timer)
+        if (hasConsented) return
+
+        const countryCode = location?.countryCode?.toUpperCase()
+        if (countryCode && !EU_EEA_GB.has(countryCode)) {
+            localStorage.setItem('cookieConsent', 'accepted')
+            return
         }
-    }, [])
+
+        const timer = setTimeout(() => setShowBanner(true), 2000)
+        return () => clearTimeout(timer)
+    }, [location])
 
     const acceptCookies = () => {
         localStorage.setItem('cookieConsent', 'accepted')
