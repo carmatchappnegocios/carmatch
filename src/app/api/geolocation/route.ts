@@ -46,30 +46,28 @@ export async function GET(request: NextRequest) {
                 return NextResponse.json({
                     latitude: parseFloat(lat),
                     longitude: parseFloat(lng),
-                    city: city,
+                    city: decodeURIComponent(city),
                     state: region || '',
                     country: country || '',
                     countryCode: country?.toUpperCase() || ''
                 })
             }
 
-            // Fallback: Si no hay headers de Vercel, podríamos usar una API externa desde el servidor
-            // o simplemente devolver 404 para que el cliente intente otra vía.
-            // Para robustez, intentaremos ipapi.co desde el servidor si falla Vercel
+            // Fallback: ip-api.com (mejor precisión global que ipapi.co, 45 req/min gratis)
             try {
                 const ip = request.headers.get('x-real-ip') || request.headers.get('x-forwarded-for')?.split(',')[0]
                 if (ip) {
-                    const ipRes = await fetch(`https://ipapi.co/${ip}/json/`)
+                    const ipRes = await fetch(`http://ip-api.com/json/${ip}?fields=status,country,countryCode,regionName,city,lat,lon`)
                     if (ipRes.ok) {
                         const data = await ipRes.json()
-                        if (data.latitude && data.longitude) {
+                        if (data.status === 'success' && data.lat && data.lon) {
                             return NextResponse.json({
-                                latitude: data.latitude,
-                                longitude: data.longitude,
-                                city: data.city,
-                                state: data.region || '',
-                                country: data.country_name || '',
-                                countryCode: data.country_code || ''
+                                latitude: data.lat,
+                                longitude: data.lon,
+                                city: data.city || '',
+                                state: data.regionName || '',
+                                country: data.country || '',
+                                countryCode: data.countryCode || ''
                             })
                         }
                     }
