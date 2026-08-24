@@ -58,13 +58,9 @@ export default function MapBoxStoreLocator({
     const [mapLoaded, setMapLoaded] = useState(false)
     const [mapError, setMapError] = useState<string | null>(null)
 
-    // Default: Neutral Center (Fallback if everything fails)
-    // Usamos un centro de México para que no aparezca en el mar o en LA por error
-    const DEFAULT_LAT = 23.6345 
-    const DEFAULT_LNG = -102.5528
-
     useEffect(() => {
         if (!mapContainer.current || map.current) return
+        if (!initialLocation) return
 
         const token = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
         if (!token) {
@@ -74,9 +70,7 @@ export default function MapBoxStoreLocator({
         }
         mapboxgl.accessToken = token
 
-        const center: [number, number] = initialLocation
-            ? [initialLocation.longitude, initialLocation.latitude]
-            : [DEFAULT_LNG, DEFAULT_LAT]
+        const center: [number, number] = [initialLocation.longitude, initialLocation.latitude]
 
         let newMap: mapboxgl.Map
         try {
@@ -84,7 +78,7 @@ export default function MapBoxStoreLocator({
             container: mapContainer.current,
             style: 'mapbox://styles/mapbox/outdoors-v12',
             center: center,
-            zoom: initialLocation ? 12 : 5, // Zoom out if we don't have a specific location yet
+            zoom: 12,
             minZoom: 8,
             maxZoom: 18,
             minTileCacheSize: 500,
@@ -171,31 +165,13 @@ export default function MapBoxStoreLocator({
                 map.current = null
             }
         }
-    }, [])
+    }, [initialLocation])
 
     const lastFlyToRef = useRef<{ lat: number; lng: number } | null>(null)
     const userMovedRef = useRef(false)
     const didSafetyFitRef = useRef(false)
 
-    // 📍 Re-centrar mapa cuando cambia la ubicación (Manual o GPS)
-    useEffect(() => {
-        if (!map.current || !initialLocation) return
-
-        // 🔥 OPTIMIZACIÓN CRÍTICA: Evitar que el mapa "regrese" si las coordenadas son las mismas
-        // (Previene snapping involuntario cuando el componente padre re-renderiza)
-        if (lastFlyToRef.current?.lat === initialLocation.latitude &&
-            lastFlyToRef.current?.lng === initialLocation.longitude) {
-            return
-        }
-
-        lastFlyToRef.current = { lat: initialLocation.latitude, lng: initialLocation.longitude }
-
-        map.current.flyTo({
-            center: [initialLocation.longitude, initialLocation.latitude],
-            zoom: 13,
-            essential: true
-        })
-    }, [initialLocation])
+    // flyTo ya no es necesario — el mapa se crea directo en initialLocation
 
     useEffect(() => {
         if (!map.current || !mapLoaded) return
@@ -447,9 +423,9 @@ export default function MapBoxStoreLocator({
             console.error('[MAP] Error adding source/layers:', e)
         }
 
-        // 🔧 FIT BOUNDS: Solo centrar en negocios si NO hay initialLocation
-        // (evita que fitBounds sobreescriba la ubicación detectada por IP/GPS)
-        if (features.length > 0 && !didSafetyFitRef.current && !initialLocation) {
+        // 🔧 FIT BOUNDS: Centrar en todos los negocios una sola vez para garantizar
+        // que siempre sean visibles al cargar el mapa.
+        if (features.length > 0 && !didSafetyFitRef.current) {
             try {
                 const bounds = new mapboxgl.LngLatBounds()
                 features.forEach((f: any) => bounds.extend(f.geometry.coordinates as [number, number]))
@@ -462,6 +438,17 @@ export default function MapBoxStoreLocator({
             }
         }
     }, [businesses, mapLoaded, categoryColors, t])
+
+    if (!initialLocation) {
+        return (
+            <div className="w-full h-full relative bg-gray-900 flex items-center justify-center">
+                <div className="flex flex-col items-center gap-3">
+                    <div className="w-10 h-10 border-4 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
+                    <span className="text-sm text-white/60">Detectando tu ubicación...</span>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div className="w-full h-full relative bg-gray-900">

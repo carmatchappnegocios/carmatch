@@ -200,17 +200,9 @@ export function LocationProvider({
                     localStorage.setItem('carmatch_last_detected_location', JSON.stringify(locationData))
                 }
             } catch (e) {
-                console.warn('⚠️ IP detection failed. Using cached or defaulting to Mexico...')
-                // 🛡️ FALLBACK FINAL: Si la IP falla también, centramos en México (Cd. Juárez)
-                // NUNCA (0,0) porque eso centra el mapa en el océano y oculta todos los negocios.
-                setLocation(prev => prev || {
-                    latitude: 31.6904,
-                    longitude: -106.4245,
-                    city: 'Ciudad Juárez',
-                    state: 'Chihuahua',
-                    country: 'México',
-                    countryCode: 'MX'
-                })
+                console.warn('⚠️ IP detection failed. No city set — user must search manually.')
+                // Sin fallback: la app es mundial, no hardcodeamos ciudad.
+                // El mapa mostrará loading hasta que el usuario busque una ciudad.
             } finally {
                 setLoading(false) // ✅ Siempre liberar el loading al terminar IP
             }
