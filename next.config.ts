@@ -92,7 +92,7 @@ const nextConfig: NextConfig = {
                     },
                     {
                         key: 'Content-Security-Policy',
-                        value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://browser.sentry-cdn.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.mapbox.com; font-src 'self' https://fonts.gstatic.com https://*.mapbox.com data:; img-src 'self' data: blob: https: http:; connect-src 'self' https://*.mapbox.com https://api.mapbox.com https://events.mapbox.com https://res.cloudinary.com https://www.google-analytics.com https://www.googletagmanager.com https://analytics.google.com https://www.google.com https://*.sentry.io wss://carmatchapp.net ws://localhost:3001; worker-src 'self' blob:; child-src blob:; frame-src 'none';"
+                        value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://browser.sentry-cdn.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.mapbox.com; font-src 'self' https://fonts.gstatic.com https://*.mapbox.com data:; img-src 'self' data: blob: https: http:; connect-src 'self' data: https://*.mapbox.com https://api.mapbox.com https://events.mapbox.com https://res.cloudinary.com https://www.google-analytics.com https://www.googletagmanager.com https://analytics.google.com https://www.google.com https://stats.g.doubleclick.net https://*.sentry.io wss://carmatchapp.net ws://localhost:3001; worker-src 'self' blob:; child-src blob:; frame-src 'none';"
                     }
                 ]
             }
