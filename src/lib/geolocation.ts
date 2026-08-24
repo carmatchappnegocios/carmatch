@@ -82,7 +82,7 @@ function getPosition(options?: PositionOptions): Promise<Coordinates> {
 export async function getLocationFromIP(): Promise<LocationData> {
     try {
         // Nueva detección profesional mediante el servidor
-        const response = await fetch('/api/geolocation?detect=true')
+        const response = await fetch('/api/geolocation?detect=true&_t=' + Date.now())
         if (!response.ok) throw new Error('API detection failed')
         
         const data = await response.json()

@@ -154,8 +154,12 @@ export function LocationProvider({
             } else if (savedDetected) {
                 try {
                     const parsed = JSON.parse(savedDetected)
-                    setLocation(parsed)
-                    hasSaved = true;
+                    // Ignorar cache viejo — la IP detection siempre provee datos frescos
+                    // Solo usamos cache si tiene GPS (precise) data
+                    if (parsed && parsed.latitude && parsed.longitude) {
+                        // No cargamos del cache — esperamos a que IP detection corra
+                        // para siempre tener datos actualizados
+                    }
                 } catch (e) {
                     console.error('Error parsing detected location', e)
                 }
@@ -180,14 +184,9 @@ export function LocationProvider({
                 const locationData = await getLocationFromIP()
                 
                 // Actualizar ubicación:
-                // - Si no hay nada → usar IP
-                // - Si solo hay coordenadas sin ciudad → usar IP
-                // - Si ya hay ciudad en cache → mantener cache (más preciso)
-                setLocation(prev => {
-                    if (!prev) return locationData
-                    if (prev && !prev.city) return locationData
-                    return prev // Cache ya tiene ciudad, mantener
-                })
+                // La detección IP siempre sobrescribe el cache con datos frescos
+                // porque el cache puede tener datos viejos/incorrectos.
+                setLocation(locationData)
                 
                 if (typeof window !== 'undefined') {
                     localStorage.setItem('carmatch_last_detected_location', JSON.stringify(locationData))

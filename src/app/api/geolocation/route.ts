@@ -35,29 +35,14 @@ export async function GET(request: NextRequest) {
 
         // MODO 0: AUTODETECCIÓN POR IP (SILENCIOSO)
         if (detect) {
-            // Vercel Geolocation Headers
-            const city = request.headers.get('x-vercel-ip-city')
-            const region = request.headers.get('x-vercel-ip-country-region')
-            const country = request.headers.get('x-vercel-ip-country')
-            const lat = request.headers.get('x-vercel-ip-latitude')
-            const lng = request.headers.get('x-vercel-ip-longitude')
-
-            if (city && lat && lng) {
-                return NextResponse.json({
-                    latitude: parseFloat(lat),
-                    longitude: parseFloat(lng),
-                    city: decodeURIComponent(city),
-                    state: region || '',
-                    country: country || '',
-                    countryCode: country?.toUpperCase() || ''
-                })
-            }
-
-            // Fallback: ip-api.com (mejor precisión global que ipapi.co, 45 req/min gratis)
+            // ip-api.com: mejor precisión global, se actualiza constantemente
+            // NO usamos headers de Vercel porque su GeoIP es poco preciso para LATAM
             try {
                 const ip = request.headers.get('x-real-ip') || request.headers.get('x-forwarded-for')?.split(',')[0]
                 if (ip) {
-                    const ipRes = await fetch(`http://ip-api.com/json/${ip}?fields=status,country,countryCode,regionName,city,lat,lon`)
+                    const ipRes = await fetch(`http://ip-api.com/json/${ip}?fields=status,country,countryCode,regionName,city,lat,lon`, {
+                        headers: { 'Cache-Control': 'no-cache' }
+                    })
                     if (ipRes.ok) {
                         const data = await ipRes.json()
                         if (data.status === 'success' && data.lat && data.lon) {
@@ -74,6 +59,28 @@ export async function GET(request: NextRequest) {
                 }
             } catch (e) {
                 console.error("Server-side IP fetch failed:", e)
+            }
+
+            // Fallback: headers de Vercel (menos preciso)
+            try {
+                const city = request.headers.get('x-vercel-ip-city')
+                const region = request.headers.get('x-vercel-ip-country-region')
+                const country = request.headers.get('x-vercel-ip-country')
+                const lat = request.headers.get('x-vercel-ip-latitude')
+                const lng = request.headers.get('x-vercel-ip-longitude')
+
+                if (city && lat && lng) {
+                    return NextResponse.json({
+                        latitude: parseFloat(lat),
+                        longitude: parseFloat(lng),
+                        city: decodeURIComponent(city),
+                        state: region || '',
+                        country: country || '',
+                        countryCode: country?.toUpperCase() || ''
+                    })
+                }
+            } catch (e) {
+                console.error("Vercel headers fallback failed:", e)
             }
             
             return NextResponse.json({ error: 'No se pudo detectar la ubicación por IP' }, { status: 404 })
