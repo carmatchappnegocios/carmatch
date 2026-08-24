@@ -113,7 +113,6 @@ export default function MapBoxStoreLocator({
         newMap.on('load', () => {
             setMapLoaded(true)
             try { newMap.resize() } catch (e) { /* ignore resize errors */ }
-            try { geolocateControl.trigger() } catch (e) { /* mobile/no GPS */ }
 
             if (newMap.getLayer('poi-label')) {
                 newMap.setLayoutProperty('poi-label', 'visibility', 'none')
