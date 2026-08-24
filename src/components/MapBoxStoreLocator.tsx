@@ -135,6 +135,11 @@ export default function MapBoxStoreLocator({
             onMapLoad()
         } else {
             newMap.on('load', onMapLoad)
+            // Fallback: forzar loaded después de 3s si CSP bloquea recursos
+            setTimeout(() => {
+                if (!map.current) return
+                setMapLoaded(true)
+            }, 3000)
         }
 
         // 🎯 Focus Business Listener
