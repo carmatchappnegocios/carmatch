@@ -14,21 +14,21 @@ export async function GET(request: NextRequest) {
         const minLng = parseFloat(searchParams.get('minLng') || '')
         const maxLng = parseFloat(searchParams.get('maxLng') || '')
         const category = searchParams.get('category')
-        const searchQuery = searchParams.get('search') // 🔍 NEW: Raw search query
+        const searchQuery = searchParams.get('search')
+        const zoom = parseInt(searchParams.get('zoom') || '12')
 
         if (isNaN(minLat) || isNaN(maxLat) || isNaN(minLng) || isNaN(maxLng)) {
             return NextResponse.json({ error: 'Missing or invalid bounds' }, { status: 400 })
         }
 
-        // Search within bounds
-        // Handle longitude wrap-around (crossing the anti-meridian)
+        const takeLimit = zoom >= 15 ? 200 : zoom >= 13 ? 500 : 1000
+
         let lngFilter: any = {
             gte: minLng,
             lte: maxLng
         }
 
         if (minLng > maxLng) {
-            // Crossing the anti-meridian
             lngFilter = {
                 OR: [
                     { gte: minLng },
@@ -37,28 +37,26 @@ export async function GET(request: NextRequest) {
             }
         }
 
+        const where: any = {
+            isActive: true,
+            latitude: { gte: minLat, lte: maxLat },
+            longitude: lngFilter,
+        }
+
+        if (category && category !== 'all') {
+            where.category = category
+        }
+
+        if (searchQuery) {
+            where.OR = [
+                { name: { contains: searchQuery, mode: 'insensitive' } },
+                { description: { contains: searchQuery, mode: 'insensitive' } },
+                { services: { hasSome: [searchQuery] } }
+            ]
+        }
+
         const businesses = await prisma.business.findMany({
-            where: {
-                isActive: true,
-                latitude: {
-                    gte: minLat,
-                    lte: maxLat
-                },
-                longitude: lngFilter,
-                ...(category && category !== 'all' ? { category } : {}),
-                ...(searchQuery ? {
-                    OR: [
-                        { name: { contains: searchQuery, mode: 'insensitive' } },
-                        { description: { contains: searchQuery, mode: 'insensitive' } },
-                        { services: { hasSome: [searchQuery] } },
-                        {
-                            services: {
-                                isEmpty: false
-                            }
-                        }
-                    ]
-                } : {})
-            },
+            where,
             select: {
                 id: true,
                 name: true,
@@ -76,50 +74,18 @@ export async function GET(request: NextRequest) {
                 services: true,
                 phone: true,
                 whatsapp: true,
-                telegram: true,
-                website: true,
-                facebook: true,
-                instagram: true,
-                tiktok: true,
                 hours: true,
-                additionalPhones: true,
                 is24Hours: true,
                 hasEmergencyService: true,
                 hasHomeService: true,
                 isSafeMeetingPoint: true,
                 hasMiniWeb: true,
-                user: {
-                    select: {
-                        name: true,
-                        image: true
-                    }
-                },
-                reviews: {
-                    select: {
-                        rating: true
-                    }
-                }
             },
-            take: 500
-        })
-
-        // Calcular promedio de ratings para cada negocio
-        const businessesWithRatings = businesses.map(business => {
-            const reviews = business.reviews
-            const reviewCount = reviews.length
-            const averageRating = reviewCount > 0
-                ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviewCount
-                : null
-            return {
-                ...business,
-                averageRating,
-                reviewCount,
-                reviews: undefined // No enviar las reseñas completas en el listado
-            }
+            take: takeLimit
         })
 
         return NextResponse.json({
-            businesses: serializeDecimal(businessesWithRatings)
+            businesses: serializeDecimal(businesses)
         })
 
     } catch (error) {

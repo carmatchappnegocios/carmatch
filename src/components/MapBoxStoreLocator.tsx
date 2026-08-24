@@ -121,12 +121,15 @@ export default function MapBoxStoreLocator({
                     minLat: bounds.getSouth(),
                     maxLat: bounds.getNorth(),
                     minLng: bounds.getWest(),
-                    maxLng: bounds.getEast()
+                    maxLng: bounds.getEast(),
+                    zoom: Math.round(newMap.getZoom())
                 })
             }
 
             newMap.on('moveend', reportBounds)
             newMap.on('dragstart', () => { userMovedRef.current = true })
+
+            setTimeout(reportBounds, 500)
         }
 
         if (newMap.loaded()) {
@@ -256,7 +259,7 @@ export default function MapBoxStoreLocator({
                 cluster: true,
                 clusterMaxZoom: 14,
                 clusterRadius: 70,
-                clusterMinPoints: 70,
+                clusterMinPoints: 5,
             })
 
             mapInstance.addLayer({

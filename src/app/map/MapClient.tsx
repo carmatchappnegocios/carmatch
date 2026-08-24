@@ -139,7 +139,8 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                     minLng: bounds.minLng.toString(),
                     maxLng: bounds.maxLng.toString(),
                     category: selectedCategories.length === 1 ? selectedCategories[0] : 'all',
-                    search: searchQuery || '' // 🔍 NEW: Pass AI search query to bounds API
+                    search: searchQuery || '',
+                    zoom: (bounds.zoom || 12).toString()
                 })
 
                 const res = await fetch(`/api/businesses/bounds?${params}`)
