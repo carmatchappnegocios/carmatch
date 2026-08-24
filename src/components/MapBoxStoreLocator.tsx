@@ -125,11 +125,8 @@ export default function MapBoxStoreLocator({
                 })
             }
 
-            newMap.on('moveend', () => {
-                if (userMovedRef.current) reportBounds()
-            })
+            newMap.on('moveend', reportBounds)
             newMap.on('dragstart', () => { userMovedRef.current = true })
-            setTimeout(reportBounds, 2000)
         }
 
         if (newMap.loaded()) {
@@ -227,23 +224,22 @@ export default function MapBoxStoreLocator({
 
         console.log('🗺️ [MAP] Businesses:', (businesses || []).length, '| Features with coords:', features.length)
 
+        const pinSvgUrl = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 384 512'%3E%3Cpath fill='%23fff' d='M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z'/%3E%3C/svg%3E"
         if (!mapInstance.hasImage('pin')) {
-            const pinImg = new window.Image(384, 512)
-            pinImg.onload = () => {
+            mapInstance.loadImage(pinSvgUrl, (error, image) => {
+                if (error || !image) {
+                    console.error('[MAP] Failed to load pin:', error)
+                    return
+                }
                 try {
                     if (!mapInstance.hasImage('pin')) {
-                        mapInstance.addImage('pin', pinImg, { sdf: true })
-                        // 🔥 FORZAR REDIBUJADO: la capa se montó antes de tener el ícono
-                        mapInstance.triggerRepaint()
+                        mapInstance.addImage('pin', image, { sdf: true })
                     }
+                    mapInstance.triggerRepaint()
                 } catch (e) {
                     console.error('[MAP] Failed to add pin image:', e)
                 }
-            }
-            pinImg.onerror = (e) => {
-                console.error('[MAP] Failed to load pin SVG:', e)
-            }
-            pinImg.src = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 384 512'%3E%3Cpath fill='%23fff' d='M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z'/%3E%3C/svg%3E"
+            })
         }
 
         const sourceId = 'businesses';
@@ -440,7 +436,7 @@ export default function MapBoxStoreLocator({
 
         // 🔧 FIT BOUNDS: Centrar en todos los negocios una sola vez para garantizar
         // que siempre sean visibles al cargar el mapa.
-        if (features.length > 0 && !didSafetyFitRef.current && !initialLocation) {
+        if (features.length > 0 && !didSafetyFitRef.current) {
             console.log('🗺️ [MAP] fitBounds running with', features.length, 'features')
             try {
                 const bounds = new mapboxgl.LngLatBounds()

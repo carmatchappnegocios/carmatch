@@ -100,7 +100,7 @@ export async function GET(request: NextRequest) {
                     }
                 }
             },
-            take: 300
+            take: 500
         })
 
         // Calcular promedio de ratings para cada negocio
