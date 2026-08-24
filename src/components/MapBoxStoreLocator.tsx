@@ -129,6 +129,7 @@ export default function MapBoxStoreLocator({
                 if (userMovedRef.current) reportBounds()
             })
             newMap.on('dragstart', () => { userMovedRef.current = true })
+            setTimeout(reportBounds, 2000)
         }
 
         if (newMap.loaded()) {
