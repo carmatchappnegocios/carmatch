@@ -125,9 +125,10 @@ export default function MapBoxStoreLocator({
                 })
             }
 
-            newMap.on('moveend', reportBounds)
+            newMap.on('moveend', () => {
+                if (userMovedRef.current) reportBounds()
+            })
             newMap.on('dragstart', () => { userMovedRef.current = true })
-            setTimeout(reportBounds, 1000)
         })
 
         // 🎯 Focus Business Listener
@@ -211,6 +212,8 @@ export default function MapBoxStoreLocator({
             type: 'FeatureCollection',
             features: features
         }
+
+        console.log('🗺️ [MAP] Businesses:', (businesses || []).length, '| Features with coords:', features.length)
 
         if (!mapInstance.hasImage('pin')) {
             const pinImg = new window.Image(384, 512)
@@ -426,6 +429,7 @@ export default function MapBoxStoreLocator({
         // 🔧 FIT BOUNDS: Centrar en todos los negocios una sola vez para garantizar
         // que siempre sean visibles al cargar el mapa.
         if (features.length > 0 && !didSafetyFitRef.current) {
+            console.log('🗺️ [MAP] fitBounds running with', features.length, 'features')
             try {
                 const bounds = new mapboxgl.LngLatBounds()
                 features.forEach((f: any) => bounds.extend(f.geometry.coordinates as [number, number]))
