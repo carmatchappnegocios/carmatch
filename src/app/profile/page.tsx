@@ -11,7 +11,13 @@ import { Suspense } from 'react'
 export const dynamic = "force-dynamic"
 
 export default async function ProfilePage() {
-    const session = await auth()
+    let session
+    try {
+        session = await auth()
+    } catch (e) {
+        console.error("🔥 Error en auth() del ProfilePage:", e)
+        redirect("/auth")
+    }
 
     if (!session?.user?.email) {
         redirect("/auth")
@@ -27,7 +33,9 @@ export default async function ProfilePage() {
                     select: {
                         id: true, title: true, brand: true, model: true, version: true,
                         year: true, price: true, currency: true, images: true, city: true,
-                        status: true, vehicleType: true, createdAt: true
+                        status: true, vehicleType: true, createdAt: true,
+                        latitude: true, longitude: true,
+                        expiresAt: true, isFreePublication: true, moderationStatus: true
                     }
                 },
                 _count: {
@@ -36,14 +44,6 @@ export default async function ProfilePage() {
                         businesses: true,
                         favorites: true,
                     },
-                },
-                reportsMade: {
-                    take: 20,
-                    include: {
-                        vehicle: { select: { title: true } },
-                        business: { select: { name: true } }
-                    },
-                    orderBy: { createdAt: 'desc' }
                 }
             },
         }) as any

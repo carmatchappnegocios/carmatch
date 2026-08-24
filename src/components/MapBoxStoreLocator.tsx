@@ -112,7 +112,7 @@ export default function MapBoxStoreLocator({
 
         newMap.on('load', () => {
             setMapLoaded(true)
-            newMap.resize()
+            try { newMap.resize() } catch (e) { /* ignore resize errors */ }
             try { geolocateControl.trigger() } catch (e) { /* mobile/no GPS */ }
 
             if (newMap.getLayer('poi-label')) {
@@ -257,6 +257,7 @@ export default function MapBoxStoreLocator({
         }
 
         const sourceId = 'businesses';
+        try {
         if (mapInstance.getSource(sourceId)) {
             (mapInstance.getSource(sourceId) as mapboxgl.GeoJSONSource).setData(geojson)
         } else {
@@ -322,6 +323,7 @@ export default function MapBoxStoreLocator({
                 const features = mapInstance.queryRenderedFeatures(e.point, {
                     layers: ['clusters']
                 })
+                if (!features.length) return
                 const clusterId = features[0].properties?.cluster_id
                 const source = mapInstance.getSource('businesses') as mapboxgl.GeoJSONSource
 
@@ -441,6 +443,9 @@ export default function MapBoxStoreLocator({
                     }
                 }
             });
+        }
+        } catch (e) {
+            console.error('[MAP] Error adding source/layers:', e)
         }
 
         // 🔧 FIT BOUNDS: Centrar en todos los negocios una sola vez para garantizar
