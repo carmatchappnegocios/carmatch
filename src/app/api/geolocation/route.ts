@@ -46,6 +46,32 @@ export async function GET(request: NextRequest) {
                     if (ipRes.ok) {
                         const data = await ipRes.json()
                         if (data.status === 'success' && data.lat && data.lon) {
+                            // Refinar coordenadas con MapBox: ip-api.com da coords del ISP,
+                            // MapBox da el centro real de la ciudad
+                            const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
+                            if (mapboxToken && data.city) {
+                                try {
+                                    const query = [data.city, data.regionName, data.country].filter(Boolean).join(', ')
+                                    const mbUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${mapboxToken}&language=es&limit=1&types=place,locality`
+                                    const mbRes = await fetch(mbUrl)
+                                    if (mbRes.ok) {
+                                        const mbData = await mbRes.json()
+                                        if (mbData.features?.length > 0) {
+                                            const f = mbData.features[0]
+                                            return NextResponse.json({
+                                                latitude: f.center[1],
+                                                longitude: f.center[0],
+                                                city: data.city || '',
+                                                state: data.regionName || '',
+                                                country: data.country || '',
+                                                countryCode: data.countryCode || ''
+                                            })
+                                        }
+                                    }
+                                } catch (e) {
+                                    console.warn("MapBox refinement failed, using ip-api coords:", e)
+                                }
+                            }
                             return NextResponse.json({
                                 latitude: data.lat,
                                 longitude: data.lon,
