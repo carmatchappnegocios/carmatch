@@ -188,7 +188,7 @@ export function LocationProvider({
                     state: locationData.state,
                     lat: locationData.latitude,
                     lng: locationData.longitude,
-                    source: locationData.source
+                    source: 'ip-api'
                 })
                 
                 // Actualizar ubicación:
