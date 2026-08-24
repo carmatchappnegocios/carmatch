@@ -225,22 +225,25 @@ export default function MapBoxStoreLocator({
         console.log('🗺️ [MAP] Businesses:', (businesses || []).length, '| Features with coords:', features.length)
 
         const pinSvgUrl = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 384 512'%3E%3Cpath fill='%23fff' d='M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z'/%3E%3C/svg%3E"
-        if (!mapInstance.hasImage('pin')) {
-            mapInstance.loadImage(pinSvgUrl, (error, image) => {
-                if (error || !image) {
-                    console.error('[MAP] Failed to load pin:', error)
-                    return
+        const pinImg = new window.Image()
+        pinImg.onload = () => {
+            try {
+                const canvas = document.createElement('canvas')
+                canvas.width = 384
+                canvas.height = 512
+                const ctx = canvas.getContext('2d')!
+                ctx.drawImage(pinImg, 0, 0, 384, 512)
+                const imageData = ctx.getImageData(0, 0, 384, 512)
+                if (!mapInstance.hasImage('pin')) {
+                    mapInstance.addImage('pin', imageData, { sdf: true })
                 }
-                try {
-                    if (!mapInstance.hasImage('pin')) {
-                        mapInstance.addImage('pin', image, { sdf: true })
-                    }
-                    mapInstance.triggerRepaint()
-                } catch (e) {
-                    console.error('[MAP] Failed to add pin image:', e)
-                }
-            })
+                mapInstance.triggerRepaint()
+            } catch (e) {
+                console.error('[MAP] Failed to add pin image:', e)
+            }
         }
+        pinImg.onerror = () => console.error('[MAP] Failed to load pin SVG')
+        pinImg.src = pinSvgUrl
 
         const sourceId = 'businesses';
         try {
@@ -436,7 +439,7 @@ export default function MapBoxStoreLocator({
 
         // 🔧 FIT BOUNDS: Centrar en todos los negocios una sola vez para garantizar
         // que siempre sean visibles al cargar el mapa.
-        if (features.length > 0 && !didSafetyFitRef.current) {
+        if (features.length > 0 && !didSafetyFitRef.current && !initialLocation) {
             console.log('🗺️ [MAP] fitBounds running with', features.length, 'features')
             try {
                 const bounds = new mapboxgl.LngLatBounds()
