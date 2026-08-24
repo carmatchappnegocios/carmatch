@@ -183,6 +183,14 @@ export function LocationProvider({
                 
                 const locationData = await getLocationFromIP()
                 
+                console.log('🔍 [LocationContext] IP detection result:', {
+                    city: locationData.city,
+                    state: locationData.state,
+                    lat: locationData.latitude,
+                    lng: locationData.longitude,
+                    source: locationData.source
+                })
+                
                 // Actualizar ubicación:
                 // La detección IP siempre sobrescribe el cache con datos frescos
                 // porque el cache puede tener datos viejos/incorrectos.
@@ -210,13 +218,9 @@ export function LocationProvider({
         
         startIpDetection()
 
-        // ─── PASO 3: GPS Preciso (OPCIONAL - solo si ya inició sesión y lo activó) ─
-        const precisePref = typeof window !== 'undefined'
-            ? localStorage.getItem('carmatch_precise_location') === '1'
-            : false
-        if (!manualLocationRef.current && precisePref) {
-            fetchLocation(false)
-        }
+        // ─── PASO 3: GPS Preciso ─
+        // NO se ejecuta automáticamente — solo cuando el usuario lo activa desde Settings
+        // (evita que GPS de baja precisión sobreescriba la ubicación IP correcta)
         
     // 🔥 BUCLE PREVENIDO: Solo se ejecuta al montar (fetchLocation es estable con useCallback)
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -447,9 +447,9 @@ export default function MapBoxStoreLocator({
             console.error('[MAP] Error adding source/layers:', e)
         }
 
-        // 🔧 FIT BOUNDS: Centrar en todos los negocios una sola vez para garantizar
-        // que siempre sean visibles al cargar el mapa.
-        if (features.length > 0 && !didSafetyFitRef.current) {
+        // 🔧 FIT BOUNDS: Solo centrar en negocios si NO hay initialLocation
+        // (evita que fitBounds sobreescriba la ubicación detectada por IP/GPS)
+        if (features.length > 0 && !didSafetyFitRef.current && !initialLocation) {
             try {
                 const bounds = new mapboxgl.LngLatBounds()
                 features.forEach((f: any) => bounds.extend(f.geometry.coordinates as [number, number]))
