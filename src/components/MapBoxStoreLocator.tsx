@@ -104,7 +104,7 @@ export default function MapBoxStoreLocator({
 
         newMap.addControl(geolocateControl, 'top-right')
 
-        newMap.on('load', () => {
+        const onMapLoad = () => {
             setMapLoaded(true)
             try { newMap.resize() } catch (e) { /* ignore resize errors */ }
 
@@ -129,7 +129,13 @@ export default function MapBoxStoreLocator({
                 if (userMovedRef.current) reportBounds()
             })
             newMap.on('dragstart', () => { userMovedRef.current = true })
-        })
+        }
+
+        if (newMap.loaded()) {
+            onMapLoad()
+        } else {
+            newMap.on('load', onMapLoad)
+        }
 
         // 🎯 Focus Business Listener
         const handleFocus = (e: any) => {
