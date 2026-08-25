@@ -64,6 +64,7 @@ export default function MapBoxStoreLocator({
     const mapReadyRef = useRef(false)
 
     const mapCreatedRef = useRef(false)
+    const sourceSetupRef = useRef(false)
 
     useEffect(() => {
         if (!mapContainer.current || map.current || mapCreatedRef.current) return
@@ -180,6 +181,7 @@ export default function MapBoxStoreLocator({
 
         return () => {
             mapCreatedRef.current = false
+            sourceSetupRef.current = false
             window.removeEventListener('map-focus-business', handleFocus);
             window.removeEventListener('map-ai-search', handleAiSearch);
             if (map.current) {
@@ -444,16 +446,26 @@ export default function MapBoxStoreLocator({
         const trySetupSource = (attempt = 0) => {
             try {
                 addSourceAndLayers()
+                sourceSetupRef.current = false
             } catch (e: any) {
                 if (e.message?.includes('Style is not done loading') && attempt < 10) {
-                    console.log('[MAP] Style not ready, retry', attempt + 1)
+                    if (attempt === 0) console.log('[MAP] Style not ready, retrying...')
                     setTimeout(() => trySetupSource(attempt + 1), 300)
                 } else {
+                    sourceSetupRef.current = false
                     console.error('[MAP] Error adding source/layers:', e)
                 }
             }
         }
 
+        if (sourceSetupRef.current) {
+            if (mapInstance.getSource(sourceId)) {
+                (mapInstance.getSource(sourceId) as mapboxgl.GeoJSONSource).setData(geojson)
+            }
+            return
+        }
+
+        sourceSetupRef.current = true
         trySetupSource()
 
         // 🔧 FIT BOUNDS: Centrar en todos los negocios una sola vez para garantizar
