@@ -42,6 +42,7 @@ export const authConfig: NextAuthConfig = {
                 '/privacy',
                 '/terms',
                 '/notifications',
+                '/api/auth',
             ]
 
             const isPublicPath = publicPaths.some(path =>
