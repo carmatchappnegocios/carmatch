@@ -5,7 +5,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "@/lib/db"
 import { comparePassword } from "@/lib/password"
 import { validateAndNormalizeEmail } from "@/lib/email-validation"
-import authConfig from "./auth.config"
+import { authConfig } from "./auth.config"
 
 
 export const {
