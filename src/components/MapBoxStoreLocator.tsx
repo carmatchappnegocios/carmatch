@@ -123,19 +123,17 @@ export default function MapBoxStoreLocator({
             }
 
             const reportBounds = () => {
-                if (!onBoundsChange) { console.log('[MAP] reportBounds: no onBoundsChange prop'); return }
+                if (!onBoundsChange) return
                 const bounds = newMap.getBounds()
-                if (!bounds) { console.log('[MAP] reportBounds: no bounds'); return }
+                if (!bounds) return
 
-                const b = {
+                onBoundsChange({
                     minLat: bounds.getSouth(),
                     maxLat: bounds.getNorth(),
                     minLng: bounds.getWest(),
                     maxLng: bounds.getEast(),
                     zoom: Math.round(newMap.getZoom())
-                }
-                console.log('[MAP] reportBounds called:', b)
-                onBoundsChange(b)
+                })
             }
 
             newMap.on('moveend', reportBounds)
@@ -226,8 +224,6 @@ export default function MapBoxStoreLocator({
             features: features
         }
 
-        console.log('🗺️ [MAP] Businesses:', (businesses || []).length, '| Features with coords:', features.length)
-
         const pinSvgUrl = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 384 512'%3E%3Cpath fill='%23fff' d='M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z'/%3E%3C/svg%3E"
         const pinImg = new window.Image()
         pinImg.onload = () => {
@@ -250,10 +246,12 @@ export default function MapBoxStoreLocator({
         pinImg.src = pinSvgUrl
 
         const sourceId = 'businesses';
-        try {
-        if (mapInstance.getSource(sourceId)) {
-            (mapInstance.getSource(sourceId) as mapboxgl.GeoJSONSource).setData(geojson)
-        } else {
+
+        const addSourceAndLayers = () => {
+            if (mapInstance.getSource(sourceId)) {
+                (mapInstance.getSource(sourceId) as mapboxgl.GeoJSONSource).setData(geojson)
+                return true
+            }
             mapInstance.addSource(sourceId, {
                 type: 'geojson',
                 data: geojson,
@@ -436,15 +434,27 @@ export default function MapBoxStoreLocator({
                     }
                 }
             });
+            return true
         }
-        } catch (e) {
-            console.error('[MAP] Error adding source/layers:', e)
+
+        const trySetupSource = () => {
+            try {
+                addSourceAndLayers()
+            } catch (e: any) {
+                if (e.message?.includes('Style is not done loading')) {
+                    console.log('[MAP] Style not ready, retrying on load...')
+                    mapInstance.once('load', trySetupSource)
+                } else {
+                    console.error('[MAP] Error adding source/layers:', e)
+                }
+            }
         }
+
+        trySetupSource()
 
         // 🔧 FIT BOUNDS: Centrar en todos los negocios una sola vez para garantizar
         // que siempre sean visibles al cargar el mapa.
         if (features.length > 0 && !didSafetyFitRef.current && !initialLocation) {
-            console.log('🗺️ [MAP] fitBounds running with', features.length, 'features')
             try {
                 const bounds = new mapboxgl.LngLatBounds()
                 features.forEach((f: any) => bounds.extend(f.geometry.coordinates as [number, number]))

@@ -17,8 +17,6 @@ export async function GET(request: NextRequest) {
         const searchQuery = searchParams.get('search')
         const zoom = parseInt(searchParams.get('zoom') || '12')
 
-        console.log('[BOUNDS API] Request:', { minLat, maxLat, minLng, maxLng, category, zoom, searchQuery })
-
         if (isNaN(minLat) || isNaN(maxLat) || isNaN(minLng) || isNaN(maxLng)) {
             return NextResponse.json({ error: 'Missing or invalid bounds' }, { status: 400 })
         }
@@ -85,11 +83,6 @@ export async function GET(request: NextRequest) {
             },
             take: takeLimit
         })
-
-        console.log('[BOUNDS API] Found:', businesses.length, 'businesses (limit:', takeLimit, ')')
-        if (businesses.length > 0) {
-            console.log('[BOUNDS API] First business:', businesses[0].name, 'city:', businesses[0].city, 'lat:', businesses[0].latitude, 'lng:', businesses[0].longitude)
-        }
 
         return NextResponse.json({
             businesses: serializeDecimal(businesses)
