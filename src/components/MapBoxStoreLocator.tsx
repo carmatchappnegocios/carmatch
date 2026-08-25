@@ -39,7 +39,7 @@ interface MapBoxStoreLocatorProps {
     categoryEmojis: Record<string, string>
     initialLocation?: { latitude: number; longitude: number }
     highlightCategories?: string[]
-    onBoundsChange?: (bounds: { minLat: number; maxLat: number; minLng: number; maxLng: number }) => void
+    onBoundsChange?: (bounds: { minLat: number; maxLat: number; minLng: number; maxLng: number; zoom: number }) => void
     preciseLocationEnabled?: boolean
 }
 
