@@ -183,7 +183,7 @@ export const {
             },
         }),
     ],
-    debug: false,
+    debug: true,
     events: {
         async createUser({ user }) {
             if (user.email === process.env.ADMIN_EMAIL) {
