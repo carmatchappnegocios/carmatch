@@ -443,14 +443,13 @@ export default function MapBoxStoreLocator({
             return true
         }
 
-        const trySetupSource = (attempt = 0) => {
+        const trySetupSource = () => {
             try {
                 addSourceAndLayers()
                 sourceSetupRef.current = false
             } catch (e: any) {
-                if (e.message?.includes('Style is not done loading') && attempt < 10) {
-                    if (attempt === 0) console.log('[MAP] Style not ready, retrying...')
-                    setTimeout(() => trySetupSource(attempt + 1), 300)
+                if (e.message?.includes('Style is not done loading')) {
+                    mapInstance.once('idle', trySetupSource)
                 } else {
                     sourceSetupRef.current = false
                     console.error('[MAP] Error adding source/layers:', e)

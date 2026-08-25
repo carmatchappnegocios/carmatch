@@ -163,7 +163,7 @@ export default function MapClient({ businesses, user }: MapClientProps) {
             } finally {
                 setIsLoadingBounds(false)
             }
-        }, 300) // Reduced debounce for snappier AI response
+        }, 100)
     }
 
     const handleBoundsChange = (bounds: any) => {

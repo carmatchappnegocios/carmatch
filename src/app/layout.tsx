@@ -129,6 +129,8 @@ export default function RootLayout({
             <head>
                 <meta name="theme-color" content="#0f172a" />
                 <meta name="application-name" content="CarMatch" />
+                <link rel="preconnect" href="https://api.mapbox.com" />
+                <link rel="preconnect" href="https://events.mapbox.com" />
                 <link rel="apple-touch-icon" href="/icon-192-v20.png?v=22" />
                 <style dangerouslySetInnerHTML={{ __html: 'html,body{background-color:#0f172a!important}' }} />
             </head>
