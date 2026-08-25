@@ -3,6 +3,7 @@ import type { NextAuthConfig } from "next-auth"
 
 // Edge-compatible config (used only by middleware)
 export const authConfig: NextAuthConfig = {
+    trustHost: true,
     providers: [
         Google({
             clientId: process.env.GOOGLE_CLIENT_ID || process.env.AUTH_GOOGLE_ID,

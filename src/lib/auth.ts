@@ -13,6 +13,7 @@ export const {
     signIn,
     signOut
 } = NextAuth({
+    trustHost: true,
     adapter: PrismaAdapter(prisma),
     callbacks: {
         async signIn({ user, account, profile }) {
