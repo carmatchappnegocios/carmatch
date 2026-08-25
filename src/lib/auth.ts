@@ -5,6 +5,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "@/lib/db"
 import { comparePassword } from "@/lib/password"
 import { validateAndNormalizeEmail } from "@/lib/email-validation"
+import authConfig from "./auth.config"
 
 
 export const {
@@ -13,6 +14,7 @@ export const {
     signIn,
     signOut
 } = NextAuth({
+    ...authConfig,
     trustHost: true,
     adapter: PrismaAdapter(prisma),
     callbacks: {
@@ -184,7 +186,7 @@ export const {
             },
         }),
     ],
-    debug: true,
+    debug: false,
     events: {
         async createUser({ user }) {
             if (user.email === process.env.ADMIN_EMAIL) {
