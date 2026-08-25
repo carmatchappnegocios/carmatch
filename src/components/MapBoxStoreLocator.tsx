@@ -58,6 +58,11 @@ export default function MapBoxStoreLocator({
     const [mapLoaded, setMapLoaded] = useState(false)
     const [mapError, setMapError] = useState<string | null>(null)
 
+    const lastFlyToRef = useRef<{ lat: number; lng: number } | null>(null)
+    const userMovedRef = useRef(false)
+    const didSafetyFitRef = useRef(false)
+    const mapReadyRef = useRef(false)
+
     useEffect(() => {
         if (!mapContainer.current || map.current) return
         if (!initialLocation) return
@@ -105,7 +110,12 @@ export default function MapBoxStoreLocator({
         newMap.addControl(geolocateControl, 'top-right')
 
         const onMapLoad = () => {
+            if (!newMap.loaded()) {
+                newMap.once('load', onMapLoad)
+                return
+            }
             setMapLoaded(true)
+            mapReadyRef.current = true
             try { newMap.resize() } catch (e) { /* ignore resize errors */ }
 
             if (newMap.getLayer('poi-label')) {
@@ -138,11 +148,6 @@ export default function MapBoxStoreLocator({
             onMapLoad()
         } else {
             newMap.on('load', onMapLoad)
-            // Fallback: forzar loaded después de 3s si CSP bloquea recursos
-            setTimeout(() => {
-                if (!map.current) return
-                setMapLoaded(true)
-            }, 3000)
         }
 
         // 🎯 Focus Business Listener
@@ -181,12 +186,6 @@ export default function MapBoxStoreLocator({
             }
         }
     }, [initialLocation])
-
-    const lastFlyToRef = useRef<{ lat: number; lng: number } | null>(null)
-    const userMovedRef = useRef(false)
-    const didSafetyFitRef = useRef(false)
-
-    // flyTo ya no es necesario — el mapa se crea directo en initialLocation
 
     useEffect(() => {
         if (!map.current || !mapLoaded) return
