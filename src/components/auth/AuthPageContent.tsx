@@ -22,6 +22,8 @@ export default function AuthPageContent() {
     const router = useRouter()
     const searchParams = useSearchParams()
     const error = searchParams.get("error")
+    const errorDescription = searchParams.get("error_description")
+    const errorProvider = searchParams.get("provider")
 
 
 
@@ -90,7 +92,10 @@ export default function AuthPageContent() {
                             <AlertTriangle className="text-red-400 mb-2" size={24} />
                             <p className="text-red-400 font-bold text-sm">Error de Configuración</p>
                             <p className="text-gray-300 text-xs mt-1">
-                                Hay un problema de configuración. Por favor intenta más tarde o usa tu correo y contraseña.
+                                {errorDescription || "El proveedor OAuth no está configurado correctamente."}
+                            </p>
+                            <p className="text-gray-500 text-[10px] mt-2 font-mono">
+                                error=Configuration{errorProvider ? `&provider=${errorProvider}` : ""}
                             </p>
                         </div>
                     )}
@@ -111,6 +116,16 @@ export default function AuthPageContent() {
                             <p className="text-yellow-400 font-bold text-sm">Cuenta No Vinculada</p>
                             <p className="text-gray-300 text-xs mt-1">
                                 Este correo ya está registrado. Inicia sesión con tu correo y contraseña, luego puedes vincular Google desde tu perfil.
+                            </p>
+                        </div>
+                    )}
+
+                    {error && !["login_required", "interaction_required", "OAuthCallback", "Configuration", "AccessDenied", "OAuthAccountNotLinked"].includes(error) && (
+                        <div className="mb-6 bg-red-500/10 border border-red-500/20 rounded-2xl p-4 flex flex-col items-center text-center">
+                            <AlertTriangle className="text-red-400 mb-2" size={24} />
+                            <p className="text-red-400 font-bold text-sm">Error: {error}</p>
+                            <p className="text-gray-300 text-xs mt-1">
+                                {errorDescription || "Ocurrió un error inesperado al iniciar sesión."}
                             </p>
                         </div>
                     )}
