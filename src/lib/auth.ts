@@ -5,7 +5,6 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "@/lib/db"
 import { comparePassword } from "@/lib/password"
 import { validateAndNormalizeEmail } from "@/lib/email-validation"
-import { authConfig } from "./auth.config"
 
 
 export const {
@@ -14,7 +13,6 @@ export const {
     signIn,
     signOut
 } = NextAuth({
-    ...authConfig,
     trustHost: true,
     adapter: PrismaAdapter(prisma),
     callbacks: {
@@ -61,7 +59,6 @@ export const {
                             })
                         } catch (linkError) {
                             console.error('[Auth] Failed to link Google account:', linkError)
-                            // Continue anyway - user can still sign in, account linking is best-effort
                         }
 
                         // Return the existing user (not the new one from Google)
@@ -96,7 +93,6 @@ export const {
                 token.id = user.id
                 // @ts-ignore
                 token.isAdmin = !!user.isAdmin
-                // Store lastPasswordChange to invalidate tokens after password change
                 // @ts-ignore
                 token.lastPasswordChange = (user as any).lastPasswordChange?.getTime() || null
             }
@@ -106,12 +102,10 @@ export const {
             }
 
             // Validate token against lastPasswordChange (token invalidation on password change)
-            // Only check every ~1 hour by comparing iat gap instead of querying DB on every request
             if (token.id && token.lastPasswordChange) {
                 const now = Math.floor(Date.now() / 1000)
                 const iat = (token.iat as number) || 0
                 const hourInSeconds = 3600
-                // Only query DB if token is older than 1 hour or no iat
                 if (now - iat > hourInSeconds || iat === 0) {
                     const dbUser = await prisma.user.findUnique({
                         where: { id: token.id as string },
@@ -121,7 +115,6 @@ export const {
                         const tokenTime = iat * 1000
                         const passwordChangeTime = dbUser.lastPasswordChange.getTime()
                         if (passwordChangeTime > tokenTime) {
-                            // Token was issued before password change - invalidate
                             return null
                         }
                     }
