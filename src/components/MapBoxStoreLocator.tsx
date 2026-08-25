@@ -63,8 +63,10 @@ export default function MapBoxStoreLocator({
     const didSafetyFitRef = useRef(false)
     const mapReadyRef = useRef(false)
 
+    const mapCreatedRef = useRef(false)
+
     useEffect(() => {
-        if (!mapContainer.current || map.current) return
+        if (!mapContainer.current || map.current || mapCreatedRef.current) return
         if (!initialLocation) return
 
         const token = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
@@ -174,8 +176,10 @@ export default function MapBoxStoreLocator({
         window.addEventListener('map-ai-search', handleAiSearch);
 
         map.current = newMap
+        mapCreatedRef.current = true
 
         return () => {
+            mapCreatedRef.current = false
             window.removeEventListener('map-focus-business', handleFocus);
             window.removeEventListener('map-ai-search', handleAiSearch);
             if (map.current) {

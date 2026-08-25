@@ -68,6 +68,12 @@ export default function MapClient({ businesses, user }: MapClientProps) {
     const [searchSuccess, setSearchSuccess] = useState(false)
     const [hasSearched, setHasSearched] = useState(false)
 
+    const memoizedLocation = useMemo(() => {
+        if (location && (location.latitude !== 0 || location.longitude !== 0)) {
+            return { latitude: location.latitude, longitude: location.longitude }
+        }
+        return undefined
+    }, [location?.latitude, location?.longitude])
     const [selectedBusiness, setSelectedBusiness] = useState<any | null>(null)
     const [activeBusinessId, setActiveBusinessId] = useState<string | null>(null)
     const [dynamicBusinesses, setDynamicBusinesses] = useState<any[]>(businesses)
@@ -320,7 +326,7 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                 <div className="absolute inset-0 lg:relative lg:flex-1 lg:inset-auto z-0 order-2">
                     <MapBoxStoreLocator
                         businesses={filteredBusinesses}
-                        initialLocation={location && (location.latitude !== 0 || location.longitude !== 0) ? { latitude: location.latitude, longitude: location.longitude } : undefined}
+                        initialLocation={memoizedLocation}
                         onBoundsChange={handleBoundsChange}
                         highlightCategories={searchSuccess ? selectedCategories : []}
                         preciseLocationEnabled={preciseLocationEnabled}
