@@ -113,17 +113,19 @@ export default function MapBoxStoreLocator({
             }
 
             const reportBounds = () => {
-                if (!onBoundsChange) return
+                if (!onBoundsChange) { console.log('[MAP] reportBounds: no onBoundsChange prop'); return }
                 const bounds = newMap.getBounds()
-                if (!bounds) return
+                if (!bounds) { console.log('[MAP] reportBounds: no bounds'); return }
 
-                onBoundsChange({
+                const b = {
                     minLat: bounds.getSouth(),
                     maxLat: bounds.getNorth(),
                     minLng: bounds.getWest(),
                     maxLng: bounds.getEast(),
                     zoom: Math.round(newMap.getZoom())
-                })
+                }
+                console.log('[MAP] reportBounds called:', b)
+                onBoundsChange(b)
             }
 
             newMap.on('moveend', reportBounds)

@@ -144,13 +144,19 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                 })
 
                 const res = await fetch(`/api/businesses/bounds?${params}`)
+                console.log('[BOUNDS] API response:', res.status, res.ok ? 'OK' : 'FAIL')
                 if (res.ok) {
                     const data = await res.json()
+                    console.log('[BOUNDS] Received businesses:', data.businesses?.length || 0)
                     setDynamicBusinesses(prev => {
                         const existingIds = new Set(prev.map(b => b.id))
                         const newOnes = data.businesses.filter((b: any) => !existingIds.has(b.id))
+                        console.log('[BOUNDS] New businesses to add:', newOnes.length, '| Total will be:', Math.min(prev.length + newOnes.length, 1000))
                         return [...prev, ...newOnes].slice(-1000)
                     })
+                } else {
+                    const errBody = await res.text().catch(() => 'unable to read')
+                    console.error('[BOUNDS] Error response:', res.status, errBody)
                 }
             } catch (err) {
                 console.error("Bounds fetch error:", err)
