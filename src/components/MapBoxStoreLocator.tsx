@@ -321,7 +321,7 @@ export default function MapBoxStoreLocator({
                     layers: ['clusters']
                 })
                 if (!features.length) return
-                const clusterId = features[0].properties?.cluster_id
+                const clusterId = (features[0] as any).properties?.cluster_id
                 const source = mapInstance.getSource('businesses') as mapboxgl.GeoJSONSource
 
                 source.getClusterExpansionZoom(clusterId, (err, zoom) => {
