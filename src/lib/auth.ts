@@ -179,7 +179,7 @@ export const {
             },
         }),
     ],
-    debug: true,
+    debug: false,
     events: {
         async createUser({ user }) {
             if (user.email === process.env.ADMIN_EMAIL) {

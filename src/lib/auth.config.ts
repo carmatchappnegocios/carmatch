@@ -1,7 +1,7 @@
 import Google from "next-auth/providers/google"
 import type { NextAuthConfig } from "next-auth"
 
-// Edge-compatible config (used only by middleware for session checking)
+// Edge-compatible config (used only by middleware)
 export const authConfig: NextAuthConfig = {
     trustHost: true,
     providers: [
@@ -42,6 +42,7 @@ export const authConfig: NextAuthConfig = {
                 '/privacy',
                 '/terms',
                 '/notifications',
+                '/api/auth',
             ]
 
             const isPublicPath = publicPaths.some(path =>
@@ -50,6 +51,45 @@ export const authConfig: NextAuthConfig = {
 
             if (isPublicPath) return true
             return isLoggedIn
+        },
+        async signIn() {
+            return true
+        },
+        async session({ session, token }) {
+            if (session.user && token) {
+                // @ts-ignore
+                session.user.id = (token.id as string) || (token.sub as string)
+                session.user.image = (token.picture as string) || session.user.image
+                session.user.name = (token.name as string) || session.user.name
+
+                if (session.user.email === process.env.ADMIN_EMAIL) {
+                    // @ts-ignore
+                    session.user.isAdmin = true
+                } else {
+                    // @ts-ignore
+                    session.user.isAdmin = !!token.isAdmin
+                }
+            }
+            return session
+        },
+        async jwt({ token, user, trigger, session }) {
+            if (user && user.id) {
+                token.id = user.id
+                // @ts-ignore
+                token.isAdmin = !!user.isAdmin
+                // @ts-ignore
+                token.lastPasswordChange = (user as any).lastPasswordChange?.getTime() || null
+            }
+            if (trigger === "update") {
+                if (session?.image) token.picture = session.image
+                if (session?.name) token.name = session.name
+            }
+            return token
+        },
+        async redirect({ url, baseUrl }) {
+            if (url.startsWith("/")) return `${baseUrl}${url}`
+            else if (new URL(url).origin === baseUrl) return url
+            return baseUrl
         },
     },
 }
