@@ -1,13 +1,13 @@
 
-// ?? CarMatch Intelligent Vehicle Taxonomy
+// üöó CarMatch Intelligent Vehicle Taxonomy
 // Single Source of Truth for Global Vehicle Data
 
 // Heavy data (BRANDS, POPULAR_MODELS) moved to vehicleTaxonomyData.ts to fix TDZ bundler bug
 export { BRANDS, POPULAR_MODELS } from './vehicleTaxonomyData'
 
-export type VehicleCategory = 'AutomÛvil' | 'Motocicleta' | 'CamiÛn' | 'Autob˙s' | 'Maquinaria' | 'Especial'
+export type VehicleCategory = 'Autom√≥vil' | 'Motocicleta' | 'Cami√≥n' | 'Autob√∫s' | 'Maquinaria' | 'Especial'
 
-// ?? Dynamic Year Generator (Current + 1)
+// üìÖ Dynamic Year Generator (Current + 1)
 export function getYears() {
     const currentYear = new Date().getFullYear() + 1
     const years = []
@@ -17,35 +17,35 @@ export function getYears() {
     return years
 }
 
-// ?? Categories and Subtypes
+// üöó Categories and Subtypes
 export var VEHICLE_CATEGORIES: Record<VehicleCategory, string[]> = {
-    'AutomÛvil': ['Sed·n', 'SUV', 'Pickup', 'Deportivo', 'Convertible', 'Coupe', 'Hatchback', 'Minivan', 'Wagon', 'Crossover', 'Limusina', 'Microcar', 'Roadster', 'Moke', 'Targa', 'Shooting Brake'],
+    'Autom√≥vil': ['Sed√°n', 'SUV', 'Pickup', 'Deportivo', 'Convertible', 'Coupe', 'Hatchback', 'Minivan', 'Wagon', 'Crossover', 'Limusina', 'Microcar', 'Roadster', 'Moke', 'Targa', 'Shooting Brake'],
     'Motocicleta': ['Deportiva', 'Cruiser', 'Touring', 'Off-road', 'Scooter', 'Chopper', 'Naked', 'Dual-Sport', 'Adventure', 'Cafe Racer', 'Scrambler', 'Enduro', 'Motocross', 'Trial', 'Triciclo (Spyder/Ryker)', 'Cuatrimoto (ATV)', 'Moped', 'Pocket Bike', 'Supermoto'],
-    'CamiÛn': ['TractocamiÛn (Trailer)', 'Torton', 'Rabon', 'Pickup Heavy Duty', 'Volteo', 'Cisterna (Pipa)', 'Refrigerado', 'Plataforma', 'Caja Seca', 'Gr˙a', 'Hormigonera (Olla)', 'Portacoches (Madrina)', 'Basurero', 'Chasis Cabina', 'Bomberos (CamiÛn)', 'Blindado (Valores)', 'Compactador', 'Madre (Nodriza)'],
-    'Autob˙s': ['Urbano', 'Interurbano', 'Turismo', 'Escolar', 'Microb˙s', 'Van Pasajeros', 'Articulado', 'Dos Pisos', 'Troleb˙s', 'Minib˙s', 'Shuttle Bus'],
-    'Maquinaria': ['Excavadora', 'Retroexcavadora', 'Bulldozer', 'Montacargas', 'Tractor AgrÌcola', 'Cosechadora', 'Rodillo Compactador', 'Pavimentadora', 'Gr˙a Industrial', 'Cargador Frontal', 'Minicargador', 'Sembradora', 'Motoconformadora', 'Telehandler', 'Sideboom', 'Barredora Industrial', 'Zanjadora', 'Perforadora'],
-    'Especial': ['UTV (RZR / Maverick / Side-by-Side)', 'Buggy / Arenero', 'Golf Cart', 'Go-kart', 'Motonieve', 'Ambulancia', 'Patrulla', 'Bomberos', 'Blindado', 'Food Truck', 'Casa Rodante (RV)', 'Remolque', 'Lowboy', 'Remolque FrigorÌfico', 'Plataforma Porta-contenedor']
+    'Cami√≥n': ['Tractocami√≥n (Trailer)', 'Torton', 'Rabon', 'Pickup Heavy Duty', 'Volteo', 'Cisterna (Pipa)', 'Refrigerado', 'Plataforma', 'Caja Seca', 'Gr√∫a', 'Hormigonera (Olla)', 'Portacoches (Madrina)', 'Basurero', 'Chasis Cabina', 'Bomberos (Cami√≥n)', 'Blindado (Valores)', 'Compactador', 'Madre (Nodriza)'],
+    'Autob√∫s': ['Urbano', 'Interurbano', 'Turismo', 'Escolar', 'Microb√∫s', 'Van Pasajeros', 'Articulado', 'Dos Pisos', 'Troleb√∫s', 'Minib√∫s', 'Shuttle Bus'],
+    'Maquinaria': ['Excavadora', 'Retroexcavadora', 'Bulldozer', 'Montacargas', 'Tractor Agr√≠cola', 'Cosechadora', 'Rodillo Compactador', 'Pavimentadora', 'Gr√∫a Industrial', 'Cargador Frontal', 'Minicargador', 'Sembradora', 'Motoconformadora', 'Telehandler', 'Sideboom', 'Barredora Industrial', 'Zanjadora', 'Perforadora'],
+    'Especial': ['UTV (RZR / Maverick / Side-by-Side)', 'Buggy / Arenero', 'Golf Cart', 'Go-kart', 'Motonieve', 'Ambulancia', 'Patrulla', 'Bomberos', 'Blindado', 'Food Truck', 'Casa Rodante (RV)', 'Remolque', 'Lowboy', 'Remolque Frigor√≠fico', 'Plataforma Porta-contenedor']
 }
 
-// ?? Technical Specs Options
-export var TRANSMISSIONS = ['Manual', 'Autom·tica', 'CVT', 'Dual Clutch (DCT)', 'Tiptronic', 'Secuencial', 'Semi-autom·tica']
-export var FUELS = ['Gasolina', 'DiÈsel', 'HÌbrido (HEV)', 'HÌbrido Enchufable (PHEV)', 'ElÈctrico (BEV)', 'Gas LP', 'Gas Natural (GNC)', 'HidrÛgeno (FCEV)', 'Etanol']
+// ‚öôÔ∏è Technical Specs Options
+export var TRANSMISSIONS = ['Manual', 'Autom√°tica', 'CVT', 'Dual Clutch (DCT)', 'Tiptronic', 'Secuencial', 'Semi-autom√°tica']
+export var FUELS = ['Gasolina', 'Di√©sel', 'H√≠brido (HEV)', 'H√≠brido Enchufable (PHEV)', 'El√©ctrico (BEV)', 'Gas LP', 'Gas Natural (GNC)', 'Hidr√≥geno (FCEV)', 'Etanol']
 export var TRACTIONS = ['Delantera (FWD)', 'Trasera (RWD)', '4x4 (4WD)', 'Integral (AWD)', '6x4', '6x6', '8x4', '8x8']
-export var COLORS = ['Blanco', 'Negro', 'Gris', 'Plata', 'Rojo', 'Azul', 'Verde', 'Amarillo', 'Naranja', 'CafÈ', 'Beige', 'Oro', 'Bronce', 'Morado', 'Rosa', 'Bicolor', 'Mate', 'Otro']
+export var COLORS = ['Blanco', 'Negro', 'Gris', 'Plata', 'Rojo', 'Azul', 'Verde', 'Amarillo', 'Naranja', 'Caf√©', 'Beige', 'Oro', 'Bronce', 'Morado', 'Rosa', 'Bicolor', 'Mate', 'Otro']
 export var CONDITIONS = ['Nuevo', 'Seminuevo (Casi Nuevo)', 'Usado', 'Para Restaurar', 'Para Piezas']
 
-// ?? DICCIONARIO GLOBAL DE SIN”NIMOS (Base de Conocimiento para Inteligencia Artificial)
-// Mapea tÈrminos coloquiales e internacionales a la taxonomÌa oficial de la BD
+// üåç DICCIONARIO GLOBAL DE SIN√ìNIMOS (Base de Conocimiento para Inteligencia Artificial)
+// Mapea t√©rminos coloquiales e internacionales a la taxonom√≠a oficial de la BD
 export var GLOBAL_SYNONYMS: Record<string, string> = {
-    // CategorÌas
-    'Carro': 'AutomÛvil', 'Coche': 'AutomÛvil', 'Auto': 'AutomÛvil', 'Nave': 'AutomÛvil', 'Fierro': 'AutomÛvil',
-    'Voiture': 'AutomÛvil', 'Car': 'AutomÛvil', 'Vehicle': 'AutomÛvil',
-    'Troca': 'AutomÛvil', 'Pickup': 'AutomÛvil', 'Camioneta': 'AutomÛvil', 'Truck': 'AutomÛvil',
+    // Categor√≠as
+    'Carro': 'Autom√≥vil', 'Coche': 'Autom√≥vil', 'Auto': 'Autom√≥vil', 'Nave': 'Autom√≥vil', 'Fierro': 'Autom√≥vil',
+    'Voiture': 'Autom√≥vil', 'Car': 'Autom√≥vil', 'Vehicle': 'Autom√≥vil',
+    'Troca': 'Autom√≥vil', 'Pickup': 'Autom√≥vil', 'Camioneta': 'Autom√≥vil', 'Truck': 'Autom√≥vil',
     'Moto': 'Motocicleta', 'Burra': 'Motocicleta', 'Bike': 'Motocicleta', 'Motorcycle': 'Motocicleta',
     'Mano de chango': 'Maquinaria', 'Retro': 'Maquinaria', 'Excavator': 'Maquinaria',
-    'Tracto': 'CamiÛn', 'Trailer': 'CamiÛn', 'Mula': 'CamiÛn', 'Semi': 'CamiÛn', 'Lorry': 'CamiÛn',
-    'Ute': 'AutomÛvil', 'Bakkie': 'AutomÛvil', 'Estate': 'AutomÛvil', 'Saloon': 'AutomÛvil', 'Wagon': 'AutomÛvil',
-    'Camineta': 'AutomÛvil', 'Hondita': 'Motocicleta', 'Ranfla': 'AutomÛvil', 'Mueble': 'AutomÛvil',
+    'Tracto': 'Cami√≥n', 'Trailer': 'Cami√≥n', 'Mula': 'Cami√≥n', 'Semi': 'Cami√≥n', 'Lorry': 'Cami√≥n',
+    'Ute': 'Autom√≥vil', 'Bakkie': 'Autom√≥vil', 'Estate': 'Autom√≥vil', 'Saloon': 'Autom√≥vil', 'Wagon': 'Autom√≥vil',
+    'Camineta': 'Autom√≥vil', 'Hondita': 'Motocicleta', 'Ranfla': 'Autom√≥vil', 'Mueble': 'Autom√≥vil',
 
     // Colores
     'Negra': 'Negro', 'Black': 'Negro', 'Noir': 'Negro', 'Dark': 'Negro', 'Preto': 'Negro',
@@ -61,100 +61,100 @@ export var GLOBAL_SYNONYMS: Record<string, string> = {
     'Lambo': 'Lamborghini', 'Rari': 'Ferrari', 'Vw': 'Volkswagen', 'Vocho': 'Volkswagen', 'Fusca': 'Volkswagen',
     'Mamalona': 'RAM', 'Yota': 'Toyota', 'Ramona': 'RAM', 'Panchita': 'Ford',
 
-    // TÈrminos de motor y estado (Slang)
+    // T√©rminos de motor y estado (Slang)
     'Cero horas': '0 hrs', '0 km': 'Nuevo', 'Recien llegado': 'Importado', 'Clima helando': 'Aire Acondicionado',
     'Patas de hule': 'Llantas nuevas', 'Al 100': 'Excelente estado', 'Sin fallas': 'Excelente estado',
-    'Diesel': 'DiÈsel', 'Poder stroke': 'PowerStroke', 'Cumins': 'Cummins', 'Duramax': 'Duramax',
+    'Diesel': 'Di√©sel', 'Poder stroke': 'PowerStroke', 'Cumins': 'Cummins', 'Duramax': 'Duramax',
     'Hemi': 'Hemi', 'Triton': 'Triton', 'Vortec': 'Vortec'
 }
 
-// ?? Helper to get features by category
+// üîß Helper to get features by category
 export function getFeaturesByCategory(category: VehicleCategory) {
     const common = ['Alarma', 'GPS', 'Luces LED', 'Frenos ABS', 'Bluetooth', 'USB', 'Pantalla Touch']
 
     switch (category) {
-        case 'AutomÛvil':
+        case 'Autom√≥vil':
             return [
                 ...common,
                 // Confort
-                'Aire Acondicionado', 'Climatizador Autom·tico', 'Asientos de Piel', 'Asientos ElÈctricos',
-                'Asientos Calefactables', 'Asientos Ventilados', 'Quemacocos', 'Techo Panor·mico',
-                'Vidrios ElÈctricos', 'Espejos ElÈctricos', 'Volante Multifuncional', 'Cajuela ElÈctrica',
+                'Aire Acondicionado', 'Climatizador Autom√°tico', 'Asientos de Piel', 'Asientos El√©ctricos',
+                'Asientos Calefactables', 'Asientos Ventilados', 'Quemacocos', 'Techo Panor√°mico',
+                'Vidrios El√©ctricos', 'Espejos El√©ctricos', 'Volante Multifuncional', 'Cajuela El√©ctrica',
                 // Tech
-                'Android Auto/CarPlay', 'Cargador Inal·mbrico', 'Head-Up Display', 'Sistema de Sonido Premium',
-                'Tablero Digital', 'Llave Inteligente (Keyless)', 'C·mara de Reversa', 'C·mara 360∞',
+                'Android Auto/CarPlay', 'Cargador Inal√°mbrico', 'Head-Up Display', 'Sistema de Sonido Premium',
+                'Tablero Digital', 'Llave Inteligente (Keyless)', 'C√°mara de Reversa', 'C√°mara 360¬∞',
                 // Seguridad / ADAS
                 'Bolsas de Aire (Airbags)', 'Sensores de Estacionamiento', 'Monitor de Punto Ciego',
-                'Alerta de Cambio de Carril', 'Frenado AutÛnomo de Emergencia', 'Control Crucero Adaptativo',
+                'Alerta de Cambio de Carril', 'Frenado Aut√≥nomo de Emergencia', 'Control Crucero Adaptativo',
                 // Exterior
                 'Rines de Aluminio', 'Faros de Niebla', 'Barras de Techo', 'Kit Deportivo'
             ]
         case 'Motocicleta':
             return [
                 ...common,
-                'Frenos de Disco', 'ABS en Curva', 'Control de TracciÛn', 'Quickshifter',
-                'Modos de Manejo', 'SuspensiÛn ElectrÛnica', 'Amortiguador de DirecciÛn',
+                'Frenos de Disco', 'ABS en Curva', 'Control de Tracci√≥n', 'Quickshifter',
+                'Modos de Manejo', 'Suspensi√≥n Electr√≥nica', 'Amortiguador de Direcci√≥n',
                 'Maletas Laterales', 'Top Case', 'Parabrisas', 'Defensas/Sliders',
-                'PuÒos Calefactables', 'Asiento Comfort', 'Luces Auxiliares (Exploradoras)'
+                'Pu√±os Calefactables', 'Asiento Comfort', 'Luces Auxiliares (Exploradoras)'
             ]
-        case 'CamiÛn':
+        case 'Cami√≥n':
             return [
                 ...common,
-                'Freno de Motor', 'Retardador', 'Camarote', 'Ejes Retr·ctiles', 'SuspensiÛn de Aire',
+                'Freno de Motor', 'Retardador', 'Camarote', 'Ejes Retractiles', 'Suspensi√≥n de Aire',
                 'Toma de Fuerza (PTO)', 'Deflector de Aire', 'Tanque Auxiliar', 'Rines de Aluminio',
-                'Visera Exterior', 'Asiento Neum·tico', 'Eje Elevable'
+                'Visera Exterior', 'Asiento Neum√°tico', 'Eje Elevable'
             ]
         case 'Maquinaria':
             return [
                 ...common,
-                'Cabina Cerrada (ROPS/FOPS)', 'Aire Acondicionado', 'CalefacciÛn', 'Joystick Control',
-                'Estabilizadores', 'Cucharon 4en1', 'LÌnea Hidr·ulica Auxiliar', 'Ripper (Desgarrador)',
-                'Zapatas Anchas', 'Llantas SÛlidas'
+                'Cabina Cerrada (ROPS/FOPS)', 'Aire Acondicionado', 'Calefacci√≥n', 'Joystick Control',
+                'Estabilizadores', 'Cucharon 4en1', 'L√≠nea Hidr√°ulica Auxiliar', 'Ripper (Desgarrador)',
+                'Zapatas Anchas', 'Llantas S√≥lidas'
             ]
         case 'Especial':
             return [
                 ...common,
-                'Winch (Cabrestante)', 'Roll Cage (Jaula)', 'Snorkel', 'SuspensiÛn Lift Kit',
-                'Llantas All-Terrain/Mud-Terrain', 'Luces LED Bar', 'Techo RÌgido', 'Medios Puertas'
+                'Winch (Cabrestante)', 'Roll Cage (Jaula)', 'Snorkel', 'Suspensi√≥n Lift Kit',
+                'Llantas All-Terrain/Mud-Terrain', 'Luces LED Bar', 'Techo R√≠gido', 'Medios Puertas'
             ]
         default:
             return common
     }
 }
-// ?? Global Currency Support
+// üí± Global Currency Support
 export var CURRENCIES = [
     { code: 'AED', name: 'Dirham (EAU)' },
     { code: 'AFN', name: 'Afgani' },
     { code: 'ALL', name: 'Lek' },
     { code: 'AMD', name: 'Dram' },
-    { code: 'ANG', name: 'FlorÌn (Antillas)' },
+    { code: 'ANG', name: 'Flor√≠n (Antillas)' },
     { code: 'AOA', name: 'Kwanza' },
     { code: 'ARS', name: 'Peso (AR)' },
-    { code: 'AUD', name: 'DÛlar (AU)' },
-    { code: 'AWG', name: 'FlorÌn (Aruba)' },
+    { code: 'AUD', name: 'D√≥lar (AU)' },
+    { code: 'AWG', name: 'Flor√≠n (Aruba)' },
     { code: 'AZN', name: 'Manat' },
     { code: 'BAM', name: 'Marco' },
-    { code: 'BBD', name: 'DÛlar (BB)' },
+    { code: 'BBD', name: 'D√≥lar (BB)' },
     { code: 'BDT', name: 'Taka' },
     { code: 'BGN', name: 'Lev' },
     { code: 'BHD', name: 'Dinar (BH)' },
     { code: 'BIF', name: 'Franco (BI)' },
-    { code: 'BMD', name: 'DÛlar (BM)' },
-    { code: 'BND', name: 'DÛlar (BN)' },
+    { code: 'BMD', name: 'D√≥lar (BM)' },
+    { code: 'BND', name: 'D√≥lar (BN)' },
     { code: 'BOB', name: 'Boliviano' },
     { code: 'BRL', name: 'Real' },
-    { code: 'BSD', name: 'DÛlar (BS)' },
+    { code: 'BSD', name: 'D√≥lar (BS)' },
     { code: 'BTN', name: 'Ngultrum' },
     { code: 'BWP', name: 'Pula' },
     { code: 'BYN', name: 'Rublo (BY)' },
-    { code: 'BZD', name: 'DÛlar (BZ)' },
-    { code: 'CAD', name: 'DÛlar (CA)' },
+    { code: 'BZD', name: 'D√≥lar (BZ)' },
+    { code: 'CAD', name: 'D√≥lar (CA)' },
     { code: 'CDF', name: 'Franco (CD)' },
     { code: 'CHF', name: 'Franco (CH)' },
     { code: 'CLP', name: 'Peso (CL)' },
     { code: 'CNY', name: 'Yuan' },
     { code: 'COP', name: 'Peso (CO)' },
-    { code: 'CRC', name: 'ColÛn' },
+    { code: 'CRC', name: 'Col√≥n' },
     { code: 'CUP', name: 'Peso (CU)' },
     { code: 'CVE', name: 'Escudo' },
     { code: 'CZK', name: 'Corona (CZ)' },
@@ -166,7 +166,7 @@ export var CURRENCIES = [
     { code: 'ERN', name: 'Nakfa' },
     { code: 'ETB', name: 'Birr' },
     { code: 'EUR', name: 'Euro' },
-    { code: 'FJD', name: 'DÛlar (FJ)' },
+    { code: 'FJD', name: 'D√≥lar (FJ)' },
     { code: 'FKP', name: 'Libra (FK)' },
     { code: 'GBP', name: 'Libra (GB)' },
     { code: 'GEL', name: 'Lari' },
@@ -175,8 +175,8 @@ export var CURRENCIES = [
     { code: 'GMD', name: 'Dalasi' },
     { code: 'GNF', name: 'Franco (GN)' },
     { code: 'GTQ', name: 'Quetzal' },
-    { code: 'GYD', name: 'DÛlar (GY)' },
-    { code: 'HKD', name: 'DÛlar (HK)' },
+    { code: 'GYD', name: 'D√≥lar (GY)' },
+    { code: 'HKD', name: 'D√≥lar (HK)' },
     { code: 'HNL', name: 'Lempira' },
     { code: 'HRK', name: 'Kuna' },
     { code: 'HTG', name: 'Gourde' },
@@ -187,22 +187,22 @@ export var CURRENCIES = [
     { code: 'IQD', name: 'Dinar (IQ)' },
     { code: 'IRR', name: 'Rial (IR)' },
     { code: 'ISK', name: 'Corona (IS)' },
-    { code: 'JMD', name: 'DÛlar (JM)' },
+    { code: 'JMD', name: 'D√≥lar (JM)' },
     { code: 'JOD', name: 'Dinar (JO)' },
     { code: 'JPY', name: 'Yen' },
-    { code: 'KES', name: 'ChelÌn (KE)' },
+    { code: 'KES', name: 'Chel√≠n (KE)' },
     { code: 'KGS', name: 'Som' },
     { code: 'KHR', name: 'Riel' },
     { code: 'KMF', name: 'Franco (KM)' },
     { code: 'KPW', name: 'Won (KP)' },
     { code: 'KRW', name: 'Won (KR)' },
     { code: 'KWD', name: 'Dinar (KW)' },
-    { code: 'KYD', name: 'DÛlar (KY)' },
+    { code: 'KYD', name: 'D√≥lar (KY)' },
     { code: 'KZT', name: 'Tenge' },
     { code: 'LAK', name: 'Kip' },
     { code: 'LBP', name: 'Libra (LB)' },
     { code: 'LKR', name: 'Rupia (LK)' },
-    { code: 'LRD', name: 'DÛlar (LR)' },
+    { code: 'LRD', name: 'D√≥lar (LR)' },
     { code: 'LSL', name: 'Loti' },
     { code: 'LYD', name: 'Dinar (LY)' },
     { code: 'MAD', name: 'Dirham (MA)' },
@@ -219,12 +219,12 @@ export var CURRENCIES = [
     { code: 'MXN', name: 'Peso (MX)' },
     { code: 'MYR', name: 'Ringgit' },
     { code: 'MZN', name: 'Metical' },
-    { code: 'NAD', name: 'DÛlar (NA)' },
+    { code: 'NAD', name: 'D√≥lar (NA)' },
     { code: 'NGN', name: 'Naira' },
-    { code: 'NIO', name: 'CÛrdoba' },
+    { code: 'NIO', name: 'C√≥rdoba' },
     { code: 'NOK', name: 'Corona (NO)' },
     { code: 'NPR', name: 'Rupia (NP)' },
-    { code: 'NZD', name: 'DÛlar (NZ)' },
+    { code: 'NZD', name: 'D√≥lar (NZ)' },
     { code: 'OMR', name: 'Rial (OM)' },
     { code: 'PAB', name: 'Balboa' },
     { code: 'PEN', name: 'Sol' },
@@ -232,25 +232,25 @@ export var CURRENCIES = [
     { code: 'PHP', name: 'Peso (PH)' },
     { code: 'PKR', name: 'Rupia (PK)' },
     { code: 'PLN', name: 'Zloty' },
-    { code: 'PYG', name: 'GuaranÌ' },
+    { code: 'PYG', name: 'Guaran√≠' },
     { code: 'QAR', name: 'Rial (QA)' },
     { code: 'RON', name: 'Leu (RO)' },
     { code: 'RSD', name: 'Dinar (RS)' },
     { code: 'RUB', name: 'Rublo' },
     { code: 'RWF', name: 'Franco (RW)' },
     { code: 'SAR', name: 'Riyal' },
-    { code: 'SBD', name: 'DÛlar (SB)' },
+    { code: 'SBD', name: 'D√≥lar (SB)' },
     { code: 'SCR', name: 'Rupia (SC)' },
     { code: 'SDG', name: 'Libra (SD)' },
     { code: 'SEK', name: 'Corona (SE)' },
-    { code: 'SGD', name: 'DÛlar (SG)' },
+    { code: 'SGD', name: 'D√≥lar (SG)' },
     { code: 'SHP', name: 'Libra (SH)' },
     { code: 'SLL', name: 'Leone' },
-    { code: 'SOS', name: 'ChelÌn (SO)' },
-    { code: 'SRD', name: 'DÛlar (SR)' },
+    { code: 'SOS', name: 'Chel√≠n (SO)' },
+    { code: 'SRD', name: 'D√≥lar (SR)' },
     { code: 'SSP', name: 'Libra (SS)' },
     { code: 'STN', name: 'Dobra' },
-    { code: 'SVC', name: 'ColÛn (SV)' },
+    { code: 'SVC', name: 'Col√≥n (SV)' },
     { code: 'SYP', name: 'Libra (SY)' },
     { code: 'SZL', name: 'Lilangeni' },
     { code: 'THB', name: 'Baht' },
@@ -259,26 +259,26 @@ export var CURRENCIES = [
     { code: 'TND', name: 'Dinar (TN)' },
     { code: 'TOP', name: 'Pa\'anga' },
     { code: 'TRY', name: 'Lira' },
-    { code: 'TTD', name: 'DÛlar (TT)' },
-    { code: 'TWD', name: 'DÛlar (TW)' },
-    { code: 'TZS', name: 'ChelÌn (TZ)' },
+    { code: 'TTD', name: 'D√≥lar (TT)' },
+    { code: 'TWD', name: 'D√≥lar (TW)' },
+    { code: 'TZS', name: 'Chel√≠n (TZ)' },
     { code: 'UAH', name: 'Grivna' },
-    { code: 'UGX', name: 'ChelÌn (UG)' },
-    { code: 'USD', name: 'DÛlar (US)' },
+    { code: 'UGX', name: 'Chel√≠n (UG)' },
+    { code: 'USD', name: 'D√≥lar (US)' },
     { code: 'UYU', name: 'Peso (UY)' },
     { code: 'UZS', name: 'Som (UZ)' },
-    { code: 'VES', name: 'BolÌvar' },
+    { code: 'VES', name: 'Bol√≠var' },
     { code: 'VND', name: 'Dong' },
     { code: 'VUV', name: 'Vatu' },
     { code: 'WST', name: 'Tala' },
     { code: 'XAF', name: 'Franco (BEAC)' },
-    { code: 'XCD', name: 'DÛlar (EC)' },
+    { code: 'XCD', name: 'D√≥lar (EC)' },
     { code: 'XOF', name: 'Franco (BCEAO)' },
     { code: 'XPF', name: 'Franco (CFP)' },
     { code: 'YER', name: 'Rial (YE)' },
     { code: 'ZAR', name: 'Rand' },
     { code: 'ZMW', name: 'Kwacha (ZM)' },
-    { code: 'ZWL', name: 'DÛlar (ZW)' }
+    { code: 'ZWL', name: 'D√≥lar (ZW)' }
 ]
 
 export var COUNTRY_CURRENCY_MAP: Record<string, string> = {
@@ -293,7 +293,7 @@ export var COUNTRY_DISTANCE_UNIT_MAP: Record<string, 'km' | 'mi'> = {
 }
 
 /**
- * ??? Map CarMatch internal locales to BCP-47 tags
+ * üåê Map CarMatch internal locales to BCP-47 tags
  */
 export function getIntlLocale(locale: string): string {
     const maps: Record<string, string> = {
@@ -306,7 +306,7 @@ export function getIntlLocale(locale: string): string {
 }
 
 /**
- * ?? Formatea un n˙mero seg˙n el locale
+ * üî¢ Formatea un n√∫mero seg√∫n el locale
  */
 export function formatNumber(num: any, locale: string = 'es') {
     try {
@@ -319,7 +319,7 @@ export function formatNumber(num: any, locale: string = 'es') {
 }
 
 /**
- * ?? Formatea el precio con separadores de miles y moneda
+ * üí∞ Formatea el precio con separadores de miles y moneda
  */
 export function formatPrice(price: any, currency: string = 'MXN', locale: string = 'es') {
     try {
@@ -334,7 +334,7 @@ export function formatPrice(price: any, currency: string = 'MXN', locale: string
         });
         const formattedPrice = formatter.format(val);
 
-        // Agregar el cÛdigo de moneda al final para mayor claridad
+        // Agregar el c√≥digo de moneda al final para mayor claridad
         // Ejemplo: "$98,689,895 MXN" en lugar de solo "$98,689,895"
         if (!formattedPrice.includes(currency)) {
             return `${formattedPrice} ${currency}`;
