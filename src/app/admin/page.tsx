@@ -247,7 +247,7 @@ function AdminPanelContent() {
                             exit={{ opacity: 0, y: -10 }}
                             transition={{ duration: 0.2 }}
                         >
-                            {activeView === 'overview' && <OverviewTab stats={stats} handleRunAnalyst={handleRunAnalyst} isAnalyzing={isAnalyzing} aiAnalysis={aiAnalysis} />}
+                            {activeView === 'overview' && <OverviewTab stats={stats} handleRunAnalyst={handleRunAnalyst} isAnalyzing={isAnalyzing} aiAnalysis={aiAnalysis} setActiveView={setActiveView} />}
                             {activeView === 'intelligence' && <IntelligenceTab stats={stats} />}
                             {activeView === 'users' && <UsersTab users={stats.users.recent} />}
                             {activeView === 'inventory' && <InventoryTab vehicles={stats.vehicles.recent} />}
@@ -436,7 +436,7 @@ function AiHealthWidget() {
     )
 }
 
-function OverviewTab({ stats, handleRunAnalyst, isAnalyzing, aiAnalysis }: any) {
+function OverviewTab({ stats, handleRunAnalyst, isAnalyzing, aiAnalysis, setActiveView }: any) {
     return (
         <div className="space-y-6">
 
@@ -596,7 +596,7 @@ function OverviewTab({ stats, handleRunAnalyst, isAnalyzing, aiAnalysis }: any) 
                             </div>
                         ))}
                     </div>
-                    <button className="w-full mt-8 py-3 bg-white/5 hover:bg-white/10 rounded-xl text-[10px] font-black uppercase tracking-widest transition-colors">
+                    <button onClick={() => setActiveView('logs')} className="w-full mt-8 py-3 bg-white/5 hover:bg-white/10 rounded-xl text-[10px] font-black uppercase tracking-widest transition-colors">
                         Ver Auditoría Completa
                     </button>
                 </div>
@@ -813,6 +813,20 @@ function UsersTab({ users }: { users: any[] }) {
 
 function InventoryTab({ vehicles }: { vehicles: any[] }) {
     const [exporting, setExporting] = useState(false)
+    const [filterOpen, setFilterOpen] = useState(false)
+    const [filterText, setFilterText] = useState('')
+
+    const filteredVehicles = vehicles.filter(v => {
+        if (!filterText) return true
+        const search = filterText.toLowerCase()
+        return (
+            (v.title || '').toLowerCase().includes(search) ||
+            (v.city || '').toLowerCase().includes(search) ||
+            (v.status || '').toLowerCase().includes(search) ||
+            (v.brand || '').toLowerCase().includes(search) ||
+            (v.model || '').toLowerCase().includes(search)
+        )
+    })
 
     const handleExportCSV = () => {
         if (vehicles.length === 0) return
@@ -848,9 +862,21 @@ function InventoryTab({ vehicles }: { vehicles: any[] }) {
     return (
         <div className="bg-[#111114] border border-white/5 rounded-3xl overflow-hidden shadow-2xl">
             <div className="p-4 border-b border-white/5">
-                <h3 className="font-bold text-lg mb-3">Inventario Global ({vehicles.length})</h3>
+                <h3 className="font-bold text-lg mb-3">Inventario Global ({filteredVehicles.length}{filterText ? ` / ${vehicles.length}` : ''})</h3>
+                {filterOpen && (
+                    <div className="mb-3">
+                        <input
+                            type="text"
+                            placeholder="Buscar por título, ciudad, marca, modelo o estado..."
+                            value={filterText}
+                            onChange={(e) => setFilterText(e.target.value)}
+                            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder-text-secondary focus:outline-none focus:border-primary-500 transition"
+                            autoFocus
+                        />
+                    </div>
+                )}
                 <div className="flex gap-2">
-                    <button className="p-3 min-h-[44px] min-w-[44px] bg-white/5 border border-white/10 rounded-xl hover:text-primary-500 hover:bg-white/10 active:bg-white/15 transition flex items-center justify-center"><Filter className="w-5 h-5" /></button>
+                    <button onClick={() => { setFilterOpen(!filterOpen); if (filterOpen) setFilterText('') }} className={`p-3 min-h-[44px] min-w-[44px] border rounded-xl transition flex items-center justify-center ${filterOpen ? 'bg-primary-500/20 border-primary-500/50 text-primary-500' : 'bg-white/5 border-white/10 hover:text-primary-500 hover:bg-white/10 active:bg-white/15'}`}><Filter className="w-5 h-5" /></button>
                     <button
                         onClick={handleExportCSV}
                         disabled={exporting || vehicles.length === 0}
@@ -863,7 +889,7 @@ function InventoryTab({ vehicles }: { vehicles: any[] }) {
             {/* Desktop Table */}
             {/* Premium Mobile Card View — Eliminada tabla Legacy */}
             <div className="grid grid-cols-1 gap-4 p-4">
-                {vehicles.map(vehicle => (
+                {filteredVehicles.map(vehicle => (
                     <div key={vehicle.id} className="bg-[#1a1a1d] border border-white/5 rounded-3xl p-4 shadow-xl space-y-4 transition-all active:scale-[0.98]">
                         <div className="flex items-start gap-4">
                             <div className="w-24 h-20 rounded-2xl bg-black overflow-hidden border border-white/10 shrink-0 shadow-inner">
@@ -1614,7 +1640,15 @@ function IntelligenceTab({ stats }: { stats: any }) {
                                 "{opp.reason}"
                             </p>
 
-                            <button className="w-full py-5 bg-white/[0.03] hover:bg-green-500 hover:text-black border border-white/10 hover:border-transparent rounded-3xl text-[10px] font-black uppercase tracking-[0.2em] transition-all active:scale-95 shadow-xl">
+                            <button onClick={() => {
+                                if (opp.action.includes('Talleres')) {
+                                    window.open('/map-store', '_blank')
+                                } else if (opp.action.includes('Inventario')) {
+                                    window.open('/market', '_blank')
+                                } else if (opp.action.includes('Campaña')) {
+                                    toast.info('Próximamente: Campañas de marketing local')
+                                }
+                            }} className="w-full py-5 bg-white/[0.03] hover:bg-green-500 hover:text-black border border-white/10 hover:border-transparent rounded-3xl text-[10px] font-black uppercase tracking-[0.2em] transition-all active:scale-95 shadow-xl">
                                 {opp.action}
                             </button>
                         </div>

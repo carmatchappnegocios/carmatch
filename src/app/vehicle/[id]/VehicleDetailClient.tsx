@@ -559,7 +559,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                                     {t('vehicle.detail.report_listing')}
                                                 </button>
                                                 {/* Hidden trigger for the report modal */}
-                                                <div className="hidden">
+                                                <div className="hidden" id="report-image-button-trigger">
                                                     <ReportImageButton 
                                                         vehicleId={vehicle.id}
                                                         imageUrl={vehicle.images?.[0] || ''}
