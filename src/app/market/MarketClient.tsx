@@ -789,14 +789,12 @@ export default function MarketClient({
                                                 onClick={handleExpandSearch}
                                             >
                                                 <div className="w-16 h-16 bg-primary-700 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg shadow-primary-900/50">
-                                                    <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none">
-                                                        <circle cx="12" cy="12" r="2.5" fill="currentColor"/>
-                                                        <circle cx="12" cy="12" r="6" stroke="currentColor" strokeWidth="1.5" opacity="0.7"/>
-                                                        <circle cx="12" cy="12" r="9.5" stroke="currentColor" strokeWidth="1.5" opacity="0.4"/>
-                                                        <path d="M12 2.5V5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                                                        <path d="M12 19v2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                                                        <path d="M2.5 12H5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                                                        <path d="M19 12h2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                                                    <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                        <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>
+                                                        <line x1="12" y1="8" x2="12" y2="3"/><polyline points="9,6 12,3 15,6"/>
+                                                        <line x1="12" y1="16" x2="12" y2="21"/><polyline points="9,18 12,21 15,18"/>
+                                                        <line x1="8" y1="12" x2="3" y2="12"/><polyline points="6,9 3,12 6,15"/>
+                                                        <line x1="16" y1="12" x2="21" y2="12"/><polyline points="18,9 21,12 18,15"/>
                                                     </svg>
                                                 </div>
                                                 <span className="font-bold text-lg text-white">
@@ -864,14 +862,12 @@ export default function MarketClient({
                                             onClick={handleExpandSearch}
                                             className="inline-flex items-center gap-2 px-5 sm:px-8 py-3 sm:py-4 bg-primary-700 text-text-primary rounded-xl hover:bg-primary-600 transition font-bold shadow-lg justify-center text-sm sm:text-base"
                                         >
-                                            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
-                                                <circle cx="12" cy="12" r="2.5" fill="currentColor"/>
-                                                <circle cx="12" cy="12" r="6" stroke="currentColor" strokeWidth="1.5" opacity="0.7"/>
-                                                <circle cx="12" cy="12" r="9.5" stroke="currentColor" strokeWidth="1.5" opacity="0.4"/>
-                                                <path d="M12 2.5V5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                                                <path d="M12 19v2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                                                <path d="M2.5 12H5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                                                <path d="M19 12h2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                                            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>
+                                                <line x1="12" y1="8" x2="12" y2="3"/><polyline points="9,6 12,3 15,6"/>
+                                                <line x1="12" y1="16" x2="12" y2="21"/><polyline points="9,18 12,21 15,18"/>
+                                                <line x1="8" y1="12" x2="3" y2="12"/><polyline points="6,9 3,12 6,15"/>
+                                                <line x1="16" y1="12" x2="21" y2="12"/><polyline points="18,9 21,12 18,15"/>
                                             </svg>
                                             {tierIndex === RADIUS_TIERS.length - 1 ? t('market.restart_search') : t('market.expand_search')}
                                         </button>
