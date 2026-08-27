@@ -13,7 +13,6 @@ export default function AuthButtons() {
                 await signIn("google", {
                     callbackUrl: isMobile ? "/market" : "/",
                     redirect: true,
-                    prompt: "select_account",
                 })
             } else {
                 await signIn(provider, { callbackUrl: "/", redirect: true })

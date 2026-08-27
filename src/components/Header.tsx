@@ -91,17 +91,13 @@ export default function Header() {
     const { isSubscribed, subscribe, permission } = usePushNotifications()
 
     // 📱 Platform detection
-    const [userPlatform, setUserPlatform] = useState<'ios' | 'android' | 'desktop'>('desktop')
-    useEffect(() => {
+    const [userPlatform, setUserPlatform] = useState<'ios' | 'android' | 'desktop'>(() => {
+        if (typeof navigator === 'undefined') return 'desktop'
         const ua = navigator.userAgent || ''
-        if (/iPad|iPod|iPhone/.test(ua)) {
-            setUserPlatform('ios')
-        } else if (/Android/.test(ua)) {
-            setUserPlatform('android')
-        } else {
-            setUserPlatform('desktop')
-        }
-    }, [])
+        if (/iPad|iPod|iPhone/.test(ua)) return 'ios'
+        if (/Android/.test(ua)) return 'android'
+        return 'desktop'
+    })
 
     const handleIOSClick = () => {
         setSelectedPlatform('ios')

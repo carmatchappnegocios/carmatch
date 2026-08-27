@@ -43,12 +43,7 @@ export default function MobileNav() {
         };
     }, []);
 
-    const [mounted, setMounted] = useState(false)
-    useEffect(() => {
-        setMounted(true)
-    }, [])
-
-    if (pathname?.startsWith('/admin') || !mounted) {
+    if (pathname?.startsWith('/admin')) {
         return null
     }
 
