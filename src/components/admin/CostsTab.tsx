@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Globe, Database, Image, Map, Cpu, CreditCard, Server, Wifi, TriangleAlert, CheckCircle2, Clock, DollarSign, Edit3, Save, X } from 'lucide-react'
+import { Globe, Image, Map, Cpu, CreditCard, Server, Wifi, TriangleAlert, CheckCircle2, Clock, DollarSign, Edit3, Save, X } from 'lucide-react'
 
 interface Service {
     id: string
@@ -44,19 +44,7 @@ const INITIAL_SERVICES: Service[] = [
         url: 'https://vercel.com',
         notes: 'Plan Hobby — Límite de 100GB de ancho de banda'
     },
-    {
-        id: 'neon',
-        name: 'Neon DB (PostgreSQL)',
-        description: 'Base de datos Prisma/PostgreSQL en la nube',
-        icon: Database,
-        color: 'teal',
-        costMXN: 0,
-        cycle: 'gratis',
-        nextPayment: null,
-        status: 'gratis',
-        url: 'https://neon.tech',
-        notes: 'Plan Free — 512MB storage, 0.25vCPU'
-    },
+
     {
         id: 'cloudinary',
         name: 'Cloudinary (Imágenes)',

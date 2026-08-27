@@ -142,7 +142,7 @@ export async function GET(request: NextRequest) {
             log.push(`[CLEANUP] Deleted ${deletedImagesCount} old images from Cloudinary and cleared image arrays for ${oldVehicles.length} vehicles.`)
         }
         
-        // 🧹 4. PODA DE TABLAS PESADAS (OPTIMIZACIÓN DE COSTOS NEON)
+        // 🧹 4. PODA DE TABLAS PESADAS (OPTIMIZACIÓN DE COSTOS)
         const sevenDaysAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000)
         const fifteenDaysAgo = new Date(today.getTime() - 15 * 24 * 60 * 60 * 1000)
         const thirtyDaysAgoData = thirtyDaysAgo // Reutilizar
