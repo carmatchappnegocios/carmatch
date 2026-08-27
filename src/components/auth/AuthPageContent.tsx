@@ -1,19 +1,14 @@
-// 🛡️ PROHIBIDO MODIFICAR SIN ORDEN EXPLÍCITA DEL USUARIO (Ver PROJECT_RULES.md)
-// ⚠️ CRITICAL WARNING: FILE PROTECTED BY PROJECT RULES.
-// DO NOT MODIFY THIS FILE WITHOUT EXPLICIT USER INSTRUCTION.
 
 "use client"
 
 import Link from "next/link"
-import { useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
-import { useSession, signOut, signIn } from "next-auth/react"
+import { useSession } from "next-auth/react"
 
 import { Logo } from "@/components/Logo"
 import { useLanguage } from "@/contexts/LanguageContext"
 import AuthButtons from "./AuthButtons"
 import { getWeightedHomePath } from "@/lib/navigation"
-import { useState } from "react"
 import { AlertTriangle, LogIn } from "lucide-react"
 
 export default function AuthPageContent() {

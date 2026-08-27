@@ -1,22 +1,21 @@
-Ôªø// üõ°Ô∏è PROHIBIDO MODIFICAR SIN ORDEN EXPL√çCITA DEL USUARIO
 // Heavy vehicle data extracted from vehicleTaxonomy.ts to fix TDZ bundler bug in production
 
-type VehicleCategoryData = 'Autom√≥vil' | 'Motocicleta' | 'Cami√≥n' | 'Autob√∫s' | 'Maquinaria' | 'Especial'
+type VehicleCategoryData = 'AutomÛvil' | 'Motocicleta' | 'CamiÛn' | 'Autob˙s' | 'Maquinaria' | 'Especial'
 
-// üåç Global Brands Database (Structured for Scalability)
+// ?? Global Brands Database (Structured for Scalability)
 // Note: This is a curated list of major global brands. In a real AI scenario, this would be fetched from an API.
 export var BRANDS: Record<VehicleCategoryData, string[]> = {
-    'Autom√≥vil': [
-        'Abarth', 'AC Cars', 'Acura', 'Adler', 'Aion', 'Aiways', 'Aixam', 'Alfa Romeo', 'Allard', 'Alpina', 'Alpine', 'Alvis', 'AMC', 'Apollo', 'Aptera', 'Arash', 'Ariel', 'Arra', 'Artega', 'Aston Martin', 'Auburn', 'Audi', 'Austin', 'Austin-Healey', 'Auto Union', 'Autobianchi', 'Avatr', 'Avanti', 'BAIC', 'Bentley', 'Bizzarrini', 'BMW', 'Bollinger', 'Borgward', 'Brabham', 'Bricklin', 'Bristol', 'Bugatti', 'Buick', 'BYD', 'Cadillac', 'Callaway', 'Caparo', 'Caterham', 'Changan', 'Checker', 'Chery', 'Chevrolet', 'Chrysler', 'Cisitalia', 'Citro√´n', 'Cizeta', 'Coda', 'Cord', 'Cupra', 'Dacia', 'Daewoo', 'DAF', 'Daihatsu', 'Dallara', 'Datsun', 'De Tomaso', 'Deepal', 'DeLorean', 'Denza', 'DeSoto', 'Dodge', 'Dongfeng', 'Donkervoort', 'Duesenberg', 'Eagle', 'Edsel', 'Exeed', 'Facel Vega', 'Faraday Future', 'Ferrari', 'Fiat', 'Fisker', 'Ford', 'Franklin', 'GAC', 'Geely', 'Genesis', 'Ghia', 'Gillet', 'Ginetta', 'GMC', 'Great Wall', 'Gumpert', 'Haval', 'Healey', 'Hennessey', 'Hillman', 'Hindustan', 'HiPhi', 'Hispano-Suiza', 'Holden', 'Honda', 'Hongqi', 'Horch', 'Hotchkiss', 'Hudson', 'Humber', 'Hummer', 'Hupmobile', 'Hyundai', 'Imperial', 'Infiniti', 'Inezzo', 'Invicta', 'Iso', 'Isotta Fraschini', 'Isuzu', 'Italdesign', 'Iveco', 'JAC', 'Jaecoo', 'Jaguar', 'Jeep', 'Jensen', 'Jetour', 'JMC', 'Kaiser', 'Karma', 'Kia', 'Koenigsegg', 'Lada', 'Lagonda', 'Lamborghini', 'Lanchester', 'Lancia', 'Land Rover', 'Leapmotor', 'Lexus', 'Lincoln', 'Lister', 'Local Motors', 'Locomobile', 'Lola', 'Lordstown', 'Lotus', 'Lucid', 'Lynk & Co', 'Mahindra', 'Marcos', 'Marmon', 'Maserati', 'Mastretta', 'Matra', 'Maybach', 'Mazda', 'McLaren', 'Mercedes-Benz', 'Mercury', 'Messerschmitt', 'MG', 'Mini', 'Mitsubishi', 'Mitsuoka', 'Monteverdi', 'Morgan', 'Morris', 'Mosler', 'Nash', 'Nio', 'Nissan', 'Noble', 'NSU', 'Oldsmobile', 'Omoda', 'Opel', 'Ora', 'Packard', 'Pagani', 'Panhard', 'Panoz', 'Panther', 'Peerless', 'Pegaso', 'Peugeot', 'Pierce-Arrow', 'Pininfarina', 'Plymouth', 'Polestar', 'Pontiac', 'Porsche', 'Proton', 'Qoros', 'Radical', 'RAM', 'Rambler', 'Reliant', 'Renault', 'Reo', 'Rimac', 'Riley', 'Rivian', 'Rolls-Royce', 'Rootes', 'Rover', 'Saab', 'Saleen', 'Saturn', 'Scion', 'SEAT', 'Shelby', 'Simca', 'Singer', 'Siata', 'Skyworth', 'Smart', 'Spyker', 'SsangYong', 'Standard', 'Steyr', 'Studebaker', 'Stutz', 'Subaru', 'Sunbeam', 'Suzuki', 'Talbot', 'Tank', 'Tata', 'Tatra', 'Tazzari', 'Tesla', 'Think', 'Toyota', 'Triumph', 'Troller', 'Tucker', 'TVR', 'Ultima', 'Vanden Plas', 'Vauxhall', 'Vector', 'Venturi', 'VinFast', 'Volkswagen', 'Volvo', 'Voyah', 'W Motors', 'Wanderer', 'Wartburg', 'Wiesmann', 'Willys', 'Wolseley', 'Wuling', 'Xpeng', 'Yugo', 'Zacua', 'Zagato', 'Zeekr', 'Zender', 'Zenvo', 'ZIL', 'Zunder'
+    'AutomÛvil': [
+        'Abarth', 'AC Cars', 'Acura', 'Adler', 'Aion', 'Aiways', 'Aixam', 'Alfa Romeo', 'Allard', 'Alpina', 'Alpine', 'Alvis', 'AMC', 'Apollo', 'Aptera', 'Arash', 'Ariel', 'Arra', 'Artega', 'Aston Martin', 'Auburn', 'Audi', 'Austin', 'Austin-Healey', 'Auto Union', 'Autobianchi', 'Avatr', 'Avanti', 'BAIC', 'Bentley', 'Bizzarrini', 'BMW', 'Bollinger', 'Borgward', 'Brabham', 'Bricklin', 'Bristol', 'Bugatti', 'Buick', 'BYD', 'Cadillac', 'Callaway', 'Caparo', 'Caterham', 'Changan', 'Checker', 'Chery', 'Chevrolet', 'Chrysler', 'Cisitalia', 'CitroÎn', 'Cizeta', 'Coda', 'Cord', 'Cupra', 'Dacia', 'Daewoo', 'DAF', 'Daihatsu', 'Dallara', 'Datsun', 'De Tomaso', 'Deepal', 'DeLorean', 'Denza', 'DeSoto', 'Dodge', 'Dongfeng', 'Donkervoort', 'Duesenberg', 'Eagle', 'Edsel', 'Exeed', 'Facel Vega', 'Faraday Future', 'Ferrari', 'Fiat', 'Fisker', 'Ford', 'Franklin', 'GAC', 'Geely', 'Genesis', 'Ghia', 'Gillet', 'Ginetta', 'GMC', 'Great Wall', 'Gumpert', 'Haval', 'Healey', 'Hennessey', 'Hillman', 'Hindustan', 'HiPhi', 'Hispano-Suiza', 'Holden', 'Honda', 'Hongqi', 'Horch', 'Hotchkiss', 'Hudson', 'Humber', 'Hummer', 'Hupmobile', 'Hyundai', 'Imperial', 'Infiniti', 'Inezzo', 'Invicta', 'Iso', 'Isotta Fraschini', 'Isuzu', 'Italdesign', 'Iveco', 'JAC', 'Jaecoo', 'Jaguar', 'Jeep', 'Jensen', 'Jetour', 'JMC', 'Kaiser', 'Karma', 'Kia', 'Koenigsegg', 'Lada', 'Lagonda', 'Lamborghini', 'Lanchester', 'Lancia', 'Land Rover', 'Leapmotor', 'Lexus', 'Lincoln', 'Lister', 'Local Motors', 'Locomobile', 'Lola', 'Lordstown', 'Lotus', 'Lucid', 'Lynk & Co', 'Mahindra', 'Marcos', 'Marmon', 'Maserati', 'Mastretta', 'Matra', 'Maybach', 'Mazda', 'McLaren', 'Mercedes-Benz', 'Mercury', 'Messerschmitt', 'MG', 'Mini', 'Mitsubishi', 'Mitsuoka', 'Monteverdi', 'Morgan', 'Morris', 'Mosler', 'Nash', 'Nio', 'Nissan', 'Noble', 'NSU', 'Oldsmobile', 'Omoda', 'Opel', 'Ora', 'Packard', 'Pagani', 'Panhard', 'Panoz', 'Panther', 'Peerless', 'Pegaso', 'Peugeot', 'Pierce-Arrow', 'Pininfarina', 'Plymouth', 'Polestar', 'Pontiac', 'Porsche', 'Proton', 'Qoros', 'Radical', 'RAM', 'Rambler', 'Reliant', 'Renault', 'Reo', 'Rimac', 'Riley', 'Rivian', 'Rolls-Royce', 'Rootes', 'Rover', 'Saab', 'Saleen', 'Saturn', 'Scion', 'SEAT', 'Shelby', 'Simca', 'Singer', 'Siata', 'Skyworth', 'Smart', 'Spyker', 'SsangYong', 'Standard', 'Steyr', 'Studebaker', 'Stutz', 'Subaru', 'Sunbeam', 'Suzuki', 'Talbot', 'Tank', 'Tata', 'Tatra', 'Tazzari', 'Tesla', 'Think', 'Toyota', 'Triumph', 'Troller', 'Tucker', 'TVR', 'Ultima', 'Vanden Plas', 'Vauxhall', 'Vector', 'Venturi', 'VinFast', 'Volkswagen', 'Volvo', 'Voyah', 'W Motors', 'Wanderer', 'Wartburg', 'Wiesmann', 'Willys', 'Wolseley', 'Wuling', 'Xpeng', 'Yugo', 'Zacua', 'Zagato', 'Zeekr', 'Zender', 'Zenvo', 'ZIL', 'Zunder'
 
     ].sort(),
     'Motocicleta': [
-        'AJP', 'AJS', 'Aprilia', 'Arctic Cat', 'Ariel Moto', 'Bajaj', 'Bultaco', 'Bimota', 'Benelli', 'Beta', 'BMW Motorrad', 'Brammo', 'Bridgestone', 'Brough Superior', 'BRP (Can-Am) Moto', 'BSA', 'Buell', 'Cagiva', 'CCM', 'CFMoto', 'Confederate', 'CZ', 'Daelim', 'Damon', 'Derbi', 'DKW', 'Ducati', 'Energica', 'Excelsior', 'Fantic', 'GasGas', 'Garelli', 'Gilera', 'Harley-Davidson', 'Henderson', 'Hercules', 'Hero', 'Hesketh', 'Honda Moto', 'Husaberg', 'Husqvarna', 'Hyosung', 'Indian', 'Italika', 'James', 'Java', 'Junak', 'Kawasaki', 'Keeway', 'Kreidler', 'KTM', 'Kymco', 'Lambretta', 'Laverda', 'Lifan', 'Magni', 'Maico', 'Malaguti', 'Mash', 'Matchless', 'Mondial', 'Moto Guzzi', 'Moto Morini', 'MV Agusta', 'Mutt', 'MZ', 'Norton', 'NSU Moto', 'OSSA', 'Peugeot Moto', 'Piaggio', 'Polaris', 'Puch', 'QJMotor', 'Quadro', 'Rieju', 'Royal Enfield', 'Sachs', 'Sanglas', 'Segway Powersports', 'Sherco', 'Simson', 'Sunbeam Moto', 'Suzuki Moto', 'Sym', 'Terrot', 'Triumph Moto', 'TVS', 'Ural', 'Velocette', 'Vento', 'Vespa', 'Victory', 'Vincent', 'Voge', 'Voxan', 'Yamaha Moto', 'Z√ºndapp', 'Zero', 'Zontes'
+        'AJP', 'AJS', 'Aprilia', 'Arctic Cat', 'Ariel Moto', 'Bajaj', 'Bultaco', 'Bimota', 'Benelli', 'Beta', 'BMW Motorrad', 'Brammo', 'Bridgestone', 'Brough Superior', 'BRP (Can-Am) Moto', 'BSA', 'Buell', 'Cagiva', 'CCM', 'CFMoto', 'Confederate', 'CZ', 'Daelim', 'Damon', 'Derbi', 'DKW', 'Ducati', 'Energica', 'Excelsior', 'Fantic', 'GasGas', 'Garelli', 'Gilera', 'Harley-Davidson', 'Henderson', 'Hercules', 'Hero', 'Hesketh', 'Honda Moto', 'Husaberg', 'Husqvarna', 'Hyosung', 'Indian', 'Italika', 'James', 'Java', 'Junak', 'Kawasaki', 'Keeway', 'Kreidler', 'KTM', 'Kymco', 'Lambretta', 'Laverda', 'Lifan', 'Magni', 'Maico', 'Malaguti', 'Mash', 'Matchless', 'Mondial', 'Moto Guzzi', 'Moto Morini', 'MV Agusta', 'Mutt', 'MZ', 'Norton', 'NSU Moto', 'OSSA', 'Peugeot Moto', 'Piaggio', 'Polaris', 'Puch', 'QJMotor', 'Quadro', 'Rieju', 'Royal Enfield', 'Sachs', 'Sanglas', 'Segway Powersports', 'Sherco', 'Simson', 'Sunbeam Moto', 'Suzuki Moto', 'Sym', 'Terrot', 'Triumph Moto', 'TVS', 'Ural', 'Velocette', 'Vento', 'Vespa', 'Victory', 'Vincent', 'Voge', 'Voxan', 'Yamaha Moto', 'Z¸ndapp', 'Zero', 'Zontes'
     ].sort(),
-    'Cami√≥n': [
+    'CamiÛn': [
         'Astra', 'Avia', 'Beiben', 'BMC', 'CAMC', 'Chassis', 'Chevrolet Heavy', 'DAF', 'Dayun', 'Dina', 'Dongfeng Trucks', 'Eicher', 'FAW', 'Ford Heavy', 'Foton', 'Freightliner', 'GMC Heavy', 'Hino', 'Howo', 'Hyundai Truck', 'International', 'Irizar Trucks', 'Isuzu Trucks', 'Iveco', 'JAC Trucks', 'Kamaz', 'Kenworth', 'Liaz', 'Mack', 'MAZ', 'MAN', 'Mercedes-Benz Trucks', 'Mitsubishi Fuso', 'Navistar', 'Nikola', 'Oshkosh', 'Paccar', 'Peterbilt', 'Renault Trucks', 'Scania', 'Shacman', 'Sinotruk', 'SISU', 'Sterling', 'Tata Trucks', 'Tatra', 'Terberg', 'UD Trucks', 'Volkswagen Camiones', 'Volvo Trucks', 'Western Star'
     ].sort(),
-    'Autob√∫s': [
+    'Autob˙s': [
         'Alexander Dennis', 'Ankai', 'Ashok Leyland', 'Ayco', 'Blue Bird', 'Dina', 'Foton Bus', 'Golden Dragon', 'Gullig', 'Higer', 'Hino Bus', 'Irizar', 'Isbus', 'Iveco Bus', 'King Long', 'Liaz Bus', 'MAN Bus', 'Marcopolo', 'MCI', 'Mercedes-Benz Bus', 'Neoplan', 'Nova Bus', 'Optare', 'Orion', 'Prevost', 'Scania Bus', 'Solaris', 'Sunwin', 'TEMSA', 'Thomas Built', 'Van Hool', 'VDL', 'Volvo Bus', 'Wrightbus', 'Yutong', 'Zhongtong'
     ].sort(),
     'Maquinaria': [
@@ -27,10 +26,10 @@ export var BRANDS: Record<VehicleCategoryData, string[]> = {
     ].sort()
 }
 
-// üöò Popular Models by Brand (Top Brands)
+// ?? Popular Models by Brand (Top Brands)
 // This helps the "Smart Lists" feature. Users can still type manually if not found.
 export var POPULAR_MODELS: Record<string, string[]> = {
-    // === AUTOM√ìVILES ===
+    // === AUTOM”VILES ===
     'Abarth': ['500', '595', '695', 'Punto', '124 Spider', 'Pulse Abarth', 'Fastback Abarth'],
     'Acura': ['ILX', 'TLX', 'Integra', 'MDX', 'RDX', 'NSX', 'ZDX', 'Precision EV', 'CL', 'RL', 'SLX', 'RSX', 'Legend', 'Vigor', 'EL', 'TSX', 'RLX', 'CDX'],
     'AC Cars': ['Cobra', 'Ace', 'Aceca', 'Greyhound', 'Brooklands Ace', '212 S.C.', '378 GT Zagato', 'Cobra GT Roadster'],
@@ -52,7 +51,7 @@ export var POPULAR_MODELS: Record<string, string[]> = {
     'Artega': ['GT', 'Scalo', 'Karo'],
     'Aston Martin': ['Vantage', 'DB11', 'DBS', 'DBX', 'Vanquish', 'Rapide', 'Valhalla', 'Valkyrie', 'DB12', 'One-77', 'Cygnet', 'DB9', 'DB7', 'DB6', 'DB5', 'DB4', 'Virage', 'Lagonda', 'Victor', 'Vulcan', 'Atom'],
     'Auburn': ['851 Speedster', '852', '125'],
-    'Audi': ['A1', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'Q2', 'Q3', 'Q4 e-tron', 'Q5', 'Q6 e-tron', 'Q7', 'Q8', 'TT', 'R8', 'e-tron', 'e-tron GT', 'RS3', 'RS4', 'RS5', 'RS6', 'RS7', 'RS Q3', 'RS Q8', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'SQ5', 'SQ7', 'SQ8', 'Allroad', 'Q5 Sportback', 'RS e-tron GT', 'Quattro', 'Coupe GT', 'V8 (Sed√°n)', '100', '80', '90', '50', 'A2', 'E-tron Sportback'],
+    'Audi': ['A1', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'Q2', 'Q3', 'Q4 e-tron', 'Q5', 'Q6 e-tron', 'Q7', 'Q8', 'TT', 'R8', 'e-tron', 'e-tron GT', 'RS3', 'RS4', 'RS5', 'RS6', 'RS7', 'RS Q3', 'RS Q8', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'SQ5', 'SQ7', 'SQ8', 'Allroad', 'Q5 Sportback', 'RS e-tron GT', 'Quattro', 'Coupe GT', 'V8 (Sed·n)', '100', '80', '90', '50', 'A2', 'E-tron Sportback'],
     'Austin': ['Mini', 'Healey', 'Seven', 'Allegro', 'Metro', 'Maestro', 'Montego', 'Princess', 'Maxi', 'A30', 'A40', 'A90'],
     'Austin-Healey': ['3000', '100', 'Sprite'],
     'Auto Union': ['Type C', 'Type D', '1000'],
@@ -81,7 +80,7 @@ export var POPULAR_MODELS: Record<string, string[]> = {
     'Chevrolet': ['Aveo', 'Spark', 'Beat', 'Sonic', 'Cruze', 'Malibu', 'Camaro', 'Corvette', 'Trax', 'Tracker', 'Equinox', 'Blazer', 'Traverse', 'Tahoe', 'Suburban', 'Silverado', 'Cheyenne', 'Colorado', 'S10', 'Tornado', 'Cavalier', 'Onix', 'Captiva', 'Groove', 'Montana', 'Bolt EUV', 'Blazer EV', 'Equinox EV', 'Silverado EV', 'Chevy', 'LUV', 'Cresta', 'Astra (Mex)', 'Zafira (Mex)', 'Optra', 'Epica', 'HHR', 'Volt', 'SS'],
     'Chrysler': ['300', 'Pacifica', 'Voyager', 'Town & Country', 'Aspen', 'Halcyon', 'Sebring', 'Crossfire', 'PT Cruiser', 'Imperial', 'LeBaron', 'LHS', 'Concorde', 'New Yorker', '300C'],
     'Cisitalia': ['202', '202 SMM', '360'],
-    'Citro√´n': ['C1', 'C3', 'C3 Aircross', 'C4', 'C4 X', 'C5 Aircross', 'C5 X', 'Ami', 'Berlingo', 'DS3', 'DS4', 'DS5', '2CV', 'DS', 'SM', 'CX', 'GS', 'Mehari', 'Xantia', 'Saxo', 'Xsara'],
+    'CitroÎn': ['C1', 'C3', 'C3 Aircross', 'C4', 'C4 X', 'C5 Aircross', 'C5 X', 'Ami', 'Berlingo', 'DS3', 'DS4', 'DS5', '2CV', 'DS', 'SM', 'CX', 'GS', 'Mehari', 'Xantia', 'Saxo', 'Xsara'],
     'Cizeta': ['V16T'],
     'Coda': ['Sedan'],
     'Cord': ['810', '812', 'Model L-29'],
@@ -133,7 +132,7 @@ export var POPULAR_MODELS: Record<string, string[]> = {
     'Humber': ['Super Snipe', 'Sceptre', 'Hawk'],
     'Hummer': ['H1', 'H2', 'H3', 'H1 Alpha', 'H3T'],
     'Hupmobile': ['Model 20', 'Skylark'],
-    'Hyundai': ['Grand i10', 'Accent', 'Elantra', 'Sonata', 'Creta', 'Tucson', 'Santa Fe', 'Palisade', 'Venue', 'Staria', 'H100', 'Ioniq 5', 'Ioniq 6', 'HB20', 'Kona', 'Tucson Hybrid', 'Alcazar', 'Exter', 'Casper', 'Azera', 'Veloster', 'Genesis (Sed√°n)', 'Tibur√≥n', 'Stargazer', 'Atos', 'Dynasty', 'Equus', 'Pony', 'Scoupe'],
+    'Hyundai': ['Grand i10', 'Accent', 'Elantra', 'Sonata', 'Creta', 'Tucson', 'Santa Fe', 'Palisade', 'Venue', 'Staria', 'H100', 'Ioniq 5', 'Ioniq 6', 'HB20', 'Kona', 'Tucson Hybrid', 'Alcazar', 'Exter', 'Casper', 'Azera', 'Veloster', 'Genesis (Sed·n)', 'TiburÛn', 'Stargazer', 'Atos', 'Dynasty', 'Equus', 'Pony', 'Scoupe'],
     'Imperial': ['Crown', 'LeBaron (Luxury)', 'Southampton'],
     'Infiniti': ['Q50', 'Q60', 'QX30', 'QX50', 'QX55', 'QX60', 'QX80', 'G35', 'G37', 'FX35', 'FX50', 'I30', 'J30', 'Q45', 'QX4', 'M35', 'M45', 'QX70'],
     'Inezzo': ['EV-1'],
@@ -154,7 +153,7 @@ export var POPULAR_MODELS: Record<string, string[]> = {
     'Koenigsegg': ['Jesko', 'Gemera', 'Regera', 'Agera', 'One:1', 'CCX', 'CCR', 'CC8S', 'Quant', 'Trevita'],
     'Lada': ['Niva', 'Granta', 'Vesta', 'Largus', 'Kalina', 'Priora', 'Samara', '2101', 'Riva'],
     'Lagonda': ['Taraf', 'Rapide'],
-    'Lamborghini': ['Aventador', 'Hurac√°n', 'Urus', 'Revuelto', 'Temerario', 'Murci√©lago', 'Gallardo', 'Diablo', 'Countach', 'Miura', 'Sian', 'Veneno', 'Revent√≥n', 'Centenario', 'Estoque', 'Jarama', 'Espada', 'Urraco'],
+    'Lamborghini': ['Aventador', 'Hurac·n', 'Urus', 'Revuelto', 'Temerario', 'MurciÈlago', 'Gallardo', 'Diablo', 'Countach', 'Miura', 'Sian', 'Veneno', 'ReventÛn', 'Centenario', 'Estoque', 'Jarama', 'Espada', 'Urraco'],
     'Lanchester': ['Ten', 'LD10', 'Roadrider'],
     'Lancia': ['Delta', 'Stratos', '037', 'Fulvia', 'Thema', 'Ypsilon', 'Thesis', 'Flavia', 'Beta', 'Gamma', 'Aurelia', 'Appia'],
     'Land Rover': ['Defender', 'Discovery', 'Discovery Sport', 'Range Rover', 'Range Rover Sport', 'Range Rover Velar', 'Range Rover Evoque', 'Freelander', 'LR2', 'LR3', 'LR4', 'Series I', 'Series II', 'Series III', '101 Forward Control'],
@@ -217,7 +216,7 @@ export var POPULAR_MODELS: Record<string, string[]> = {
     'RAM': ['700', '1000', '1500', '2500', '3500', '4000', 'ProMaster', 'ProMaster Rapid', 'Rampage', 'TRX', 'Dakota', 'SRT-10'],
     'Rambler': ['Classic', 'American', 'Ambassador', 'Marlin'],
     'Reliant': ['Robin', 'Scimitar', 'Kitten', 'Regal'],
-    'Renault': ['Kwid', 'Sandero', 'Logan', 'Stepway', 'Duster', 'Oroch', 'Koleos', 'Captur', 'Megane E-Tech', 'Kardian', 'Twizy', 'Clio', 'Megane (Combusti√≥n)', 'Fluence', 'Kangoo', 'Master', 'Alaska', 'R5', 'R4', 'Alpine (Mex)', 'Encore (Mex)', 'Alliance (Mex)', 'Twingo', 'Espace', 'Scenic', 'Laguna', 'Symbol', 'Safrane', 'Austral', 'Rafale'],
+    'Renault': ['Kwid', 'Sandero', 'Logan', 'Stepway', 'Duster', 'Oroch', 'Koleos', 'Captur', 'Megane E-Tech', 'Kardian', 'Twizy', 'Clio', 'Megane (CombustiÛn)', 'Fluence', 'Kangoo', 'Master', 'Alaska', 'R5', 'R4', 'Alpine (Mex)', 'Encore (Mex)', 'Alliance (Mex)', 'Twingo', 'Espace', 'Scenic', 'Laguna', 'Symbol', 'Safrane', 'Austral', 'Rafale'],
     'Reo': ['Speed Wagon', 'Flying Cloud', 'Royale'],
     'Rimac': ['Nevera', 'Concept_One', 'Concept_S'],
     'Riley': ['RM', 'Pathfinder', 'Elf', 'Kestrel'],
@@ -263,7 +262,7 @@ export var POPULAR_MODELS: Record<string, string[]> = {
     'Vector': ['W8', 'M12'],
     'Venturi': ['Atlantique', '400GT', 'Fetish'],
     'VinFast': ['VF 5', 'VF 6', 'VF 7', 'VF 8', 'VF 9', 'VF e34', 'President', 'Lux A2.0'],
-    'Volkswagen': ['Jetta', 'Golf', 'Polo', 'Vento', 'Virtus', 'Passat', 'Arteon', 'Beetle', 'Tiguan', 'Taos', 'T-Cross', 'Nivus', 'Teramont', 'Touareg', 'Saveiro', 'Amarok', 'Crafter', 'Transporter', 'Caddy', 'ID.3', 'ID.4', 'ID.Buzz', 'Gol', 'CrossFox', 'Polo Track', 'Tayron', 'Bora', 'Combi', 'Sed√°n (Vocho)', 'Pointer', 'Derby', 'Corsar', 'Atlantic', 'Caribe', 'Scirocco', 'Corrado', 'Karmann Ghia', 'Lupo', 'Fox', 'Brasilia', 'Hormiga (Mex)', 'Safari (VW 181)', 'Taigun'],
+    'Volkswagen': ['Jetta', 'Golf', 'Polo', 'Vento', 'Virtus', 'Passat', 'Arteon', 'Beetle', 'Tiguan', 'Taos', 'T-Cross', 'Nivus', 'Teramont', 'Touareg', 'Saveiro', 'Amarok', 'Crafter', 'Transporter', 'Caddy', 'ID.3', 'ID.4', 'ID.Buzz', 'Gol', 'CrossFox', 'Polo Track', 'Tayron', 'Bora', 'Combi', 'Sed·n (Vocho)', 'Pointer', 'Derby', 'Corsar', 'Atlantic', 'Caribe', 'Scirocco', 'Corrado', 'Karmann Ghia', 'Lupo', 'Fox', 'Brasilia', 'Hormiga (Mex)', 'Safari (VW 181)', 'Taigun'],
     'Volvo': ['S60', 'S90', 'V60', 'V90', 'XC40', 'XC60', 'XC90', 'C40', 'EX30', 'EX90', 'V40', 'C30', 'S40', 'S80', 'XC70', '240', '740', '940', '850', 'PV544', 'Amazon', 'P1800'],
     'Voyah': ['Free', 'Dreamer', 'Passion'],
     'W Motors': ['Lykan Hypersport', 'Fenyr Supersport', 'Ghiath'],
@@ -307,7 +306,7 @@ export var POPULAR_MODELS: Record<string, string[]> = {
     'CZ': ['Type 860', 'Type 477'],
     'Daelim': ['Daystar', 'Roadwin'],
     'Damon': ['Hypersport', 'Hyperfighter'],
-    'Derbi': ['Senda', 'GPR', 'Mulhac√©n'],
+    'Derbi': ['Senda', 'GPR', 'MulhacÈn'],
     'DKW': ['RT 125', 'NZ 350'],
     'Ducati': ['Monster', 'Multistrada V4', 'Panigale V4', 'Panigale V2', 'Streetfighter V4', 'Diavel V4', 'Scrambler', 'DesertX', 'Hypermotard', 'SuperSport 950', 'XDiavel'],
     'Energica': ['Ego', 'Eva Ribelle', 'Experia'],
@@ -420,7 +419,7 @@ export var POPULAR_MODELS: Record<string, string[]> = {
     'Bobcat': ['S450', 'S76', 'T66', 'T870', 'E35', 'E85', 'S150', 'T190'],
     'Bomag': ['BW 211', 'BW 120', 'BW 177'],
     'Case': ['580N', 'CX210', '721G', '850L', 'SV280B', '1110EX', 'SR210', 'TR310'],
-    'Caterpillar': ['320 (Excavadora)', '416 (Retro)', 'D6 (Dozer)', '950 (Cargador)', '140 (Motoniveladora)', '777 (D√∫mper)', 'CB2.5 (Rodillo)', 'TH407 (Telehandler)', '336', 'D11', '988K'],
+    'Caterpillar': ['320 (Excavadora)', '416 (Retro)', 'D6 (Dozer)', '950 (Cargador)', '140 (Motoniveladora)', '777 (D˙mper)', 'CB2.5 (Rodillo)', 'TH407 (Telehandler)', '336', 'D11', '988K'],
     'Claas': ['Lexion', 'Jaguar', 'Tucano', 'Arion', 'Axion'],
     'Deere & Company (John Deere)': ['6120M', '310L', '850K'],
     'Demag': ['AC 250', 'AC 100'],

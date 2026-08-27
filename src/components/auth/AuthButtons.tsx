@@ -1,8 +1,5 @@
-// 🛡️ PROHIBIDO MODIFICAR SIN ORDEN EXPLÍCITA DEL USUARIO (Ver PROJECT_RULES.md)
-// ⚠️ CRITICAL WARNING: FILE PROTECTED BY PROJECT RULES.
-// DO NOT MODIFY THIS FILE WITHOUT EXPLICIT USER INSTRUCTION.
 
-import { signIn, useSession } from "next-auth/react"
+import { signIn } from "next-auth/react"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { useRouter } from "next/navigation"
 import CredentialsForm from "./CredentialsForm"

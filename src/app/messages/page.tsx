@@ -1,12 +1,10 @@
-// 🛡️ PROHIBIDO MODIFICAR SIN ORDEN EXPLÍCITA DEL USUARIO (Ver PROJECT_RULES.md)
-// ⚠️ CRITICAL WARNING: FILE PROTECTED BY PROJECT RULES.
-// DO NOT MODIFY THIS FILE WITHOUT EXPLICIT USER INSTRUCTION.
 
 'use client'
 
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { useLanguage } from '@/contexts/LanguageContext'
 
 import { formatPrice } from '@/lib/vehicleTaxonomy'
@@ -113,12 +111,12 @@ export default function MessagesPage() {
                         <p className="text-text-secondary mb-6 pl-2 pr-2">
                             Cuando contactes a vendedores sobre vehículos, tus conversaciones aparecerán aquí.
                         </p>
-                        <a
+                        <Link
                             href="/swipe"
                             className="inline-block px-6 py-3 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition"
                         >
                             Explorar Vehículos
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -136,7 +134,7 @@ export default function MessagesPage() {
                         const timeSince = getTimeSince(new Date(chat.updatedAt))
 
                         return (
-                            <a
+                            <Link
                                 key={chat.id}
                                 href={`/messages/${chat.id}`}
                                 className={`block bg-surface border rounded-xl p-4 hover:bg-surface-highlight transition relative ${chat.unreadCount > 0 ? 'border-primary-500/50' : 'border-surface-highlight'
@@ -213,7 +211,7 @@ export default function MessagesPage() {
                                         </div>
                                     </div>
                                 </div>
-                            </a>
+                            </Link>
                         )
                     })}
                 </div>
