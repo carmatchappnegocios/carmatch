@@ -10,6 +10,9 @@ export default function AuthButtons() {
         try {
             const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
             if (provider === "google") {
+                if (isMobile) {
+                    sessionStorage.setItem('carmatch_oauth_reload', '1')
+                }
                 await signIn("google", {
                     callbackUrl: isMobile ? "/market" : "/",
                     redirect: true,

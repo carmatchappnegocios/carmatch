@@ -116,6 +116,7 @@ export const viewport: Viewport = {
 
 
 import PushNotificationRequest from "@/components/PushNotificationRequest";
+import ClientViewportFix from "@/components/ClientViewportFix";
 
 export default function RootLayout({
     children,
@@ -133,6 +134,7 @@ export default function RootLayout({
                 <style dangerouslySetInnerHTML={{ __html: 'html,body{background-color:#0f172a!important}' }} />
             </head>
             <body className={`${inter.className} min-h-screen-safe bg-[#0f172a]`}>
+                <ClientViewportFix />
                 <GoogleAnalytics />
                 <Providers>
                     <Toaster position="top-center" richColors closeButton />
