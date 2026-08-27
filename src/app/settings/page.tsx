@@ -10,7 +10,6 @@ import {
     Settings,
     ChevronLeft,
     Globe,
-    Headset,
     Bell,
     BellOff,
     LogOut,
@@ -218,7 +217,7 @@ export default function SettingsPage() {
             </div>
 
             <main className="max-w-2xl mx-auto p-4 space-y-8 mt-4">
-                {/* Notificaciones y Soporte */}
+                {/* Notificaciones */}
                 <section className="space-y-4">
                     <div className="flex items-center gap-2 px-1">
                         <Settings size={18} className="text-primary-500" />
@@ -311,21 +310,6 @@ export default function SettingsPage() {
                             {isSubscribed && (
                                 <span className="text-xs font-black uppercase tracking-tighter bg-red-600 text-white px-3 py-1 rounded-full">{t('settings.deactivate')}</span>
                             )}
-                        </button>
-
-                        <button
-                            onClick={() => window.dispatchEvent(new CustomEvent('open-chatbot'))}
-                            className="w-full flex items-center gap-4 p-5 rounded-2xl border border-surface-highlight bg-surface text-text-primary hover:border-text-secondary/30 transition-all"
-                        >
-                            <div className="p-2 rounded-xl bg-blue-500/10 text-blue-500">
-                                <Headset size={22} />
-                            </div>
-                            <div className="text-left">
-                                <p className="font-bold">{t('settings.support_title')}</p>
-                                <p className="text-xs text-text-secondary">
-                                    {t('settings.support_desc')}
-                                </p>
-                            </div>
                         </button>
 
                         <button

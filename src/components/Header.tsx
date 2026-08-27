@@ -13,7 +13,7 @@ import PWAInstallModal from "@/components/PWAInstallModal"
 import NotificationsDropdown from "@/components/NotificationsDropdown"
 import { usePWAInstall } from '@/hooks/usePWAInstall'
 import { getWeightedHomePath } from "@/lib/navigation"
-import { ThumbsUp, Headset, Flame, CarFront, UserRound, Map, Bell, BellOff, Settings, ShieldCheck, Coins, Heart, MessageSquare, Briefcase, Smartphone } from "lucide-react"
+import { ThumbsUp, Headset, Flame, CarFront, UserRound, Map, Bell, BellOff, Settings, ShieldCheck, Coins, Heart, MessageSquare, Briefcase, Smartphone, MessageCircleQuestion } from "lucide-react"
 import { usePushNotifications } from "@/hooks/usePushNotifications"
 import { BUSINESS_CATEGORIES } from "@/lib/businessCategories"
 import { useRestoreSessionModal } from "@/hooks/useRestoreSessionModal"
@@ -525,6 +525,21 @@ export default function Header() {
                                                 <Settings className="w-5 h-5 text-slate-400" />
                                                 <span className="font-medium">{t('nav.settings')}</span>
                                             </Link>
+
+                                            {/* CarMatch Ayuda - Soporte + Consejos */}
+                                            <button
+                                                onClick={() => {
+                                                    window.dispatchEvent(new CustomEvent('open-chatbot'))
+                                                    setShowMenu(false)
+                                                }}
+                                                className="w-full flex items-center gap-3 px-4 py-3 hover:bg-surface-highlight transition-colors"
+                                            >
+                                                <MessageCircleQuestion className="w-5 h-5 text-blue-500" />
+                                                <div className="text-left">
+                                                    <p className="font-medium">{t('common.support')}</p>
+                                                    <p className="text-[11px] text-text-secondary">{t('common.online_team')}</p>
+                                                </div>
+                                            </button>
 
 
                                         </div>
