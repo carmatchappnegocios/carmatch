@@ -676,6 +676,12 @@ model AutoUpdateLog {
   brandsAdded         Int      @default(0)
   modelsAdded         Int      @default(0)
   typesAdded          Int      @default(0)
+  fuelsAdded          Int      @default(0)
+  colorsAdded         Int      @default(0)
+  featuresAdded       Int      @default(0)
+  synonymsAdded       Int      @default(0)
+  modelsUpdated       Int      @default(0)
+  modelsDeprecated    Int      @default(0)
   errors              String?
   executionTime       Int?
   metadata            Json?

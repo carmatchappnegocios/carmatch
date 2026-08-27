@@ -65,7 +65,78 @@ export var GLOBAL_SYNONYMS: Record<string, string> = {
     'Cero horas': '0 hrs', '0 km': 'Nuevo', 'Recien llegado': 'Importado', 'Clima helando': 'Aire Acondicionado',
     'Patas de hule': 'Llantas nuevas', 'Al 100': 'Excelente estado', 'Sin fallas': 'Excelente estado',
     'Diesel': 'Diésel', 'Poder stroke': 'PowerStroke', 'Cumins': 'Cummins', 'Duramax': 'Duramax',
-    'Hemi': 'Hemi', 'Triton': 'Triton', 'Vortec': 'Vortec'
+    'Hemi': 'Hemi', 'Triton': 'Triton', 'Vortec': 'Vortec',
+
+    // Combustibles (Fuel Synonyms)
+    'ev': 'Eléctrico (BEV)', 'EV': 'Eléctrico (BEV)', 'electric': 'Eléctrico (BEV)', 'eléctrico': 'Eléctrico (BEV)',
+    'electrico': 'Eléctrico (BEV)', 'batería': 'Eléctrico (BEV)', 'bateria': 'Eléctrico (BEV)',
+    'pure ev': 'Eléctrico (BEV)', '100% electric': 'Eléctrico (BEV)', '100% eléctrico': 'Eléctrico (BEV)',
+    'BEV': 'Eléctrico (BEV)', 'cero emisiones': 'Eléctrico (BEV)', 'sin gasolina': 'Eléctrico (BEV)',
+    'hybrid': 'Híbrido (HEV)', 'HEV': 'Híbrido (HEV)', 'híbrido': 'Híbrido (HEV)', 'hibrido': 'Híbrido (HEV)',
+    'mild hybrid': 'Híbrido (HEV)', 'híbrido suave': 'Híbrido (HEV)',
+    'plug-in': 'Híbrido Enchufable (PHEV)', 'plug in': 'Híbrido Enchufable (PHEV)', 'PHEV': 'Híbrido Enchufable (PHEV)',
+    'enchufable': 'Híbrido Enchufable (PHEV)', 'híbrido enchufable': 'Híbrido Enchufable (PHEV)',
+    'hydrogen': 'Hidrógeno (FCEV)', 'hidrógeno': 'Hidrógeno (FCEV)', 'hidrogeno': 'Hidrógeno (FCEV)',
+    'FCEV': 'Hidrógeno (FCEV)', 'fuel cell': 'Hidrógeno (FCEV)', 'celda de combustible': 'Hidrógeno (FCEV)',
+    'LPG': 'Gas LP', 'gas lp': 'Gas LP', 'GLP': 'Gas LP', 'propano': 'Gas LP',
+    'CNG': 'Gas Natural (GNC)', 'GNC': 'Gas Natural (GNC)', 'natural gas': 'Gas Natural (GNC)', 'gas natural': 'Gas Natural (GNC)',
+    'ethanol': 'Etanol', 'etanol': 'Etanol', 'E85': 'Etanol',
+    'gasolina': 'Gasolina', 'gas': 'Gasolina', 'gasoleo': 'Diésel', 'diesel': 'Diésel',
+}
+
+// 🔧 Dynamic Taxonomy Updater - Allows runtime additions
+export function addFuel(fuel: string): boolean {
+    if (!FUELS.includes(fuel as any)) {
+        (FUELS as string[]).push(fuel);
+        console.log(`⛽ Fuel added dynamically: ${fuel}`);
+        return true;
+    }
+    return false;
+}
+
+export function addColor(color: string): boolean {
+    if (!COLORS.includes(color as any)) {
+        (COLORS as string[]).push(color);
+        console.log(`🎨 Color added dynamically: ${color}`);
+        return true;
+    }
+    return false;
+}
+
+export function addTransmission(transmission: string): boolean {
+    if (!TRANSMISSIONS.includes(transmission as any)) {
+        (TRANSMISSIONS as string[]).push(transmission);
+        console.log(`⚙️ Transmission added dynamically: ${transmission}`);
+        return true;
+    }
+    return false;
+}
+
+export function addTraction(traction: string): boolean {
+    if (!TRACTIONS.includes(traction as any)) {
+        (TRACTIONS as string[]).push(traction);
+        console.log(`🛞 Traction added dynamically: ${traction}`);
+        return true;
+    }
+    return false;
+}
+
+export function addSynonym(slang: string, official: string): boolean {
+    if (!GLOBAL_SYNONYMS[slang]) {
+        GLOBAL_SYNONYMS[slang] = official;
+        console.log(`📝 Synonym added: ${slang} -> ${official}`);
+        return true;
+    }
+    return false;
+}
+
+export function addVehicleSubtype(category: VehicleCategory, subtype: string): boolean {
+    if (VEHICLE_CATEGORIES[category] && !VEHICLE_CATEGORIES[category].includes(subtype)) {
+        VEHICLE_CATEGORIES[category].push(subtype);
+        console.log(`📂 Vehicle subtype added: ${category} -> ${subtype}`);
+        return true;
+    }
+    return false;
 }
 
 // 🔧 Helper to get features by category
