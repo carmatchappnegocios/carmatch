@@ -789,8 +789,14 @@ export default function MarketClient({
                                                 onClick={handleExpandSearch}
                                             >
                                                 <div className="w-16 h-16 bg-primary-700 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg shadow-primary-900/50">
-                                                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                                    <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none">
+                                                        <circle cx="12" cy="12" r="2.5" fill="currentColor"/>
+                                                        <circle cx="12" cy="12" r="6" stroke="currentColor" strokeWidth="1.5" opacity="0.7"/>
+                                                        <circle cx="12" cy="12" r="9.5" stroke="currentColor" strokeWidth="1.5" opacity="0.4"/>
+                                                        <path d="M12 2.5V5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                                                        <path d="M12 19v2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                                                        <path d="M2.5 12H5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                                                        <path d="M19 12h2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                                                     </svg>
                                                 </div>
                                                 <span className="font-bold text-lg text-white">
@@ -858,8 +864,14 @@ export default function MarketClient({
                                             onClick={handleExpandSearch}
                                             className="inline-flex items-center gap-2 px-5 sm:px-8 py-3 sm:py-4 bg-primary-700 text-text-primary rounded-xl hover:bg-primary-600 transition font-bold shadow-lg justify-center text-sm sm:text-base"
                                         >
-                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                                                <circle cx="12" cy="12" r="2.5" fill="currentColor"/>
+                                                <circle cx="12" cy="12" r="6" stroke="currentColor" strokeWidth="1.5" opacity="0.7"/>
+                                                <circle cx="12" cy="12" r="9.5" stroke="currentColor" strokeWidth="1.5" opacity="0.4"/>
+                                                <path d="M12 2.5V5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                                                <path d="M12 19v2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                                                <path d="M2.5 12H5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                                                <path d="M19 12h2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                                             </svg>
                                             {tierIndex === RADIUS_TIERS.length - 1 ? t('market.restart_search') : t('market.expand_search')}
                                         </button>
