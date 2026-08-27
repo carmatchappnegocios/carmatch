@@ -13,7 +13,6 @@ import {
     User
 } from "lucide-react"
 import { useRestoreSessionModal } from "@/hooks/useRestoreSessionModal"
-import { useRouter } from "next/navigation"
 
 export default function MobileNav() {
     const pathname = usePathname()

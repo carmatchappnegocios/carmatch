@@ -11,8 +11,7 @@ export const dynamic = 'force-dynamic'
 export async function GET(request: NextRequest) {
     try {
         const session = await auth()
-        // @ts-ignore
-        if (!session?.user?.id || !session.user.isAdmin) {
+        if (!session?.user?.id || !(session.user as any).isAdmin) {
             return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
         }
 

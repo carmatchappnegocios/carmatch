@@ -3,11 +3,9 @@
 
 import { useRestoreSessionModal } from '@/hooks/useRestoreSessionModal'
 import { ThumbsUp, X } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 
 export default function RestoreSessionModal() {
     const { isOpen, message, confirm, closeModal } = useRestoreSessionModal()
-    const router = useRouter()
 
     if (!isOpen) return null
 

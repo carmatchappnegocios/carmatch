@@ -10,8 +10,7 @@ import { auth } from '@/lib/auth'
 export async function scoutGlobalStations(query: string) {
     try {
         const session = await auth()
-        // @ts-ignore
-        if (!session?.user?.id || !session.user.isAdmin) {
+        if (!session?.user?.id || !(session.user as any).isAdmin) {
             return { success: false, error: 'Unauthorized' }
         }
 

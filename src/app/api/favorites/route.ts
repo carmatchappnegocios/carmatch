@@ -142,6 +142,8 @@ export async function POST(request: NextRequest) {
                 isFavorited: false,
                 message: deleted.count > 0 ? 'Eliminado de favoritos' : 'No estaba en favoritos'
             })
+        } else {
+            return NextResponse.json({ error: 'Acción no válida. Usa: toggle, add, o remove' }, { status: 400 })
         }
 
     } catch (error) {

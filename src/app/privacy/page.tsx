@@ -1,11 +1,10 @@
 
 'use client'
 
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { Shield, Mail, MapPin, FileText, Clock, Lock, Eye, Database, Share2, AlertCircle } from 'lucide-react'
 
 export default function PrivacyPage() {
-    const router = useRouter()
 
     return (
         <div className="min-h-screen bg-background pb-32">
@@ -248,9 +247,9 @@ export default function PrivacyPage() {
 
                         <p className="text-text-secondary mb-4">
                             Usamos cookies para mejorar tu experiencia. Para más detalles, consulta nuestra{' '}
-                            <a href="/cookies" className="text-primary-400 hover:text-primary-300 underline">
+                            <Link href="/cookies" className="text-primary-400 hover:text-primary-300 underline">
                                 Política de Cookies
-                            </a>.
+                            </Link>.
                         </p>
                     </section>
 

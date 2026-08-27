@@ -1,6 +1,6 @@
 'use client'
 
-import { ShieldCheck, Car, ShoppingBag, Clock, Zap } from 'lucide-react'
+import { ShieldCheck, Car, ShoppingBag, Clock } from 'lucide-react'
 
 interface UserBadgesProps {
     user: {

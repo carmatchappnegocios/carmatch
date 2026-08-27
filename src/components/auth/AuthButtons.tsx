@@ -1,12 +1,10 @@
 
 import { signIn } from "next-auth/react"
 import { useLanguage } from "@/contexts/LanguageContext"
-import { useRouter } from "next/navigation"
 import CredentialsForm from "./CredentialsForm"
 
 export default function AuthButtons() {
     const { t } = useLanguage()
-    const router = useRouter()
 
     const handleSignIn = async (provider: string) => {
         try {

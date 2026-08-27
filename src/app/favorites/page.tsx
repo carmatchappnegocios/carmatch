@@ -2,9 +2,6 @@
 import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import { prisma } from "@/lib/db"
-import Header from "@/components/Header"
-import FavoriteButton from "@/components/FavoriteButton"
-import Link from "next/link"
 import FavoritesClient from "./FavoritesClient"
 
 export default async function FavoritesPage() {

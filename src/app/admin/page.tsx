@@ -51,7 +51,6 @@ const FacebookAdsTab = dynamic<any>(() => import('@/components/admin/FacebookAds
 const VideoPromptsTab = dynamic<any>(() => import('@/components/admin/VideoPromptsTab'), { ssr: false })
 const FamilyMatchTab = dynamic<any>(() => import('@/components/admin/FamilyMatchTab'), { ssr: false })
 import ManageCreditsModal from '@/components/admin/ManageCreditsModal'
-import QRCodeModal from '@/components/QRCodeModal'
 import { testGeminiHealth, AiHealthReport } from '@/app/admin/actions/ai-health-actions'
 import { scoutGlobalStations } from '@/app/admin/actions/scout-actions'
 import { toast } from "sonner"
@@ -90,7 +89,6 @@ function AdminPanelContent() {
     })
     const [isAnalyzing, setIsAnalyzing] = useState(false)
     const [aiAnalysis, setAiAnalysis] = useState<any>(null)
-    const [showQRModal, setShowQRModal] = useState(false)
 
     useEffect(() => {
         const fetchStats = async () => {
@@ -272,11 +270,6 @@ function AdminPanelContent() {
             </main>
 
             <AdminMobileNav activeView={activeView} setActiveView={setActiveView} menuItems={menuItems} />
-
-            <QRCodeModal
-                isOpen={showQRModal}
-                onClose={() => setShowQRModal(false)}
-            />
         </div>
     )
 }
@@ -686,7 +679,6 @@ function UsersTab({ users }: { users: any[] }) {
     const [selectedUser, setSelectedUser] = useState<any>(null)
     const [showCreditModal, setShowCreditModal] = useState(false)
     const [searchTerm, setSearchTerm] = useState('')
-    const router = useRouter()
 
     const filteredUsers = useMemo(() => {
         if (!searchTerm.trim()) return users

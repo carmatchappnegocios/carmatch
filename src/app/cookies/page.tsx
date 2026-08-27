@@ -1,11 +1,10 @@
 
 'use client'
 
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { Cookie, Eye, Settings, Info, Shield } from 'lucide-react'
 
 export default function CookiesPage() {
-    const router = useRouter()
 
     return (
         <div className="min-h-screen bg-background pb-32">
@@ -185,9 +184,9 @@ export default function CookiesPage() {
                         </div>
                         <p className="text-text-secondary text-sm">
                             Si tienes dudas sobre cómo usamos las cookies, revisa nuestro{' '}
-                            <a href="/privacy" className="text-primary-400 hover:text-primary-300 underline">
+                            <Link href="/privacy" className="text-primary-400 hover:text-primary-300 underline">
                                 Aviso de Privacidad
-                            </a>{' '}
+                            </Link>{' '}
                             o contáctanos a través del soporte en la aplicación.
                         </p>
                     </section>

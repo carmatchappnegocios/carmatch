@@ -23,6 +23,10 @@ export default function VehicleCardUltraLite({ vehicle }: VehicleCardUltraLitePr
 
     if (!ultraLiteMode) return null
 
+    const handleViewDetails = () => {
+        window.location.href = `/vehicle/${vehicle.id}`
+    }
+
     return (
         <div className="bg-surface rounded-lg border border-surface-highlight p-4 hover:border-primary-700 transition">
             {/* Ícono de placeholder en lugar de imagen */}
@@ -51,7 +55,10 @@ export default function VehicleCardUltraLite({ vehicle }: VehicleCardUltraLitePr
             </div>
 
             {/* Botón simple */}
-            <button className="w-full mt-3 py-2 bg-primary-700 text-text-primary rounded-lg text-sm font-medium">
+            <button
+                onClick={handleViewDetails}
+                className="w-full mt-3 py-2 bg-primary-700 text-text-primary rounded-lg text-sm font-medium hover:bg-primary-600 transition"
+            >
                 Ver Detalles
             </button>
         </div>

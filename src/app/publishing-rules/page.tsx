@@ -1,11 +1,9 @@
 
 'use client'
 
-import { useRouter } from 'next/navigation'
 import { AlertTriangle, Ban, ShieldAlert, Flag, CheckCircle, XCircle } from 'lucide-react'
 
 export default function PublishingRulesPage() {
-    const router = useRouter()
 
     return (
         <div className="min-h-screen bg-background pb-32">

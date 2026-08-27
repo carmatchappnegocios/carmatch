@@ -2,19 +2,17 @@
 "use client"
 
 import Link from "next/link"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 import { useSession } from "next-auth/react"
 
 import { Logo } from "@/components/Logo"
 import { useLanguage } from "@/contexts/LanguageContext"
 import AuthButtons from "./AuthButtons"
-import { getWeightedHomePath } from "@/lib/navigation"
-import { AlertTriangle, LogIn } from "lucide-react"
+import { AlertTriangle } from "lucide-react"
 
 export default function AuthPageContent() {
     const { t } = useLanguage()
     const { data: session, status } = useSession()
-    const router = useRouter()
     const searchParams = useSearchParams()
     const error = searchParams.get("error")
     const errorDescription = searchParams.get("error_description")

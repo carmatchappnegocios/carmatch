@@ -3,7 +3,6 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useLanguage } from '@/contexts/LanguageContext'
-import dynamic from 'next/dynamic'
 import { ShieldAlert, Siren } from 'lucide-react'
 import { toast } from 'sonner'
 

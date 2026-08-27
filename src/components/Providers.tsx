@@ -7,8 +7,6 @@ import { DataSaverProvider } from "@/contexts/DataSaverContext"
 import dynamic from "next/dynamic"
 
 import QueryProvider from "./QueryProvider"
-import HistoryShield from "@/components/HistoryShield";
-import GlobalLocationGate from "@/components/GlobalLocationGate";
 
 const AIChatbot = dynamic(() => import("@/components/AIChatbot"), { ssr: false });
 const RegisterSW = dynamic(() => import("@/components/RegisterSW"), { ssr: false });
