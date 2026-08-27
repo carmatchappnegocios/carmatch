@@ -8,8 +8,9 @@ export default function AuthButtons() {
 
     const handleSignIn = async (provider: string) => {
         try {
-            const options: any = { callbackUrl: "/" }
-            await signIn(provider, options)
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+            const callbackUrl = isMobile ? "/market" : "/"
+            await signIn(provider, { callbackUrl, redirect: true })
         } catch (error) {
             console.error("Error signing in:", error)
             window.location.href = `/api/auth/signin/${provider}?callbackUrl=/`

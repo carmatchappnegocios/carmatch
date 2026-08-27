@@ -633,6 +633,7 @@ export default async function MarketPage({
 
     return (
         <>
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover" />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(marketFaqLd) }} />
             <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-background"><div className="w-8 h-8 border-4 border-primary-500 border-t-transparent rounded-full animate-spin"></div></div>}>
                 <MarketClient
