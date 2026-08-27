@@ -1,6 +1,6 @@
 'use client'
 
-import { ShieldCheck, Car, ShoppingBag, Clock } from 'lucide-react'
+import { ShoppingBag, Clock } from 'lucide-react'
 
 interface UserBadgesProps {
     user: {
@@ -22,24 +22,6 @@ export default function UserBadges({ user, showAll = false }: UserBadgesProps) {
         label: `Miembro ${memberYear}`,
         color: 'bg-blue-500/10 text-blue-400 border-blue-500/20'
     })
-
-    // Badge: Vendedor activo (si tiene vehículos publicados)
-    if (user.lifetimeVehicleCount && user.lifetimeVehicleCount > 0) {
-        badges.push({
-            icon: <Car size={12} />,
-            label: 'Vendedor',
-            color: 'bg-green-500/10 text-green-400 border-green-500/20'
-        })
-    }
-
-    // Badge: Dueño de negocio
-    if (user.lifetimeBusinessCount && user.lifetimeBusinessCount > 0) {
-        badges.push({
-            icon: <ShieldCheck size={12} />,
-            label: 'Negocio',
-            color: 'bg-purple-500/10 text-purple-400 border-purple-500/20'
-        })
-    }
 
     // Badge: Comprador (si no tiene vehículos ni negocios)
     if ((!user.lifetimeVehicleCount || user.lifetimeVehicleCount === 0) &&
