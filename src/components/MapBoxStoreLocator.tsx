@@ -327,7 +327,7 @@ export default function MapBoxStoreLocator({
                 source.getClusterExpansionZoom(clusterId, (err, zoom) => {
                     if (err || zoom == null) return
                     mapInstance.easeTo({
-                        center: (features[0].geometry as any).coordinates,
+                        center: ((features[0] as any).geometry as any).coordinates,
                         zoom: zoom
                     })
                 })
