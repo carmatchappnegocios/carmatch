@@ -9,8 +9,15 @@ export default function AuthButtons() {
     const handleSignIn = async (provider: string) => {
         try {
             const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
-            const callbackUrl = isMobile ? "/market" : "/"
-            await signIn(provider, { callbackUrl, redirect: true })
+            if (provider === "google") {
+                await signIn("google", {
+                    callbackUrl: isMobile ? "/market" : "/",
+                    redirect: true,
+                    prompt: "select_account",
+                })
+            } else {
+                await signIn(provider, { callbackUrl: "/", redirect: true })
+            }
         } catch (error) {
             console.error("Error signing in:", error)
             window.location.href = `/api/auth/signin/${provider}?callbackUrl=/`
