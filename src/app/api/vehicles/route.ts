@@ -255,7 +255,7 @@ export async function POST(request: NextRequest) {
             // No bloqueamos la respuesta, lo hacemos async
             (async () => {
                 try {
-                    const restrictedAdminEmail = process.env.ADMIN_EMAIL || 'carmatchoficial001@gmail.com'
+                    const restrictedAdminEmail = process.env.ADMIN_EMAIL
 
                     // 🛡️ REGLA ESTRICTA: Este admin solo puede publicar en MÉXICO
                     if (session.user.email === restrictedAdminEmail) {

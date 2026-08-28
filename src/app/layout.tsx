@@ -24,13 +24,13 @@ import DynamicHeader from "@/components/DynamicHeader";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    metadataBase: new URL("https://www.carmatchapp.net"),
+    metadataBase: new URL("https://carmatchapp.net"),
     title: "CarMatch | Compra y Vende Autos Gratis en México",
     description: "La red social automotriz #1 de México. Vende tu auto sin comisiones, encuentra talleres mecánicos 24/7 y descubre tu próximo vehículo.",
     alternates: {
-        canonical: "https://www.carmatchapp.net",
+        canonical: "https://carmatchapp.net",
         languages: {
-            'es': 'https://www.carmatchapp.net',
+            'es': 'https://carmatchapp.net',
         },
     },
     verification: {

@@ -43,6 +43,8 @@ const nextConfig: NextConfig = {
         unoptimized: false, // Siempre optimizar
     },
     eslint: {
+        // TODO: Migrate to eslint.config.js (flat config) for ESLint 9 compatibility
+        // then set to false to enforce linting during builds
         ignoreDuringBuilds: true,
     },
     typescript: {
