@@ -39,6 +39,7 @@ import {
     MapPin,
     DollarSign,
     CheckCircle2,
+    Mail,
 } from 'lucide-react'
 import dynamic from 'next/dynamic'
 
@@ -50,12 +51,13 @@ const BetaSessionsTab = dynamic<any>(() => import('@/components/admin/BetaSessio
 const FacebookAdsTab = dynamic<any>(() => import('@/components/admin/FacebookAdsTab'), { ssr: false })
 const VideoPromptsTab = dynamic<any>(() => import('@/components/admin/VideoPromptsTab'), { ssr: false })
 const FamilyMatchTab = dynamic<any>(() => import('@/components/admin/FamilyMatchTab'), { ssr: false })
+const EmailAliasesTab = dynamic<any>(() => import('@/components/admin/EmailAliasesTab'), { ssr: false })
 import ManageCreditsModal from '@/components/admin/ManageCreditsModal'
 import { testGeminiHealth, AiHealthReport } from '@/app/admin/actions/ai-health-actions'
 import { scoutGlobalStations } from '@/app/admin/actions/scout-actions'
 import { toast } from "sonner"
 
-type AdminView = 'overview' | 'users' | 'inventory' | 'map-store' | 'intelligence' | 'reports' | 'logs' | 'ai-hub' | 'costs' | 'marketing' | 'videos' | 'family' | 'more'
+type AdminView = 'overview' | 'users' | 'inventory' | 'map-store' | 'intelligence' | 'reports' | 'logs' | 'ai-hub' | 'costs' | 'marketing' | 'videos' | 'family' | 'email' | 'more'
 
 const AdminSidebar = dynamic<any>(() => import('@/components/admin/AdminSidebar'), { ssr: false })
 
@@ -206,6 +208,7 @@ function AdminPanelContent() {
         { id: 'marketing', icon: Megaphone, label: 'Marketing' },
         { id: 'videos', icon: Video, label: 'Videos' },
         { id: 'family', icon: User, label: 'Familia Match' },
+        { id: 'email', icon: Mail, label: 'Correos' },
         { id: 'reports', icon: Flag, label: 'Reportes', badge: stats.reports?.filter((r: any) => r.status === 'PENDING').length || 0 },
         { id: 'logs', icon: Terminal, label: 'Registros' },
     ]
@@ -255,6 +258,7 @@ function AdminPanelContent() {
                             {activeView === 'marketing' && <MarketingTab />}
                             {activeView === 'videos' && <VideoPromptsTab />}
                             {activeView === 'family' && <FamilyMatchTab />}
+                            {activeView === 'email' && <EmailAliasesTab />}
 
                             {activeView === 'reports' && <ReportsTab reports={stats.reports} />}
                             {activeView === 'logs' && <LogsTab logs={stats.logs} />}
