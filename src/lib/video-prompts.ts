@@ -10,6 +10,7 @@ export interface HeroData {
     personality: string
     phrase: string
     defeatMethod: string
+    characterImage?: string
 }
 
 export interface VillainData {
@@ -39,28 +40,32 @@ export const heroes: Record<Hero, HeroData> = {
         age: 45,
         personality: 'Emprendedor nato, trabajador incansable, conoce a todos en el barrio',
         phrase: 'Si existe, se publica en CarMatch',
-        defeatMethod: 'Encuentra soluciones con talleres verificados'
+        defeatMethod: 'Encuentra soluciones con talleres verificados',
+        characterImage: '',
     },
     'car-mela': {
         name: 'Car-mela',
         age: 42,
         personality: 'La columna vertebral de la familia, organizada, detallista',
         phrase: 'Detras de gran negocio, hay una gran mujer organizandolo todo',
-        defeatMethod: 'Compra directa sin intermediarios'
+        defeatMethod: 'Compra directa sin intermediarios',
+        characterImage: '',
     },
     'matchy': {
         name: 'Matchy',
         age: 20,
         personality: 'La influencer de la familia, creativa, conectada con la generacion Z',
         phrase: 'Si no esta en TikTok, no existe',
-        defeatMethod: 'Verificacion digital y perfiles reales'
+        defeatMethod: 'Verificacion digital y perfiles reales',
+        characterImage: '',
     },
     'car-litos': {
         name: 'Car-litos',
         age: 18,
         personality: 'El mas joven y aventurero, le gustan los autos rapidos',
         phrase: 'Si tiene motor, lo revolucionamos',
-        defeatMethod: 'Escapa con alternativas eficientes'
+        defeatMethod: 'Escapa con alternativas eficientes',
+        characterImage: '',
     }
 }
 
@@ -190,6 +195,7 @@ export interface GeneratedPrompt {
     scene: Scene
     emotion: Emotion
     season: Season
+    characterImage?: string
     hook: string
     voiceover: string
     escenas: string
@@ -221,33 +227,35 @@ function generateHook(hero: HeroData, villain: VillainData, scene: SceneData): s
 }
 
 function generateVoiceover(hero: Hero, heroData: HeroData, villain: VillainData, scene: SceneData, season: SeasonData): string {
+    const characterRef = heroData.characterImage ? ` Usa la imagen de referencia del personaje: ${heroData.characterImage}.` : ''
     const voiceovers: Record<Hero, string[]> = {
         'don-match': [
-            `Cuidado con ${villain.villainName}! Te esta causando problemas en la ${scene.name.toLowerCase()}. Pero no te preocupes, Don Match tiene la solucion. Abre CarMatch y encuentra lo que necesitas. ${heroData.phrase}. Descarga CarMatch ahora.`,
-            `${villain.villainName} no perdona. ${villain.problem}. Pero Don Match llega con su experiencia. En CarMatch encuentras talleres verificados, precios justos. Sin estafas. Descarga CarMatch.`,
-            `Otro dia, otro problema con ${villain.villainName}. Pero Don Match tiene la formula: CarMatch conecta con los mejores. ${heroData.phrase}. No sufras mas, descarga CarMatch.`
+            `Cuidado con ${villain.villainName}! Te esta causando problemas en la ${scene.name.toLowerCase()}. Pero no te preocupes, Don Match tiene la solucion. Abre CarMatch y encuentra lo que necesitas. ${heroData.phrase}.${characterRef} Descarga CarMatch ahora.`,
+            `${villain.villainName} no perdona. ${villain.problem}. Pero Don Match llega con su experiencia. En CarMatch encuentras talleres verificados, precios justos. Sin estafas.${characterRef} Descarga CarMatch.`,
+            `Otro dia, otro problema con ${villain.villainName}. Pero Don Match tiene la formula: CarMatch conecta con los mejores. ${heroData.phrase}.${characterRef} No sufras mas, descarga CarMatch.`
         ],
         'car-mela': [
-            `${villain.villainName} te esta complicando la vida. ${villain.problem}. Pero Car-mela tiene el plan. En CarMatch todo es organizado, directo, sin intermediarios. ${heroData.phrase}. Descarga CarMatch.`,
-            `No permitas que ${villain.villainName} te robe tu dinero. Car-mela te muestra como: CarMatch, compra directa, sin comisiones. ${heroData.phrase}. Descarga CarMatch ahora.`,
-            `${villain.villainName} causa ${villain.emotion}. Pero Car-mela tiene la solucion organizada. En CarMatch encuentras todo verificado. ${heroData.phrase}. Descarga CarMatch.`
+            `${villain.villainName} te esta complicando la vida. ${villain.problem}. Pero Car-mela tiene el plan. En CarMatch todo es organizado, directo, sin intermediarios. ${heroData.phrase}.${characterRef} Descarga CarMatch.`,
+            `No permitas que ${villain.villainName} te robe tu dinero. Car-mela te muestra como: CarMatch, compra directa, sin comisiones. ${heroData.phrase}.${characterRef} Descarga CarMatch ahora.`,
+            `${villain.villainName} causa ${villain.emotion}. Pero Car-mela tiene la solucion organizada. En CarMatch encuentras todo verificado. ${heroData.phrase}.${characterRef} Descarga CarMatch.`
         ],
         'matchy': [
-            `${villain.villainName} piensa que puede estafarte. Pero Matchy tiene la tecnologia. En CarMatch los perfiles son reales, los autos verificados. ${heroData.phrase}. Descarga CarMatch.`,
-            `No mas sorpresas con ${villain.villainName}! Matchy te protege con verificacion digital. CarMatch tiene todo verificado. ${heroData.phrase}. Descarga CarMatch.`,
-            `${villain.viralHook}! Pero Matchy tiene la app. CarMatch verifica todo: kilometraje, vendedor, auto. ${heroData.phrase}. No mas estafas, descarga CarMatch.`
+            `${villain.villainName} piensa que puede estafarte. Pero Matchy tiene la tecnologia. En CarMatch los perfiles son reales, los autos verificados. ${heroData.phrase}.${characterRef} Descarga CarMatch.`,
+            `No mas sorpresas con ${villain.villainName}! Matchy te protege con verificacion digital. CarMatch tiene todo verificado. ${heroData.phrase}.${characterRef} Descarga CarMatch.`,
+            `${villain.viralHook}! Pero Matchy tiene la app. CarMatch verifica todo: kilometraje, vendedor, auto. ${heroData.phrase}.${characterRef} No mas estafas, descarga CarMatch.`
         ],
         'car-litos': [
-            `${villain.villainName} no sabe con quien se mete. Car-litos tiene la estrategia. En CarMatch encuentras alternativas que ${villain.villainName} no puede destruir. ${heroData.phrase}. Descarga CarMatch.`,
-            `El gasolinazo, el robo, ${villain.villainName} ataca. Pero Car-litos escapa con soluciones inteligentes. CarMatch tiene autos eficientes y seguros. ${heroData.phrase}. Descarga CarMatch.`,
-            `Car-litos contra ${villain.villainName}: la batalla final. En CarMatch encuentras lo que necesitas para ganar. ${heroData.phrase}. Descarga CarMatch ahora.`
+            `${villain.villainName} no sabe con quien se mete. Car-litos tiene la estrategia. En CarMatch encuentras alternativas que ${villain.villainName} no puede destruir. ${heroData.phrase}.${characterRef} Descarga CarMatch.`,
+            `El gasolinazo, el robo, ${villain.villainName} ataca. Pero Car-litos escapa con soluciones inteligentes. CarMatch tiene autos eficientes y seguros. ${heroData.phrase}.${characterRef} Descarga CarMatch.`,
+            `Car-litos contra ${villain.villainName}: la batalla final. En CarMatch encuentras lo que necesitas para ganar. ${heroData.phrase}.${characterRef} Descarga CarMatch ahora.`
         ]
     }
     return pick(voiceovers[hero])
 }
 
 function generateScenes(hero: HeroData, villain: VillainData, scene: SceneData): string {
-    return `ESCENA 1 (0-3s) HOOK: ${scene.description}. ${villain.villainName} aparece causando problemas. Texto: ${villain.viralHook}.\nESCENA 2 (3-8s) PROBLEMA: La victima sufre las consecuencias de ${villain.villainName}. ${villain.problem}. Emocion: ${villain.emotion}.\nESCENA 3 (8-15s) HEROE: ${hero.name} llega con su chaqueta azul de CarMatch. Muestra la app con la solucion.\nESCENA 4 (15-20s) DERROTA: ${villain.villainName} es vencido. ${hero.name} salva la situacion con CarMatch.\nESCENA 5 (20-25s) CTA: Logo CarMatch. Texto: Descarga CarMatch ahora.`
+    const characterRef = hero.characterImage ? ` Personaje de referencia: ${hero.characterImage}.` : ''
+    return `ESCENA 1 (0-3s) HOOK: ${scene.description}. ${villain.villainName} aparece causando problemas. Texto: ${villain.viralHook}.${characterRef}\nESCENA 2 (3-8s) PROBLEMA: La victima sufre las consecuencias de ${villain.villainName}. ${villain.problem}. Emocion: ${villain.emotion}.\nESCENA 3 (8-15s) HEROE: ${hero.name} llega con su chaqueta azul de CarMatch. Muestra la app con la solucion.${characterRef}\nESCENA 4 (15-20s) DERROTA: ${villain.villainName} es vencido. ${hero.name} salva la situacion con CarMatch.\nESCENA 5 (20-25s) CTA: Logo CarMatch. Texto: Descarga CarMatch ahora.`
 }
 
 function generateMusic(emotion: Emotion, season: Season): string {
@@ -374,6 +382,7 @@ export function generateVideoPrompt(
         scene: sceneKey,
         emotion: emotionKey,
         season: seasonKey,
+        characterImage: heroData.characterImage,
         hook: generateHook(heroData, villainData, sceneData),
         voiceover: generateVoiceover(heroKey, heroData, villainData, sceneData, seasonData),
         escenas: generateScenes(heroData, villainData, sceneData),
