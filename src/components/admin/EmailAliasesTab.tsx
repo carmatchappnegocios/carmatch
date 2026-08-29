@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Mail, Plus, Copy, Trash2, Check, Loader2, AlertCircle, Info } from 'lucide-react'
-import { useToast } from '@/components/ui/use-toast'
+import { Mail, Plus, Copy, Trash2, Check, Loader2, Info } from 'lucide-react'
+import { toast } from 'sonner'
 
 interface Alias {
   id: string
@@ -19,7 +19,6 @@ export default function EmailAliasesTab() {
   const [deleting, setDeleting] = useState<string | null>(null)
   const [newAlias, setNewAlias] = useState('')
   const [copied, setCopied] = useState<string | null>(null)
-  const { toast } = useToast()
 
   const fetchAliases = async () => {
     try {
@@ -29,11 +28,7 @@ export default function EmailAliasesTab() {
       setAliases(data.aliases || [])
     } catch (error) {
       console.error('Error fetching aliases:', error)
-      toast({
-        title: 'Error',
-        description: 'No se pudieron cargar los aliases',
-        variant: 'destructive',
-      })
+      toast.error('No se pudieron cargar los aliases')
     } finally {
       setLoading(false)
     }
@@ -63,16 +58,9 @@ export default function EmailAliasesTab() {
       const alias = await res.json()
       setAliases([alias, ...aliases])
       setNewAlias('')
-      toast({
-        title: 'Creado',
-        description: `${alias.email} creado correctamente`,
-      })
+      toast.success(`${alias.email} creado correctamente`)
     } catch (error) {
-      toast({
-        title: 'Error',
-        description: error instanceof Error ? error.message : 'Error al crear alias',
-        variant: 'destructive',
-      })
+      toast.error(error instanceof Error ? error.message : 'Error al crear alias')
     } finally {
       setCreating(false)
     }
@@ -90,16 +78,9 @@ export default function EmailAliasesTab() {
       if (!res.ok) throw new Error('Error al eliminar')
 
       setAliases(aliases.filter((a) => a.id !== id))
-      toast({
-        title: 'Eliminado',
-        description: `${email} eliminado`,
-      })
+      toast.success(`${email} eliminado`)
     } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'No se pudo eliminar',
-        variant: 'destructive',
-      })
+      toast.error('No se pudo eliminar')
     } finally {
       setDeleting(null)
     }
@@ -109,10 +90,7 @@ export default function EmailAliasesTab() {
     navigator.clipboard.writeText(email)
     setCopied(email)
     setTimeout(() => setCopied(null), 2000)
-    toast({
-      title: 'Copiado',
-      description: `${email} copiado al portapapeles`,
-    })
+    toast.success(`${email} copiado al portapapeles`)
   }
 
   if (loading) {
