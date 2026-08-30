@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { Copy, Check, Search, Filter, Facebook, Users, Car, Wrench, Zap, Mountain, Heart } from 'lucide-react'
+import { Copy, Check, Search, Filter, Facebook, Users, Car, Wrench, Zap, Mountain, Heart, Image, ChevronDown, ChevronUp } from 'lucide-react'
 
 type Character = 'don-match' | 'car-mela' | 'matchy' | 'car-litos'
 type Category = 'negocios' | 'vehiculos' | 'compradores' | 'servicios'
@@ -336,11 +336,35 @@ const allPrompts: AdPrompt[] = [
 
 ]
 
+const characterRefs: Record<Character, { name: string; refPrompt: string; description: string }> = {
+    'don-match': {
+        name: 'Don Match',
+        description: 'Hombre mexicano de 45 años, bigote corto, canas en sienes, polo azul marino CarMatch',
+        refPrompt: 'Fotografía realista de un hombre mexicano de 45 años, complexión robusta, bigote corto bien cuidado, cabello negro con algunas canas en las sienes. Expresión amigable y confiable, mirando directo a cámara. Usa polo oscuro azul marino con el logo pequeño de "CarMatch" en el pecho, jeans oscuros, zapatos de vestir café. Fondo blanco limpio, iluminación profesional de estudio, retrato de medio cuerpo, estilo foto de perfil corporativo.'
+    },
+    'car-mela': {
+        name: 'Car-mela',
+        description: 'Mujer mexicana de 42 años, cabello negro recogido, blusa blanca con detalles naranja CarMatch',
+        refPrompt: 'Fotografía realista de una mujer mexicana de 42 años, complexión media, cabello negro recogido en coleta baja, aros pequeños dorados. Expresión segura y profesional, ligeramente sonriente, mirando directo a cámara. Usa blusa blanca con detalles CarMatch en color naranja, pantalón negro formal, zapatos bajos. Fondo blanco limpio, iluminación profesional de estudio, retrato de medio cuerpo, estilo foto de perfil corporativo.'
+    },
+    'matchy': {
+        name: 'Matchy',
+        description: 'Joven mexicana de 20 años, cabello largo con mechas, sudadera oversize gris con logo naranja',
+        refPrompt: 'Fotografía realista de una joven mexicana de 20 años, complexión delgada, cabello largo negro con mechas castaños, maquillaje natural moderno. Expresión divertida y enérgica, sonrisa amplia, mirando directo a cámara. Usa sudadera oversize gris con logo CarMatch grande en naranja, jeans mom fit blancos, tenis blancos. Fondo blanco limpio, iluminación profesional de estudio, retrato de medio cuerpo, estilo foto de perfil corporativo.'
+    },
+    'car-litos': {
+        name: 'Car-litos',
+        description: 'Joven mexicano de 18 años, cabello corto despeinado, playera negra con detalle naranja',
+        refPrompt: 'Fotografía realista de un joven mexicano de 18 años, complexión delgada, cabello corto negro despeinado, rasgos juveniles. Expresión aventurera y confiada, medio sonriente, mirando directo a cámara. Usa playera negra con detalle CarMatch en naranja en el cuello, jeans cargo negros, tenis deportivos rojos. Fondo blanco limpio, iluminación profesional de estudio, retrato de medio cuerpo, estilo foto de perfil corporativo.'
+    }
+}
+
 export default function FacebookAdsTab() {
     const [searchTerm, setSearchTerm] = useState('')
     const [filterCategory, setFilterCategory] = useState<Category | 'all'>('all')
     const [copiedId, setCopiedId] = useState<number | null>(null)
     const [expandedId, setExpandedId] = useState<number | null>(null)
+    const [showRefs, setShowRefs] = useState(false)
     const [publishedIds, setPublishedIds] = useState<Set<number>>(() => {
         if (typeof window !== 'undefined') {
             const saved = localStorage.getItem('carmatch-published-ads')
@@ -381,6 +405,23 @@ export default function FacebookAdsTab() {
         setTimeout(() => setCopiedId(null), 2000)
     }
 
+    const copyForGemini = async (prompt: AdPrompt) => {
+        const charRef = characterRefs[prompt.character]
+        const fullPrompt = `INSTRUCCIONES PARA GEMINI:
+1. Adjunta la imagen de referencia de ${charRef.name} como referencia del personaje
+2. Genera una imagen con el siguiente prompt, usando la referencia para mantener la cara consistente
+
+PROMPT:
+${prompt.prompt}
+
+HOOK PARA FACEBOOK: ${prompt.hook}
+CTA: ${prompt.cta}
+SEGMENTACION: ${prompt.segmentacion.edad} años, ${prompt.segmentacion.ubicacion}, intereses: ${prompt.segmentacion.intereses}`
+        await navigator.clipboard.writeText(fullPrompt)
+        setCopiedId(prompt.id * 10 + 3)
+        setTimeout(() => setCopiedId(null), 2000)
+    }
+
     const categoryLabels: Record<Category, string> = {
         negocios: 'Negocios (Supply)',
         vehiculos: 'Vehiculos (Supply)',
@@ -401,6 +442,53 @@ export default function FacebookAdsTab() {
             <div className="flex items-center gap-3">
                 <Facebook className="w-8 h-8 text-blue-500" />
                 <h3 className="text-2xl font-black italic tracking-tighter uppercase">Facebook Ads Timeline</h3>
+            </div>
+
+            {/* Character Reference Images */}
+            <div className="bg-[#111114] rounded-2xl border border-white/5 overflow-hidden">
+                <button
+                    onClick={() => setShowRefs(!showRefs)}
+                    className="w-full flex items-center justify-between p-5 hover:bg-white/5 transition-colors"
+                >
+                    <div className="flex items-center gap-3">
+                        <Image className="w-5 h-5 text-purple-400" />
+                        <div className="text-left">
+                            <div className="text-white font-bold text-sm">Reference Images para Gemini</div>
+                            <div className="text-zinc-500 text-xs">Genera estos 4 personajes UNA vez, luego reusalos en todos los prompts</div>
+                        </div>
+                    </div>
+                    {showRefs ? <ChevronUp className="w-4 h-4 text-zinc-500" /> : <ChevronDown className="w-4 h-4 text-zinc-500" />}
+                </button>
+                {showRefs && (
+                    <div className="px-5 pb-5 space-y-3 border-t border-white/5 pt-4">
+                        <div className="bg-purple-500/10 border border-purple-500/20 rounded-xl p-3 text-xs text-purple-300">
+                            PASO 1: Genera cada personaje en Gemini con este prompt. PASO 2: Sube las fotos a Cloudinary. PASO 3: Adjunta la reference image cuando copies cada prompt de anuncio.
+                        </div>
+                        {Object.entries(characterRefs).map(([key, ref]) => (
+                            <div key={key} className="bg-black/30 rounded-xl p-4 border border-white/5">
+                                <div className="flex items-center justify-between mb-2">
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-white font-bold text-sm">{ref.name}</span>
+                                        <span className="text-zinc-500 text-xs">— {ref.description}</span>
+                                    </div>
+                                    <button
+                                        onClick={() => copyToClipboard(ref.refPrompt, -Object.keys(characters).indexOf(key as Character) - 1)}
+                                        className="px-3 py-1 bg-purple-500/10 text-purple-400 rounded-lg text-xs font-bold hover:bg-purple-500/20 transition-colors flex items-center gap-1"
+                                    >
+                                        {copiedId === -Object.keys(characters).indexOf(key as Character) - 1 ? (
+                                            <><Check className="w-3 h-3" /> Copiado</>
+                                        ) : (
+                                            <><Copy className="w-3 h-3" /> Copiar prompt</>
+                                        )}
+                                    </button>
+                                </div>
+                                <div className="bg-black/50 rounded-lg p-3 text-zinc-400 text-xs font-mono whitespace-pre-wrap max-h-24 overflow-y-auto">
+                                    {ref.refPrompt}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
 
             {/* Progress Bar */}
@@ -511,6 +599,12 @@ export default function FacebookAdsTab() {
 
                                         <div className="flex items-center gap-2 flex-shrink-0">
                                             <button
+                                                onClick={(e) => { e.stopPropagation(); copyForGemini(prompt) }}
+                                                className="px-3 py-1.5 bg-purple-500/10 text-purple-400 rounded-lg text-xs font-bold hover:bg-purple-500/20 transition-colors"
+                                            >
+                                                {copiedId === prompt.id * 10 + 3 ? 'Copiado!' : 'Gemini'}
+                                            </button>
+                                            <button
                                                 onClick={(e) => { e.stopPropagation(); copyToClipboard(prompt.prompt, prompt.id * 10 + 1) }}
                                                 className="px-3 py-1.5 bg-primary-500/10 text-primary-400 rounded-lg text-xs font-bold hover:bg-primary-500/20 transition-colors"
                                             >
@@ -528,6 +622,9 @@ export default function FacebookAdsTab() {
                                     {/* Expanded Content */}
                                     {isExpanded && (
                                         <div className="px-4 pb-4 space-y-3 border-t border-white/5 pt-3">
+                                            <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3 text-xs text-purple-300">
+                                                Para usar en Gemini: Adjunta la reference image de <strong>{characters[prompt.character].name}</strong> y pega el prompt de abajo. La imagen de referencia mantiene la cara consistente.
+                                            </div>
                                             <div>
                                                 <div className="text-zinc-400 text-xs font-bold mb-1">PROMPT (Gemini):</div>
                                                 <div className="bg-black/50 rounded-lg p-3 text-zinc-300 text-sm font-mono whitespace-pre-wrap max-h-48 overflow-y-auto">
