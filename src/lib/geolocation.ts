@@ -272,9 +272,9 @@ export var EXPANSION_TIERS = [25, 50, 100, 250, 500, 1000, 5000, 10000]
 
 /**
  * Tracking continuo de ubicación usando watchPosition.
- * Siempre entrega el punto (no oculta), pero avisa si precisión es baja.
- * @param callback Se llama cada vez que hay nueva ubicación (siempre, con accuracy)
- * @param options.maxAccuracy Umbral para warning (default: 200m)
+ * Solo entrega fixes con accuracy aceptable, rechaza WiFi/cell.
+ * @param callback Se llama solo cuando accuracy <= maxAccuracy
+ * @param options.maxAccuracy Precisión máxima en metros (default: 100)
  * @returns Función para detener el tracking
  */
 export function watchUserLocation(
@@ -286,16 +286,16 @@ export function watchUserLocation(
         return () => {}
     }
 
-    const maxAccuracy = options?.maxAccuracy ?? 200
+    const maxAccuracy = options?.maxAccuracy ?? 100
 
     const watchId = navigator.geolocation.watchPosition(
         (position) => {
             const accuracy = position.coords.accuracy
             if (accuracy > maxAccuracy) {
-                console.warn(`⚠️ GPS: precisión baja ${Math.round(accuracy)}m > ${maxAccuracy}m, mostrando igual con círculo amarillo`)
-            } else {
-                console.log(`📍 GPS: ${position.coords.latitude.toFixed(6)}, ${position.coords.longitude.toFixed(6)} ±${Math.round(accuracy)}m`)
+                console.warn(`⚠️ GPS: precisión ${Math.round(accuracy)}m > ${maxAccuracy}m, descartando fix (WiFi/cell)`)
+                return // NO ejecutar callback — fix demasiado inexacto
             }
+            console.log(`📍 GPS: ${position.coords.latitude.toFixed(6)}, ${position.coords.longitude.toFixed(6)} ±${Math.round(accuracy)}m`)
             callback(
                 { latitude: position.coords.latitude, longitude: position.coords.longitude },
                 accuracy

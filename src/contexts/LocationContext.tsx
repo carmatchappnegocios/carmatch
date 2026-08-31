@@ -296,6 +296,12 @@ export function LocationProvider({
                     gotFirstFix = true
                     if (retryTimer) { clearTimeout(retryTimer); retryTimer = null }
                     
+                    // Doble filtro: watchUserLocation ya filtra, pero defense in depth
+                    if (accuracy > 100) {
+                        console.warn(`📍 [LocationContext] fix ignorado: ±${Math.round(accuracy)}m > 100m (WiFi/cell)`)
+                        return
+                    }
+
                     console.log(`📍 [LocationContext] watchPosition update: ${coords.latitude.toFixed(6)}, ${coords.longitude.toFixed(6)} (±${Math.round(accuracy)}m)`)
                     
                     // Actualizar ubicación local para que el punto se mueva en el mapa
@@ -336,7 +342,7 @@ export function LocationProvider({
                     console.warn('[LOCATION] Real-time sync failed:', e)
                 }
             },
-            { maxAccuracy: 200 }
+            { maxAccuracy: 100 }
         )
 
         return () => {
