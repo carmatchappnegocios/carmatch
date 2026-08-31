@@ -42,8 +42,8 @@ export function LocationProvider({
 
     // Persistencia: Guardar ubicación manual
     const setManualLocation = useCallback((data: LocationData | null) => {
-        manualLocationRef.current = data
-        setManualLocationState(data)
+        manualLocationRef.current = data ? { ...data, source: 'manual' } : null
+        setManualLocationState(data ? { ...data, source: 'manual' } : null)
         if (data) setError(null) // 🔥 Limpiar error si el usuario selecciona una ubicación válida
         if (typeof window !== 'undefined') {
             if (data) localStorage.setItem('carmatch_manual_location', JSON.stringify(data))
@@ -107,7 +107,10 @@ export function LocationProvider({
             // 2. Convertir coordenadas a ciudad
             const locationData = await reverseGeocode(coords.latitude, coords.longitude)
 
-            setLocation(locationData)
+            // 3. Marcar source según la fuente real
+            // getUserLocation intenta GPS → fallback IP. Si el accuracy es muy alto (>500m), es IP.
+            const source = coords.accuracy > 500 ? 'ip' : 'gps'
+            setLocation({ ...locationData, source })
 
             // Si el usuario pidió detectar manualmente, limpiamos la selección manual previa
             // para que la ubicación real tome precedencia
@@ -224,7 +227,7 @@ export function LocationProvider({
                 // Actualizar ubicación:
                 // La detección IP siempre sobrescribe el cache con datos frescos
                 // porque el cache puede tener datos viejos/incorrectos.
-                setLocation(locationData)
+                setLocation({ ...locationData, source: 'ip' })
                 
                 if (typeof window !== 'undefined') {
                     localStorage.setItem('carmatch_last_detected_location', JSON.stringify(locationData))
@@ -265,6 +268,7 @@ export function LocationProvider({
                         latitude: coords.latitude,
                         longitude: coords.longitude,
                         accuracy,
+                        source: 'gps',
                     }))
 
                     // Sync to server
@@ -289,6 +293,7 @@ export function LocationProvider({
                             latitude: coords.latitude,
                             longitude: coords.longitude,
                             accuracy,
+                            source: 'gps',
                         }))
                     }
                 } catch (e) {

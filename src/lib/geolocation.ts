@@ -18,6 +18,7 @@ export interface LocationData extends Coordinates {
     country?: string
     countryCode?: string
     accuracy?: number
+    source?: 'gps' | 'ip' | 'manual'
 }
 
 /**
@@ -93,6 +94,7 @@ export async function getLocationFromIP(): Promise<LocationData> {
                 state: data.state || undefined,
                 country: data.country || undefined,
                 countryCode: data.countryCode || undefined,
+                source: 'ip',
             }
         }
         throw new Error('IP localization failed')
@@ -104,7 +106,7 @@ export async function getLocationFromIP(): Promise<LocationData> {
     }
 }
 
-export async function getUserLocation(): Promise<Coordinates> {
+export async function getUserLocation(): Promise<Coordinates & { accuracy: number }> {
     if (!navigator.geolocation) {
         throw new Error('Geolocalización no soportada en este navegador')
     }
@@ -173,12 +175,14 @@ export async function reverseGeocode(
             state: data.state,
             country: data.country,
             countryCode: data.countryCode,
+            source: 'gps',
         }
     } catch (error) {
         console.error('Error en reverseGeocode:', error)
         return {
             latitude,
             longitude,
+            source: 'gps',
         }
     }
 }

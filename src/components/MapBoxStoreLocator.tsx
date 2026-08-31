@@ -38,7 +38,7 @@ interface MapBoxStoreLocatorProps {
     highlightCategories?: string[]
     onBoundsChange?: (bounds: { minLat: number; maxLat: number; minLng: number; maxLng: number; zoom: number }) => void
     preciseLocationEnabled?: boolean
-    userLocation?: { latitude: number; longitude: number; accuracy?: number } | null
+    userLocation?: { latitude: number; longitude: number; accuracy?: number; source?: string } | null
 }
 
 export default function MapBoxStoreLocator({
@@ -487,8 +487,8 @@ export default function MapBoxStoreLocator({
     useEffect(() => {
         if (!map.current || !mapLoaded) return
 
-        // Remove marker if no location
-        if (!userLocation || !userLocation.latitude || !userLocation.longitude) {
+        // Remove marker if no location or source is IP (not precise enough)
+        if (!userLocation || !userLocation.latitude || !userLocation.longitude || userLocation.source === 'ip') {
             if (userMarkerRef.current) {
                 userMarkerRef.current.remove()
                 userMarkerRef.current = null
