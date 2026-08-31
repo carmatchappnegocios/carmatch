@@ -133,7 +133,7 @@ export async function getUserLocation(): Promise<Coordinates & { accuracy: numbe
 
             try {
                 // Intento 3: Ubicación por IP (Fallback final para PCs sin GPS)
-                return await getLocationFromIP()
+                return { ...(await getLocationFromIP()), accuracy: 9999 }
             } catch (ipError: any) {
                 let message = 'Error al obtener ubicación. Intenta ingresarla manualmente.'
                 const finalError = ipError || retryError || error
