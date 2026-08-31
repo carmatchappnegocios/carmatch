@@ -200,8 +200,9 @@ export default function Header() {
         window.addEventListener('favoriteUpdated', handleFavUpdate)
 
         // Escuchar actualizaciones de perfil
-        const handleProfileUpdate = () => {
-            update()
+        const handleProfileUpdate = (e: any) => {
+            const data = e.detail || {}
+            update(data)
             router.refresh()
         }
         window.addEventListener('profileUpdated', handleProfileUpdate)

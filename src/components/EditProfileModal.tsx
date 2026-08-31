@@ -57,7 +57,7 @@ export default function EditProfileModal({ isOpen, onClose, currentUser, userVeh
                 await update({ name, image: selectedImage })
 
                 // 📡 Notificar a otros componentes (Header) que deben refrescarse
-                window.dispatchEvent(new CustomEvent('profileUpdated'))
+                window.dispatchEvent(new CustomEvent('profileUpdated', { detail: { name, image: selectedImage } }))
 
                 router.refresh()
                 onClose()
