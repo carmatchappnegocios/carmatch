@@ -38,6 +38,7 @@ interface MapBoxStoreLocatorProps {
     highlightCategories?: string[]
     onBoundsChange?: (bounds: { minLat: number; maxLat: number; minLng: number; maxLng: number; zoom: number }) => void
     preciseLocationEnabled?: boolean
+    userLocation?: { latitude: number; longitude: number; accuracy?: number } | null
 }
 
 export default function MapBoxStoreLocator({
@@ -47,7 +48,8 @@ export default function MapBoxStoreLocator({
     initialLocation,
     onBoundsChange,
     highlightCategories = [],
-    preciseLocationEnabled = false
+    preciseLocationEnabled = false,
+    userLocation = null
 }: MapBoxStoreLocatorProps) {
     const { t } = useLanguage()
     const mapContainer = useRef<HTMLDivElement>(null)
@@ -62,6 +64,7 @@ export default function MapBoxStoreLocator({
 
     const mapCreatedRef = useRef(false)
     const sourceSetupRef = useRef(false)
+    const userMarkerRef = useRef<mapboxgl.Marker | null>(null)
 
     useEffect(() => {
         if (!mapContainer.current || map.current || mapCreatedRef.current) return
@@ -102,9 +105,9 @@ export default function MapBoxStoreLocator({
 
         const geolocateControl = new mapboxgl.GeolocateControl({
             positionOptions: { enableHighAccuracy: true },
-            trackUserLocation: preciseLocationEnabled,
-            showUserLocation: preciseLocationEnabled,
-            showAccuracyCircle: preciseLocationEnabled
+            trackUserLocation: false,
+            showUserLocation: false,
+            showAccuracyCircle: false
         })
 
         newMap.addControl(geolocateControl, 'top-right')
@@ -479,6 +482,63 @@ export default function MapBoxStoreLocator({
             }
         }
     }, [businesses, mapLoaded, categoryColors, t])
+
+    // 🎯 User location marker - custom blue dot
+    useEffect(() => {
+        if (!map.current || !mapLoaded) return
+
+        // Remove marker if no location
+        if (!userLocation || !userLocation.latitude || !userLocation.longitude) {
+            if (userMarkerRef.current) {
+                userMarkerRef.current.remove()
+                userMarkerRef.current = null
+            }
+            return
+        }
+
+        const mapInstance = map.current
+        const accuracy = userLocation.accuracy ?? 50
+
+        // Determine color based on accuracy
+        let dotColor = '#3b82f6' // blue (good)
+        let ringColor = 'rgba(59, 130, 246, 0.3)'
+        if (accuracy > 150) {
+            dotColor = '#f59e0b' // orange (bad)
+            ringColor = 'rgba(245, 158, 11, 0.3)'
+        } else if (accuracy > 50) {
+            dotColor = '#eab308' // yellow (medium)
+            ringColor = 'rgba(234, 179, 8, 0.3)'
+        }
+
+        // Create custom HTML marker
+        const el = document.createElement('div')
+        el.style.cssText = 'position:relative;width:24px;height:24px;'
+        el.innerHTML = `
+            <div style="position:absolute;inset:-8px;border-radius:50%;background:${ringColor};animation:pulse-ring 2s infinite"></div>
+            <div style="position:absolute;inset:0;border-radius:50%;border:3px solid white;background:${dotColor};box-shadow:0 2px 6px rgba(0,0,0,0.4)"></div>
+        `
+
+        if (userMarkerRef.current) {
+            // Update existing marker
+            userMarkerRef.current.setLngLat([userLocation.longitude, userLocation.latitude])
+            userMarkerRef.current.setElement(el)
+        } else {
+            // Create new marker
+            userMarkerRef.current = new mapboxgl.Marker({ element: el, anchor: 'center' })
+                .setLngLat([userLocation.longitude, userLocation.latitude])
+                .addTo(mapInstance)
+        }
+    }, [userLocation, mapLoaded])
+
+    // Cleanup user marker on unmount
+    useEffect(() => {
+        return () => {
+            if (userMarkerRef.current) {
+                userMarkerRef.current.remove()
+                userMarkerRef.current = null
+            }
+        }
+    }, [])
 
     if (!initialLocation) {
         return (

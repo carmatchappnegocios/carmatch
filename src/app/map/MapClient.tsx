@@ -329,6 +329,7 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                         preciseLocationEnabled={preciseLocationEnabled}
                         categoryColors={categoryColors}
                         categoryEmojis={categoryEmojis}
+                        userLocation={preciseLocationEnabled ? location : null}
                     />
                 </div>
 
