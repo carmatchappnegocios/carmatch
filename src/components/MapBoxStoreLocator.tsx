@@ -497,18 +497,10 @@ export default function MapBoxStoreLocator({
         }
 
         const mapInstance = map.current
-        const accuracy = userLocation.accuracy ?? 50
 
-        // Determine color based on accuracy
-        let dotColor = '#3b82f6' // blue (good)
-        let ringColor = 'rgba(59, 130, 246, 0.3)'
-        if (accuracy > 150) {
-            dotColor = '#f59e0b' // orange (bad)
-            ringColor = 'rgba(245, 158, 11, 0.3)'
-        } else if (accuracy > 50) {
-            dotColor = '#eab308' // yellow (medium)
-            ringColor = 'rgba(234, 179, 8, 0.3)'
-        }
+        // Always blue - users are familiar with this standard color
+        const dotColor = '#3b82f6'
+        const ringColor = 'rgba(59, 130, 246, 0.3)'
 
         // Create custom HTML marker
         const el = document.createElement('div')
