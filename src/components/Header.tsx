@@ -25,11 +25,6 @@ export default function Header() {
     const { t, locale, setLocale } = useLanguage()
     const isAdmin = (session?.user as any)?.isAdmin
     const [showMenu, setShowMenu] = useState<boolean | 'lang' | 'notifications' | 'user' | 'lang_inner'>(false)
-    const [profileNameOverride, setProfileNameOverride] = useState<string | null>(null)
-    const [profileImageOverride, setProfileImageOverride] = useState<string | null>(null)
-
-    const displayName = profileNameOverride || session?.user?.name || ''
-    const displayImage = profileImageOverride || session?.user?.image || null
 
     const [ctaIndex, setCtaIndex] = useState(0)
     const ctas = useMemo(() => {
@@ -204,16 +199,6 @@ export default function Header() {
         const handleFavUpdate = () => fetchCounts()
         window.addEventListener('favoriteUpdated', handleFavUpdate)
 
-        // Escuchar actualizaciones de perfil
-        const handleProfileUpdate = (e: any) => {
-            const data = e.detail || {}
-            if (data.name) setProfileNameOverride(data.name)
-            if (data.image) setProfileImageOverride(data.image)
-            update(data)
-            router.refresh()
-        }
-        window.addEventListener('profileUpdated', handleProfileUpdate)
-
         // Fallback: Low frequency polling (every 5 mins instead of 10s) just in case
         const interval = setInterval(fetchCounts, 300000)
 
@@ -224,7 +209,6 @@ export default function Header() {
             })
             clearInterval(interval)
             window.removeEventListener('favoriteUpdated', handleFavUpdate)
-            window.removeEventListener('profileUpdated', handleProfileUpdate)
         }
     }, [status, update, router, session?.user?.id])
 
@@ -450,14 +434,14 @@ export default function Header() {
                                     onClick={() => setShowMenu(showMenu === 'user' ? false : 'user')}
                                     className="flex items-center gap-2 hover:bg-surface-highlight px-2 py-1.5 rounded-lg transition"
                                 >
-                                    {displayImage ? (
-                                        <Image src={displayImage} alt={t('common.user')} width={32} height={32} unoptimized className="w-8 h-8 rounded-lg object-cover" />
+                                    {session.user?.image ? (
+                                        <Image src={session.user.image} alt={t('common.user')} width={32} height={32} unoptimized className="w-8 h-8 rounded-lg object-cover" />
                                     ) : (
                                         <div className="w-8 h-8 bg-primary-700 rounded-lg flex items-center justify-center text-sm font-bold text-white">
-                                            {displayName?.[0]?.toUpperCase()}
+                                            {session.user?.name?.[0]?.toUpperCase()}
                                         </div>
                                     )}
-                                    <span className="text-text-primary font-medium hidden xl:block">{displayName}</span>
+                                    <span className="text-text-primary font-medium hidden xl:block">{session.user?.name}</span>
                                 </button>
                                 {showMenu === 'user' && (
                                     <>

@@ -56,11 +56,8 @@ export default function EditProfileModal({ isOpen, onClose, currentUser, userVeh
                 // 🔥 Forzar actualización de la sesión JWT con los nuevos datos
                 await update({ name, image: selectedImage })
 
-                // Notificar a otros componentes
-                window.dispatchEvent(new CustomEvent('profileUpdated', { detail: { name, image: selectedImage } }))
-
-                router.refresh()
-                onClose()
+                // Recarga completa para que Header lea el JWT cookie actualizado
+                window.location.reload()
             }
         } catch (error) {
             console.error('Error updating profile:', error)
