@@ -53,10 +53,10 @@ export default function EditProfileModal({ isOpen, onClose, currentUser, userVeh
             })
 
             if (res.ok) {
-                // 🔥 Forzar actualización de la sesión en el cliente (Header, etc)
+                // 🔥 Forzar actualización de la sesión JWT con los nuevos datos
                 await update({ name, image: selectedImage })
 
-                // 📡 Notificar a otros componentes (Header) que deben refrescarse
+                // Notificar a otros componentes
                 window.dispatchEvent(new CustomEvent('profileUpdated', { detail: { name, image: selectedImage } }))
 
                 router.refresh()
