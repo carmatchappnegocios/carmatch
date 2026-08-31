@@ -19,6 +19,7 @@ import FooterSEO from "@/components/FooterSEO";
 import BetaSessionTracker from "@/components/BetaSessionTracker";
 import GlobalSOSWatcher from "@/components/GlobalSOSWatcher";
 import DynamicHeader from "@/components/DynamicHeader";
+import LocationPromptBanner from "@/components/LocationPromptBanner";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -148,6 +149,7 @@ export default function RootLayout({
 
                     <BetaSessionTracker />
                     <GlobalSOSWatcher />
+                    <LocationPromptBanner />
                     {/* 📱 Native Body Scroll Architecture: Standard Mobile Web Pattern */}
                     <div className="flex flex-col min-h-screen w-full relative bg-slate-950">
                         {/* Header: Sticky at top, scrolls with page */}

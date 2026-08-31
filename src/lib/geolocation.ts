@@ -17,6 +17,7 @@ export interface LocationData extends Coordinates {
     state?: string
     country?: string
     countryCode?: string
+    accuracy?: number
 }
 
 /**
@@ -263,9 +264,9 @@ export var EXPANSION_TIERS = [25, 50, 100, 250, 500, 1000, 5000, 10000]
 
 /**
  * Tracking continuo de ubicación usando watchPosition.
- * Actualiza automáticamente cuando el usuario se mueve.
- * @param callback Se llama cada vez que hay una nueva ubicación precisa
- * @param options.maxAccuracy Precisión máxima en metros (default: 50)
+ * Siempre entrega el punto (no oculta), pero avisa si precisión es baja.
+ * @param callback Se llama cada vez que hay nueva ubicación (siempre, con accuracy)
+ * @param options.maxAccuracy Umbral para warning (default: 200m)
  * @returns Función para detener el tracking
  */
 export function watchUserLocation(
@@ -277,14 +278,15 @@ export function watchUserLocation(
         return () => {}
     }
 
-    const maxAccuracy = options?.maxAccuracy ?? 50
+    const maxAccuracy = options?.maxAccuracy ?? 200
 
     const watchId = navigator.geolocation.watchPosition(
         (position) => {
             const accuracy = position.coords.accuracy
             if (accuracy > maxAccuracy) {
-                console.warn(`⚠️ GPS: precisión ${Math.round(accuracy)}m > ${maxAccuracy}m, ignorando lectura`)
-                return
+                console.warn(`⚠️ GPS: precisión baja ${Math.round(accuracy)}m > ${maxAccuracy}m, mostrando igual con círculo amarillo`)
+            } else {
+                console.log(`📍 GPS: ${position.coords.latitude.toFixed(6)}, ${position.coords.longitude.toFixed(6)} ±${Math.round(accuracy)}m`)
             }
             callback(
                 { latitude: position.coords.latitude, longitude: position.coords.longitude },
@@ -296,7 +298,7 @@ export function watchUserLocation(
         },
         {
             enableHighAccuracy: true,
-            maximumAge: 10000, // Aceite positions de max 10s
+            maximumAge: 5000,
             timeout: 15000
         }
     )

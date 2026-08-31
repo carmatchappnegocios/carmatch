@@ -104,7 +104,7 @@ export default function MapBoxStoreLocator({
             positionOptions: { enableHighAccuracy: true },
             trackUserLocation: preciseLocationEnabled,
             showUserLocation: preciseLocationEnabled,
-            showAccuracyCircle: false
+            showAccuracyCircle: preciseLocationEnabled
         })
 
         newMap.addControl(geolocateControl, 'top-right')

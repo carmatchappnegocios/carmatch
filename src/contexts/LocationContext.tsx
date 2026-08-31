@@ -14,6 +14,8 @@ interface LocationContextType {
     preciseLocationEnabled: boolean
     setPreciseLocationEnabled: (enabled: boolean) => void
     gpsPermission: PermissionState | 'unsupported' | 'unknown'
+    showLocationPrompt: boolean
+    dismissLocationPrompt: (allow: boolean) => void
 }
 
 
@@ -36,6 +38,7 @@ export function LocationProvider({
     const manualLocationRef = useRef<LocationData | null>(null)
     const [preciseLocationEnabled, setPreciseLocationEnabledState] = useState(false)
     const [gpsPermission, setGpsPermission] = useState<PermissionState | 'unsupported' | 'unknown'>('unknown')
+    const [showLocationPrompt, setShowLocationPrompt] = useState(false)
 
     // Persistencia: Guardar ubicación manual
     const setManualLocation = useCallback((data: LocationData | null) => {
@@ -68,6 +71,7 @@ export function LocationProvider({
         setPreciseLocationEnabledState(enabled)
         if (typeof window !== 'undefined') {
             localStorage.setItem('carmatch_precise_location', enabled ? '1' : '0')
+            localStorage.setItem('carmatch_location_prompt', 'asked')
         }
         // Si se activa, pedir GPS inmediatamente
         if (enabled) {
@@ -76,6 +80,18 @@ export function LocationProvider({
     // fetchLocation se agrega más abajo como dependencia
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    const dismissLocationPrompt = useCallback((allow: boolean) => {
+        setShowLocationPrompt(false)
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('carmatch_location_prompt', 'asked')
+        }
+        if (allow) {
+            setPreciseLocationEnabled(true)
+        } else {
+            setPreciseLocationEnabled(false)
+        }
+    }, [setPreciseLocationEnabled])
 
     const fetchLocation = useCallback(async (isManualRefresh = false) => {
         // 🛡️ PREVENT RE-ENTRY: Si ya está cargando, no iniciar otra petición
@@ -168,6 +184,20 @@ export function LocationProvider({
 
         setInitializing(false)
 
+        // ─── Mostrar prompt UNA vez si nunca se preguntó ─
+        if (typeof window !== 'undefined') {
+            const promptState = localStorage.getItem('carmatch_location_prompt')
+            const preciseState = localStorage.getItem('carmatch_precise_location')
+            if (!promptState && preciseState !== '1' && preciseState !== '0') {
+                // No molestar si hay manualLocation, solo preguntar en primera visita limpia
+                const hasManual = localStorage.getItem('carmatch_manual_location')
+                if (!hasManual) {
+                    // Delay 1.5s para no bloquear carga inicial
+                    setTimeout(() => setShowLocationPrompt(true), 1500)
+                }
+            }
+        }
+
         // ─── PASO 2: Detección por IP (OBLIGATORIA - siempre provee ciudad) ─
         // Se ejecuta UNA SOLA VEZ al montar. Usamos ref para leer manualLocation
         // sin agregarlo como dependencia (evita bucle infinito).
@@ -222,23 +252,50 @@ export function LocationProvider({
     useEffect(() => {
         if (!preciseLocationEnabled) return
 
+        let lastReverseGeocode = 0
+
         const stopWatching = watchUserLocation(
             async (coords, accuracy) => {
                 try {
                     console.log(`📍 [LocationContext] watchPosition update: ${coords.latitude.toFixed(6)}, ${coords.longitude.toFixed(6)} (±${Math.round(accuracy)}m)`)
+                    
+                    // Actualizar ubicación local para que el punto se mueva en el mapa
+                    setLocation(prev => ({
+                        ...prev,
+                        latitude: coords.latitude,
+                        longitude: coords.longitude,
+                        accuracy,
+                    }))
+
+                    // Sync to server
                     await fetch('/api/user/location', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                             latitude: coords.latitude,
-                            longitude: coords.longitude
+                            longitude: coords.longitude,
+                            accuracy,
                         })
                     })
+
+                    // Reverse geocode throttled cada 60s (no cada update)
+                    const now = Date.now()
+                    if (now - lastReverseGeocode > 60000) {
+                        lastReverseGeocode = now
+                        const geo = await reverseGeocode(coords.latitude, coords.longitude)
+                        setLocation(prev => ({
+                            ...prev,
+                            ...geo,
+                            latitude: coords.latitude,
+                            longitude: coords.longitude,
+                            accuracy,
+                        }))
+                    }
                 } catch (e) {
                     console.warn('[LOCATION] Real-time sync failed:', e)
                 }
             },
-            { maxAccuracy: 50 } // Ignora lecturas con error >50m
+            { maxAccuracy: 200 }
         )
 
         return () => stopWatching()
@@ -258,7 +315,9 @@ export function LocationProvider({
         preciseLocationEnabled,
         setPreciseLocationEnabled,
         gpsPermission,
-    }), [effectiveLocation, loading, initializing, error, manualLocation, setManualLocation, fetchLocation, preciseLocationEnabled, setPreciseLocationEnabled, gpsPermission])
+        showLocationPrompt,
+        dismissLocationPrompt,
+    }), [effectiveLocation, loading, initializing, error, manualLocation, setManualLocation, fetchLocation, preciseLocationEnabled, setPreciseLocationEnabled, gpsPermission, showLocationPrompt, dismissLocationPrompt])
 
     return (
         <LocationContext.Provider value={contextValue}>
