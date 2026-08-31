@@ -1,7 +1,7 @@
 "use client"
 
 import React, { createContext, useContext, useEffect, useState, useCallback, useRef, useMemo } from 'react'
-import { getUserLocation, getLocationFromIP, reverseGeocode, LocationData } from '@/lib/geolocation'
+import { getUserLocation, getLocationFromIP, reverseGeocode, watchUserLocation, LocationData } from '@/lib/geolocation'
 
 interface LocationContextType {
     location: LocationData | null
@@ -218,30 +218,30 @@ export function LocationProvider({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fetchLocation])
 
-    // 🔄 PERIODIC LOCATION UPDATE: Cada 5 minutos cuando GPS está activo
+    // 🔄 REAL-TIME LOCATION UPDATE: watchPosition continuo cuando GPS está activo
     useEffect(() => {
         if (!preciseLocationEnabled) return
-        const interval = setInterval(() => {
-            navigator.geolocation?.getCurrentPosition(
-                async (position) => {
-                    try {
-                        await fetch('/api/user/location', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                latitude: position.coords.latitude,
-                                longitude: position.coords.longitude
-                            })
+
+        const stopWatching = watchUserLocation(
+            async (coords, accuracy) => {
+                try {
+                    console.log(`📍 [LocationContext] watchPosition update: ${coords.latitude.toFixed(6)}, ${coords.longitude.toFixed(6)} (±${Math.round(accuracy)}m)`)
+                    await fetch('/api/user/location', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            latitude: coords.latitude,
+                            longitude: coords.longitude
                         })
-                    } catch (e) {
-                        console.warn('[LOCATION] Periodic sync failed:', e)
-                    }
-                },
-                () => {},
-                { enableHighAccuracy: true, timeout: 10000 }
-            )
-        }, 5 * 60 * 1000) // 5 minutos
-        return () => clearInterval(interval)
+                    })
+                } catch (e) {
+                    console.warn('[LOCATION] Real-time sync failed:', e)
+                }
+            },
+            { maxAccuracy: 50 } // Ignora lecturas con error >50m
+        )
+
+        return () => stopWatching()
     }, [preciseLocationEnabled])
 
     // Si el usuario selecciona manualmente una ciudad, usar esa

@@ -33,6 +33,10 @@ export default function GlobalSOSWatcher() {
                         const syncLocation = () => {
                             if (!navigator.geolocation) return
                             navigator.geolocation.getCurrentPosition(async (pos) => {
+                                if (pos.coords.accuracy > 100) {
+                                    console.warn(`⚠️ [SOS WATCHER] GPS precisión ${Math.round(pos.coords.accuracy)}m > 100m, ignorando`)
+                                    return
+                                }
                                 try {
                                     await fetch('/api/user/location', {
                                         method: 'POST',
@@ -47,7 +51,7 @@ export default function GlobalSOSWatcher() {
                                 }
                             }, (err) => {
                                 console.warn('Global SOS location failed:', err)
-                            }, { enableHighAccuracy: true })
+                            }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 5000 })
                         }
 
                         syncLocation()

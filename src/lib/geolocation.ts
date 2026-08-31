@@ -59,13 +59,14 @@ function toRad(degrees: number): number {
  * @returns Promise con las coordenadas o error
  */
 // Helper para envolver getCurrentPosition en Promise
-function getPosition(options?: PositionOptions): Promise<Coordinates> {
+function getPosition(options?: PositionOptions): Promise<Coordinates & { accuracy: number }> {
     return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 resolve({
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude,
+                    accuracy: position.coords.accuracy,
                 })
             },
             (error) => {
@@ -121,8 +122,8 @@ export async function getUserLocation(): Promise<Coordinates> {
             // Intento 2: Baja precisión (Wifi/Cell/IP) - Más rápido y robusto
             return await getPosition({
                 enableHighAccuracy: false,
-                timeout: 60000, // 60s timeout para fallback (muy tolerante)
-                maximumAge: Infinity // Aceptamos cualquier posición cacheada
+                timeout: 60000,
+                maximumAge: 300000 // Max 5 minutos de cache
             })
         } catch (retryError: any) {
             console.warn('⚠️ Falló GPS baja precisión. Intentando fallback por IP...')
@@ -259,6 +260,49 @@ export async function searchCities(query: string): Promise<LocationData[]> {
 }
 
 export var EXPANSION_TIERS = [25, 50, 100, 250, 500, 1000, 5000, 10000]
+
+/**
+ * Tracking continuo de ubicación usando watchPosition.
+ * Actualiza automáticamente cuando el usuario se mueve.
+ * @param callback Se llama cada vez que hay una nueva ubicación precisa
+ * @param options.maxAccuracy Precisión máxima en metros (default: 50)
+ * @returns Función para detener el tracking
+ */
+export function watchUserLocation(
+    callback: (coords: Coordinates, accuracy: number) => void,
+    options?: { maxAccuracy?: number }
+): () => void {
+    if (!navigator.geolocation) {
+        console.warn('⚠️ Geolocation not supported, cannot watch position')
+        return () => {}
+    }
+
+    const maxAccuracy = options?.maxAccuracy ?? 50
+
+    const watchId = navigator.geolocation.watchPosition(
+        (position) => {
+            const accuracy = position.coords.accuracy
+            if (accuracy > maxAccuracy) {
+                console.warn(`⚠️ GPS: precisión ${Math.round(accuracy)}m > ${maxAccuracy}m, ignorando lectura`)
+                return
+            }
+            callback(
+                { latitude: position.coords.latitude, longitude: position.coords.longitude },
+                accuracy
+            )
+        },
+        (error) => {
+            console.warn('⚠️ watchPosition error:', error.message)
+        },
+        {
+            enableHighAccuracy: true,
+            maximumAge: 10000, // Aceite positions de max 10s
+            timeout: 15000
+        }
+    )
+
+    return () => navigator.geolocation.clearWatch(watchId)
+}
 
 /**
  * Normaliza el código de país a formato ISO de 2 letras (MX, US, etc)

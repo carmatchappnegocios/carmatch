@@ -34,14 +34,20 @@ export default function SOSComponent({ isActive, otherUserId, onEndMeeting, chat
     const checkInTimerRef = useRef<NodeJS.Timeout | null>(null)
     const autoCancelTimerRef = useRef<NodeJS.Timeout | null>(null)
 
-    // Location Tracking Effect
+    // Location Tracking Effect - con filtro de precisión
     useEffect(() => {
         if (!isActive) return
 
         const sendLocation = () => {
             if (!navigator.geolocation) return
             navigator.geolocation.getCurrentPosition(async (pos) => {
+                // 🔍 Filtrar lecturas imprecisas (>100m)
+                if (pos.coords.accuracy > 100) {
+                    console.warn(`⚠️ [SOS] GPS precisión ${Math.round(pos.coords.accuracy)}m > 100m, ignorando`)
+                    return
+                }
                 try {
+                    console.log(`📍 [SOS] Tracking: ${pos.coords.latitude.toFixed(6)}, ${pos.coords.longitude.toFixed(6)} (±${Math.round(pos.coords.accuracy)}m)`)
                     await fetch('/api/user/location', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -53,7 +59,7 @@ export default function SOSComponent({ isActive, otherUserId, onEndMeeting, chat
                 } catch (e) {
                     console.error('Error sending location:', e)
                 }
-            })
+            }, undefined, { enableHighAccuracy: true, timeout: 10000, maximumAge: 5000 })
         }
 
         // Send immediately and then every 10s for real-time tracking
