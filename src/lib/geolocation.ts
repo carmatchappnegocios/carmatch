@@ -106,33 +106,37 @@ export async function getLocationFromIP(): Promise<LocationData> {
     }
 }
 
-export async function getUserLocation(): Promise<Coordinates & { accuracy: number }> {
+export async function getUserLocation(options?: { highAccuracyOnly?: boolean }): Promise<Coordinates & { accuracy: number }> {
     if (!navigator.geolocation) {
         throw new Error('Geolocalización no soportada en este navegador')
     }
 
     try {
-        // Intento 1: Alta precisión (Aumentado a 15s para dar más tiempo)
+        // Intento 1: Alta precisión GPS (15s)
         return await getPosition({
             enableHighAccuracy: true,
             timeout: 15000,
             maximumAge: 0
         })
     } catch (error: any) {
-        console.warn('⚠️ Falló GPS alta precisión:', error.message, '- Reintentando con baja precisión...')
+        console.warn('⚠️ Falló GPS alta precisión:', error.message)
+
+        if (options?.highAccuracyOnly) {
+            // No hacer fallback a WiFi/celda — retornar error para que watchPosition lo resuelva
+            throw error
+        }
 
         try {
-            // Intento 2: Baja precisión (Wifi/Cell/IP) - Más rápido y robusto
+            // Intento 2: Baja precisión (Wifi/Cell) — solo para ubicación inicial/IP fallback
             return await getPosition({
                 enableHighAccuracy: false,
                 timeout: 60000,
-                maximumAge: 300000 // Max 5 minutos de cache
+                maximumAge: 300000
             })
         } catch (retryError: any) {
             console.warn('⚠️ Falló GPS baja precisión. Intentando fallback por IP...')
 
             try {
-                // Intento 3: Ubicación por IP (Fallback final para PCs sin GPS)
                 return { ...(await getLocationFromIP()), accuracy: 9999 }
             } catch (ipError: any) {
                 let message = 'Error al obtener ubicación. Intenta ingresarla manualmente.'
@@ -302,8 +306,8 @@ export function watchUserLocation(
         },
         {
             enableHighAccuracy: true,
-            maximumAge: 5000,
-            timeout: 15000
+            maximumAge: 10000,
+            timeout: 30000
         }
     )
 

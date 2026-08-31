@@ -35,6 +35,9 @@ export default function LocationPromptBanner() {
                             ¿Quieres ver tu punto en el mapa y encontrar negocios/vehículos cercanos con precisión? 
                             Puedes cambiar esto después en Configuración.
                         </p>
+                        <p className="text-text-secondary/60 text-[10px] md:text-xs leading-relaxed">
+                            En Android/iOS, selecciona "Ubicación precisa" (no aproximada) cuando el navegador lo pida para mejor exactitud.
+                        </p>
 
                         <div className="flex flex-col sm:flex-row gap-2">
                             <button
