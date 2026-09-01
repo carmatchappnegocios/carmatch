@@ -180,9 +180,14 @@ export default function MapBoxStoreLocator({
         mapCreatedRef.current = true
 
         return () => {
+            mapCreatedRef.current = false
+            sourceSetupRef.current = false
             window.removeEventListener('map-focus-business', handleFocus);
             window.removeEventListener('map-ai-search', handleAiSearch);
-            // NO destruir el mapa — se persiste entre re-renders
+            if (map.current) {
+                map.current.remove()
+                map.current = null
+            }
         }
     }, [initialLocation])
 
