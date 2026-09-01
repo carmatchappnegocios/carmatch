@@ -1,6 +1,7 @@
 "use client"
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import mapboxgl from 'mapbox-gl'
 import { useLocation } from '@/contexts/LocationContext'
 
@@ -8,6 +9,9 @@ export default function MapPreloader() {
     const containerRef = useRef<HTMLDivElement>(null)
     const { location } = useLocation()
     const mapRef = useRef<mapboxgl.Map | null>(null)
+    const [mounted, setMounted] = useState(false)
+
+    useEffect(() => { setMounted(true) }, [])
 
     useEffect(() => {
         if (!location?.latitude || !location?.longitude) return
@@ -31,11 +35,14 @@ export default function MapPreloader() {
         }
     }, [location?.latitude, location?.longitude])
 
-    return (
+    if (!mounted) return null
+
+    return createPortal(
         <div
             ref={containerRef}
             className="fixed -left-[9999px] top-0 w-screen h-screen opacity-0 pointer-events-none"
             aria-hidden="true"
-        />
+        />,
+        document.body
     )
 }

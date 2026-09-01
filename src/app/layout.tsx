@@ -151,6 +151,7 @@ export default function RootLayout({
                     <BetaSessionTracker />
                     <GlobalSOSWatcher />
                     <LocationPromptBanner />
+                    <MapPreloader />
                     {/* 📱 Native Body Scroll Architecture: Standard Mobile Web Pattern */}
                     <div className="flex flex-col min-h-screen w-full relative bg-slate-950">
                         {/* Header: Sticky at top, scrolls with page */}
@@ -167,7 +168,6 @@ export default function RootLayout({
                         {/* MobileNav: Fixed at bottom, independent of scroll */}
                         <MobileNav />
                     </div>
-                    <MapPreloader />
                 </Providers>
             </body>
         </html>
