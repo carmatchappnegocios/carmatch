@@ -103,14 +103,29 @@ export function LocationProvider({
         setError(null)
 
         try {
-            // 1. Intentar obtener GPS — fallback a WiFi si GPS falla (funciona en desktop y mobile)
+            // 1. Si ubicación precisa activa, SOLO GPS (sin WiFi fallback en móvil)
+            //    Si GPS falla, no设置 ubicación — watchPosition se encargará cuando consiga señal
+            if (preciseLocationRef.current) {
+                try {
+                    const coords = await getUserLocation({ highAccuracyOnly: true })
+                    const locationData = await reverseGeocode(coords.latitude, coords.longitude)
+                    setLocation(prev => ({ ...prev, ...locationData, source: 'gps', accuracy: coords.accuracy }))
+                    if (isManualRefresh && locationData) setManualLocation(null)
+                    if (typeof window !== 'undefined') {
+                        localStorage.setItem('carmatch_last_detected_location', JSON.stringify(locationData))
+                    }
+                } catch {
+                    // GPS falló (cold start en móvil puede tardar 30-60s)
+                    // No设置 ubicación — watchPosition se encargará cuando GPS consiga fix
+                    console.log('📍 [LocationContext] GPS no disponible aún, watchPosition se encargará')
+                }
+                return
+            }
+
+            // 2. Sin ubicación precisa — fallback normal (WiFi/celda para ciudad)
             const coords = await getUserLocation()
-
-            // 2. Convertir coordenadas a ciudad
             const locationData = await reverseGeocode(coords.latitude, coords.longitude)
-
-            // 3. Marcar source según la fuente real — si ubicación precisa activa, siempre 'gps'
-            const source = preciseLocationRef.current ? 'gps' : (coords.accuracy > 500 ? 'ip' : 'gps')
+            const source = coords.accuracy > 500 ? 'ip' : 'gps'
             setLocation(prev => ({ ...prev, ...locationData, source, accuracy: coords.accuracy }))
 
             // Si el usuario pidió detectar manualmente, limpiamos la selección manual previa
