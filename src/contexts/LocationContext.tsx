@@ -308,18 +308,22 @@ export function LocationProvider({
         const stopWatching = watchUserLocation(
             async (coords, accuracy) => {
                 try {
-                    gotFirstFix = true
-                    if (retryTimer) { clearTimeout(retryTimer); retryTimer = null }
+                    // Solo marcar como GPS cuando accuracy es buena (≤200m)
+                    // Torre celular/WiFi (accuracy >200m) no se etiqueta como GPS
+                    if (accuracy <= 200) {
+                        gotFirstFix = true
+                        if (retryTimer) { clearTimeout(retryTimer); retryTimer = null }
+                    }
 
                     console.log(`📍 [LocationContext] watchPosition update: ${coords.latitude.toFixed(6)}, ${coords.longitude.toFixed(6)} (±${Math.round(accuracy)}m)`)
                     
-                    // Actualizar ubicación local para que el punto se mueva en el mapa
+                    // Actualizar ubicación — source solo cambia a 'gps' si accuracy ≤200m
                     setLocation(prev => ({
                         ...prev,
                         latitude: coords.latitude,
                         longitude: coords.longitude,
                         accuracy,
-                        source: 'gps',
+                        source: accuracy <= 200 ? 'gps' : prev.source,
                     }))
 
                     // Sync to server
