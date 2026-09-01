@@ -482,9 +482,8 @@ export default function MapBoxStoreLocator({
     useEffect(() => {
         if (!map.current || !mapLoaded) return
 
-        // Remove marker if no location, source is IP, or accuracy too low (torre celular/WiFi)
-        if (!userLocation || !userLocation.latitude || !userLocation.longitude || 
-            userLocation.source === 'ip' || (userLocation.accuracy && userLocation.accuracy > 200)) {
+        // Remove marker if no location or source is IP (not precise enough)
+        if (!userLocation || !userLocation.latitude || !userLocation.longitude || userLocation.source === 'ip') {
             if (userMarkerRef.current) {
                 userMarkerRef.current.remove()
                 userMarkerRef.current = null

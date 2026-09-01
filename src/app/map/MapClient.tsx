@@ -67,10 +67,10 @@ export default function MapClient({ businesses, user }: MapClientProps) {
 
     const memoizedLocation = useMemo(() => {
         if (location && (location.latitude !== 0 || location.longitude !== 0)) {
-            return { latitude: location.latitude, longitude: location.longitude, source: location.source, accuracy: location.accuracy }
+            return { latitude: location.latitude, longitude: location.longitude, source: location.source }
         }
         return undefined
-    }, [location?.latitude, location?.longitude, location?.source, location?.accuracy])
+    }, [location?.latitude, location?.longitude, location?.source])
     const [selectedBusiness, setSelectedBusiness] = useState<any | null>(null)
     const [activeBusinessId, setActiveBusinessId] = useState<string | null>(null)
     const [dynamicBusinesses, setDynamicBusinesses] = useState<any[]>(businesses)

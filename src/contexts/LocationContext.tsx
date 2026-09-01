@@ -103,28 +103,11 @@ export function LocationProvider({
         setError(null)
 
         try {
-            // 1. Si ubicación precisa activa, SOLO GPS (sin WiFi fallback en móvil)
-            //    Si GPS falla, no设置 ubicación — watchPosition se encargará cuando consiga señal
-            if (preciseLocationRef.current) {
-                try {
-                    const coords = await getUserLocation({ highAccuracyOnly: true })
-                    const locationData = await reverseGeocode(coords.latitude, coords.longitude)
-                    setLocation(prev => ({ ...prev, ...locationData, source: 'gps', accuracy: coords.accuracy }))
-                    if (isManualRefresh && locationData) setManualLocation(null)
-                    if (typeof window !== 'undefined') {
-                        localStorage.setItem('carmatch_last_detected_location', JSON.stringify(locationData))
-                    }
-                } catch {
-                    // GPS falló (cold start en móvil puede tardar 30-60s)
-                    // No设置 ubicación — watchPosition se encargará cuando GPS consiga fix
-                    console.log('📍 [LocationContext] GPS no disponible aún, watchPosition se encargará')
-                }
-                return
-            }
-
-            // 2. Sin ubicación precisa — fallback normal (WiFi/celda para ciudad)
+            // getUserLocation intenta GPS → fallback WiFi/celda. Si accuracy > 500m, es IP.
             const coords = await getUserLocation()
             const locationData = await reverseGeocode(coords.latitude, coords.longitude)
+            const source = coords.accuracy > 500 ? 'ip' : 'gps'
+            setLocation(prev => ({ ...prev, ...locationData, source }))
             const source = coords.accuracy > 500 ? 'ip' : 'gps'
             setLocation(prev => ({ ...prev, ...locationData, source, accuracy: coords.accuracy }))
 
@@ -308,22 +291,18 @@ export function LocationProvider({
         const stopWatching = watchUserLocation(
             async (coords, accuracy) => {
                 try {
-                    // Solo marcar como GPS cuando accuracy es buena (≤200m)
-                    // Torre celular/WiFi (accuracy >200m) no se etiqueta como GPS
-                    if (accuracy <= 200) {
-                        gotFirstFix = true
-                        if (retryTimer) { clearTimeout(retryTimer); retryTimer = null }
-                    }
+                    gotFirstFix = true
+                    if (retryTimer) { clearTimeout(retryTimer); retryTimer = null }
 
                     console.log(`📍 [LocationContext] watchPosition update: ${coords.latitude.toFixed(6)}, ${coords.longitude.toFixed(6)} (±${Math.round(accuracy)}m)`)
                     
-                    // Actualizar ubicación — source solo cambia a 'gps' si accuracy ≤200m
+                    // Actualizar ubicación local para que el punto se mueva en el mapa
                     setLocation(prev => ({
                         ...prev,
                         latitude: coords.latitude,
                         longitude: coords.longitude,
                         accuracy,
-                        source: accuracy <= 200 ? 'gps' : (prev?.source || 'ip'),
+                        source: 'gps',
                     }))
 
                     // Sync to server
