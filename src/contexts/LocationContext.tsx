@@ -274,7 +274,7 @@ export function LocationProvider({
                         })
                     })
                     const { latitude, longitude, accuracy } = pos.coords
-                    if (accuracy <= 150) {
+                    if (accuracy <= 300) {
                         console.log(`📍 [LocationContext] GPS retry fix: ${latitude.toFixed(6)}, ${longitude.toFixed(6)} ±${Math.round(accuracy)}m`)
                         setLocation(prev => ({ ...prev, latitude, longitude, accuracy, source: 'gps' }))
                         gotFirstFix = true
@@ -297,8 +297,8 @@ export function LocationProvider({
                     if (retryTimer) { clearTimeout(retryTimer); retryTimer = null }
                     
                     // Doble filtro: watchUserLocation ya filtra, pero defense in depth
-                    if (accuracy > 100) {
-                        console.warn(`📍 [LocationContext] fix ignorado: ±${Math.round(accuracy)}m > 100m (WiFi/cell)`)
+                    if (accuracy > 300) {
+                        console.warn(`📍 [LocationContext] fix ignorado: ±${Math.round(accuracy)}m > 300m`)
                         return
                     }
 
@@ -342,7 +342,7 @@ export function LocationProvider({
                     console.warn('[LOCATION] Real-time sync failed:', e)
                 }
             },
-            { maxAccuracy: 100 }
+            { maxAccuracy: 300 }
         )
 
         return () => {

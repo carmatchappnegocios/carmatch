@@ -286,7 +286,7 @@ export function watchUserLocation(
         return () => {}
     }
 
-    const maxAccuracy = options?.maxAccuracy ?? 100
+    const maxAccuracy = options?.maxAccuracy ?? 300
 
     const watchId = navigator.geolocation.watchPosition(
         (position) => {
