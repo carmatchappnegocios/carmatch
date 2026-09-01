@@ -108,4 +108,7 @@ export default withSentryConfig(nextConfig, {
     silent: true,
     org: "carmatch-social",
     project: "carmatch",
+    unstable_sentryWebpackPluginOptions: {
+        disable: true,
+    },
 });
