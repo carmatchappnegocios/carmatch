@@ -293,12 +293,6 @@ export function LocationProvider({
         const stopWatching = watchUserLocation(
             async (coords, accuracy) => {
                 try {
-                    // Esperar GPS preciso: ignorar cold start fixes (accuracy > 100m)
-                    if (accuracy > 100) {
-                        console.warn(`📍 [LocationContext] GPS fix ignorado: ±${Math.round(accuracy)}m > 100m (esperando GPS preciso)`)
-                        return
-                    }
-
                     gotFirstFix = true
                     if (retryTimer) { clearTimeout(retryTimer); retryTimer = null }
 
