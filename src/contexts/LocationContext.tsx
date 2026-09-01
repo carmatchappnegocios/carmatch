@@ -103,8 +103,8 @@ export function LocationProvider({
         setError(null)
 
         try {
-            // 1. Intentar obtener GPS — si preciseLocationEnabled, NO hacer fallback a WiFi/celda
-            const coords = await getUserLocation({ highAccuracyOnly: preciseLocationRef.current })
+            // 1. Intentar obtener GPS — fallback a WiFi si GPS falla (funciona en desktop y mobile)
+            const coords = await getUserLocation()
 
             // 2. Convertir coordenadas a ciudad
             const locationData = await reverseGeocode(coords.latitude, coords.longitude)
@@ -293,6 +293,12 @@ export function LocationProvider({
         const stopWatching = watchUserLocation(
             async (coords, accuracy) => {
                 try {
+                    // Esperar GPS preciso: ignorar cold start fixes (accuracy > 100m)
+                    if (accuracy > 100) {
+                        console.warn(`📍 [LocationContext] GPS fix ignorado: ±${Math.round(accuracy)}m > 100m (esperando GPS preciso)`)
+                        return
+                    }
+
                     gotFirstFix = true
                     if (retryTimer) { clearTimeout(retryTimer); retryTimer = null }
 
