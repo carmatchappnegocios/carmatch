@@ -180,14 +180,9 @@ export default function MapBoxStoreLocator({
         mapCreatedRef.current = true
 
         return () => {
-            mapCreatedRef.current = false
-            sourceSetupRef.current = false
             window.removeEventListener('map-focus-business', handleFocus);
             window.removeEventListener('map-ai-search', handleAiSearch);
-            if (map.current) {
-                map.current.remove()
-                map.current = null
-            }
+            // NO destruir el mapa — se persiste entre re-renders
         }
     }, [initialLocation])
 
@@ -511,11 +506,8 @@ export default function MapBoxStoreLocator({
         `
 
         if (userMarkerRef.current) {
-            // Remove old marker and recreate with new element (MapBox has no setElement)
-            userMarkerRef.current.remove()
-            userMarkerRef.current = new mapboxgl.Marker({ element: el, anchor: 'center' })
-                .setLngLat([userLocation.longitude, userLocation.latitude])
-                .addTo(mapInstance)
+            // Solo actualizar posición — no destruir/recrear el marker
+            userMarkerRef.current.setLngLat([userLocation.longitude, userLocation.latitude])
         } else {
             // Create new marker
             userMarkerRef.current = new mapboxgl.Marker({ element: el, anchor: 'center' })
