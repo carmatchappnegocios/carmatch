@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from 'react'
-import mapboxgl from 'mapboxgl'
+import mapboxgl from 'mapbox-gl'
 import { useLocation } from '@/contexts/LocationContext'
 
 export default function MapPreloader() {
