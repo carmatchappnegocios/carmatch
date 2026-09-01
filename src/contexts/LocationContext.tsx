@@ -323,7 +323,7 @@ export function LocationProvider({
                         latitude: coords.latitude,
                         longitude: coords.longitude,
                         accuracy,
-                        source: accuracy <= 200 ? 'gps' : prev.source,
+                        source: accuracy <= 200 ? 'gps' : (prev?.source || 'ip'),
                     }))
 
                     // Sync to server
