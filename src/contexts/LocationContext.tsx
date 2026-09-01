@@ -37,7 +37,6 @@ export function LocationProvider({
     const [manualLocation, setManualLocationState] = useState<LocationData | null>(null)
     const manualLocationRef = useRef<LocationData | null>(null)
     const [preciseLocationEnabled, setPreciseLocationEnabledState] = useState(false)
-    const preciseLocationRef = useRef(false)
     const [gpsPermission, setGpsPermission] = useState<PermissionState | 'unsupported' | 'unknown'>('unknown')
     const [showLocationPrompt, setShowLocationPrompt] = useState(false)
 
@@ -70,7 +69,6 @@ export function LocationProvider({
     // Persistencia: Toggle de ubicación precisa (GPS)
     const setPreciseLocationEnabled = useCallback((enabled: boolean) => {
         setPreciseLocationEnabledState(enabled)
-        preciseLocationRef.current = enabled
         if (typeof window !== 'undefined') {
             localStorage.setItem('carmatch_precise_location', enabled ? '1' : '0')
             localStorage.setItem('carmatch_location_prompt', 'asked')
@@ -103,9 +101,14 @@ export function LocationProvider({
         setError(null)
 
         try {
-            // getUserLocation intenta GPS → fallback WiFi/celda. Si accuracy > 500m, es IP.
+            // 1. Intentar obtener GPS del navegador (solo cuando se llama explícitamente)
             const coords = await getUserLocation()
+
+            // 2. Convertir coordenadas a ciudad
             const locationData = await reverseGeocode(coords.latitude, coords.longitude)
+
+            // 3. Marcar source según la fuente real
+            // getUserLocation intenta GPS → fallback IP. Si el accuracy es muy alto (>500m), es IP.
             const source = coords.accuracy > 500 ? 'ip' : 'gps'
             setLocation({ ...locationData, source })
 
@@ -156,7 +159,6 @@ export function LocationProvider({
 
             if (savedPrecise === '1') {
                 setPreciseLocationEnabledState(true)
-                preciseLocationRef.current = true
             }
 
             if (savedManual) {
@@ -254,44 +256,10 @@ export function LocationProvider({
         if (!preciseLocationEnabled) return
 
         let lastReverseGeocode = 0
-        let gotFirstFix = false
-        let retryTimer: NodeJS.Timeout | null = null
-
-        // Rescate: si watchPosition no emite fix en 20s, intentar one-shot GPS
-        retryTimer = setTimeout(async () => {
-            if (!gotFirstFix) {
-                console.warn('⚠️ [LocationContext] GPS retry: watchPosition sin fix en 20s, intentando one-shot...')
-                try {
-                    const pos = await new Promise<GeolocationPosition>((resolve, reject) => {
-                        navigator.geolocation.getCurrentPosition(resolve, reject, {
-                            enableHighAccuracy: true,
-                            timeout: 20000,
-                            maximumAge: 0,
-                        })
-                    })
-                    const { latitude, longitude, accuracy } = pos.coords
-                    if (accuracy <= 200) {
-                        console.log(`📍 [LocationContext] GPS retry fix: ${latitude.toFixed(6)}, ${longitude.toFixed(6)} ±${Math.round(accuracy)}m`)
-                        setLocation(prev => ({ ...prev, latitude, longitude, accuracy, source: 'gps' }))
-                        gotFirstFix = true
-                        await fetch('/api/user/location', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ latitude, longitude, accuracy })
-                        })
-                    }
-                } catch (e) {
-                    console.warn('⚠️ [LocationContext] GPS retry also failed:', e)
-                }
-            }
-        }, 20000)
 
         const stopWatching = watchUserLocation(
             async (coords, accuracy) => {
                 try {
-                    gotFirstFix = true
-                    if (retryTimer) { clearTimeout(retryTimer); retryTimer = null }
-
                     console.log(`📍 [LocationContext] watchPosition update: ${coords.latitude.toFixed(6)}, ${coords.longitude.toFixed(6)} (±${Math.round(accuracy)}m)`)
                     
                     // Actualizar ubicación local para que el punto se mueva en el mapa
@@ -335,10 +303,7 @@ export function LocationProvider({
             { maxAccuracy: 200 }
         )
 
-        return () => {
-            if (retryTimer) clearTimeout(retryTimer)
-            stopWatching()
-        }
+        return () => stopWatching()
     }, [preciseLocationEnabled])
 
     // Si el usuario selecciona manualmente una ciudad, usar esa

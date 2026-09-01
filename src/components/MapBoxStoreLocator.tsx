@@ -511,8 +511,11 @@ export default function MapBoxStoreLocator({
         `
 
         if (userMarkerRef.current) {
-            // Solo actualizar posición — no destruir/recrear el marker
-            userMarkerRef.current.setLngLat([userLocation.longitude, userLocation.latitude])
+            // Remove old marker and recreate with new element (MapBox has no setElement)
+            userMarkerRef.current.remove()
+            userMarkerRef.current = new mapboxgl.Marker({ element: el, anchor: 'center' })
+                .setLngLat([userLocation.longitude, userLocation.latitude])
+                .addTo(mapInstance)
         } else {
             // Create new marker
             userMarkerRef.current = new mapboxgl.Marker({ element: el, anchor: 'center' })

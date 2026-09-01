@@ -106,37 +106,33 @@ export async function getLocationFromIP(): Promise<LocationData> {
     }
 }
 
-export async function getUserLocation(options?: { highAccuracyOnly?: boolean }): Promise<Coordinates & { accuracy: number }> {
+export async function getUserLocation(): Promise<Coordinates & { accuracy: number }> {
     if (!navigator.geolocation) {
         throw new Error('Geolocalización no soportada en este navegador')
     }
 
     try {
-        // Intento 1: Alta precisión GPS (15s)
+        // Intento 1: Alta precisión (Aumentado a 15s para dar más tiempo)
         return await getPosition({
             enableHighAccuracy: true,
             timeout: 15000,
             maximumAge: 0
         })
     } catch (error: any) {
-        console.warn('⚠️ Falló GPS alta precisión:', error.message)
-
-        if (options?.highAccuracyOnly) {
-            // No hacer fallback a WiFi/celda — retornar error para que watchPosition lo resuelva
-            throw error
-        }
+        console.warn('⚠️ Falló GPS alta precisión:', error.message, '- Reintentando con baja precisión...')
 
         try {
-            // Intento 2: Baja precisión (Wifi/Cell) — solo para ubicación inicial/IP fallback
+            // Intento 2: Baja precisión (Wifi/Cell/IP) - Más rápido y robusto
             return await getPosition({
                 enableHighAccuracy: false,
                 timeout: 60000,
-                maximumAge: 300000
+                maximumAge: 300000 // Max 5 minutos de cache
             })
         } catch (retryError: any) {
             console.warn('⚠️ Falló GPS baja precisión. Intentando fallback por IP...')
 
             try {
+                // Intento 3: Ubicación por IP (Fallback final para PCs sin GPS)
                 return { ...(await getLocationFromIP()), accuracy: 9999 }
             } catch (ipError: any) {
                 let message = 'Error al obtener ubicación. Intenta ingresarla manualmente.'
@@ -272,7 +268,8 @@ export var EXPANSION_TIERS = [25, 50, 100, 250, 500, 1000, 5000, 10000]
 
 /**
  * Tracking continuo de ubicación usando watchPosition.
- * @param callback Se llama cada vez que hay nueva ubicación
+ * Siempre entrega el punto (no oculta), pero avisa si precisión es baja.
+ * @param callback Se llama cada vez que hay nueva ubicación (siempre, con accuracy)
  * @param options.maxAccuracy Umbral para warning (default: 200m)
  * @returns Función para detener el tracking
  */
@@ -291,11 +288,10 @@ export function watchUserLocation(
         (position) => {
             const accuracy = position.coords.accuracy
             if (accuracy > maxAccuracy) {
-                console.warn(`⚠️ GPS: precisión ${Math.round(accuracy)}m > ${maxAccuracy}m, warning`)
+                console.warn(`⚠️ GPS: precisión baja ${Math.round(accuracy)}m > ${maxAccuracy}m, mostrando igual con círculo amarillo`)
             } else {
                 console.log(`📍 GPS: ${position.coords.latitude.toFixed(6)}, ${position.coords.longitude.toFixed(6)} ±${Math.round(accuracy)}m`)
             }
-            // SIEMPRE ejecutar callback — el mapa decide si mostrar o no
             callback(
                 { latitude: position.coords.latitude, longitude: position.coords.longitude },
                 accuracy
