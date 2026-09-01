@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
     experimental: {
         // 🚫 DESHABILITADO: rompe tree-shaking de framer-motion/lucide-react y deja toda la app en negro
         // optimizePackageImports: ['lucide-react', 'framer-motion'],
+        serverMinification: false,
     },
 
     images: {
