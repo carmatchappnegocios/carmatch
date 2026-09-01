@@ -109,9 +109,9 @@ export function LocationProvider({
             // 2. Convertir coordenadas a ciudad
             const locationData = await reverseGeocode(coords.latitude, coords.longitude)
 
-            // 3. Marcar source según la fuente real
-            const source = coords.accuracy > 500 ? 'ip' : 'gps'
-            setLocation({ ...locationData, source, accuracy: coords.accuracy })
+            // 3. Marcar source según la fuente real — si ubicación precisa activa, siempre 'gps'
+            const source = preciseLocationRef.current ? 'gps' : (coords.accuracy > 500 ? 'ip' : 'gps')
+            setLocation(prev => ({ ...prev, ...locationData, source, accuracy: coords.accuracy }))
 
             // Si el usuario pidió detectar manualmente, limpiamos la selección manual previa
             // para que la ubicación real tome precedencia
