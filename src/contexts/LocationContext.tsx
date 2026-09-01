@@ -108,8 +108,6 @@ export function LocationProvider({
             const locationData = await reverseGeocode(coords.latitude, coords.longitude)
             const source = coords.accuracy > 500 ? 'ip' : 'gps'
             setLocation(prev => ({ ...prev, ...locationData, source }))
-            const source = coords.accuracy > 500 ? 'ip' : 'gps'
-            setLocation(prev => ({ ...prev, ...locationData, source, accuracy: coords.accuracy }))
 
             // Si el usuario pidió detectar manualmente, limpiamos la selección manual previa
             // para que la ubicación real tome precedencia
