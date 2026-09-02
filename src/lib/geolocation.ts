@@ -106,20 +106,24 @@ export async function getLocationFromIP(): Promise<LocationData> {
     }
 }
 
-export async function getUserLocation(): Promise<Coordinates & { accuracy: number }> {
+export async function getUserLocation(options?: { highAccuracyOnly?: boolean }): Promise<Coordinates & { accuracy: number }> {
     if (!navigator.geolocation) {
         throw new Error('Geolocalización no soportada en este navegador')
     }
 
     try {
-        // Intento 1: Alta precisión (Aumentado a 15s para dar más tiempo)
+        // Intento 1: Alta precisión GPS (15s)
         return await getPosition({
             enableHighAccuracy: true,
             timeout: 15000,
             maximumAge: 0
         })
     } catch (error: any) {
-        console.warn('⚠️ Falló GPS alta precisión:', error.message, '- Reintentando con baja precisión...')
+        console.warn('⚠️ Falló GPS alta precisión:', error.message)
+
+        if (options?.highAccuracyOnly) {
+            throw error
+        }
 
         try {
             // Intento 2: Baja precisión (Wifi/Cell/IP) - Más rápido y robusto

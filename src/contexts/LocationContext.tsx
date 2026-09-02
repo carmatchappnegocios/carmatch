@@ -36,6 +36,7 @@ export function LocationProvider({
     const [error, setError] = useState<string | null>(null)
     const [manualLocation, setManualLocationState] = useState<LocationData | null>(null)
     const manualLocationRef = useRef<LocationData | null>(null)
+    const preciseLocationRef = useRef(false)
     const [preciseLocationEnabled, setPreciseLocationEnabledState] = useState(false)
     const [gpsPermission, setGpsPermission] = useState<PermissionState | 'unsupported' | 'unknown'>('unknown')
     const [showLocationPrompt, setShowLocationPrompt] = useState(false)
@@ -68,6 +69,7 @@ export function LocationProvider({
 
     // Persistencia: Toggle de ubicación precisa (GPS)
     const setPreciseLocationEnabled = useCallback((enabled: boolean) => {
+        preciseLocationRef.current = enabled
         setPreciseLocationEnabledState(enabled)
         if (typeof window !== 'undefined') {
             localStorage.setItem('carmatch_precise_location', enabled ? '1' : '0')
@@ -101,14 +103,26 @@ export function LocationProvider({
         setError(null)
 
         try {
-            // 1. Intentar obtener GPS del navegador (solo cuando se llama explícitamente)
+            // Si ubicación precisa activa, SOLO GPS (sin WiFi/celda)
+            if (preciseLocationRef.current) {
+                try {
+                    const coords = await getUserLocation({ highAccuracyOnly: true })
+                    const locationData = await reverseGeocode(coords.latitude, coords.longitude)
+                    setLocation({ ...locationData, source: 'gps' })
+                } catch {
+                    // GPS no disponible aún (cold start en móvil puede tardar 30-60s)
+                    // watchPosition se encargará cuando consiga fix
+                }
+                return
+            }
+
+            // Sin ubicación precisa — fallback normal (WiFi/celda para ciudad)
             const coords = await getUserLocation()
 
-            // 2. Convertir coordenadas a ciudad
+            // Convertir coordenadas a ciudad
             const locationData = await reverseGeocode(coords.latitude, coords.longitude)
 
-            // 3. Marcar source según la fuente real
-            // getUserLocation intenta GPS → fallback IP. Si el accuracy es muy alto (>500m), es IP.
+            // Marcar source según la fuente real
             const source = coords.accuracy > 500 ? 'ip' : 'gps'
             setLocation({ ...locationData, source })
 
@@ -158,6 +172,7 @@ export function LocationProvider({
             const savedPrecise = localStorage.getItem('carmatch_precise_location')
 
             if (savedPrecise === '1') {
+                preciseLocationRef.current = true
                 setPreciseLocationEnabledState(true)
             }
 
