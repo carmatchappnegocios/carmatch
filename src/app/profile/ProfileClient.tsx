@@ -10,7 +10,7 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { toast } from "sonner"
 import EditProfileModal from "@/components/EditProfileModal"
 import ReportImageButton from "@/components/ReportImageButton"
-import { Flag, MessageSquare, AlertCircle, ChevronRight, RefreshCw, Headset, ShieldCheck } from "lucide-react"
+import { Flag, MessageSquare, AlertCircle, ChevronRight, RefreshCw, Headset, ShieldCheck, ThumbsUp } from "lucide-react"
 import UserBadges from "@/components/UserBadges"
 
 interface ProfileClientProps {
@@ -170,24 +170,22 @@ export default function ProfileClient({ user, isOwner, vehiclesToShow }: Profile
 
                         {/* 3. Botones de Acción (Abajo) */}
                         {isOwner && (
-                            <div className="flex flex-wrap gap-2 w-full sm:w-auto">
+                            <div className="flex flex-col gap-2 w-full">
+                                <Link
+                                    href="/favorites"
+                                    className="w-full px-4 py-2 bg-surface-highlight text-text-primary text-center font-bold rounded-xl hover:bg-surface-highlight/80 transition border border-white/10 flex items-center justify-center gap-2 text-sm"
+                                >
+                                    <ThumbsUp size={16} className="text-primary-400" />
+                                    Mis Favoritos
+                                </Link>
                                 <Link
                                     href="/publish"
-                                    className="flex-1 sm:flex-none px-6 py-3 bg-primary-700 text-background text-center font-bold rounded-xl hover:bg-primary-600 transition shadow-lg flex items-center justify-center gap-2 text-sm"
+                                    className="w-full px-6 py-3 bg-primary-700 text-background text-center font-bold rounded-xl hover:bg-primary-600 transition shadow-lg flex items-center justify-center gap-2 text-sm"
                                 >
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                                     </svg>
                                     {t('profile.publish_vehicle')}
-                                </Link>
-                                <Link
-                                    href="/favorites"
-                                    className="flex-1 sm:flex-none px-6 py-3 bg-surface-highlight text-text-primary text-center font-bold rounded-xl hover:bg-surface-highlight/80 transition border border-white/10 flex items-center justify-center gap-2 text-sm"
-                                >
-                                    <svg className="w-5 h-5 text-red-400" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                                    </svg>
-                                    Mis Favoritos
                                 </Link>
                             </div>
                         )}
