@@ -279,7 +279,7 @@ export var EXPANSION_TIERS = [25, 50, 100, 250, 500, 1000, 5000, 10000]
  */
 export function watchUserLocation(
     callback: (coords: Coordinates, accuracy: number) => void,
-    options?: { maxAccuracy?: number }
+    options?: { maxAccuracy?: number; onError?: (error: GeolocationPositionError) => void }
 ): () => void {
     if (!navigator.geolocation) {
         console.warn('⚠️ Geolocation not supported, cannot watch position')
@@ -303,6 +303,7 @@ export function watchUserLocation(
         },
         (error) => {
             console.warn('⚠️ watchPosition error:', error.message)
+            options?.onError?.(error)
         },
         {
             enableHighAccuracy: true,
