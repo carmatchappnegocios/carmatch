@@ -411,18 +411,7 @@ export default function FacebookAdsTab() {
     }
 
     const copyForGemini = async (prompt: AdPrompt) => {
-        const charRef = characterRefs[prompt.character]
-        const fullPrompt = `INSTRUCCIONES PARA GEMINI:
-1. Adjunta la imagen de referencia de ${charRef.name} como referencia del personaje
-2. Genera una imagen con el siguiente prompt, usando la referencia para mantener la cara consistente
-
-PROMPT:
-${prompt.prompt}
-
-HOOK PARA FACEBOOK: ${prompt.hook}
-CTA: ${prompt.cta}
-SEGMENTACION: ${prompt.segmentacion.edad} años, ${prompt.segmentacion.ubicacion}, intereses: ${prompt.segmentacion.intereses}`
-        await navigator.clipboard.writeText(fullPrompt)
+        await navigator.clipboard.writeText(prompt.prompt)
         setCopiedId(prompt.id * 10 + 3)
         setTimeout(() => setCopiedId(null), 2000)
     }
