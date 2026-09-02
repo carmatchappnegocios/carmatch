@@ -134,7 +134,7 @@ export default function RootLayout({
                 <link rel="apple-touch-icon" href="/icon-192-v20.png?v=22" />
                 <style dangerouslySetInnerHTML={{ __html: 'html,body{background-color:#0f172a!important}' }} />
             </head>
-            <body className={`${inter.className} min-h-screen-safe bg-[#0f172a]`}>
+            <body className={`${inter.className} min-h-screen-safe bg-[#0f172a]`} style={{ backgroundColor: '#0f172a' }}>
                 <ClientViewportFix />
                 <GoogleAnalytics />
                 <Providers>
