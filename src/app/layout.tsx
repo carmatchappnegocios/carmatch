@@ -125,7 +125,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="es" className="dark" style={{ colorScheme: 'dark' }} suppressHydrationWarning>
+        <html lang="es" className="dark" style={{ colorScheme: 'dark', backgroundColor: '#0f172a' }} suppressHydrationWarning>
             <head>
                 <meta name="theme-color" content="#0f172a" />
                 <meta name="application-name" content="CarMatch" />
