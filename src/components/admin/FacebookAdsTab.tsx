@@ -563,12 +563,6 @@ SEGMENTACION: ${prompt.segmentacion.edad} años, ${prompt.segmentacion.ubicacion
                                                 {copiedId === prompt.id * 10 + 3 ? 'Copiado!' : 'Gemini'}
                                             </button>
                                             <button
-                                                onClick={(e) => { e.stopPropagation(); copyToClipboard(prompt.prompt, prompt.id * 10 + 1) }}
-                                                className="px-3 py-1.5 bg-primary-500/10 text-primary-400 rounded-lg text-xs font-bold hover:bg-primary-500/20 transition-colors"
-                                            >
-                                                {copiedId === prompt.id * 10 + 1 ? 'Copiado!' : 'Prompt'}
-                                            </button>
-                                            <button
                                                 onClick={(e) => { e.stopPropagation(); copyToClipboard(prompt.hook, prompt.id * 10 + 2) }}
                                                 className="px-3 py-1.5 bg-orange-500/10 text-orange-400 rounded-lg text-xs font-bold hover:bg-orange-500/20 transition-colors"
                                             >
