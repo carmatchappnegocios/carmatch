@@ -41,6 +41,8 @@ interface Business {
     instagram?: string
     tiktok?: string
     expiresAt?: string
+    stripeSubscriptionId?: string | null
+    subscriptionStatus?: string | null
 }
 
 export default function MyBusinessesClient() {
@@ -1051,6 +1053,31 @@ export default function MyBusinessesClient() {
                                         >
                                             {t('business.edit')}
                                         </button>
+                                        {business.stripeSubscriptionId && (
+                                            <button
+                                                onClick={async () => {
+                                                    try {
+                                                        const res = await fetch('/api/subscriptions/portal', {
+                                                            method: 'POST',
+                                                            headers: { 'Content-Type': 'application/json' },
+                                                            body: JSON.stringify({ businessId: business.id })
+                                                        })
+                                                        const data = await res.json()
+                                                        if (res.ok && data.url) {
+                                                            window.open(data.url, '_blank')
+                                                        } else {
+                                                            toast.error(data.error || 'Error al abrir portal')
+                                                        }
+                                                    } catch {
+                                                        toast.error('Error de conexión')
+                                                    }
+                                                }}
+                                                className="px-3 py-2 bg-blue-900/20 text-blue-400 rounded-lg text-sm hover:bg-blue-900/30 transition flex items-center justify-center"
+                                                title="Gestionar Facturación"
+                                            >
+                                                <CreditCard size={16} />
+                                            </button>
+                                        )}
                                         <button
                                             onClick={() => handleDelete(business.id)}
                                             className="px-3 py-2 bg-red-900/20 text-red-400 rounded-lg text-sm hover:bg-red-900/30 transition flex items-center justify-center"

@@ -279,7 +279,11 @@ model Business {
   hasMiniWeb          Boolean                   @default(false)
   isSafeMeetingPoint  Boolean                   @default(false)
   slug                String?                   @unique
-  user                User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  stripeSubscriptionId String?
+  stripeCustomerId     String?
+  subscriptionStatus   String?                   @default("trialing")
+  trialEndsAt          DateTime?
+  user                 User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
   analytics           BusinessAnalytics?
   favorites           BusinessFavorite[]
   reviews             BusinessReview[]
@@ -296,6 +300,7 @@ model Business {
   @@index([isActive, expiresAt])
   @@index([expiresAt])
   @@index([slug])
+  @@index([stripeSubscriptionId])
 }
 
 model BusinessAnalytics {

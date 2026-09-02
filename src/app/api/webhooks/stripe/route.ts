@@ -18,7 +18,6 @@ export async function POST(request: NextRequest) {
     const body = await request.text()
     const sig = request.headers.get('stripe-signature')
 
-    // --- 🕵️‍♂️ LOG DE INICIO (TOP PRIORITY) ---
     await prisma.systemLog.create({
         data: {
             level: 'INFO',
@@ -50,7 +49,6 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'Firma invalida' }, { status: 400 })
     }
 
-    // --- LOG DE EVENTO ---
     await prisma.systemLog.create({
         data: {
             level: 'INFO',
@@ -60,11 +58,8 @@ export async function POST(request: NextRequest) {
         }
     })
 
-    // --- MANEJAR EVENTOS ---
     try {
         // ✅ CASO 1: Pago con Tarjeta (Inmediato)
-        // Para SPEI/OXXO este evento llega con payment_status='unpaid' → lo ignoramos aquí.
-        // Los pagos async se manejan en checkout.session.async_payment_succeeded.
         if (event.type === 'checkout.session.completed') {
             const session = event.data.object as Stripe.Checkout.Session
             const metadata = session.metadata
@@ -72,8 +67,6 @@ export async function POST(request: NextRequest) {
             if (session.payment_status === 'paid' && metadata?.type === 'CREDIT_PURCHASE') {
                 const userId = metadata.userId
                 const creditsToAdd = parseInt(metadata.credits || '0')
-                // 🔑 Clave única: usar `session.id` como fallback cuando payment_intent es null
-                // (ocurre con customer_balance/SPEI si se completan de forma inmediata)
                 const transactionId = (session.payment_intent as string) || session.id
 
                 if (userId && creditsToAdd > 0 && transactionId) {
@@ -86,6 +79,14 @@ export async function POST(request: NextRequest) {
             } else if (metadata?.type === 'BUSINESS_SUBSCRIPTION_MONTHLY') {
                 const businessId = metadata.businessId
                 if (businessId && businessId !== 'pending') {
+                    // Retrieve subscription from Stripe to get the subscription ID
+                    let stripeSubscriptionId: string | null = null
+                    if (typeof session.subscription === 'string') {
+                        stripeSubscriptionId = session.subscription
+                    } else if (session.subscription?.id) {
+                        stripeSubscriptionId = session.subscription.id
+                    }
+
                     const expiresAt = new Date()
                     expiresAt.setMonth(expiresAt.getMonth() + 1)
 
@@ -94,7 +95,11 @@ export async function POST(request: NextRequest) {
                         data: {
                             isActive: true,
                             isFreePublication: false,
-                            expiresAt
+                            expiresAt,
+                            stripeSubscriptionId: stripeSubscriptionId || undefined,
+                            stripeCustomerId: session.customer as string || undefined,
+                            subscriptionStatus: 'active',
+                            trialEndsAt: null,
                         }
                     })
 
@@ -103,7 +108,7 @@ export async function POST(request: NextRequest) {
                             level: 'SUCCESS',
                             source: 'StripeWebhook',
                             message: `🏢 Suscripción activada para negocio: ${businessId}`,
-                            metadata: { businessId, userId: metadata.userId, expiresAt: expiresAt.toISOString() }
+                            metadata: { businessId, userId: metadata.userId, expiresAt: expiresAt.toISOString(), stripeSubscriptionId }
                         }
                     })
                 }
@@ -111,8 +116,6 @@ export async function POST(request: NextRequest) {
         }
 
         // ✅ CASO 2: Pago Async Confirmado (SPEI / OXXO)
-        // 🔥 CRÍTICO — Este evento se dispara DÍAS DESPUÉS cuando el banco confirma.
-        // Sin este handler, los usuarios de SPEI/OXXO NUNCA reciben sus créditos.
         if (event.type === 'checkout.session.async_payment_succeeded') {
             const session = event.data.object as Stripe.Checkout.Session
             const metadata = session.metadata
@@ -129,8 +132,6 @@ export async function POST(request: NextRequest) {
             if (metadata?.type === 'CREDIT_PURCHASE') {
                 const userId = metadata.userId
                 const creditsToAdd = parseInt(metadata.credits || '0')
-                // 🔑 FIX CRÍTICO SPEI: Para customer_balance (SPEI), session.payment_intent es NULL.
-                // Usamos session.id como transactionId único para evitar que se pierdan los créditos.
                 const transactionId = (session.payment_intent as string) || `spei_${session.id}`
 
                 if (userId && creditsToAdd > 0) {
@@ -140,10 +141,45 @@ export async function POST(request: NextRequest) {
                         'Compra de créditos (SPEI/OXXO)'
                     )
                 }
+            } else if (metadata?.type === 'BUSINESS_SUBSCRIPTION_MONTHLY') {
+                // SPEI/OXXO subscription payment confirmed
+                const businessId = metadata.businessId
+                if (businessId && businessId !== 'pending') {
+                    let stripeSubscriptionId: string | null = null
+                    if (typeof session.subscription === 'string') {
+                        stripeSubscriptionId = session.subscription
+                    } else if (session.subscription?.id) {
+                        stripeSubscriptionId = session.subscription.id
+                    }
+
+                    const expiresAt = new Date()
+                    expiresAt.setMonth(expiresAt.getMonth() + 1)
+
+                    await prisma.business.update({
+                        where: { id: businessId },
+                        data: {
+                            isActive: true,
+                            isFreePublication: false,
+                            expiresAt,
+                            stripeSubscriptionId: stripeSubscriptionId || undefined,
+                            stripeCustomerId: session.customer as string || undefined,
+                            subscriptionStatus: 'active',
+                        }
+                    })
+
+                    await prisma.systemLog.create({
+                        data: {
+                            level: 'SUCCESS',
+                            source: 'StripeWebhook',
+                            message: `🏢 Suscripción activada (SPEI/OXXO): negocio ${businessId}`,
+                            metadata: { businessId, stripeSubscriptionId }
+                        }
+                    })
+                }
             }
         }
 
-        // ✅ CASO 3: Fallo async (SPEI vence sin pago) — Log de diagnóstico
+        // ✅ CASO 3: Fallo async (SPEI vence sin pago)
         if (event.type === 'checkout.session.async_payment_failed') {
             const session = event.data.object as Stripe.Checkout.Session
             await prisma.systemLog.create({
@@ -156,49 +192,151 @@ export async function POST(request: NextRequest) {
             })
         }
 
-        // ❌ ELIMINADO: payment_intent.succeeded — causaba RIESGO DE DOBLE CRÉDITO.
-        // checkout.session.completed ya maneja tarjeta.
-        // checkout.session.async_payment_succeeded ya maneja SPEI/OXXO.
-
-        // ✅ CASO 4: Suscripción cancelada o expirada
+        // ✅ CASO 4: Suscripción cancelada — buscar por stripeSubscriptionId en DB
         if (event.type === 'customer.subscription.deleted') {
             const subscription = event.data.object as Stripe.Subscription
-            const businessId = subscription.metadata?.businessId
 
-            if (businessId) {
+            const business = await prisma.business.findFirst({
+                where: { stripeSubscriptionId: subscription.id }
+            })
+
+            if (business) {
                 await prisma.business.update({
-                    where: { id: businessId },
-                    data: { isActive: false }
-                }).catch(() => {})
+                    where: { id: business.id },
+                    data: {
+                        isActive: false,
+                        subscriptionStatus: 'canceled',
+                    }
+                })
 
                 await prisma.systemLog.create({
                     data: {
                         level: 'WARN',
                         source: 'StripeWebhook',
-                        message: `🏢 Suscripción cancelada: negocio ${businessId}`,
-                        metadata: { businessId, subscriptionId: subscription.id }
+                        message: `🏢 Suscripción cancelada: negocio ${business.id}`,
+                        metadata: { businessId: business.id, subscriptionId: subscription.id }
                     }
                 })
             }
         }
 
-        // ✅ CASO 5: Pago de suscripción fallido
+        // ✅ CASO 5: Suscripción actualizada (renovación, cambio de plan, etc.)
+        if (event.type === 'customer.subscription.updated') {
+            const subscription = event.data.object as Stripe.Subscription
+
+            const business = await prisma.business.findFirst({
+                where: { stripeSubscriptionId: subscription.id }
+            })
+
+            if (business) {
+                const newStatus = subscription.status === 'active' ? 'active'
+                    : subscription.status === 'past_due' ? 'past_due'
+                    : subscription.status === 'canceled' ? 'canceled'
+                    : subscription.status
+
+                // Extend expiresAt on successful renewal
+                let expiresAtUpdate = undefined
+                if (subscription.status === 'active' && subscription.current_period_end) {
+                    expiresAtUpdate = new Date(subscription.current_period_end * 1000)
+                }
+
+                await prisma.business.update({
+                    where: { id: business.id },
+                    data: {
+                        subscriptionStatus: newStatus,
+                        ...(expiresAtUpdate ? { expiresAt: expiresAtUpdate, isActive: true } : {}),
+                        ...(subscription.status === 'canceled' ? { isActive: false } : {}),
+                    }
+                })
+
+                await prisma.systemLog.create({
+                    data: {
+                        level: 'INFO',
+                        source: 'StripeWebhook',
+                        message: `🏢 Suscripción actualizada: negocio ${business.id} → ${newStatus}`,
+                        metadata: { businessId: business.id, subscriptionId: subscription.id, status: newStatus }
+                    }
+                })
+            }
+        }
+
+        // ✅ CASO 6: Pago de factura exitoso (renovación de suscripción)
+        if (event.type === 'invoice.paid') {
+            const invoice = event.data.object as Stripe.Invoice
+            const subscriptionId = typeof invoice.subscription === 'string' ? invoice.subscription : invoice.subscription?.id
+
+            if (subscriptionId) {
+                const business = await prisma.business.findFirst({
+                    where: { stripeSubscriptionId: subscriptionId }
+                })
+
+                if (business) {
+                    // Extend expiresAt based on the new period end
+                    const periodEnd = (invoice as any).period_end
+                    const expiresAt = periodEnd ? new Date(periodEnd * 1000) : (() => {
+                        const d = new Date(); d.setMonth(d.getMonth() + 1); return d
+                    })()
+
+                    await prisma.business.update({
+                        where: { id: business.id },
+                        data: {
+                            isActive: true,
+                            expiresAt,
+                            subscriptionStatus: 'active',
+                        }
+                    })
+
+                    await prisma.systemLog.create({
+                        data: {
+                            level: 'SUCCESS',
+                            source: 'StripeWebhook',
+                            message: `🏢 Renovación de suscripción exitosa: negocio ${business.id}`,
+                            metadata: { businessId: business.id, subscriptionId, expiresAt: expiresAt.toISOString() }
+                        }
+                    })
+                }
+            }
+        }
+
+        // ✅ CASO 7: Pago de suscripción fallido — desactivar negocio + notificar
         if (event.type === 'invoice.payment_failed') {
             const invoice = event.data.object as Stripe.Invoice
             const subscriptionId = typeof invoice.subscription === 'string' ? invoice.subscription : invoice.subscription?.id
 
             if (subscriptionId) {
-                const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', { apiVersion: STRIPE_API_VERSION })
-                const subscription = await stripe.subscriptions.retrieve(subscriptionId)
-                const businessId = subscription.metadata?.businessId
+                const business = await prisma.business.findFirst({
+                    where: { stripeSubscriptionId: subscriptionId }
+                })
 
-                if (businessId) {
+                if (business) {
+                    await prisma.business.update({
+                        where: { id: business.id },
+                        data: {
+                            subscriptionStatus: 'past_due',
+                        }
+                    })
+
+                    // Notify user about failed payment
+                    try {
+                        await prisma.notification.create({
+                            data: {
+                                userId: business.userId,
+                                type: 'SYSTEM',
+                                title: 'Pago de suscripción fallido',
+                                message: `El pago de tu suscripción de $20 MXN/mes para "${business.name}" falló. Por favor actualiza tu método de pago para evitar la desactivación de tu negocio.`,
+                                metadata: JSON.stringify({ businessId: business.id, subscriptionId, invoiceId: invoice.id }),
+                            }
+                        })
+                    } catch {
+                        // Notification might fail if schema differs
+                    }
+
                     await prisma.systemLog.create({
                         data: {
                             level: 'WARN',
                             source: 'StripeWebhook',
-                            message: `⚠️ Pago de suscripción fallido: negocio ${businessId}`,
-                            metadata: { businessId, subscriptionId, invoiceId: invoice.id }
+                            message: `⚠️ Pago de suscripción fallido: negocio ${business.id}`,
+                            metadata: { businessId: business.id, subscriptionId, invoiceId: invoice.id }
                         }
                     })
                 }
@@ -226,8 +364,6 @@ async function processCreditPurchase(
     userId: string, credits: number, transactionId: string,
     amount: number, currency: string, description: string = 'Compra de créditos'
 ) {
-    // 🛡️ Idempotencia: Use database unique constraint to prevent race conditions
-    // Instead of check-then-create (TOCTOU), we create directly and catch duplicate errors
     try {
         await prisma.$transaction([
             prisma.payment.create({
@@ -255,12 +391,11 @@ async function processCreditPurchase(
             })
         ])
     } catch (error: unknown) {
-        // If unique constraint violation, payment was already processed (race condition)
         if (error instanceof Error && error.message.includes('Unique constraint')) {
             console.log(`[StripeWebhook] Pago ${transactionId} ya procesado (race condition). Saliendo.`)
             return
         }
-        throw error // Re-throw other errors
+        throw error
     }
 
     await prisma.systemLog.create({
@@ -272,7 +407,6 @@ async function processCreditPurchase(
         }
     })
 
-    // 📊 REGISTRAR EVENTO: Pago completado
     try {
         await prisma.analyticsEvent.create({
             data: {

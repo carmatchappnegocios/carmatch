@@ -7,6 +7,7 @@ import { formatPrice } from "@/lib/vehicleTaxonomy"
 import Link from "next/link"
 import { useState, useEffect, useRef, useCallback } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
+import { toast } from "sonner"
 import EditProfileModal from "@/components/EditProfileModal"
 import ReportImageButton from "@/components/ReportImageButton"
 import { Flag, MessageSquare, AlertCircle, ChevronRight, RefreshCw, Headset, ShieldCheck } from "lucide-react"
@@ -58,6 +59,26 @@ export default function ProfileClient({ user, isOwner, vehiclesToShow }: Profile
             topRef.current?.scrollIntoView({ behavior: 'smooth' })
         }
     }, [currentPage, searchParams, vehiclesToShow.length])
+
+    // Handle subscription success redirect from Stripe
+    useEffect(() => {
+        const subscription = searchParams.get('subscription')
+        if (subscription === 'success') {
+            toast.success('¡Suscripción activada! Tu negocio está ahora publicado.')
+            // Clean URL
+            router.replace('/profile')
+        }
+    }, [searchParams, router])
+
+    // Handle business registration success
+    useEffect(() => {
+        const registered = searchParams.get('business_registered')
+        if (registered === 'true') {
+            toast.success('¡Negocio registrado! Tu periodo de prueba de 3 meses ha comenzado.')
+            // Clean URL
+            router.replace('/profile')
+        }
+    }, [searchParams, router])
 
     // Lógica de paginación
     const totalPages = Math.ceil(vehiclesToShow.length / ITEMS_PER_PAGE)

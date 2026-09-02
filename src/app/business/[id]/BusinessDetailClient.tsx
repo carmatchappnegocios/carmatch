@@ -12,6 +12,7 @@ import { MapPin, Clock, Phone, Navigation, ArrowLeft, Star, ShieldCheck, Edit3, 
 import ConfirmationModal from '@/components/ConfirmationModal'
 import OpeningHoursDisplay from '@/components/OpeningHoursDisplay'
 import ReviewList from '@/components/ReviewList'
+import SubscriptionBanner from '@/components/SubscriptionBanner'
 
 interface BusinessDetailProps {
     business: {
@@ -33,6 +34,8 @@ interface BusinessDetailProps {
         isActive: boolean
         expiresAt: string | Date | null
         isFreePublication: boolean
+        subscriptionStatus?: string | null
+        stripeSubscriptionId?: string | null
     }
     currentUserId?: string | null
 }
@@ -57,6 +60,43 @@ export default function BusinessDetailClient({ business, currentUserId }: Busine
 
     // Verificar si el usuario actual es el dueño del negocio
     const isOwner = currentUserId === business.userId
+
+    const handleSubscribe = async (businessId: string) => {
+        try {
+            const res = await fetch('/api/subscriptions/create-checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ businessId })
+            })
+            const data = await res.json()
+            if (res.ok && data.url) {
+                window.open(data.url, '_blank')
+            } else {
+                alert(data.error || 'Error al iniciar suscripción')
+            }
+        } catch {
+            alert('Error de conexión')
+        }
+    }
+
+    const handleManageBilling = async (businessId: string) => {
+        try {
+            const res = await fetch('/api/subscriptions/portal', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ businessId })
+            })
+            const data = await res.json()
+            if (res.ok && data.url) {
+                window.open(data.url, '_blank')
+            } else {
+                alert(data.error || 'Error al abrir portal de facturación')
+            }
+        } catch {
+            alert('Error de conexión')
+        }
+    }
+
     // Lógica para acciones de gestión
     const executeToggleStatus = async (useCredit: boolean) => {
         setLoading(true)
@@ -277,6 +317,21 @@ export default function BusinessDetailClient({ business, currentUserId }: Busine
 
                     {/* Right Column: Info & Details */}
                     <div className="flex flex-col space-y-6">
+                        {isOwner && (
+                            <SubscriptionBanner
+                                business={{
+                                    id: business.id,
+                                    name: business.name,
+                                    isActive: business.isActive,
+                                    isFreePublication: business.isFreePublication,
+                                    expiresAt: business.expiresAt ? (typeof business.expiresAt === 'string' ? business.expiresAt : business.expiresAt.toISOString()) : null,
+                                    subscriptionStatus: business.subscriptionStatus || null,
+                                    stripeSubscriptionId: business.stripeSubscriptionId || null,
+                                }}
+                                onSubscribe={handleSubscribe}
+                                onManageBilling={handleManageBilling}
+                            />
+                        )}
                         {isOwner && managementPanel()}
 
                         {/* Status Card */}
