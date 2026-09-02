@@ -110,14 +110,8 @@ export function LocationProvider({
                     const locationData = await reverseGeocode(coords.latitude, coords.longitude)
                     setLocation({ ...locationData, source: 'gps' })
                 } catch {
-                    // GPS no disponible — fallback a IP detection
-                    try {
-                        const coords = await getUserLocation()
-                        const locationData = await reverseGeocode(coords.latitude, coords.longitude)
-                        setLocation({ ...locationData, source: 'ip' })
-                    } catch {
-                        console.warn('⚠️ GPS y IP detection fallaron')
-                    }
+                    // GPS no disponible aún (cold start en móvil puede tardar 30-60s)
+                    // watchPosition se encargará cuando consiga fix
                 }
                 return
             }
@@ -172,29 +166,14 @@ export function LocationProvider({
         let hasSaved = false;
         
         // ─── PASO 1: Cargar ubicación en cache (instantáneo) ───────────────
-        const initLocation = async () => {
         if (typeof window !== 'undefined') {
             const savedManual = localStorage.getItem('carmatch_manual_location')
             const savedDetected = localStorage.getItem('carmatch_last_detected_location')
             const savedPrecise = localStorage.getItem('carmatch_precise_location')
 
             if (savedPrecise === '1') {
-                // Verificar si el permiso GPS sigue activo antes de restaurar
-                try {
-                    const result = await navigator.permissions.query({ name: 'geolocation' })
-                    if (result.state === 'granted' || result.state === 'prompt') {
-                        preciseLocationRef.current = true
-                        setPreciseLocationEnabledState(true)
-                    } else {
-                        // Permiso denegado — limpiar cache para que usuario pueda re-intentar
-                        localStorage.removeItem('carmatch_precise_location')
-                        localStorage.removeItem('carmatch_location_prompt')
-                    }
-                } catch {
-                    // permissions API no disponible — confiar en cache
-                    preciseLocationRef.current = true
-                    setPreciseLocationEnabledState(true)
-                }
+                preciseLocationRef.current = true
+                setPreciseLocationEnabledState(true)
             }
 
             if (savedManual) {
@@ -282,10 +261,7 @@ export function LocationProvider({
         // ─── PASO 3: GPS Preciso ─
         // NO se ejecuta automáticamente — solo cuando el usuario lo activa desde Settings
         // (evita que GPS de baja precisión sobreescriba la ubicación IP correcta)
-
-        } // end initLocation
-        initLocation()
-
+        
     // 🔥 BUCLE PREVENIDO: Solo se ejecuta al montar (fetchLocation es estable con useCallback)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fetchLocation])
@@ -339,21 +315,7 @@ export function LocationProvider({
                     console.warn('[LOCATION] Real-time sync failed:', e)
                 }
             },
-            { 
-                maxAccuracy: 200,
-                onError: (error) => {
-                    // Permiso denegado (1) o timeout (3) → desactivar GPS y limpiar cache
-                    if (error.code === 1 || error.code === 3) {
-                        console.warn(`⚠️ GPS desactivado automáticamente: ${error.code === 1 ? 'permiso denegado' : 'timeout'}`)
-                        setPreciseLocationEnabledState(false)
-                        preciseLocationRef.current = false
-                        if (typeof window !== 'undefined') {
-                            localStorage.removeItem('carmatch_precise_location')
-                            localStorage.removeItem('carmatch_location_prompt')
-                        }
-                    }
-                }
-            }
+            { maxAccuracy: 200 }
         )
 
         return () => stopWatching()
