@@ -168,17 +168,28 @@ export default function ProfileClient({ user, isOwner, vehiclesToShow }: Profile
                             </div>
                         </div>
 
-                        {/* 3. Botón Publicar (Abajo - Morado) */}
+                        {/* 3. Botones de Acción (Abajo) */}
                         {isOwner && (
-                            <Link
-                                href="/publish"
-                                className="w-full sm:w-auto px-6 py-3 bg-primary-700 text-background text-center font-bold rounded-xl hover:bg-primary-600 transition shadow-lg flex items-center justify-center gap-2 text-sm sm:self-start"
-                            >
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                                </svg>
-                                {t('profile.publish_vehicle')}
-                            </Link>
+                            <div className="flex flex-wrap gap-2 w-full sm:w-auto">
+                                <Link
+                                    href="/publish"
+                                    className="flex-1 sm:flex-none px-6 py-3 bg-primary-700 text-background text-center font-bold rounded-xl hover:bg-primary-600 transition shadow-lg flex items-center justify-center gap-2 text-sm"
+                                >
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                    </svg>
+                                    {t('profile.publish_vehicle')}
+                                </Link>
+                                <Link
+                                    href="/favorites"
+                                    className="flex-1 sm:flex-none px-6 py-3 bg-surface-highlight text-text-primary text-center font-bold rounded-xl hover:bg-surface-highlight/80 transition border border-white/10 flex items-center justify-center gap-2 text-sm"
+                                >
+                                    <svg className="w-5 h-5 text-red-400" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                                    </svg>
+                                    Mis Favoritos
+                                </Link>
+                            </div>
                         )}
                     </div>
 
