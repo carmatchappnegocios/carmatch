@@ -22,6 +22,27 @@ export type CountryCode = typeof EMERGING_MARKETS[number] | string
 /**
  * Calculate price for credits based on country
  */
+export async function detectCountryFromIP(ip?: string): Promise<string> {
+    if (!ip) return 'MX'
+    try {
+        const res = await fetch(`https://ipapi.co/${ip}/json/`, { next: { revalidate: 3600 } })
+        if (res.ok) {
+            const data = await res.json()
+            return data.country_code || 'MX'
+        }
+    } catch {}
+    return 'MX'
+}
+
+export function getPricingForCountry(countryCode: string) {
+    const isEmerging = EMERGING_MARKETS.includes(countryCode as typeof EMERGING_MARKETS[number])
+    return {
+        pricePerCredit: isEmerging ? BASE_PRICE_MXN : PREMIUM_PRICE_USD,
+        currency: isEmerging ? 'MXN' : 'USD',
+        region: isEmerging ? 'emerging' : 'premium',
+    }
+}
+
 export function calculateCreditPrice(country: string, quantity: number) {
     if (country === 'MX') {
         return {

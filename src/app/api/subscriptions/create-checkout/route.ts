@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
         const stripeCustomer = await getOrCreateStripeCustomer(
             stripe,
             session.user.email,
-            session.user.name,
+            session.user.name ?? null,
             session.user.id
         )
 
