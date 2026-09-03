@@ -95,11 +95,11 @@ export const metadata: Metadata = {
             { url: "/favicon-v20.png?v=22", sizes: "32x32" },
         ],
         shortcut: "/icon-192-v20.png?v=22",
-        apple: "/icon-192-v20.png?v=22",
+        apple: "/maskable-192-dark.png",
         other: [
             {
                 rel: 'maskable-icon',
-                url: '/maskable-192-v20.png?v=22',
+                url: '/maskable-192-dark.png',
             },
         ],
     }
@@ -131,7 +131,9 @@ export default function RootLayout({
                 <meta name="application-name" content="CarMatch" />
                 <link rel="preconnect" href="https://api.mapbox.com" />
                 <link rel="preconnect" href="https://events.mapbox.com" />
-                <link rel="apple-touch-icon" href="/icon-192-v20.png?v=22" />
+                <link rel="apple-touch-icon" href="/maskable-192-dark.png" />
+                <link rel="apple-touch-icon" sizes="192x192" href="/maskable-192-dark.png" />
+                <link rel="apple-touch-icon" sizes="512x512" href="/maskable-512-dark.png" />
                 <script dangerouslySetInnerHTML={{ __html: "document.documentElement.style.background='#0f172a';document.documentElement.style.backgroundColor='#0f172a';document.body.style.background='#0f172a';document.body.style.backgroundColor='#0f172a'" }} />
                 <meta name="apple-mobile-web-app-capable" content="yes" />
                 <meta name="mobile-web-app-capable" content="yes" />

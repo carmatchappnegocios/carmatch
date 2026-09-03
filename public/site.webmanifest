@@ -27,13 +27,13 @@
     ],
     "icons": [
         {
-            "src": "/maskable-192-v20.png",
+            "src": "/maskable-192-dark.png",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "maskable"
         },
         {
-            "src": "/maskable-512-v20.png",
+            "src": "/maskable-512-dark.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"
@@ -53,18 +53,18 @@
     ],
     "screenshots": [
         {
-            "src": "/screenshots/market_mobile.png",
+            "src": "/splash-1080x1920.png",
             "sizes": "1080x1920",
             "type": "image/png",
             "form_factor": "narrow",
-            "label": "MarketCar - Encuentra tu próximo auto"
+            "label": "CarMatch - Compra y vende autos gratis"
         },
         {
-            "src": "/screenshots/swipe_mobile.png",
-            "sizes": "1080x1920",
+            "src": "/splash-1170x2532.png",
+            "sizes": "1170x2532",
             "type": "image/png",
             "form_factor": "narrow",
-            "label": "CarMatch Swipe - Descubre autos como en Tinder"
+            "label": "CarMatch - Tu marketplace automotriz"
         }
     ],
     "shortcuts": [
