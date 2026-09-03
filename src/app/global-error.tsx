@@ -12,8 +12,11 @@ export default function GlobalError({
     Sentry.captureException(error)
 
     return (
-        <html lang="es">
-            <body>
+        <html lang="es" style={{ backgroundColor: '#0f172a' }}>
+            <head>
+                <meta name="color-scheme" content="dark" />
+            </head>
+            <body style={{ backgroundColor: '#0f172a' }}>
                 <div style={{
                     minHeight: '100vh',
                     display: 'flex',

@@ -125,22 +125,18 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="es" className="dark" style={{ colorScheme: 'dark', backgroundColor: '#0f172a' }} suppressHydrationWarning>
+        <html lang="es" className="dark" suppressHydrationWarning>
             <head>
-                <meta name="theme-color" content="#0f172a" />
                 <meta name="application-name" content="CarMatch" />
                 <link rel="preconnect" href="https://api.mapbox.com" />
                 <link rel="preconnect" href="https://events.mapbox.com" />
                 <link rel="apple-touch-icon" href="/maskable-192-dark.png" />
                 <link rel="apple-touch-icon" sizes="192x192" href="/maskable-192-dark.png" />
                 <link rel="apple-touch-icon" sizes="512x512" href="/maskable-512-dark.png" />
-                <script dangerouslySetInnerHTML={{ __html: "document.documentElement.style.background='#0f172a';document.documentElement.style.backgroundColor='#0f172a';document.body.style.background='#0f172a';document.body.style.backgroundColor='#0f172a'" }} />
                 <meta name="apple-mobile-web-app-capable" content="yes" />
                 <meta name="mobile-web-app-capable" content="yes" />
-                <meta name="color-scheme" content="dark" />
-                <style dangerouslySetInnerHTML={{ __html: 'html,body{background-color:#0f172a!important;min-height:100vh;margin:0;padding:0}' }} />
             </head>
-            <body className={`${inter.className} min-h-screen-safe bg-[#0f172a]`} style={{ backgroundColor: '#0f172a' }}>
+            <body className={`${inter.className} min-h-screen-safe bg-[#0f172a]`}>
                 <ClientViewportFix />
                 <GoogleAnalytics />
                 <Providers>
@@ -157,7 +153,7 @@ export default function RootLayout({
                     <GlobalSOSWatcher />
                     <LocationPromptBanner />
                     {/* 📱 Native Body Scroll Architecture: Standard Mobile Web Pattern */}
-                    <div className="flex flex-col min-h-screen w-full relative bg-slate-950">
+                    <div className="flex flex-col min-h-screen w-full relative bg-[#0f172a]">
                         {/* Header: Sticky at top, scrolls with page */}
                         <DynamicHeader />
 

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'carmatch-v2.5.0';
+const CACHE_NAME = 'carmatch-v2.6.0';
 const OFFLINE_URL = '/offline.html';
 
 const PRE_CACHE_RESOURCES = [
@@ -9,7 +9,7 @@ const PRE_CACHE_RESOURCES = [
     '/map',
     '/favicon-v20.png',
     '/icon-192-v20.png',
-    '/icon-192-v20.png'
+    '/manifest.json'
 ];
 
 self.addEventListener('install', (event) => {
@@ -50,6 +50,22 @@ self.addEventListener('fetch', (event) => {
         event.request.method !== 'GET' ||
         url.origin !== self.location.origin
     ) {
+        return;
+    }
+
+    // Network First for manifest — always fetch fresh
+    if (event.request.url.endsWith('/manifest.json')) {
+        event.respondWith(
+            fetch(event.request).then((response) => {
+                if (response && response.status === 200) {
+                    const responseToCache = response.clone();
+                    caches.open(CACHE_NAME).then((cache) => {
+                        cache.put(event.request, responseToCache);
+                    });
+                }
+                return response;
+            }).catch(() => caches.match(event.request))
+        );
         return;
     }
 
