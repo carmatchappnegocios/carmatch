@@ -4,7 +4,7 @@
 
 import { useEffect, useState, useRef, useCallback } from 'react'
 import { MapPin, Search, Loader2, Plus, RefreshCw, MessageSquare } from 'lucide-react'
-import { MarketChat } from '@/components/MarketChat'
+import AIChatWidget from '@/components/AIChatWidget'
 
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'

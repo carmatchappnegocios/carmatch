@@ -16,6 +16,7 @@ import { formatPrice, formatNumber } from '@/lib/vehicleTaxonomy'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Edit3, Sparkles, CreditCard, Play, Pause, BadgeCheck, AlertTriangle, Share2, X, Trash2 } from 'lucide-react'
 import { generateVehicleSlug } from '@/lib/slug'
+import { isSoftLogout } from '@/lib/utils'
 import ConfirmationModal from '@/components/ConfirmationModal'
 
 interface VehicleDetailProps {
@@ -94,11 +95,11 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
 
     const isOwner = !!currentUserId && currentUserId === vehicle.userId
     const isGuest = !currentUserId
-    const [isSoftLogout, setIsSoftLogout] = useState(false)
+    const [isSoftLogoutState, setIsSoftLogoutState] = useState(false)
     const [zoomScale, setZoomScale] = useState(1)
 
     useEffect(() => {
-        setIsSoftLogout(document.cookie.includes('soft_logout=true') || localStorage.getItem('soft_logout') === 'true')
+        setIsSoftLogoutState(isSoftLogout())
     }, [])
 
 
@@ -478,7 +479,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
 
                     {/* Right Column: Details */}
                     <div className="flex flex-col">
-                        {isOwner && !isSoftLogout && <ManagementPanel />}
+                        {isOwner && !isSoftLogoutState && <ManagementPanel />}
 
 
                         <div className="bg-surface border border-surface-highlight rounded-3xl p-6 shadow-xl mb-6">

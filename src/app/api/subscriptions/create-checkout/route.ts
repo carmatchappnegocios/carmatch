@@ -1,16 +1,11 @@
-
 import { NextRequest, NextResponse } from 'next/server'
-import Stripe from 'stripe'
 import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/db'
-
-
-const SUBSCRIPTION_PRICE_MXN = 20.00
+import { SUBSCRIPTION_PRICE_MXN } from '@/lib/pricing'
+import { createStripeClient, getOrCreateStripeCustomer } from '@/lib/stripe'
 
 export async function POST(request: NextRequest) {
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-        apiVersion: '2025-02-24.acacia',
-    })
+    const stripe = createStripeClient()
 
     try {
         const session = await auth()
@@ -21,21 +16,12 @@ export async function POST(request: NextRequest) {
         const { businessId } = await request.json()
 
         // --- PREPARAR CLIENTE STRIPE ---
-        let stripeCustomer;
-        const customers = await stripe.customers.list({
-            email: session.user.email,
-            limit: 1
-        });
-
-        if (customers.data.length > 0) {
-            stripeCustomer = customers.data[0];
-        } else {
-            stripeCustomer = await stripe.customers.create({
-                email: session.user.email,
-                name: session.user.name || 'Cliente CarMatch',
-                metadata: { userId: session.user.id }
-            });
-        }
+        const stripeCustomer = await getOrCreateStripeCustomer(
+            stripe,
+            session.user.email,
+            session.user.name,
+            session.user.id
+        )
 
         // Crear Sesión de Suscripción
         const checkoutSession = await stripe.checkout.sessions.create({

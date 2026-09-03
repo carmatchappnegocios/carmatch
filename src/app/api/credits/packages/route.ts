@@ -1,27 +1,10 @@
-
 import { NextRequest, NextResponse } from 'next/server'
-
-// API gratuita para tipo de cambio en tiempo real
-const EXCHANGE_API = 'https://api.exchangerate-api.com/v4/latest/MXN'
+import { BASE_PRICE_MXN, PREMIUM_PRICE_USD, EMERGING_MARKETS, EXCHANGE_API, MIN_PRICE_EMERGING, MIN_PRICE_PREMIUM } from '@/lib/pricing'
 
 export async function GET(request: NextRequest) {
     try {
         const { searchParams } = new URL(request.url)
         const country = searchParams.get('country') || 'MX'
-
-        // PRECIOS BASE
-        const BASE_PRICE_MXN = 20.00      // Para emergentes (LATAM, Asia, África) - en MXN
-        const PREMIUM_PRICE_USD = 4.99    // Para desarrollados (USA, Europa, Japón) - en USD fijo
-
-        // PISOS MÍNIMOS EN USD (NO BAJAR DE AQUÍ)
-        const MIN_PRICE_EMERGING = 1.00   // Mínimo $1.00 USD
-        const MIN_PRICE_PREMIUM = 4.99    // Precio fijo para países desarrollados
-
-        // Lista de países emergentes
-        const emergingMarkets = [
-            'CO', 'AR', 'PE', 'CL', 'EC', 'GT', 'CR', 'BR', 'MX', // LATAM
-            'IN', 'CN', 'VN', 'TH', 'ID', 'PH', 'EG', 'NG'  // Asia/África
-        ]
 
         let currency = 'USD'
         let price = MIN_PRICE_PREMIUM
@@ -34,7 +17,7 @@ export async function GET(request: NextRequest) {
             price = BASE_PRICE_MXN
             tierName = 'mexico'
             priceInMXN = BASE_PRICE_MXN
-        } else if (emergingMarkets.includes(country)) {
+        } else if (EMERGING_MARKETS.includes(country as typeof EMERGING_MARKETS[number])) {
             // Emergentes: $20 MXN convertido a USD
             let usdToMxnRate = 16.50
             try {

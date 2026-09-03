@@ -61,3 +61,23 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'Error al enviar reporte' }, { status: 500 })
     }
 }
+
+export async function GET(req: NextRequest) {
+    try {
+        const session = await auth()
+        if (!session?.user?.id) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+        }
+
+        const reports = await prisma.report.findMany({
+            where: { reporterId: session.user.id },
+            orderBy: { createdAt: 'desc' },
+            take: 20
+        })
+
+        return NextResponse.json({ reports })
+    } catch (error) {
+        console.error('Error fetching reports:', error)
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+    }
+}

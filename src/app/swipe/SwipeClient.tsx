@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { calculateDistance, searchCity, searchCities, normalizeCountryCode, LocationData } from '@/lib/geolocation'
 import { useRestoreSessionModal } from '@/hooks/useRestoreSessionModal'
+import { isSoftLogout } from '@/lib/utils'
 
 interface FeedItem {
     id: string
@@ -356,8 +357,7 @@ export default function SwipeClient({ initialItems, currentUserId }: SwipeClient
 
     const handleLike = async (id: string) => {
         // 🔥 RESTAURAR SESIÓN: Si hay sesión pero está en "Modo Invitado", la activamos
-        const isSoftLogout = document.cookie.includes('soft_logout=true') || localStorage.getItem('soft_logout') === 'true'
-        if (currentUserId !== 'guest' && isSoftLogout) {
+        if (currentUserId !== 'guest' && isSoftLogout()) {
             openModal(
                 "¿Deseas reactivar tu sesión para guardar este vehículo? Tu cuenta sigue vinculada.",
                 () => executeLike(id)

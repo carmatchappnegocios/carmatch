@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { useRestoreSessionModal } from '@/hooks/useRestoreSessionModal'
+import { isSoftLogout } from '@/lib/utils'
 import { toast } from 'sonner'
 
 interface ContactButtonProps {
@@ -35,8 +36,7 @@ export default function ContactButton({
 
     const handleContact = async () => {
         // 🔥 RESTAURAR SESIÓN: Si hay sesión pero está en "Modo Invitado", la activamos
-        const isSoftLogout = document.cookie.includes('soft_logout=true') || localStorage.getItem('soft_logout') === 'true'
-        if (session && isSoftLogout) {
+        if (session && isSoftLogout()) {
             openModal(
                 t('contact.reactivate_prompt'),
                 () => executeContact()
@@ -88,9 +88,7 @@ export default function ContactButton({
     }
 
     // No mostrar si es tu propio vehículo (Solo si la sesión está ACTIVA y NO en soft logout)
-    const isSoftLogout = typeof document !== 'undefined' && (document.cookie.includes('soft_logout=true') || localStorage.getItem('soft_logout') === 'true')
-
-    if (session?.user?.id === sellerId && !isSoftLogout) {
+    if (session?.user?.id === sellerId && !isSoftLogout()) {
         return null
     }
 

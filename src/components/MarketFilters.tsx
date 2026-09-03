@@ -19,7 +19,7 @@ import { useLanguage } from '@/contexts/LanguageContext'
 import { useLocation } from '@/contexts/LocationContext'
 import { searchCities, LocationData } from '@/lib/geolocation'
 import { MapPin, Search, Loader2, ChevronDown, X } from 'lucide-react'
-import { MarketChat } from '@/components/MarketChat'
+import AIChatWidget from '@/components/AIChatWidget'
 
 interface MarketFiltersAdvancedProps {
     currentFilters: any
@@ -354,7 +354,7 @@ export default function MarketFiltersAdvanced({
 
             {/* 2. 🧠 MARKETCHAT – IA que busca en la ciudad seleccionada */}
             <div className="mb-4">
-                <MarketChat
+                <AIChatWidget context="market"
                     userCity={city || ''}
                     onFilterChange={(filters) => {
                         const params = new URLSearchParams(searchParams.toString())

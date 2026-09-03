@@ -1,11 +1,12 @@
 
 'use client'
 
-import { MapPin, Phone, Globe, Navigation, MessageCircle, Star } from 'lucide-react'
+import { MapPin, Phone, Globe, Navigation, MessageCircle } from 'lucide-react'
 import { getBusinessStatus } from '@/lib/businessTimeUtils'
 import CategoryIcon from './CategoryIcon'
 import { BUSINESS_CATEGORIES } from '@/lib/businessCategories'
 import { useLanguage } from '@/contexts/LanguageContext'
+import RatingDisplay from '@/components/RatingDisplay'
 
 interface BusinessListCardProps {
     business: {
@@ -67,15 +68,7 @@ export default function BusinessListCard({ business, isActive, onClick }: Busine
 
                     <div className="flex items-center gap-1 mt-0.5">
                         {rating > 0 ? (
-                            <>
-                                <span className="text-sm font-bold text-amber-500">{rating.toFixed(1)}</span>
-                                <div className="flex">
-                                    {[1, 2, 3, 4, 5].map((s) => (
-                                        <Star key={s} size={12} fill={s <= Math.round(rating) ? "currentColor" : "none"} className="text-amber-500" />
-                                    ))}
-                                </div>
-                                <span className="text-xs text-text-secondary">({totalReviews})</span>
-                            </>
+                            <RatingDisplay rating={rating} totalReviews={totalReviews} size="sm" />
                         ) : (
                             <span className="text-xs text-text-secondary">Sin reseñas</span>
                         )}

@@ -10,9 +10,11 @@ import { BUSINESS_CATEGORIES as CATEGORIES } from '@/lib/businessCategories'
 import { useLocation } from '@/contexts/LocationContext'
 import { Star, Sparkles, MapPin, Settings2, Plus, Check, MessageSquare } from 'lucide-react'
 import CategoryIcon from '@/components/CategoryIcon'
-import { MapStoreChat } from '@/components/MapStoreChat'
+import AIChatWidget from '@/components/AIChatWidget'
 import { useRestoreSessionModal } from "@/hooks/useRestoreSessionModal"
+import { isSoftLogout } from '@/lib/utils'
 import { toast } from 'sonner'
+import { searchCity } from '@/lib/geolocation'
 
 const MapBoxStoreLocator = dynamic(() => import('@/components/MapBoxStoreLocator'), {
     ssr: false,
@@ -25,26 +27,6 @@ const BusinessDetailsModal = dynamic(() => import('@/components/BusinessDetailsM
 interface MapClientProps {
     businesses: any[]
     user: any
-}
-
-async function searchCity(query: string) {
-    try {
-        const res = await fetch(`/api/geolocation?q=${encodeURIComponent(query)}`)
-        if (!res.ok) return null
-        const data = await res.json()
-        if (data.latitude && data.longitude) {
-            return {
-                latitude: data.latitude,
-                longitude: data.longitude,
-                city: data.city || query, // Fallback al query si no hay ciudad
-                country: data.country || ''
-            }
-        }
-        return null
-    } catch (error) {
-        console.error('Error in searchCity:', error)
-        return null
-    }
 }
 
 export default function MapClient({ businesses, user }: MapClientProps) {
@@ -368,8 +350,7 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                                     href="/my-businesses?action=new"
                                     onClick={(e) => {
                                         // 🔥 GUEST SESSION FIX: Verificamos si hay soft logout antes de navegar a ruta protegida
-                                        const isSoftLogout = document.cookie.includes('soft_logout=true') || localStorage.getItem('soft_logout') === 'true'
-                                        if (user && isSoftLogout) {
+                                        if (user && isSoftLogout()) {
                                             e.preventDefault()
                                             openModal(
                                                 t('common2.session_expired'),
@@ -393,7 +374,7 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                             <div className="px-6 py-3 space-y-4 flex-1">
                                 {/* 2. PREGUNTAR AL EXPERTO (NUEVA IA CONVERSACIONAL) */}
                                 <div className="space-y-4">
-                                    <MapStoreChat
+                                    <AIChatWidget context="map"
                                         userCity={location?.city}
                                         onFilterChange={(filters) => {
                                             if (filters.categories && filters.categories.length > 0) {

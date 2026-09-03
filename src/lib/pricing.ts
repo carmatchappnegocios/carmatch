@@ -1,63 +1,42 @@
-// Geo-pricing utilities for dynamic credit pricing
+/**
+ * Pricing constants for CarMatch
+ * PROHIBIDO MODIFICAR ESTOS PRECIOS SIN CONSULTA PREVIA
+ */
 
-interface PricingConfig {
-    pricePerCredit: number // In MXN for Mexico, USD for international
-    currency: string
-    region: 'developed' | 'developing'
-}
+export const BASE_PRICE_MXN = 20.00
+export const PREMIUM_PRICE_USD = 4.99
+export const SUBSCRIPTION_PRICE_MXN = 20.00
 
-// Lista completa de países de alto ingreso según Banco Mundial, OCDE y FMI
-// Estos países cobran $4.99 USD por crédito
-const DEVELOPED_COUNTRIES = [
-    // América del Norte
-    'US', 'CA',
+export const MIN_PRICE_EMERGING = 1.00
+export const MIN_PRICE_PREMIUM = 4.99
 
-    // Europa Occidental
-    'GB', 'DE', 'FR', 'IT', 'ES', 'NL', 'SE', 'NO', 'DK', 'FI',
-    'CH', 'AT', 'BE', 'IE', 'PT', 'LU', 'IS', 'GR', 'CY', 'MT',
+export const EXCHANGE_API = 'https://api.exchangerate-api.com/v4/latest/MXN'
 
-    // Europa Central y del Este (Alto Ingreso)
-    'CZ', 'SI', 'EE', 'SK', 'LT', 'LV', 'PL', 'HU', 'HR',
+export const EMERGING_MARKETS = [
+    'CO', 'AR', 'PE', 'CL', 'EC', 'GT', 'CR', 'BR', 'MX',
+    'IN', 'CN', 'VN', 'TH', 'ID', 'PH', 'EG', 'NG'
+] as const
 
-    // Oceanía
-    'AU', 'NZ',
+export type CountryCode = typeof EMERGING_MARKETS[number] | string
 
-    // Asia Oriental y Sudeste Asiático (Desarrollados)
-    'JP', 'KR', 'SG', 'HK', 'TW', 'BN', 'MO',
-
-    // Medio Oriente (Alto Ingreso)
-    'AE', 'QA', 'SA', 'KW', 'BH', 'OM', 'IL',
-
-    // Caribe y Territorios (Alto Ingreso)
-    'BS', 'BB', 'TC', 'KY', 'BM', 'VI', 'PR',
-
-    // Otros territorios de alto ingreso
-    'GU', 'MP', 'AS', 'AW', 'CW', 'SX'
-]
-
-export function getPricingForCountry(countryCode: string): PricingConfig {
-    const isDeveloped = DEVELOPED_COUNTRIES.includes(countryCode.toUpperCase())
-
-    return {
-        pricePerCredit: isDeveloped ? 4.99 : 20,
-        currency: isDeveloped ? 'USD' : 'MXN',
-        region: isDeveloped ? 'developed' : 'developing'
-    }
-}
-
-export async function detectCountryFromIP(ip?: string): Promise<string> {
-    // In production, use a service like ipapi.co or MaxMind
-    // For now, we'll default to Mexico
-    try {
-        if (!ip || ip === '::1' || ip === '127.0.0.1') {
-            return 'MX' // Default for localhost
+/**
+ * Calculate price for credits based on country
+ */
+export function calculateCreditPrice(country: string, quantity: number) {
+    if (country === 'MX') {
+        return {
+            amountInCents: Math.round(BASE_PRICE_MXN * quantity * 100),
+            currency: 'mxn' as const,
         }
-
-        const response = await fetch(`https://ipapi.co/${ip}/json/`)
-        const data = await response.json()
-        return data.country_code || 'MX'
-    } catch (error) {
-        console.error('Error detecting country:', error)
-        return 'MX' // Default fallback
+    }
+    if (EMERGING_MARKETS.includes(country as typeof EMERGING_MARKETS[number])) {
+        return {
+            amountInCents: Math.round(BASE_PRICE_MXN * quantity * 100),
+            currency: 'mxn' as const,
+        }
+    }
+    return {
+        amountInCents: Math.round(PREMIUM_PRICE_USD * quantity * 100),
+        currency: 'usd' as const,
     }
 }

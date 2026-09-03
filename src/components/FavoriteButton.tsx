@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { useRestoreSessionModal } from '@/hooks/useRestoreSessionModal'
 import { useLanguage } from '@/contexts/LanguageContext'
+import { isSoftLogout } from '@/lib/utils'
 
 interface FavoriteButtonProps {
 
@@ -29,9 +30,7 @@ export default function FavoriteButton({
     rounded = 'rounded-full',
     onToggle
 }: FavoriteButtonProps) {
-    const isSoftLogout = typeof document !== 'undefined' && (document.cookie.includes('soft_logout=true') || localStorage.getItem('soft_logout') === 'true')
-
-    const [isFavorited, setIsFavorited] = useState(isSoftLogout ? false : initialIsFavorited)
+    const [isFavorited, setIsFavorited] = useState(isSoftLogout() ? false : initialIsFavorited)
     const [isLoading, setIsLoading] = useState(false)
     const [animate, setAnimate] = useState(false)
     const router = useRouter()
@@ -42,9 +41,7 @@ export default function FavoriteButton({
     // Sincronizar con cambios en props (importante para refrescos de servidor)
     useEffect(() => {
         // 🔥 GHOST SESSION FIX: Si hay soft logout, forzamos estado de invitado (no favorito)
-        const isSoftLogout = typeof document !== 'undefined' && (document.cookie.includes('soft_logout=true') || localStorage.getItem('soft_logout') === 'true')
-
-        if (isSoftLogout) {
+        if (isSoftLogout()) {
             setIsFavorited(false)
         } else {
             setIsFavorited(initialIsFavorited)

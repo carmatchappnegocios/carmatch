@@ -1,15 +1,10 @@
-
 import { NextRequest, NextResponse } from 'next/server'
-import Stripe from 'stripe'
 import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/db'
-
-const STRIPE_API_VERSION = '2025-02-24.acacia' as const
+import { createStripeClient } from '@/lib/stripe'
 
 export async function POST(request: NextRequest) {
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-        apiVersion: STRIPE_API_VERSION,
-    })
+    const stripe = createStripeClient()
 
     try {
         const session = await auth()

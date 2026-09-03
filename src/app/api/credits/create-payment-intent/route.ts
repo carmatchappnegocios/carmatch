@@ -1,19 +1,12 @@
-
 import { NextRequest, NextResponse } from 'next/server'
-import Stripe from 'stripe'
 import { prisma } from '@/lib/db'
 import { auth } from '@/lib/auth'
 import { checkRateLimit } from '@/lib/rate-limit'
-
-// Inicializar Stripe con la clave secreta (desde .env)
-
-const EXCHANGE_API = 'https://api.exchangerate-api.com/v4/latest/MXN'
+import { BASE_PRICE_MXN, PREMIUM_PRICE_USD, EMERGING_MARKETS, EXCHANGE_API } from '@/lib/pricing'
+import { createStripeClient, getOrCreateStripeCustomer } from '@/lib/stripe'
 
 export async function POST(request: NextRequest) {
-    // Inicializar Stripe con la clave secreta (desde .env)
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-        apiVersion: '2025-02-24.acacia' as any,
-    })
+    const stripe = createStripeClient()
 
     try {
         const session = await auth()
@@ -28,15 +21,6 @@ export async function POST(request: NextRequest) {
 
         const { country, quantity } = await request.json()
 
-        // --- LÓGICA DE PRECIOS ---
-        const BASE_PRICE_MXN = 20.00       // Emergentes: $20 MXN
-        const PREMIUM_PRICE_USD = 4.99     // Desarrollados: $4.99 USD fijo
-
-        const emergingMarkets = [
-            'CO', 'AR', 'PE', 'CL', 'EC', 'GT', 'CR', 'BR', 'MX',
-            'IN', 'CN', 'VN', 'TH', 'ID', 'PH', 'EG', 'NG'
-        ]
-
         let amountInCents = 0
         let currency = 'mxn'
 
@@ -45,7 +29,7 @@ export async function POST(request: NextRequest) {
             const totalMxn = BASE_PRICE_MXN * quantity
             amountInCents = Math.round(totalMxn * 100)
             currency = 'mxn'
-        } else if (emergingMarkets.includes(country)) {
+        } else if (EMERGING_MARKETS.includes(country as typeof EMERGING_MARKETS[number])) {
             // Emergentes: convertir $20 MXN a USD
             let usdToMxnRate = 16.50
             try {
@@ -69,21 +53,12 @@ export async function POST(request: NextRequest) {
         }
 
         // --- PREPARAR CLIENTE STRIPE (Requerido para SPEI) ---
-        let stripeCustomer;
-        const customers = await stripe.customers.list({
-            email: session.user.email,
-            limit: 1
-        });
-
-        if (customers.data.length > 0) {
-            stripeCustomer = customers.data[0];
-        } else {
-            stripeCustomer = await stripe.customers.create({
-                email: session.user.email,
-                name: session.user.name || 'Cliente CarMatch',
-                metadata: { userId: session.user.id }
-            });
-        }
+        const stripeCustomer = await getOrCreateStripeCustomer(
+            stripe,
+            session.user.email,
+            session.user.name,
+            session.user.id
+        )
 
         // Crear PaymentIntent
         const paymentIntent = await stripe.paymentIntents.create({

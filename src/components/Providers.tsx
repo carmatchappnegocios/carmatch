@@ -8,7 +8,7 @@ import dynamic from "next/dynamic"
 
 import QueryProvider from "./QueryProvider"
 
-const AIChatbot = dynamic(() => import("@/components/AIChatbot"), { ssr: false });
+const AIChatWidget = dynamic(() => import("@/components/AIChatWidget"), { ssr: false });
 const RegisterSW = dynamic(() => import("@/components/RegisterSW"), { ssr: false });
 const PushNotificationRequest = dynamic(() => import("@/components/PushNotificationRequest"), { ssr: false });
 
@@ -24,7 +24,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
                             {/* <HistoryShield /> */}
                             {children}
                             {/* <GlobalLocationGate /> */}
-                            <AIChatbot />
+                            <AIChatWidget context="support" />
                         </DataSaverProvider>
                     </LocationProvider>
                 </LanguageProvider>

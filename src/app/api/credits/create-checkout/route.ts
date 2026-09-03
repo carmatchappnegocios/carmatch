@@ -1,14 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
-import Stripe from 'stripe'
 import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 import { checkRateLimit } from '@/lib/rate-limit'
+import { BASE_PRICE_MXN, PREMIUM_PRICE_USD, EMERGING_MARKETS } from '@/lib/pricing'
+import { createStripeClient, getOrCreateStripeCustomer } from '@/lib/stripe'
 
 
 export async function POST(request: NextRequest) {
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-        apiVersion: '2025-02-24.acacia',
-    })
+    const stripe = createStripeClient()
 
 
     try {
@@ -28,17 +27,6 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'Cantidad inválida (1-1000)' }, { status: 400 })
         }
 
-        // █▓▒░ PROHIBIDO MODIFICAR ESTOS PRECIOS SIN CONSULTA PREVIA ░▒▓█
-        // ----------------------------------------------------------------
-        const BASE_PRICE_MXN = 20.00       // Emergentes: $20 MXN
-        const PREMIUM_PRICE_USD = 4.99     // Desarrollados: $4.99 USD fijo
-        // ----------------------------------------------------------------
-
-        const emergingMarkets = [
-            'CO', 'AR', 'PE', 'CL', 'EC', 'GT', 'CR', 'BR', 'MX',
-            'IN', 'CN', 'VN', 'TH', 'ID', 'PH', 'EG', 'NG'
-        ]
-
         let priceInCents: number
         let currency: string
 
@@ -46,7 +34,7 @@ export async function POST(request: NextRequest) {
             // México: cobrar en MXN
             priceInCents = Math.round(BASE_PRICE_MXN * quantity * 100)
             currency = 'mxn'
-        } else if (emergingMarkets.includes(country)) {
+        } else if (EMERGING_MARKETS.includes(country as typeof EMERGING_MARKETS[number])) {
             // Emergentes: cobrar en MXN (convertido a USD en Stripe)
             priceInCents = Math.round(BASE_PRICE_MXN * quantity * 100)
             currency = 'mxn'
@@ -57,21 +45,12 @@ export async function POST(request: NextRequest) {
         }
 
         // --- PREPARAR CLIENTE STRIPE (Requerido para SPEI) ---
-        let stripeCustomer;
-        const customers = await stripe.customers.list({
-            email: session.user.email,
-            limit: 1
-        });
-
-        if (customers.data.length > 0) {
-            stripeCustomer = customers.data[0];
-        } else {
-            stripeCustomer = await stripe.customers.create({
-                email: session.user.email,
-                name: session.user.name || 'Cliente CarMatch',
-                metadata: { userId: session.user.id }
-            });
-        }
+        const stripeCustomer = await getOrCreateStripeCustomer(
+            stripe,
+            session.user.email,
+            session.user.name,
+            session.user.id
+        )
 
         // Lógica de Métodos de Pago Inteligente
         const checkoutParams: any = {
