@@ -184,7 +184,7 @@ export default function MapBoxStoreLocator({
             window.removeEventListener('map-ai-search', handleAiSearch);
             // NO destruir el mapa — se persiste entre re-renders y GPS updates
         }
-    }, [])
+    }, [initialLocation])
 
     useEffect(() => {
         if (!map.current || !mapLoaded) return
