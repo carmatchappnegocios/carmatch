@@ -132,7 +132,10 @@ export default function RootLayout({
                 <link rel="preconnect" href="https://api.mapbox.com" />
                 <link rel="preconnect" href="https://events.mapbox.com" />
                 <link rel="apple-touch-icon" href="/icon-192-v20.png?v=22" />
-                <style dangerouslySetInnerHTML={{ __html: 'html,body{background-color:#0f172a!important}' }} />
+                <script dangerouslySetInnerHTML={{ __html: "document.documentElement.style.background='#0f172a';document.documentElement.style.backgroundColor='#0f172a';document.body.style.background='#0f172a';document.body.style.backgroundColor='#0f172a'" }} />
+                <meta name="apple-mobile-web-app-capable" content="yes" />
+                <meta name="mobile-web-app-capable" content="yes" />
+                <style dangerouslySetInnerHTML={{ __html: 'html,body{background-color:#0f172a!important;min-height:100vh;margin:0;padding:0}' }} />
             </head>
             <body className={`${inter.className} min-h-screen-safe bg-[#0f172a]`} style={{ backgroundColor: '#0f172a' }}>
                 <ClientViewportFix />
