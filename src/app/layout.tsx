@@ -125,7 +125,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="es" className="dark" suppressHydrationWarning>
+        <html lang="es" className="dark" suppressHydrationWarning style={{ background: '#0f172a' }}>
             <head>
                 <meta name="application-name" content="CarMatch" />
                 <link rel="preconnect" href="https://api.mapbox.com" />
@@ -135,8 +135,10 @@ export default function RootLayout({
                 <link rel="apple-touch-icon" sizes="512x512" href="/maskable-512-dark.png" />
                 <meta name="apple-mobile-web-app-capable" content="yes" />
                 <meta name="mobile-web-app-capable" content="yes" />
+                <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0f172a" />
+                <meta name="theme-color" media="(prefers-color-scheme: light)" content="#0f172a" />
             </head>
-            <body className={`${inter.className} min-h-screen-safe bg-[#0f172a]`}>
+            <body className={`${inter.className} min-h-screen-safe bg-[#0f172a]`} style={{ background: '#0f172a' }}>
                 <ClientViewportFix />
                 <GoogleAnalytics />
                 <Providers>
