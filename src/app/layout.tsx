@@ -134,10 +134,6 @@ export default function RootLayout({
                 <link rel="apple-touch-icon" href="/maskable-192-dark.png" />
                 <link rel="apple-touch-icon" sizes="192x192" href="/maskable-192-dark.png" />
                 <link rel="apple-touch-icon" sizes="512x512" href="/maskable-512-dark.png" />
-                <meta name="apple-mobile-web-app-capable" content="yes" />
-                <meta name="mobile-web-app-capable" content="yes" />
-                <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0f172a" />
-                <meta name="theme-color" media="(prefers-color-scheme: light)" content="#0f172a" />
             </head>
             <body className={`${inter.className} min-h-screen-safe bg-[#0f172a]`} style={{ background: '#0f172a' }}>
                 <ClientViewportFix />
