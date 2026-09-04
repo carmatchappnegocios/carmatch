@@ -20,6 +20,7 @@ import BetaSessionTracker from "@/components/BetaSessionTracker";
 import GlobalSOSWatcher from "@/components/GlobalSOSWatcher";
 import DynamicHeader from "@/components/DynamicHeader";
 import LocationPromptBanner from "@/components/LocationPromptBanner";
+import SmartInstallBanner from "@/components/SmartInstallBanner";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -134,6 +135,7 @@ export default function RootLayout({
                 <link rel="apple-touch-icon" href="/maskable-192-dark.png" />
                 <link rel="apple-touch-icon" sizes="192x192" href="/maskable-192-dark.png" />
                 <link rel="apple-touch-icon" sizes="512x512" href="/maskable-512-dark.png" />
+                <link rel="prefetch" href="/manifest.json" />
             </head>
             <body className={`${inter.className} min-h-screen-safe bg-[#0f172a]`} style={{ background: '#0f172a' }}>
                 <ClientViewportFix />
@@ -166,6 +168,7 @@ export default function RootLayout({
 
                         {/* MobileNav: Fixed at bottom, independent of scroll */}
                         <MobileNav />
+                        <SmartInstallBanner />
                     </div>
                 </Providers>
             </body>

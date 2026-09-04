@@ -1,4 +1,4 @@
-const CACHE_NAME = 'carmatch-v2.8.0';
+const CACHE_NAME = 'carmatch-v2.9.0';
 const OFFLINE_URL = '/offline.html';
 
 const PRE_CACHE_RESOURCES = [

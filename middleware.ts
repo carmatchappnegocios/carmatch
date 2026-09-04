@@ -96,12 +96,9 @@ export default auth((req) => {
         return Response.redirect(new URL(destination, req.url))
     }
 
-    // 🚨 GUEST at root (/): Redirect directly to /market at middleware level
-    // This is faster than waiting for auth() in page.tsx (which can fail/be slow)
-    // and guarantees guests are never stuck on a blank home screen.
-    if (pathname === "/" && !isLoggedIn && !isBot) {
-        return Response.redirect(new URL('/market', req.url))
-    }
+    // 🚨 GUEST at root (/): NO redirect at middleware level
+    // The minting server (Google WebAPK) needs start_url "/" to return 200.
+    // Client-side code handles the redirect to /market for guests.
 })
 
 export const config = {

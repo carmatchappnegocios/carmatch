@@ -1,30 +1,13 @@
 {
     "name": "CarMatch",
     "short_name": "CarMatch",
-    "description": "Red social para comprar, vender y descubrir vehículos y negocios automotrices en tiempo real",
     "start_url": "/market",
-    "id": "/",
+    "id": "carmatch",
     "display": "standalone",
     "background_color": "#0f172a",
     "theme_color": "#0f172a",
-    "orientation": "portrait",
     "scope": "/",
-    "lang": "es-MX",
     "prefer_related_applications": false,
-    "dir": "ltr",
-    "image_url": "https://www.carmatchapp.net/portada_1024x500.png?v=23",
-    "launch_handler": {
-        "client_mode": ["navigate-existing", "auto"]
-    },
-    "screenshots": [
-        {
-            "src": "https://www.carmatchapp.net/portada_1024x500.png?v=23",
-            "sizes": "1024x500",
-            "type": "image/png",
-            "form_factor": "wide",
-            "label": "CarMatch Marketplace"
-        }
-    ],
     "icons": [
         {
             "src": "/maskable-512-dark.png",
@@ -50,33 +33,5 @@
             "type": "image/png",
             "purpose": "maskable"
         }
-    ],
-    "shortcuts": [
-        {
-            "name": "Comprar Auto",
-            "short_name": "Market",
-            "description": "Busca y compara autos usados en México",
-            "url": "/market",
-            "icons": [{ "src": "/maskable-192-dark.png", "sizes": "192x192" }]
-        },
-        {
-            "name": "CarMatch Swipe",
-            "short_name": "Swipe",
-            "description": "Descubre autos deslizando como en Tinder",
-            "url": "/swipe",
-            "icons": [{ "src": "/maskable-192-dark.png", "sizes": "192x192" }]
-        },
-        {
-            "name": "Map Store",
-            "short_name": "Talleres",
-            "description": "Encuentra talleres y servicios 24/7 cerca de ti",
-            "url": "/map-store",
-            "icons": [{ "src": "/maskable-192-dark.png", "sizes": "192x192" }]
-        }
-    ],
-    "categories": [
-        "shopping",
-        "business",
-        "social"
     ]
 }
