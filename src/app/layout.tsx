@@ -127,6 +127,7 @@ export default function RootLayout({
     return (
         <html lang="es" className="dark" suppressHydrationWarning style={{ background: '#0f172a' }}>
             <head>
+                <style dangerouslySetInnerHTML={{ __html: 'html,body{background:#0f172a!important;margin:0;padding:0}' }} />
                 <meta name="application-name" content="CarMatch" />
                 <link rel="preconnect" href="https://api.mapbox.com" />
                 <link rel="preconnect" href="https://events.mapbox.com" />
