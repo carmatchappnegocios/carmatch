@@ -1,7 +1,7 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
-import { sendPushNotification } from '@/lib/push'
+import { sendPushNotification } from '@/lib/pushService'
 import { generateRandomFakeNotifications } from '@/lib/fakeNotifications'
 import { processBusinessDopamine } from '@/lib/cron/dopamine-business'
 

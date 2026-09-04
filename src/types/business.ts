@@ -13,8 +13,14 @@ export interface Business {
     description?: string
     services?: string[]
     phone?: string
+    additionalPhones?: string[]
     whatsapp?: string
+    telegram?: string
     email?: string
+    website?: string
+    facebook?: string
+    instagram?: string
+    tiktok?: string
     address?: string
     street?: string
     streetNumber?: string
@@ -28,8 +34,11 @@ export interface Business {
     totalReviews?: number
     userId?: string
     isActive?: boolean
+    status?: 'ACTIVE' | 'INACTIVE' | 'SUSPENDED'
     createdAt?: string | Date
     updatedAt?: string | Date
+    expiresAt?: string
     stripeCustomerId?: string
-    subscriptionStatus?: string
+    stripeSubscriptionId?: string | null
+    subscriptionStatus?: string | null
 }

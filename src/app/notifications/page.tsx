@@ -5,18 +5,7 @@ import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useLanguage } from '@/contexts/LanguageContext'
-
-
-interface Notification {
-    id: string
-    type: string
-    title: string
-    message: string
-    link: string | null
-    isRead: boolean
-    createdAt: string
-    metadata: any
-}
+import type { Notification } from '@/types/notification'
 
 export default function NotificationsPage() {
     const { data: session, status } = useSession()

@@ -5,19 +5,9 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { MessageCircle, ThumbsUp, Star, Search, Eye, CheckCircle, Handshake, Calendar, RefreshCw, X, Bell } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
-
-interface Notification {
-    id: string
-    type: string
-    title: string
-    message: string
-    link: string | null
-    isRead: boolean
-    createdAt: string
-    updatedAt: string
-    count?: number
-    metadata: any
-}
+import type { Notification } from '@/types/notification'
+import { getRelativeTime } from '@/lib/format-utils'
+import LoadingSpinner from './LoadingSpinner'
 
 interface NotificationsDropdownProps {
     isOpen: boolean
@@ -101,20 +91,8 @@ export default function NotificationsDropdown({ isOpen, onClose }: Notifications
         }
     }
 
-    const getTimeAgo = (dateStr: string) => {
-        const now = new Date()
-        const date = new Date(dateStr)
-        const diff = now.getTime() - date.getTime()
-        const hours = Math.floor(diff / (1000 * 60 * 60))
-        const minutes = Math.floor(diff / (1000 * 60))
-
-        if (hours === 0) {
-            if (minutes === 0) return t('notifications.just_now')
-            return t('notifications.minutes_ago', { minutes })
-        }
-        if (hours < 24) return t('notifications.hours_ago', { hours })
-        const days = Math.floor(hours / 24)
-        return t('notifications.days_ago', { days })
+    const formatTimeAgo = (dateStr: string) => {
+        return getRelativeTime(new Date(dateStr), t)
     }
 
     if (!isOpen) return null
@@ -147,7 +125,7 @@ export default function NotificationsDropdown({ isOpen, onClose }: Notifications
                 <div className="overflow-y-auto flex-1">
                     {loading ? (
                         <div className="p-8 text-center">
-                            <div className="animate-spin h-8 w-8 border-4 border-primary-600 border-t-transparent rounded-full mx-auto"></div>
+                            <LoadingSpinner fullScreen={false} />
                             <p className="text-sm text-text-secondary mt-3">{t('common2.loading')}</p>
                         </div>
                     ) : notifications.length === 0 ? (
@@ -186,7 +164,7 @@ export default function NotificationsDropdown({ isOpen, onClose }: Notifications
                                             {notification.message}
                                         </p>
                                         <p className="text-xs text-primary-400 mt-1">
-                                            {getTimeAgo(notification.updatedAt || notification.createdAt)}
+                                            {formatTimeAgo(notification.updatedAt || notification.createdAt)}
                                         </p>
                                     </div>
                                 </button>

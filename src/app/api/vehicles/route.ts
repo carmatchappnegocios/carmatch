@@ -321,7 +321,7 @@ export async function POST(request: NextRequest) {
         // 🔔 NOTIFICACIÓN REAL: Avisar a usuarios en la misma ciudad
 
         // "¡Nuevo [Marca] [Modelo] en [Ciudad]!"
-        import('@/lib/push').then(async (push) => {
+        import('@/lib/pushService').then(async (push) => {
             try {
                 // 1. Encontrar usuarios interesados en esta ciudad (excluyendo al dueño)
                 // (En un sistema real filtraríamos por preferencias, aquí es "Broadcasting por Ciudad")

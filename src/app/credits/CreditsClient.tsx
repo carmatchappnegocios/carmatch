@@ -7,6 +7,7 @@ import { useLanguage } from '@/contexts/LanguageContext'
 import ConfirmationModal from '@/components/ConfirmationModal'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { CreditCard, ShieldCheck, BadgeCheck, Clock, User as UserIcon } from 'lucide-react'
+import LoadingSpinner from '@/components/LoadingSpinner'
 
 interface CreditsClientProps {
     user: any
@@ -254,7 +255,7 @@ export default function CreditsClient({ user }: CreditsClientProps) {
                 <div className="space-y-6">
                     {loading ? (
                         <div className="flex justify-center py-12">
-                            <div className="animate-spin h-12 w-12 border-4 border-primary-600 border-t-transparent rounded-full"></div>
+                            <LoadingSpinner fullScreen={false} />
                         </div>
                     ) : pricing ? (
                         <div className="bg-surface rounded-2xl border border-surface-highlight p-8 shadow-lg">

@@ -5,18 +5,7 @@ import { MessageSquare, Plus, Loader2 } from 'lucide-react'
 import ReviewCard from './ReviewCard'
 import ReviewForm from './ReviewForm'
 import RatingSummary from './RatingSummary'
-
-interface Review {
-    id: string
-    rating: number
-    comment: string | null
-    createdAt: string
-    user: {
-        id: string
-        name: string | null
-        image: string | null
-    }
-}
+import type { Review } from '@/types/review'
 
 interface ReviewStats {
     average: number

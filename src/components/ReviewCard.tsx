@@ -5,18 +5,8 @@ import Image from 'next/image'
 import { Star, MoreVertical, Pencil, Trash2 } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 import RatingDisplay from './RatingDisplay'
-
-interface Review {
-    id: string
-    rating: number
-    comment: string | null
-    createdAt: string
-    user: {
-        id: string
-        name: string | null
-        image: string | null
-    }
-}
+import type { Review } from '@/types/review'
+import { getRelativeTime } from '@/lib/format-utils'
 
 interface ReviewCardProps {
     review: Review
@@ -34,7 +24,7 @@ export default function ReviewCard({ review, currentUserId, onUpdate, onDelete }
 
     const isAuthor = currentUserId === review.user.id
     const date = new Date(review.createdAt)
-    const timeAgo = getTimeAgo(date, t)
+    const timeAgo = getRelativeTime(date, t)
 
     const handleSave = () => {
         if (onUpdate) {
@@ -149,19 +139,4 @@ export default function ReviewCard({ review, currentUserId, onUpdate, onDelete }
             )}
         </div>
     )
-}
-
-function getTimeAgo(date: Date, t: (key: string) => string): string {
-    const now = new Date()
-    const diffMs = now.getTime() - date.getTime()
-    const diffMins = Math.floor(diffMs / 60000)
-    const diffHours = Math.floor(diffMins / 60)
-    const diffDays = Math.floor(diffHours / 24)
-
-    if (diffMins < 1) return t('reviewCard.timeAgo.justNow')
-    if (diffMins < 60) return t('reviewCard.timeAgo.minutesAgo').replace('{n}', String(diffMins))
-    if (diffHours < 24) return t('reviewCard.timeAgo.hoursAgo').replace('{n}', String(diffHours))
-    if (diffDays < 7) return t('reviewCard.timeAgo.daysAgo').replace('{n}', String(diffDays))
-    if (diffDays < 30) return t('reviewCard.timeAgo.weeksAgo').replace('{n}', String(Math.floor(diffDays / 7)))
-    return date.toLocaleDateString(undefined, { day: 'numeric', month: 'short' })
 }

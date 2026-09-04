@@ -6,13 +6,10 @@ import "./globals.css";
 
 import Providers from "@/components/Providers";
 import MobileNav from "@/components/MobileNav";
-import OpenInBrowserBanner from "@/components/OpenInBrowserBanner";
-// import { ResponsiveViewportFix } from "./responsive-viewport-fix";
 import RestoringSessionOverlay from "@/components/RestoringSessionOverlay";
 import RestoreSessionModal from "@/components/RestoreSessionModal";
 import { Toaster } from "sonner";
 
-import InstallInvasiveBanner from "@/components/InstallInvasiveBanner";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import CookieConsentBanner from "@/components/CookieConsentBanner";
 import FooterSEO from "@/components/FooterSEO";
@@ -142,10 +139,7 @@ export default function RootLayout({
                 <GoogleAnalytics />
                 <Providers>
                     <Toaster position="top-center" richColors closeButton />
-                    {/* <InstallInvasiveBanner /> */}
                     <PushNotificationRequest />
-                    {/* <OpenInBrowserBanner /> */}
-                    {/* <ResponsiveViewportFix /> */}
                     <RestoringSessionOverlay />
                     <RestoreSessionModal />
                     <CookieConsentBanner />

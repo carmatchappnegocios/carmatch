@@ -38,7 +38,7 @@ describe('POST /api/favorites', () => {
     const { auth } = await import('@/lib/auth')
     vi.mocked(auth).mockResolvedValue(null as any)
 
-    const { POST } = await import('@/api/favorites/route')
+    const { POST } = await import('@/app/api/favorites/route')
     const req = makePostRequest({ vehicleId: 'v1' })
     const res = await POST(req as any)
     const json = await res.json()
@@ -54,7 +54,7 @@ describe('POST /api/favorites', () => {
     vi.mocked(auth).mockResolvedValue({ user: { email: 'test@test.com' } } as any)
     vi.mocked(prisma.user.findUnique).mockResolvedValue({ id: 'user-1' } as any)
 
-    const { POST } = await import('@/api/favorites/route')
+    const { POST } = await import('@/app/api/favorites/route')
     const req = makePostRequest({})
     const res = await POST(req as any)
     const json = await res.json()
@@ -70,7 +70,7 @@ describe('POST /api/favorites', () => {
     vi.mocked(auth).mockResolvedValue({ user: { email: 'test@test.com' } } as any)
     vi.mocked(prisma.user.findUnique).mockResolvedValue({ id: 'user-1' } as any)
 
-    const { POST } = await import('@/api/favorites/route')
+    const { POST } = await import('@/app/api/favorites/route')
     const req = makePostRequest({ vehicleId: 'v1', action: 'invalid' })
     const res = await POST(req as any)
     const json = await res.json()
@@ -86,7 +86,7 @@ describe('POST /api/favorites', () => {
     vi.mocked(auth).mockResolvedValue({ user: { email: 'test@test.com' } } as any)
     vi.mocked(prisma.user.findUnique).mockResolvedValue(null)
 
-    const { POST } = await import('@/api/favorites/route')
+    const { POST } = await import('@/app/api/favorites/route')
     const req = makePostRequest({ vehicleId: 'v1' })
     const res = await POST(req as any)
     const json = await res.json()
@@ -105,7 +105,7 @@ describe('POST /api/favorites', () => {
     vi.mocked(prisma.favorite.create).mockResolvedValue({} as any)
     vi.mocked(notifyRealFavorite).mockResolvedValue(undefined as any)
 
-    const { POST } = await import('@/api/favorites/route')
+    const { POST } = await import('@/app/api/favorites/route')
     const req = makePostRequest({ vehicleId: 'v1', action: 'toggle' })
     const res = await POST(req as any)
     const json = await res.json()
@@ -129,7 +129,7 @@ describe('POST /api/favorites', () => {
     vi.mocked(prisma.favorite.create).mockRejectedValue(uniqueError)
     vi.mocked(prisma.favorite.deleteMany).mockResolvedValue({ count: 1 } as any)
 
-    const { POST } = await import('@/api/favorites/route')
+    const { POST } = await import('@/app/api/favorites/route')
     const req = makePostRequest({ vehicleId: 'v1', action: 'toggle' })
     const res = await POST(req as any)
     const json = await res.json()
@@ -152,7 +152,7 @@ describe('POST /api/favorites', () => {
     const uniqueError = new Error('Unique constraint violation')
     vi.mocked(prisma.favorite.create).mockRejectedValue(uniqueError)
 
-    const { POST } = await import('@/api/favorites/route')
+    const { POST } = await import('@/app/api/favorites/route')
     const req = makePostRequest({ vehicleId: 'v1', action: 'add' })
     const res = await POST(req as any)
     const json = await res.json()
@@ -170,7 +170,7 @@ describe('POST /api/favorites', () => {
     vi.mocked(prisma.user.findUnique).mockResolvedValue({ id: 'user-1' } as any)
     vi.mocked(prisma.favorite.deleteMany).mockResolvedValue({ count: 1 } as any)
 
-    const { POST } = await import('@/api/favorites/route')
+    const { POST } = await import('@/app/api/favorites/route')
     const req = makePostRequest({ vehicleId: 'v1', action: 'remove' })
     const res = await POST(req as any)
     const json = await res.json()
@@ -188,7 +188,7 @@ describe('POST /api/favorites', () => {
     vi.mocked(prisma.user.findUnique).mockResolvedValue({ id: 'user-1' } as any)
     vi.mocked(prisma.favorite.deleteMany).mockResolvedValue({ count: 0 } as any)
 
-    const { POST } = await import('@/api/favorites/route')
+    const { POST } = await import('@/app/api/favorites/route')
     const req = makePostRequest({ vehicleId: 'v1', action: 'remove' })
     const res = await POST(req as any)
     const json = await res.json()
@@ -205,7 +205,7 @@ describe('POST /api/favorites', () => {
     vi.mocked(auth).mockResolvedValue({ user: { email: 'test@test.com' } } as any)
     vi.mocked(prisma.user.findUnique).mockRejectedValue(new Error('DB down'))
 
-    const { POST } = await import('@/api/favorites/route')
+    const { POST } = await import('@/app/api/favorites/route')
     const req = makePostRequest({ vehicleId: 'v1' })
     const res = await POST(req as any)
 
@@ -222,7 +222,7 @@ describe('GET /api/favorites', () => {
     const { auth } = await import('@/lib/auth')
     vi.mocked(auth).mockResolvedValue(null as any)
 
-    const { GET } = await import('@/api/favorites/route')
+    const { GET } = await import('@/app/api/favorites/route')
     const req = new Request('http://localhost/api/favorites')
     const res = await GET(req as any)
     const json = await res.json()
@@ -244,7 +244,7 @@ describe('GET /api/favorites', () => {
       },
     ] as any)
 
-    const { GET } = await import('@/api/favorites/route')
+    const { GET } = await import('@/app/api/favorites/route')
     const req = new Request('http://localhost/api/favorites')
     const res = await GET(req as any)
     const json = await res.json()

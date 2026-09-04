@@ -1856,5 +1856,12 @@
             "daysAgo": "hace {n}d",
             "weeksAgo": "hace {n} sem"
         }
+    },
+    "timeAgo": {
+        "justNow": "ahora mismo",
+        "minutesAgo": "hace {n} min",
+        "hoursAgo": "hace {n}h",
+        "daysAgo": "hace {n}d",
+        "weeksAgo": "hace {n} sem"
     }
 }

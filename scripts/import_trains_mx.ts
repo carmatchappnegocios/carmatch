@@ -28,12 +28,7 @@ const STATES = [
     "Yucatán", "Zacatecas"
 ];
 
-function generateSlug(name: string): string {
-    return name.toLowerCase()
-        .replace(/á/g, 'a').replace(/é/g, 'e').replace(/í/g, 'i').replace(/ó/g, 'o').replace(/ú/g, 'u').replace(/ñ/g, 'n')
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-+|-+$/g, '');
-}
+import { generateSlug } from '../src/lib/slug';
 
 async function fetchOverpass(query: string) {
     for (const url of OVERPASS_INSTANCES) {

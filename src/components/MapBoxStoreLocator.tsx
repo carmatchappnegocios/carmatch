@@ -6,29 +6,7 @@ import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { escapeHtml } from '@/lib/sanitize'
-
-interface Business {
-    id: string
-    name: string
-    category: string
-    latitude: number
-    longitude: number
-    images: string[]
-    city: string
-    description?: string
-    services?: string[]
-    phone?: string
-    whatsapp?: string
-    address?: string
-    street?: string
-    streetNumber?: string
-    colony?: string
-    state?: string
-    hours?: string
-    is24Hours?: boolean
-    hasEmergencyService?: boolean
-    hasHomeService?: boolean
-}
+import type { Business } from '@/types/business'
 
 interface MapBoxStoreLocatorProps {
     businesses: Business[]

@@ -265,10 +265,10 @@ async function notifyFavoriters(vehicleId: string, title: string, brand: string,
         // Vamos a intentar usar un import dinámico de una función helper si existe, o usar lo que vi en `api/vehicles/route.ts`
 
         // Viendo `api/vehicles/route.ts` step 83:
-        // import('@/lib/push').then(async (push) => { ... })
+        // import('@/lib/pushService').then(async (push) => { ... })
 
         // Replicamos ese patrón para consistencia
-        const pushLib = await import('@/lib/push')
+        const pushLib = await import('@/lib/pushService')
 
         for (const fav of favorites) {
             for (const sub of fav.user.pushSubscriptions) {

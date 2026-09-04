@@ -14,6 +14,7 @@ import { AlertTriangle, Clock, MapPin, Phone, Globe, Trash2, Edit, AlertCircle, 
 import CategoryIcon from '@/components/CategoryIcon'
 import OpeningHoursEditor from '@/components/OpeningHoursEditor'
 import { toast } from "sonner"
+import type { Business } from '@/types/business'
 
 // Modified: MapBox Component replacement
 const MapBoxAddressPicker = dynamic(() => import('@/components/MapBoxAddressPicker'), {
@@ -23,27 +24,6 @@ const MapBoxAddressPicker = dynamic(() => import('@/components/MapBoxAddressPick
 
 import GlobalAddressSearch from '@/components/GlobalAddressSearch'
 import PhoneInput from '@/components/PhoneInput' // [NEW]
-
-interface Business {
-    id: string
-    name: string
-    category: string
-    status: 'ACTIVE' | 'INACTIVE' | 'SUSPENDED'
-    city: string
-    images: string[]
-    // New fields for types
-    phone?: string
-    additionalPhones?: string[]
-    whatsapp?: string
-    telegram?: string
-    website?: string
-    facebook?: string
-    instagram?: string
-    tiktok?: string
-    expiresAt?: string
-    stripeSubscriptionId?: string | null
-    subscriptionStatus?: string | null
-}
 
 export default function MyBusinessesClient() {
     const searchParams = useSearchParams() // Hook
@@ -1029,7 +1009,7 @@ export default function MyBusinessesClient() {
                                     </div>
                                     <div className="px-4 pb-4 pt-0 flex gap-2">
                                         <button
-                                            onClick={() => toggleStatus(business.id, business.status)}
+                                            onClick={() => business.status && toggleStatus(business.id, business.status)}
                                             className={`flex-1 py-2 rounded-lg text-sm font-bold transition flex items-center justify-center gap-1 ${business.status === 'ACTIVE'
                                                 ? 'bg-amber-900/20 text-amber-500 hover:bg-amber-900/30 border border-amber-500/20'
                                                 : (business.expiresAt && new Date(business.expiresAt) < new Date()) || !business.expiresAt

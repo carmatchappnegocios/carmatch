@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { useLanguage } from '@/contexts/LanguageContext'
 
 import { formatPrice } from '@/lib/vehicleTaxonomy'
+import { getRelativeTime } from '@/lib/format-utils'
 
 interface Chat {
     id: string
@@ -131,7 +132,7 @@ export default function MessagesPage() {
                 <div className="space-y-4">
                     {chats.map((chat) => {
                         const vehicleImage = chat.vehicle.images[0] || '/placeholder-car.png'
-                        const timeSince = getTimeSince(new Date(chat.updatedAt))
+                        const timeSince = getRelativeTime(new Date(chat.updatedAt), t)
 
                         return (
                             <Link
@@ -218,14 +219,4 @@ export default function MessagesPage() {
             </div>
         </div>
     )
-}
-
-function getTimeSince(date: Date): string {
-    const seconds = Math.floor((new Date().getTime() - date.getTime()) / 1000)
-
-    if (seconds < 60) return 'Ahora'
-    if (seconds < 3600) return `${Math.floor(seconds / 60)}m`
-    if (seconds < 86400) return `${Math.floor(seconds / 3600)}h`
-    if (seconds < 604800) return `${Math.floor(seconds / 86400)}d`
-    return `${Math.floor(seconds / 604800)}sem`
 }

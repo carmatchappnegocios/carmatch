@@ -126,7 +126,7 @@ describe('Auth Config - JWT Callback Logic', () => {
     const mockToken = { iat: Math.floor(Date.now() / 1000) }
     const mockUser = { id: 'user-123', isAdmin: true }
 
-    const token = { ...mockToken }
+    const token: any = { ...mockToken }
     const user = { ...mockUser }
 
     if (user && user.id) {
@@ -181,7 +181,7 @@ describe('Auth Config - JWT Callback Logic', () => {
     const mockToken = { iat: Math.floor(Date.now() / 1000) }
     const mockSession = { image: 'new-image.jpg', name: 'New Name' }
 
-    const token = { ...mockToken }
+    const token: any = { ...mockToken }
     const trigger = 'update'
     const session = { ...mockSession }
 
