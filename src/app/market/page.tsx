@@ -642,6 +642,7 @@ export default async function MarketPage({
                     vehicleTypes={vehicleTypes}
                     colors={colors}
                     searchParams={searchParams}
+                    aiReasoning={aiReasoning}
                 />
             </Suspense>
         </>

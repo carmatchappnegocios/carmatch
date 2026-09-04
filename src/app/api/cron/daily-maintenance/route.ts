@@ -119,6 +119,23 @@ async function processVehicleRenewals(now: Date) {
                     metadata: { willAutoRenew: userHasCredits }
                 })
                 notificationsSent++
+
+                // 📧 Enviar email de expiración de vehículo
+                if (vehicle.user.email) {
+                    try {
+                        const { sendVehicleExpiringEmail } = await import('@/lib/email-service')
+                        await sendVehicleExpiringEmail(
+                            vehicle.user.email,
+                            vehicle.user.name || 'Usuario',
+                            vehicle.title,
+                            vehicle.id,
+                            userHasCredits,
+                            vehicle.user.credits
+                        )
+                    } catch {
+                        // Fail silently
+                    }
+                }
             }
         }
     }
@@ -205,6 +222,23 @@ async function processBusinessRenewals(now: Date) {
                     metadata: { willAutoRenew: userHasCredits }
                 })
                 notificationsSent++
+
+                // 📧 Enviar email de expiración de negocio
+                if (business.user.email) {
+                    try {
+                        const { sendBusinessExpiringEmail } = await import('@/lib/email-service')
+                        await sendBusinessExpiringEmail(
+                            business.user.email,
+                            business.user.name || 'Usuario',
+                            business.name,
+                            business.id,
+                            userHasCredits,
+                            business.user.credits
+                        )
+                    } catch {
+                        // Fail silently
+                    }
+                }
             }
         }
     }

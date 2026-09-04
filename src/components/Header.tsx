@@ -199,8 +199,8 @@ export default function Header() {
         const handleFavUpdate = () => fetchCounts()
         window.addEventListener('favoriteUpdated', handleFavUpdate)
 
-        // Fallback: Low frequency polling (every 5 mins instead of 10s) just in case
-        const interval = setInterval(fetchCounts, 300000)
+        // Fallback: Low frequency polling (every 30 seconds)
+        const interval = setInterval(fetchCounts, 30000)
 
         return () => {
             import('@/lib/socket').then(({ socket }) => {

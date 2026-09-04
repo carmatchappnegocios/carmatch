@@ -189,12 +189,17 @@ export default function MarketClient({
     const [newVehiclesCount, setNewVehiclesCount] = useState(0)
 
     useEffect(() => {
-        /* 🔔 REAL-TIME NOTIFICATIONS (Socket.io)
-        // 💰 Desactivado temporalmente para diagnosticar bloqueo de main-thread
+        let debounceTimer: NodeJS.Timeout | null = null
+        let socketInstance: any = null
+
         import('@/lib/socket').then(({ socket }) => {
+            socketInstance = socket
             if (!socket.connected) socket.connect()
 
             const handleNewVehicle = (vehicle: any) => {
+                if (debounceTimer) return
+                debounceTimer = setTimeout(() => { debounceTimer = null }, 3000)
+
                 if (activeLocation && activeLocation.latitude && activeLocation.longitude && vehicle.latitude && vehicle.longitude) {
                     const dist = calculateDistance(
                         activeLocation.latitude,
@@ -212,12 +217,14 @@ export default function MarketClient({
             }
 
             socket.on('new_vehicle_published', handleNewVehicle)
+        })
 
-            return () => {
-                socket.off('new_vehicle_published', handleNewVehicle)
+        return () => {
+            if (debounceTimer) clearTimeout(debounceTimer)
+            if (socketInstance) {
+                socketInstance.off('new_vehicle_published')
             }
-        }) */
-        return () => {}
+        }
     }, [activeLocation, searchRadius])
 
     // 🔥 AI ORCHESTRATOR: Escuchar eventos externos (desde AIChatbot)
@@ -341,7 +348,9 @@ export default function MarketClient({
     const [isTouchingTop, setIsTouchingTop] = useState(false)
 
     useEffect(() => {
-        /* 🚀 MOBILE PULL-TO-REFRESH OPTIMIZATION
+        let lastRefreshTime = 0
+        const THROTTLE_MS = 5000
+
         const onTouchStart = (e: TouchEvent) => {
             const scrollTop = window.scrollY || document.documentElement.scrollTop
             if (scrollTop <= 5 && !isRefreshing) {
@@ -372,7 +381,11 @@ export default function MarketClient({
 
         const onTouchEnd = async () => {
             if (pullProgress > pullThreshold && isTouchingTop) {
-                await triggerRefresh()
+                const now = Date.now()
+                if (now - lastRefreshTime > THROTTLE_MS) {
+                    lastRefreshTime = now
+                    await triggerRefresh()
+                }
             }
             setPullProgress(0)
             setStartY(0)
@@ -387,8 +400,7 @@ export default function MarketClient({
             document.removeEventListener('touchstart', onTouchStart)
             document.removeEventListener('touchmove', onTouchMove)
             document.removeEventListener('touchend', onTouchEnd)
-        } */
-        return () => {}
+        }
     }, [startY, isRefreshing, pullProgress, pullThreshold, isTouchingTop])
 
     const triggerRefresh = async () => {
@@ -580,6 +592,13 @@ export default function MarketClient({
 
                     </div>
                 </header>
+
+                {/* AI Reasoning Display */}
+                {aiReasoning && (
+                    <div className="mb-4 p-3 bg-primary-900/20 border border-primary-700/30 rounded-xl text-sm text-primary-300">
+                        🤖 {aiReasoning}
+                    </div>
+                )}
 
                 {/* Área de Filtros (Full Width) */}
                 {

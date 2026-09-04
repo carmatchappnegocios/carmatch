@@ -101,6 +101,27 @@ export async function POST(request: NextRequest) {
 
         let isFraudulentRetry = false
 
+        // 🛡️ FRAUD DETECTION: Check for duplicate phone + location
+        try {
+            const existingBusinesses = await prisma.business.findMany({
+                where: { userId: session.user.id },
+                select: { phone: true, latitude: true, longitude: true }
+            })
+            const phone = (body.phone || '').trim()
+            const lat = body.latitude ? parseFloat(body.latitude) : null
+            const lng = body.longitude ? parseFloat(body.longitude) : null
+            if (phone && lat && lng) {
+                isFraudulentRetry = existingBusinesses.some(b =>
+                    b.phone && b.phone === phone &&
+                    b.latitude && b.longitude &&
+                    Math.abs(b.latitude - lat) < 0.001 &&
+                    Math.abs(b.longitude - lng) < 0.001
+                )
+            }
+        } catch {
+            // Fail open - don't block legitimate businesses
+        }
+
         // Obtener créditos desde el objeto user cargado previamente
         const hasCredits = (userExists.credits || 0) >= 1
 
@@ -229,8 +250,14 @@ export async function POST(request: NextRequest) {
             })
         }
 
-        // 🚀 SEGURIDAD: Iniciar revisión en segundo plano (solo si tiene fotos)
-        // 🛡️ SEGURIDAD: Moderación IA Deshabilitada
+        // 🚀 SEGURIDAD: Revisar imágenes con IA en segundo plano (solo si tiene fotos)
+        if (body.images && Array.isArray(body.images) && body.images.length > 0) {
+            import('@/lib/ai/imageAnalyzer').then(({ analyzeMultipleImages }) => {
+                analyzeMultipleImages(body.images, 'BUSINESS').catch(e =>
+                    console.error('[BUSINESS_AI_MODERATION]', e)
+                )
+            }).catch(() => {})
+        }
 
         let successMessage = ''
         if (isFraudulentRetry) {

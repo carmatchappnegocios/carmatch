@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
+import { sendPushToUser } from "@/lib/pushService";
 
 export async function POST(req: Request) {
   try {
@@ -82,6 +83,20 @@ export async function POST(req: Request) {
 
     // NOTA: Aquí se enviaría el SMS/WhatsApp al contacto de confianza (ej. Twilio)
     // await sendEmergencyNotificationToTrustedContact(session.user.id, sosAlert.id);
+
+    // Enviar push notification urgente a la contraparte
+    try {
+      await sendPushToUser(counterpartId, {
+        title: '🚨 ALERTA DE EMERGENCIA',
+        body: `Un usuario ha activado la señal SOS. SE REQUIERE INTERVENCIÓN.`,
+        url: `/emergency/${sosAlert.id}`,
+        tag: `sos-alert-${sosAlert.id}`,
+        requireInteraction: true,
+        renotify: true
+      })
+    } catch (e) {
+      console.error("Error sending SOS push to counterpart:", e)
+    }
 
     return NextResponse.json({
       success: true,

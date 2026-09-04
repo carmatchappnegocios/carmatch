@@ -110,6 +110,14 @@ export async function POST(request: Request) {
             // Fail silently
         }
 
+        // 📧 Enviar email de bienvenida
+        try {
+            const { sendWelcomeEmail } = await import('@/lib/email-service')
+            await sendWelcomeEmail(normalizedEmail, user.name || normalizedEmail.split("@")[0])
+        } catch {
+            // Fail silently - don't block registration
+        }
+
         // 📊 REGISTRAR CONVERSIÓN WAITLIST: Si el email estaba en la waitlist
         try {
             const waitlistEntry = await prisma.waitlist.findUnique({
