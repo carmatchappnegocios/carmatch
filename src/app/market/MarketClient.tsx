@@ -804,7 +804,7 @@ export default function MarketClient({
                                         <div className="contents">
                                             {/* Card 1: Expandir Búsqueda */}
                                             <div
-                                                className="bg-primary-900/20 border-2 border-primary-700/50 hover:border-primary-500 rounded-2xl flex flex-col items-center justify-center p-6 text-center transition group min-h-[250px] relative cursor-pointer"
+                                                className="bg-primary-900/20 border-2 border-primary-700/50 hover:border-primary-500 rounded-2xl flex flex-col items-center justify-center p-6 text-center transition group min-h-[200px] relative cursor-pointer"
                                                 onClick={handleExpandSearch}
                                             >
                                                 <div className="w-16 h-16 bg-primary-700 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg shadow-primary-900/50">
@@ -830,7 +830,7 @@ export default function MarketClient({
                                             </div>
 
                                             {/* Card 2: Promo Vende Tu Auto */}
-                                            <div className="bg-gradient-to-br from-primary-900/20 to-indigo-900/20 border-2 border-primary-500/30 hover:border-primary-500/50 rounded-2xl flex flex-col items-center justify-center p-6 text-center transition group min-h-[250px] relative">
+                                            <div className="bg-gradient-to-br from-primary-900/20 to-indigo-900/20 border-2 border-primary-500/30 hover:border-primary-500/50 rounded-2xl flex flex-col items-center justify-center p-6 text-center transition group min-h-[200px] relative">
                                                 <div className="flex flex-col items-center w-full">
                                                     <p className="text-sm text-primary-200 font-bold uppercase tracking-wider mb-2">{t('market.while_searching')}</p>
                                                     <h3 className="text-xl font-black text-white leading-tight mb-6">

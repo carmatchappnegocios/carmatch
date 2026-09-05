@@ -102,7 +102,7 @@ export default async function ComparativePage({ params }: Props) {
                     </p>
                 </div>
 
-                <div className={`grid grid-cols-1 md:grid-cols-${activeVehicles.length} gap-6 md:gap-8`}>
+                <div className="grid grid-cols-1 gap-6 md:gap-8" style={{ gridTemplateColumns: `repeat(min(${activeVehicles.length}, 3), 1fr)` }}>
                     {activeVehicles.map((vehicle, idx) => (
                         <div key={vehicle.id} className="space-y-6">
                             <div className="aspect-square rounded-[2rem] overflow-hidden bg-surface-highlight border border-white/5 relative group shadow-2xl">

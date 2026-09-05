@@ -224,7 +224,7 @@ function AdminPanelContent() {
             />
 
             {/* Main Content Area */}
-            <main className="flex-1 min-h-screen bg-[#000000] relative pb-24 md:pb-6 overflow-y-auto h-screen no-scrollbar">
+            <main className="flex-1 min-h-screen bg-[#000000] relative pb-24 md:pb-6 overflow-y-auto no-scrollbar">
 
                 {/* Mobile Header - Sticky (Hidden on MD+) */}
                 <div className="md:hidden p-4 pb-3 flex items-center justify-between sticky top-0 bg-black/90 backdrop-blur-xl z-40 border-b border-white/10 shadow-lg shadow-black/50">
@@ -441,7 +441,7 @@ function OverviewTab({ stats, handleRunAnalyst, isAnalyzing, aiAnalysis, setActi
             <div className="grid grid-cols-1 gap-3">
 
                 {/* 1. Global Presence Heatmap */}
-                <div className="bg-[#111114] border border-white/5 rounded-3xl overflow-hidden shadow-2xl relative group h-[320px]">
+                <div className="bg-[#111114] border border-white/5 rounded-3xl overflow-hidden shadow-2xl relative group min-h-[320px]">
                     <div className="absolute top-0 left-0 right-0 p-4 border-b border-white/5 bg-black/50 backdrop-blur-sm z-10 flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
@@ -462,7 +462,7 @@ function OverviewTab({ stats, handleRunAnalyst, isAnalyzing, aiAnalysis, setActi
                 {/* 2. Growth & Financials Column */}
                 <div className="grid grid-cols-2 gap-3">
                     {/* User Growth Chart */}
-                    <div className="bg-[#111114] border border-white/5 p-5 rounded-3xl shadow-xl flex flex-col h-[180px] justify-between">
+                    <div className="bg-[#111114] border border-white/5 p-5 rounded-3xl shadow-xl flex flex-col min-h-[180px] justify-between">
                         <div>
                             <div className="flex items-center justify-between mb-2">
                                 <h4 className="text-xs font-black uppercase tracking-widest text-text-secondary">Crecimiento Usuarios</h4>
@@ -482,7 +482,7 @@ function OverviewTab({ stats, handleRunAnalyst, isAnalyzing, aiAnalysis, setActi
                     </div>
 
                     {/* Revenue Chart */}
-                    <div className="bg-[#111114] border border-white/5 p-5 rounded-3xl shadow-xl flex flex-col h-[180px] justify-between">
+                    <div className="bg-[#111114] border border-white/5 p-5 rounded-3xl shadow-xl flex flex-col min-h-[180px] justify-between">
                         <div>
                             <div className="flex items-center justify-between mb-2">
                                 <h4 className="text-xs font-black uppercase tracking-widest text-text-secondary">Ganancias Netas (Est.)</h4>
@@ -942,7 +942,7 @@ function ReportsTab({ reports }: { reports: any[] }) {
     }, [selectedReportId])
 
     return (
-        <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-280px)]">
+        <div className="flex flex-col lg:flex-row gap-6 h-[calc(100dvh-280px)]">
             {/* Lista de Reportes */}
             <div className={`bg-[#111114] border border-white/5 rounded-3xl overflow-hidden shadow-2xl flex flex-col ${selectedReportId ? 'hidden lg:flex lg:w-1/3' : 'w-full h-full'}`}>
                 <div className="p-6 border-b border-white/5 flex items-center justify-between shrink-0">
@@ -1505,7 +1505,7 @@ function IntelligenceTab({ stats }: { stats: any }) {
                 <p className="text-text-secondary text-base mt-2 font-medium">Análisis en tiempo real de oferta (negocios) vs demanda (búsquedas).</p>
             </header>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 h-[650px]">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 min-h-[400px]">
                 <div className="lg:col-span-2 bg-[#111114] border border-white/5 rounded-[40px] overflow-hidden shadow-2xl relative group">
                     <div className="absolute top-6 left-8 z-10 flex items-center gap-4 bg-black/60 backdrop-blur-xl px-5 py-2.5 rounded-2xl border border-white/10 shadow-lg">
                         <div className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse ring-4 ring-red-500/20" />

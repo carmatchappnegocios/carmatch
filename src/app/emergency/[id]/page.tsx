@@ -212,7 +212,7 @@ export default function EmergencyPage({
                 </div>
 
                 {/* Mapa en Pantalla Completa */}
-                <div ref={mapContainer} className="w-full h-[calc(100vh-200px)]" />
+                <div ref={mapContainer} className="w-full h-[calc(100dvh-200px)]" />
 
                 {/* Panel de Información */}
                 <div className="bg-surface border-t border-surface-highlight p-6">

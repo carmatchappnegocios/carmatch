@@ -338,7 +338,7 @@ export default function AIChatWidget({
     return (
         <>
             {isOpen && (
-                <div className="fixed bottom-24 md:bottom-6 right-6 z-50 w-[calc(100vw-3rem)] md:w-[400px] h-[500px] max-h-[calc(100vh-14rem)] bg-background border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+                <div className="fixed bottom-24 md:bottom-6 right-6 z-50 w-[calc(100vw-3rem)] md:w-[400px] h-[min(500px,calc(100dvh-14rem))] max-h-[calc(100dvh-14rem)] bg-background border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden">
                     <div className="bg-surface p-4 flex justify-between items-center border-b border-white/10">
                         <div className="flex items-center gap-3">
                             <div className="bg-primary-700/20 p-2 rounded-full">

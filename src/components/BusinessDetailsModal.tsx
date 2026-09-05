@@ -79,7 +79,7 @@ export default function BusinessDetailsModal({ business, onClose, categoryColor 
     ].filter(Boolean).join(', ') || business.address
 
     return (
-        <div className="fixed left-0 right-0 bottom-0 top-[68px] z-[10000] flex flex-col items-center bg-black/80 backdrop-blur-sm p-4 animate-fade-in overflow-y-auto" onClick={onClose}>
+        <div className="fixed inset-0 top-[68px] z-[10000] flex flex-col items-center bg-black/80 backdrop-blur-sm p-4 animate-fade-in overflow-y-auto" onClick={onClose}>
             {/* ❌ Close Button */}
             <button
                 onClick={onClose}

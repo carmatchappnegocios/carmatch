@@ -258,7 +258,7 @@ export default function SOSComponent({ isActive, otherUserId, onEndMeeting, chat
             {/* SOS Modal with Map */}
             {showSOSModal && (
                 <div className="fixed inset-0 bg-red-900/90 z-50 flex items-center justify-center p-4">
-                    <div className="bg-white rounded-2xl max-w-4xl w-full h-[85vh] flex flex-col overflow-hidden shadow-2xl">
+                    <div className="bg-white rounded-2xl max-w-4xl w-full h-[min(85vh,calc(100dvh-2rem))] flex flex-col overflow-hidden shadow-2xl">
                         <div className="bg-red-600 p-4 text-white flex justify-between items-center">
                             <h2 className="font-bold text-xl flex items-center gap-2">
                                 {t('sos.emergency_modal_title')}

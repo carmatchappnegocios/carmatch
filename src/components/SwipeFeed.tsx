@@ -103,7 +103,7 @@ function SwipeCard({ item, onSwipe, isTop, exitX }: SwipeCardProps) {
                 <div className="flex-1 flex flex-col min-w-0">
 
                     {/* Imagen Principal - altura adaptativa por viewport */}
-                    <div className="relative w-full flex-1 max-h-[45vh] lg:max-h-none lg:shrink lg:h-auto lg:flex-1 lg:min-h-[40vh] flex items-center justify-center bg-black overflow-hidden group">
+                    <div className="relative w-full flex-1 max-h-[60vh] lg:max-h-none lg:shrink lg:h-auto lg:flex-1 lg:min-h-[40vh] flex items-center justify-center bg-black overflow-hidden group">
                         <Link
                             href={isBusiness ? `/map-store?id=${item.id}` : `/vehicle/${item.id}`}
                             onPointerDown={(e) => e.stopPropagation()}

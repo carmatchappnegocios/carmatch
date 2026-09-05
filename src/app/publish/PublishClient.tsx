@@ -864,7 +864,7 @@ export default function PublishClient() {
                     </div>
                 </div>
 
-                <div className="bg-surface border border-surface-highlight rounded-2xl p-6 md:p-8 shadow-xl relative min-h-[400px]">
+                <div className="bg-surface border border-surface-highlight rounded-2xl p-6 md:p-8 shadow-xl relative min-h-[300px]">
                     {isAnalyzing && (
                         <div className="absolute inset-0 z-40 bg-surface/90 backdrop-blur-sm flex flex-col items-center justify-center rounded-2xl">
                             <h3 className="text-2xl font-bold text-text-primary animate-pulse text-center px-6">
