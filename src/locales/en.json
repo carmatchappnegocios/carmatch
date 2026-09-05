@@ -224,7 +224,7 @@
         "install_ios": "Install on iOS",
         "install_android": "Install on Android",
         "install_desktop": "Download App",
-        "business_cta": "HAVE A {category}? | LIST IT FREE",
+        "business_cta": "GOT A {category}? | LIST IT FREE",
         "marketing_hooks": {
             "empty_business": "EMPTY BUSINESS? | FILL IT WITH CUSTOMERS!",
             "more_sales": "MORE SALES, MORE CASH | GET ON NOW!",

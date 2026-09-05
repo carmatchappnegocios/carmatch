@@ -226,7 +226,7 @@
         "install_ios": "Instalar en iOS",
         "install_android": "Instalar en Android",
         "install_desktop": "Descargar App",
-        "business_cta": "¿TIENES UN {category}? | SÚBELO GRATIS",
+        "business_cta": "¿TIENES {category}? | SÚBELO GRATIS",
         "marketing_hooks": {
             "empty_business": "¿NEGOCIO VACÍO? | ¡LLÉNALO DE CLIENTES!",
             "more_sales": "MÁS VENTAS, MÁS LANA | ¡SÚBETE YA!",
