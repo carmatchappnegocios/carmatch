@@ -385,7 +385,7 @@ export default function Header() {
                                                 initial={{ opacity: 0, y: -5 }}
                                                 animate={{ opacity: 1, y: 0 }}
                                                 exit={{ opacity: 0, y: 5 }}
-                                                className={`text-[10px] md:text-xs font-bold uppercase tracking-wider leading-none mb-0.5 ${isCtaSlot ? 'text-green-400' : 'text-slate-400'}`}
+                                                className={`text-[10px] md:text-xs font-bold uppercase tracking-wider leading-none mb-0.5 ${isCtaSlot ? 'text-primary-400' : 'text-slate-400'}`}
                                             >
                                                 {displayCta.split(' | ')[0]}
                                             </motion.span>
@@ -394,7 +394,7 @@ export default function Header() {
                                                 initial={{ opacity: 0, scale: 0.95 }}
                                                 animate={{ opacity: 1, scale: 1 }}
                                                 exit={{ opacity: 0, scale: 0.95 }}
-                                                className={`text-xs md:text-base font-black uppercase tracking-tight leading-none transition-colors text-center sm:text-right ${isCtaSlot ? 'text-green-400 group-hover:text-green-300' : 'text-accent-500 group-hover:text-accent-400'}`}
+                                                className={`text-xs md:text-base font-black uppercase tracking-tight leading-none transition-colors text-center sm:text-right ${isCtaSlot ? 'text-primary-400 group-hover:text-primary-300' : 'text-accent-500 group-hover:text-accent-400'}`}
                                             >
                                                 {displayCta.split(' | ')[1]}
                                             </motion.span>
@@ -412,7 +412,7 @@ export default function Header() {
                                                 initial={{ opacity: 0, x: -5 }}
                                                 animate={{ opacity: 1, x: 0 }}
                                                 exit={{ opacity: 0, x: 5 }}
-                                                className={`block font-bold text-[10px] md:text-[10px] uppercase tracking-wide leading-tight text-right max-w-[120px] md:max-w-[250px] mb-0.5 ${isCtaSlot ? 'text-green-300' : 'text-white/90'} ${pathname === '/swipe' ? 'hidden sm:block' : ''}`}
+                                                className={`block font-bold text-[10px] md:text-[10px] uppercase tracking-wide leading-tight text-right max-w-[120px] md:max-w-[250px] mb-0.5 ${isCtaSlot ? 'text-primary-300' : 'text-white/90'} ${pathname === '/swipe' ? 'hidden sm:block' : ''}`}
                                             >
                                                 {displayCta.split(' | ')[0]}
                                             </motion.div>
@@ -423,7 +423,7 @@ export default function Header() {
                                     onClick={handleCtaClick}
                                     className="relative group shrink-0 flex items-center cursor-pointer z-20"
                                 >
-                                    <div className={`px-4 py-2 lg:px-6 lg:py-2.5 rounded-lg shadow-lg group-hover:opacity-90 transition-all active:scale-95 ring-1 flex items-center gap-2 pointer-events-none ${isCtaSlot ? 'bg-green-600 ring-green-500/30' : 'bg-accent-600 ring-accent-500/30'}`}>
+                                    <div className={`px-4 py-2 lg:px-6 lg:py-2.5 rounded-lg shadow-lg group-hover:opacity-90 transition-all active:scale-95 ring-1 flex items-center gap-2 pointer-events-none ${isCtaSlot ? 'bg-primary-600 ring-primary-500/30' : 'bg-accent-600 ring-accent-500/30'}`}>
                                         <AnimatePresence mode="wait">
                                             <motion.span
                                                 key={`action-guest-${ctaIndex}`}
