@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface BeforeInstallPromptEvent extends Event {
     prompt: () => Promise<void>
@@ -26,6 +27,7 @@ function detectBrowser(): BrowserType {
 }
 
 export default function SmartInstallBanner() {
+    const { t } = useLanguage();
     const [browser, setBrowser] = useState<BrowserType>('other')
     const [canInstall, setCanInstall] = useState(false)
     const [dismissed, setDismissed] = useState(false)
@@ -89,8 +91,8 @@ export default function SmartInstallBanner() {
                         </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                        <p className="text-white text-xs font-medium">Para instalar CarMatch</p>
-                        <p className="text-slate-400 text-[10px]">Abre este link en <span className="text-[#0ea5e9] font-semibold">Chrome</span> y toca "Instalar app"</p>
+                        <p className="text-white text-xs font-medium">{t('install_banner.samsung_title')}</p>
+                        <p className="text-slate-400 text-[10px]">{t('install_banner.samsung_desc')}</p>
                     </div>
                     <button onClick={handleDismiss} className="text-slate-500 hover:text-slate-300 p-1">
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -112,8 +114,8 @@ export default function SmartInstallBanner() {
                         </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                        <p className="text-white text-xs font-medium">Agregar CarMatch a tu pantalla</p>
-                        <p className="text-slate-400 text-[10px]">Toca <span className="text-[#0ea5e9] font-semibold">Compartir</span> y luego "Agregar a pantalla de inicio"</p>
+                        <p className="text-white text-xs font-medium">{t('install_banner.ios_title')}</p>
+                        <p className="text-slate-400 text-[10px]">{t('install_banner.ios_desc')}</p>
                     </div>
                     <button onClick={handleDismiss} className="text-slate-500 hover:text-slate-300 p-1">
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -135,14 +137,14 @@ export default function SmartInstallBanner() {
                         </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                        <p className="text-white text-xs font-medium">Instalar CarMatch</p>
-                        <p className="text-slate-400 text-[10px]">Agrega CarMatch a tu pantalla de inicio como una app</p>
+                        <p className="text-white text-xs font-medium">{t('install_banner.android_title')}</p>
+                        <p className="text-slate-400 text-[10px]">{t('install_banner.android_desc')}</p>
                     </div>
                     <button
                         onClick={handleInstall}
                         className="bg-[#f97316] text-white text-xs font-bold px-3 py-1.5 rounded-lg hover:bg-[#ea580c] transition-colors"
                     >
-                        Instalar
+                        {t('install_banner.install_btn')}
                     </button>
                 </div>
             </div>
@@ -159,14 +161,14 @@ export default function SmartInstallBanner() {
                         </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                        <p className="text-white text-xs font-medium">Instalar CarMatch</p>
-                        <p className="text-slate-400 text-[10px]">Acceso rápido desde tu escritorio</p>
+                        <p className="text-white text-xs font-medium">{t('install_banner.desktop_title')}</p>
+                        <p className="text-slate-400 text-[10px]">{t('install_banner.desktop_desc')}</p>
                     </div>
                     <button
                         onClick={handleInstall}
                         className="bg-[#f97316] text-white text-xs font-bold px-3 py-1.5 rounded-lg hover:bg-[#ea580c] transition-colors"
                     >
-                        Instalar
+                        {t('install_banner.install_btn')}
                     </button>
                     <button onClick={handleDismiss} className="text-slate-500 hover:text-slate-300 p-1">
                         <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

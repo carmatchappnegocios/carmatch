@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { Coins, X, Loader2, CheckCircle2 } from 'lucide-react'
 import ConfirmationModal from '@/components/ConfirmationModal'
 import { toast } from 'sonner'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface ManageCreditsModalProps {
     isOpen: boolean
@@ -18,6 +19,7 @@ interface ManageCreditsModalProps {
 }
 
 export default function ManageCreditsModal({ isOpen, onClose, user, onSuccess }: ManageCreditsModalProps) {
+    const { t } = useLanguage();
     const [amount, setAmount] = useState<string>('')
     const [reason, setReason] = useState('')
     const [loading, setLoading] = useState(false)
@@ -95,7 +97,7 @@ export default function ManageCreditsModal({ isOpen, onClose, user, onSuccess }:
                                 <Coins size={20} />
                             </div>
                             <div>
-                                <h3 className="font-bold text-lg text-white">Gestionar Créditos</h3>
+                                <h3 className="font-bold text-lg text-white">{t('admin_panel.manage_credits')}</h3>
                                 <p className="text-xs text-gray-400">Usuario: {user.name}</p>
                             </div>
                         </div>
@@ -107,11 +109,11 @@ export default function ManageCreditsModal({ isOpen, onClose, user, onSuccess }:
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div className="bg-white/5 rounded-xl p-4 border border-white/5 flex justify-between items-center">
                             <div>
-                                <p className="text-xs text-gray-400 uppercase tracking-widest font-bold mb-1">Saldo Actual</p>
+                                <p className="text-xs text-gray-400 uppercase tracking-widest font-bold mb-1">{t('admin_panel.current_balance')}</p>
                                 <p className="text-2xl font-bold text-white">{user.credits}</p>
                             </div>
                             <div className="text-right">
-                                <p className="text-xs text-gray-400 uppercase tracking-widest font-bold mb-1">Nuevo Saldo</p>
+                                <p className="text-xs text-gray-400 uppercase tracking-widest font-bold mb-1">{t('admin_panel.new_balance')}</p>
                                 <p className={`text-2xl font-bold ${newBalance < 0 ? 'text-red-400' : 'text-green-400'}`}>
                                     {newBalance}
                                 </p>
@@ -119,7 +121,7 @@ export default function ManageCreditsModal({ isOpen, onClose, user, onSuccess }:
                         </div>
 
                         <div>
-                            <label className="block text-sm font-bold text-gray-300 mb-2">Cantidad a Ajustar</label>
+                            <label className="block text-sm font-bold text-gray-300 mb-2">{t('admin_panel.adjust_amount')}</label>
                             <input
                                 type="number"
                                 value={amount}
@@ -134,7 +136,7 @@ export default function ManageCreditsModal({ isOpen, onClose, user, onSuccess }:
                         </div>
 
                         <div>
-                            <label className="block text-sm font-bold text-gray-300 mb-2">Razón del Ajuste</label>
+                            <label className="block text-sm font-bold text-gray-300 mb-2">{t('admin_panel.adjust_reason')}</label>
                             <input
                                 type="text"
                                 value={reason}

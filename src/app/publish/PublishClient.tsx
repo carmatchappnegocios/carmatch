@@ -868,9 +868,9 @@ export default function PublishClient() {
                     {isAnalyzing && (
                         <div className="absolute inset-0 z-40 bg-surface/90 backdrop-blur-sm flex flex-col items-center justify-center rounded-2xl">
                             <h3 className="text-2xl font-bold text-text-primary animate-pulse text-center px-6">
-                                Subiendo tus fotos...
+                                {t('publish.ai.uploading')}
                             </h3>
-                            <p className="text-text-secondary text-sm mt-2 mb-8">Esto puede tardar unos segundos</p>
+                            <p className="text-text-secondary text-sm mt-2 mb-8">{t('publish.ai.analyzing')}</p>
 
                             {/* 💡 Consejos dinámicos para el vendedor */}
                             <div className="max-w-md w-full px-6 py-4 bg-primary-900/10 border border-primary-500/20 rounded-2xl animate-in fade-in zoom-in duration-500">
@@ -878,7 +878,7 @@ export default function PublishClient() {
                                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
-                                    <h4 className="font-bold text-xs uppercase tracking-widest">Consejo CarMatch</h4>
+                                    <h4 className="font-bold text-xs uppercase tracking-widest">{t('publish.tips.title')}</h4>
                                 </div>
                                 <div className="h-20 flex items-center">
                                     <p className="text-sm text-text-secondary italic">
@@ -966,7 +966,7 @@ export default function PublishClient() {
                             <div className="pt-8 border-t border-surface-highlight">
                                 <h3 className="text-xl font-bold text-text-primary mb-6 flex items-center gap-2">
                                     <span className="w-8 h-8 bg-primary-700/20 text-primary-400 rounded-lg flex items-center justify-center text-sm">2</span>
-                                    Marca y Modelo
+                                    {t('publish.labels.brand_model')}
                                 </h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <SearchableSelect
@@ -1000,7 +1000,7 @@ export default function PublishClient() {
                                                 setVersion(e.target.value)
                                                 setUserEditedFields(prev => new Set(prev).add('version'))
                                             }}
-                                            placeholder="Ej: Raptor, Denali, GTI..."
+                                            placeholder={t('publish.placeholders.version')}
                                             className="w-full px-4 py-3 bg-background border border-surface-highlight rounded-lg focus:ring-2 focus:ring-primary-700 outline-none transition-all"
                                         />
                                     </div>
@@ -1163,11 +1163,11 @@ export default function PublishClient() {
                                 <div className="pt-6 border-t border-surface-highlight/50 space-y-4">
                                     <h4 className="text-sm font-bold text-primary-400 uppercase tracking-wider flex items-center gap-2">
                                         <Settings2 size={16} />
-                                        Motor y Potencia
+                                        {t('publish.labels.engine_power')}
                                     </h4>
                                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                                         <div className="space-y-1">
-                                            <label className="block text-xs font-medium text-text-secondary uppercase">Cilindraje</label>
+                                            <label className="block text-xs font-medium text-text-secondary uppercase">{t('vehicle.detail.displacement')}</label>
                                             <input
                                                 type="text"
                                                 value={displacement}
@@ -1175,12 +1175,12 @@ export default function PublishClient() {
                                                     setDisplacement(e.target.value)
                                                     setUserEditedFields(prev => new Set(prev).add('displacement'))
                                                 }}
-                                                placeholder="Ej: 2.5 (L) o 600 (cc)"
+                                                placeholder={t('publish.placeholders.displacement')}
                                                 className="w-full px-3 py-2 bg-background border border-surface-highlight rounded-lg text-sm focus:ring-1 focus:ring-primary-700 outline-none"
                                             />
                                         </div>
                                         <div className="space-y-1">
-                                            <label className="block text-xs font-medium text-text-secondary uppercase">Potencia (HP)</label>
+                                            <label className="block text-xs font-medium text-text-secondary uppercase">{t('publish.labels.horsepower')}</label>
                                             <input
                                                 type="text"
                                                 value={hp}
@@ -1188,12 +1188,12 @@ export default function PublishClient() {
                                                     setHp(e.target.value)
                                                     setUserEditedFields(prev => new Set(prev).add('hp'))
                                                 }}
-                                                placeholder="Ej: 250"
+                                                placeholder={t('publish.placeholders.horsepower')}
                                                 className="w-full px-3 py-2 bg-background border border-surface-highlight rounded-lg text-sm focus:ring-1 focus:ring-primary-700 outline-none"
                                             />
                                         </div>
                                         <div className="space-y-1">
-                                            <label className="block text-xs font-medium text-text-secondary uppercase">Torque</label>
+                                            <label className="block text-xs font-medium text-text-secondary uppercase">{t('vehicle.detail.torque')}</label>
                                             <input
                                                 type="text"
                                                 value={torque}
@@ -1201,12 +1201,12 @@ export default function PublishClient() {
                                                     setTorque(e.target.value)
                                                     setUserEditedFields(prev => new Set(prev).add('torque'))
                                                 }}
-                                                placeholder="Ej: 300 lb-pie"
+                                                placeholder={t('publish.placeholders.torque')}
                                                 className="w-full px-3 py-2 bg-background border border-surface-highlight rounded-lg text-sm focus:ring-1 focus:ring-primary-700 outline-none"
                                             />
                                         </div>
                                         <div className="space-y-1">
-                                            <label className="block text-xs font-medium text-text-secondary uppercase">Cilindros</label>
+                                            <label className="block text-xs font-medium text-text-secondary uppercase">{t('vehicle.detail.cylinders')}</label>
                                             <input
                                                 type="text"
                                                 value={cylinders}
@@ -1214,14 +1214,14 @@ export default function PublishClient() {
                                                     setCylinders(e.target.value)
                                                     setUserEditedFields(prev => new Set(prev).add('cylinders'))
                                                 }}
-                                                placeholder="Ej: 4, 6, 8"
+                                                placeholder={t('publish.placeholders.cylinders')}
                                                 className="w-full px-3 py-2 bg-background border border-surface-highlight rounded-lg text-sm focus:ring-1 focus:ring-primary-700 outline-none"
                                             />
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-2 gap-4">
                                         <div className="space-y-1">
-                                            <label className="block text-xs font-medium text-text-secondary uppercase">Tipo de Motor / Descripción</label>
+                                            <label className="block text-xs font-medium text-text-secondary uppercase">{t('publish.labels.engine_type')}</label>
                                             <input
                                                 type="text"
                                                 value={engine}
@@ -1229,12 +1229,12 @@ export default function PublishClient() {
                                                     setEngine(e.target.value)
                                                     setUserEditedFields(prev => new Set(prev).add('engine'))
                                                 }}
-                                                placeholder="Ej: 2.0L Turbo, V6 i-VTEC, Eléctrico Dual Motor"
+                                                placeholder={t('publish.placeholders.engine_description')}
                                                 className="w-full px-4 py-3 bg-background border border-surface-highlight rounded-lg text-sm focus:ring-1 focus:ring-primary-700 outline-none"
                                             />
                                         </div>
-                                        <SearchableSelect
-                                            label="Tracción"
+                                <SearchableSelect
+                                    label={t('publish.labels.traction')}
                                             value={traction}
                                             onChange={(value) => {
                                                 setTraction(value)
@@ -1246,7 +1246,7 @@ export default function PublishClient() {
                                     </div>
                                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                                         <SearchableSelect
-                                            label="Aspiración"
+                                            label={t('publish.labels.aspiration')}
                                             value={aspiration}
                                             onChange={(value) => {
                                                 setAspiration(value)
@@ -1256,7 +1256,7 @@ export default function PublishClient() {
                                             strict={false}
                                         />
                                         <div className="space-y-1">
-                                            <label className="block text-xs font-medium text-text-secondary uppercase">Nº Pasajeros</label>
+                                            <label className="block text-xs font-medium text-text-secondary uppercase">{t('publish.labels.passengers')}</label>
                                             <input
                                                 type="text"
                                                 value={passengers}
@@ -1264,12 +1264,12 @@ export default function PublishClient() {
                                                     setPassengers(e.target.value)
                                                     setUserEditedFields(prev => new Set(prev).add('passengers'))
                                                 }}
-                                                placeholder="Ej: 5"
+                                                placeholder={t('publish.placeholders.passengers')}
                                                 className="w-full px-3 py-2 bg-background border border-surface-highlight rounded-lg text-sm focus:ring-1 focus:ring-primary-700 outline-none"
                                             />
                                         </div>
                                         <div className="space-y-1">
-                                            <label className="block text-xs font-medium text-text-secondary uppercase">Peso (kg)</label>
+                                            <label className="block text-xs font-medium text-text-secondary uppercase">{t('publish.labels.weight_kg')}</label>
                                             <input
                                                 type="text"
                                                 value={weight}
@@ -1277,7 +1277,7 @@ export default function PublishClient() {
                                                     setWeight(e.target.value)
                                                     setUserEditedFields(prev => new Set(prev).add('weight'))
                                                 }}
-                                                placeholder="Ej: 1540"
+                                                placeholder={t('publish.placeholders.weight')}
                                                 className="w-full px-3 py-2 bg-background border border-surface-highlight rounded-lg text-sm focus:ring-1 focus:ring-primary-700 outline-none"
                                             />
                                         </div>
@@ -1289,26 +1289,26 @@ export default function PublishClient() {
                                     <div className="pt-6 border-t border-surface-highlight/50 space-y-4 animate-in slide-in-from-left-2 duration-300">
                                         <h4 className="text-sm font-bold text-blue-400 uppercase tracking-wider flex items-center gap-2">
                                             <BatteryCharging size={16} />
-                                            Detalles Eléctricos
+                                            {t('publish.labels.electric_details')}
                                         </h4>
                                         <div className="grid grid-cols-2 gap-4">
                                             <div className="space-y-1">
-                                                <label className="block text-xs font-medium text-text-secondary uppercase">Capacidad Batería (kWh)</label>
+                                                <label className="block text-xs font-medium text-text-secondary uppercase">{t('publish.labels.battery_capacity_kwh')}</label>
                                                 <input
                                                     type="text"
                                                     value={batteryCapacity}
                                                     onChange={(e) => setBatteryCapacity(e.target.value)}
-                                                    placeholder="Ej: 75"
+                                                    placeholder={t('publish.placeholders.battery_capacity')}
                                                     className="w-full px-3 py-2 bg-background border border-surface-highlight rounded-lg text-sm focus:ring-1 focus:ring-primary-700 outline-none"
                                                 />
                                             </div>
                                             <div className="space-y-1">
-                                                <label className="block text-xs font-medium text-text-secondary uppercase">Rango Eléctrico (km)</label>
+                                                <label className="block text-xs font-medium text-text-secondary uppercase">{t('publish.labels.electric_range_km')}</label>
                                                 <input
                                                     type="text"
                                                     value={range}
                                                     onChange={(e) => setRange(e.target.value)}
-                                                    placeholder="Ej: 450"
+                                                    placeholder={t('publish.placeholders.electric_range')}
                                                     className="w-full px-3 py-2 bg-background border border-surface-highlight rounded-lg text-sm focus:ring-1 focus:ring-primary-700 outline-none"
                                                 />
                                             </div>
@@ -1321,37 +1321,37 @@ export default function PublishClient() {
                                     <div className="pt-6 border-t border-surface-highlight/50 space-y-4 animate-in slide-in-from-left-2 duration-300">
                                         <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2">
                                             <Truck size={16} />
-                                            Detalles de Carga y Pesados
+                                            {t('publish.labels.cargo_details')}
                                         </h4>
                                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                                             <div className="space-y-1">
-                                                <label className="block text-xs font-medium text-text-secondary uppercase">Capacidad de Carga (kg)</label>
+                                                <label className="block text-xs font-medium text-text-secondary uppercase">{t('publish.labels.cargo_capacity_kg')}</label>
                                                 <input
                                                     type="text"
                                                     value={cargoCapacity}
                                                     onChange={(e) => setCargoCapacity(e.target.value)}
-                                                    placeholder="Ej: 3500"
+                                                    placeholder={t('publish.placeholders.cargo_capacity')}
                                                     className="w-full px-3 py-2 bg-background border border-surface-highlight rounded-lg text-sm focus:ring-1 focus:ring-primary-700 outline-none"
                                                 />
                                             </div>
                                             <div className="space-y-1">
-                                                <label className="block text-xs font-medium text-text-secondary uppercase">Ejes</label>
+                                                <label className="block text-xs font-medium text-text-secondary uppercase">{t('vehicle.detail.axles')}</label>
                                                 <input
                                                     type="text"
                                                     value={axles}
                                                     onChange={(e) => setAxles(e.target.value)}
-                                                    placeholder="Ej: 2, 3, 4"
+                                                    placeholder={t('publish.placeholders.axles')}
                                                     className="w-full px-3 py-2 bg-background border border-surface-highlight rounded-lg text-sm focus:ring-1 focus:ring-primary-700 outline-none"
                                                 />
                                             </div>
                                             {vehicleCategory === 'industrial' && (
                                                 <div className="space-y-1 col-span-2 md:col-span-1">
-                                                    <label className="block text-xs font-medium text-text-secondary uppercase">Horas de Operación</label>
+                                                    <label className="block text-xs font-medium text-text-secondary uppercase">{t('vehicle.detail.operating_hours')}</label>
                                                     <input
                                                         type="text"
                                                         value={operatingHours}
                                                         onChange={(e) => setOperatingHours(e.target.value)}
-                                                        placeholder="Ej: 1200"
+                                                        placeholder={t('publish.placeholders.operating_hours')}
                                                         className="w-full px-3 py-2 bg-background border border-surface-highlight rounded-lg text-sm focus:ring-1 focus:ring-primary-700 outline-none"
                                                     />
                                                 </div>
@@ -1414,7 +1414,7 @@ export default function PublishClient() {
                                                         addCustomFeature()
                                                     }
                                                 }}
-                                                placeholder={'Ej: Rines deportivos 20", GPS...'}
+                                                placeholder={t('publish.placeholders.feature')}
                                                 className="w-full bg-surface-highlight border border-surface-highlight p-3 rounded-xl pr-10 text-sm focus:ring-1 focus:ring-primary-700 outline-none"
                                             />
                                         </div>
@@ -1427,7 +1427,7 @@ export default function PublishClient() {
                                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                                             </svg>
-                                            <span className="hidden sm:inline">Agregar</span>
+                                            <span className="hidden sm:inline">{t('publish.actions.add')}</span>
                                         </button>
                                     </div>
 
@@ -1442,7 +1442,7 @@ export default function PublishClient() {
                                     <textarea
                                         value={description}
                                         onChange={(e) => setDescription(e.target.value)}
-                                        placeholder="Comentarios adicionales, estado de llantas, mantenimiento, etc..."
+                                        placeholder={t('publish.placeholders.description')}
                                         rows={4}
                                         className="w-full px-4 py-3 bg-background border border-surface-highlight rounded-lg resize-none focus:ring-2 focus:ring-primary-700 outline-none transition-all"
                                     />

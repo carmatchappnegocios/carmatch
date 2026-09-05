@@ -2,6 +2,7 @@
 
 import { LucideIcon } from 'lucide-react'
 import { motion } from 'framer-motion'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface MenuItem {
     id: string
@@ -19,6 +20,7 @@ interface AdminSidebarProps {
 }
 
 export default function AdminSidebar({ activeView, setActiveView, menuItems, userImage, userName }: AdminSidebarProps) {
+    const { t } = useLanguage();
     return (
         <aside className="hidden md:flex flex-col w-64 bg-[#09090b] border-r border-white/5 h-screen sticky top-0 shrink-0 overflow-y-auto no-scrollbar">
             <div className="p-6">
@@ -27,8 +29,8 @@ export default function AdminSidebar({ activeView, setActiveView, menuItems, use
                         <span className="font-black text-xl italic text-white">C</span>
                     </div>
                     <div>
-                        <h1 className="font-black text-lg tracking-tighter italic text-white leading-none">CarMatch</h1>
-                        <span className="text-[10px] font-bold text-primary-500 tracking-[0.3em] uppercase">Operating System</span>
+                        <h1 className="font-black text-lg tracking-tighter italic text-white leading-none">{t('admin_panel.carmatch_brand')}</h1>
+                        <span className="text-[10px] font-bold text-primary-500 tracking-[0.3em] uppercase">{t('admin_panel.operating_system')}</span>
                     </div>
                 </div>
 
@@ -77,7 +79,7 @@ export default function AdminSidebar({ activeView, setActiveView, menuItems, use
                     </div>
                     <div className="min-w-0">
                         <p className="text-xs font-black text-white truncate">{userName || 'Administrator'}</p>
-                        <p className="text-[10px] font-bold text-zinc-600 truncate uppercase tracking-widest">Master Access</p>
+                        <p className="text-[10px] font-bold text-zinc-600 truncate uppercase tracking-widest">{t('admin_panel.master_access')}</p>
                     </div>
                 </div>
             </div>

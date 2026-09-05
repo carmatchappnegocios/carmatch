@@ -566,7 +566,7 @@ export default function SwipeClient({ initialItems, currentUserId }: SwipeClient
                             ✕
                         </button>
 
-                        <h3 className="text-xl font-bold text-text-primary mb-4">Cambiar Ubicación</h3>
+                        <h3 className="text-xl font-bold text-text-primary mb-4">{t('swipe_location.change_location')}</h3>
                         <p className="text-text-secondary text-sm mb-6">
                             {t('market.change_location_desc')}
                         </p>

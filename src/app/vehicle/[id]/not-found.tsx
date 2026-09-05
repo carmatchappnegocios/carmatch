@@ -2,10 +2,12 @@
 "use client"
 
 import { useRouter } from 'next/navigation'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 
 export default function VehicleNotFound() {
     const router = useRouter()
+    const { t } = useLanguage();
 
     return (
         <div className="min-h-screen bg-background">
@@ -27,19 +29,19 @@ export default function VehicleNotFound() {
 
                 {/* Mensaje principal */}
                 <h1 className="text-4xl md:text-5xl font-black text-green-500 mb-4">
-                    ¡Mejor! Ya vendido 🎉
+                    {t('vehicle_not_found.sold_title')}
                 </h1>
 
                 <p className="text-xl text-text-secondary mb-8 max-w-2xl">
-                    Este vehículo ya no está disponible. ¡Buenas noticias! Esto significa que otro usuario encontró su auto ideal.
+                    {t('vehicle_not_found.sold_desc')}
                 </p>
 
                 <div className="bg-surface border border-surface-highlight rounded-2xl p-6 mb-8 max-w-md">
                     <p className="text-text-primary font-medium mb-2">
-                        Pero no te preocupes...
+                        {t('vehicle_not_found.no_worry')}
                     </p>
                     <p className="text-text-secondary">
-                        Tenemos cientos de vehículos esperándote. Explora nuestra colección y encuentra el tuyo.
+                        {t('vehicle_not_found.hundreds_waiting')}
                     </p>
                 </div>
 
@@ -52,7 +54,7 @@ export default function VehicleNotFound() {
                         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
-                        Explorar MarketCar
+                        {t('vehicle_not_found.explore_market')}
                     </button>
 
                     <button
@@ -62,7 +64,7 @@ export default function VehicleNotFound() {
                         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                         </svg>
-                        Descubre en CarMatch
+                        {t('vehicle_not_found.discover_on')}
                     </button>
                 </div>
 
@@ -70,11 +72,11 @@ export default function VehicleNotFound() {
                 <div className="mt-12 grid grid-cols-2 gap-6 max-w-md w-full">
                     <div className="bg-surface-highlight/20 rounded-xl p-4">
                         <p className="text-3xl font-black text-primary-400">500+</p>
-                        <p className="text-sm text-text-secondary">Vehículos activos</p>
+                        <p className="text-sm text-text-secondary">{t('vehicle_not_found.active_vehicles')}</p>
                     </div>
                     <div className="bg-surface-highlight/20 rounded-xl p-4">
                         <p className="text-3xl font-black text-green-500">1,250+</p>
-                        <p className="text-sm text-text-secondary">Vendidos este mes</p>
+                        <p className="text-sm text-text-secondary">{t('vehicle_not_found.sold_this_month')}</p>
                     </div>
                 </div>
             </div>

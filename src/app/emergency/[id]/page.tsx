@@ -7,6 +7,7 @@ import { useSession } from 'next-auth/react'
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { Phone, AlertTriangle, MapPin } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 
 interface LocationData {
@@ -33,6 +34,7 @@ export default function EmergencyPage({
     searchParams: Promise<any>
 }) {
     const { id } = use(params)
+    const { t } = useLanguage();
     const { data: session, status } = useSession()
     const router = useRouter()
     const [sosData, setSOSData] = useState<SOSData | null>(null)
@@ -180,7 +182,7 @@ export default function EmergencyPage({
             <div className="min-h-screen bg-background flex items-center justify-center">
                 <div className="text-center">
                     <AlertTriangle className="w-16 h-16 text-red-600 mx-auto mb-4" />
-                    <p className="text-text-primary font-bold text-xl mb-2">Error</p>
+                    <p className="text-text-primary font-bold text-xl mb-2">{t('emergency_page.error')}</p>
                     <p className="text-text-secondary">{error || 'No se encontró la alerta'}</p>
                 </div>
             </div>
@@ -231,7 +233,7 @@ export default function EmergencyPage({
                                     <p className="text-xs">Última actualización: {sosData.victim.lastUpdate ? new Date(sosData.victim.lastUpdate).toLocaleString('es-MX') : 'N/A'}</p>
                                 </div>
                             ) : (
-                                <p className="text-sm text-gray-500">Ubicación no disponible</p>
+                                <p className="text-sm text-gray-500">{t('emergency_page.location_unavailable')}</p>
                             )}
                         </div>
 
@@ -252,7 +254,7 @@ export default function EmergencyPage({
                                         <p className="text-xs">Última actualización: {sosData.counterpart.lastUpdate ? new Date(sosData.counterpart.lastUpdate).toLocaleString('es-MX') : 'N/A'}</p>
                                     </div>
                                 ) : (
-                                    <p className="text-sm text-gray-500">Ubicación no disponible</p>
+                                    <p className="text-sm text-gray-500">{t('emergency_page.location_unavailable')}</p>
                                 )}
                             </div>
                         )}

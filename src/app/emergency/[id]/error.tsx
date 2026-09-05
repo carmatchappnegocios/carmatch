@@ -1,6 +1,8 @@
 "use client"
 
 import ErrorBoundary from '@/components/ErrorBoundary'
+import { useLanguage } from '@/contexts/LanguageContext'
 export default function EmergencyError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
-    return <ErrorBoundary error={error} reset={reset} title="Error en Emergencia" description="No pudimos cargar la alerta de emergencia." />
+    const { t } = useLanguage()
+    return <ErrorBoundary error={error} reset={reset} title={t('error_pages.emergency_error')} description={t('error_pages.emergency_error_desc')} />
 }

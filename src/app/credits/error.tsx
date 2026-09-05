@@ -1,6 +1,8 @@
 "use client"
 
 import ErrorBoundary from '@/components/ErrorBoundary'
+import { useLanguage } from '@/contexts/LanguageContext'
 export default function CreditsError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
-    return <ErrorBoundary error={error} reset={reset} title="Error en CrÃ©ditos" description="No pudimos cargar tu informaciÃ³n de crÃ©ditos." />
+    const { t } = useLanguage()
+    return <ErrorBoundary error={error} reset={reset} title={t('error_pages.credits_error')} description={t('error_pages.credits_error_desc')} />
 }

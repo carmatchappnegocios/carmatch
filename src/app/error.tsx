@@ -1,6 +1,8 @@
 "use client"
 
 import ErrorBoundary from '@/components/ErrorBoundary'
+import { useLanguage } from '@/contexts/LanguageContext'
 export default function GlobalError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
-    return <ErrorBoundary error={error} reset={reset} title="Algo saliÃ³ mal" description="Ha ocurrido un error inesperado. Por favor, intenta recargar la pÃ¡gina." />
+    const { t } = useLanguage()
+    return <ErrorBoundary error={error} reset={reset} title={t('error_pages.something_wrong')} description={t('error_pages.unexpected_error')} />
 }

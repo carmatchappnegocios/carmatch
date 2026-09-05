@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Crown, CreditCard, AlertTriangle, CheckCircle, X } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface BusinessSubscription {
     id: string
@@ -20,6 +21,7 @@ interface SubscriptionBannerProps {
 }
 
 export default function SubscriptionBanner({ business, onSubscribe, onManageBilling }: SubscriptionBannerProps) {
+    const { t } = useLanguage()
     const [loading, setLoading] = useState(false)
     const [dismissed, setDismissed] = useState(false)
 
@@ -76,12 +78,12 @@ export default function SubscriptionBanner({ business, onSubscribe, onManageBill
                     </div>
                     <div className="flex-1">
                         <p className={`font-bold text-sm ${isExpired ? 'text-red-300' : 'text-amber-300'}`}>
-                            {isExpired ? 'Periodo de prueba expirado' : `Te quedan ${daysLeft} días de prueba gratis`}
+                            {isExpired ? t('subscription_banner.trial_expired') : t('subscription_banner.trial_days_left').replace('{days}', String(daysLeft))}
                         </p>
                         <p className="text-text-secondary text-xs mt-1">
                             {isExpired
-                                ? 'Suscríbete por $20 MXN/mes para mantener tu negocio activo'
-                                : 'Suscríbete por $20 MXN/mes para no perder tu publicación'
+                                ? t('subscription_banner.subscribe_expired')
+                                : t('subscription_banner.subscribe_trial')
                             }
                         </p>
                         <button
@@ -89,7 +91,7 @@ export default function SubscriptionBanner({ business, onSubscribe, onManageBill
                             disabled={loading}
                             className="mt-3 bg-primary-500 hover:bg-primary-600 text-white text-xs font-bold px-4 py-2 rounded-xl transition disabled:opacity-50"
                         >
-                            {loading ? 'Abriendo...' : 'Suscribirme ahora'}
+                            {loading ? t('subscription_banner.opening') : t('subscription_banner.subscribe_now')}
                         </button>
                     </div>
                     <button onClick={() => setDismissed(true)} className="text-text-secondary hover:text-text-primary">
@@ -109,9 +111,9 @@ export default function SubscriptionBanner({ business, onSubscribe, onManageBill
                         <CheckCircle size={20} className="text-green-400" />
                     </div>
                     <div className="flex-1">
-                        <p className="text-green-300 font-bold text-sm">Suscripción activa</p>
+                        <p className="text-green-300 font-bold text-sm">{t('subscription_banner.active')}</p>
                         <p className="text-text-secondary text-xs">
-                            {business.expiresAt && `Renovación: ${new Date(business.expiresAt).toLocaleDateString()}`}
+                            {business.expiresAt && t('subscription_banner.renewal').replace('{date}', new Date(business.expiresAt).toLocaleDateString())}
                         </p>
                     </div>
                     <button
@@ -120,7 +122,7 @@ export default function SubscriptionBanner({ business, onSubscribe, onManageBill
                         className="text-text-secondary hover:text-text-primary border border-white/10 text-xs font-bold px-3 py-1.5 rounded-xl transition"
                     >
                         <CreditCard size={14} className="inline mr-1" />
-                        Gestionar
+                        {t('subscription_banner.manage')}
                     </button>
                 </div>
             </div>
@@ -136,16 +138,16 @@ export default function SubscriptionBanner({ business, onSubscribe, onManageBill
                         <AlertTriangle size={20} className="text-red-400" />
                     </div>
                     <div className="flex-1">
-                        <p className="text-red-300 font-bold text-sm">Pago pendiente</p>
+                        <p className="text-red-300 font-bold text-sm">{t('subscription_banner.past_due')}</p>
                         <p className="text-text-secondary text-xs mt-1">
-                            Tu último pago falló. Actualiza tu método de pago para evitar la desactivación.
+                            {t('subscription_banner.past_due_desc')}
                         </p>
                         <button
                             onClick={handleManageBilling}
                             disabled={loading}
                             className="mt-3 bg-red-500 hover:bg-red-600 text-white text-xs font-bold px-4 py-2 rounded-xl transition disabled:opacity-50"
                         >
-                            {loading ? 'Abriendo...' : 'Actualizar pago'}
+                            {loading ? t('subscription_banner.opening') : t('subscription_banner.update_payment')}
                         </button>
                     </div>
                 </div>

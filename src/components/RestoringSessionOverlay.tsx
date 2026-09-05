@@ -4,8 +4,10 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ShieldCheck } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function RestoringSessionOverlay() {
+    const { t } = useLanguage()
     const [isVisible, setIsVisible] = useState(false)
 
     useEffect(() => {
@@ -49,9 +51,9 @@ export default function RestoringSessionOverlay() {
                         </div>
 
                         <div>
-                            <h3 className="text-xl font-bold text-text-primary mb-2">Restaurando sesión</h3>
+                            <h3 className="text-xl font-bold text-text-primary mb-2">{t('session_overlay.restoring')}</h3>
                             <p className="text-sm text-text-secondary leading-relaxed">
-                                Sincronizando tu perfil de forma segura...
+                                {t('session_overlay.syncing')}
                             </p>
                         </div>
 

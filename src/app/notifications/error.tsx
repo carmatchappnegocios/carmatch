@@ -1,6 +1,8 @@
 "use client"
 
 import ErrorBoundary from '@/components/ErrorBoundary'
+import { useLanguage } from '@/contexts/LanguageContext'
 export default function NotificationsError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
-    return <ErrorBoundary error={error} reset={reset} title="Error en Notificaciones" description="No pudimos cargar tus notificaciones." />
+    const { t } = useLanguage()
+    return <ErrorBoundary error={error} reset={reset} title={t('error_pages.notifications_error')} description={t('error_pages.notifications_error_desc')} />
 }

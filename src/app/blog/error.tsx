@@ -1,6 +1,8 @@
 "use client"
 
 import ErrorBoundary from '@/components/ErrorBoundary'
+import { useLanguage } from '@/contexts/LanguageContext'
 export default function BlogError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
-    return <ErrorBoundary error={error} reset={reset} title="Error en el Blog" description="No pudimos cargar los artÃ­culos del blog." />
+    const { t } = useLanguage()
+    return <ErrorBoundary error={error} reset={reset} title={t('error_pages.blog_error')} description={t('error_pages.blog_error_desc')} />
 }

@@ -131,10 +131,10 @@ export default function FooterSEO() {
                         <div>
                              <h3 className="text-white font-bold mb-4 text-sm uppercase tracking-wider">{t('footer.quick_access')}</h3>
                             <ul className="space-y-2">
-                                <li><Link href="/market" className="text-slate-400 hover:text-white text-xs block bg-white/5 px-3 py-1.5 rounded-lg hover:bg-white/10 transition w-fit">Marketplace Global</Link></li>
-                                <li><Link href="/map" className="text-slate-400 hover:text-white text-xs block bg-white/5 px-3 py-1.5 rounded-lg hover:bg-white/10 transition w-fit mt-1">MapStore 24/7</Link></li>
-                                <li><Link href="/swipe" className="text-slate-400 hover:text-white text-xs block bg-primary-600/20 text-primary-400 px-3 py-1.5 rounded-lg hover:bg-primary-600/30 transition w-fit mt-1 border border-primary-500/20">CarMatch Swipe</Link></li>
-                                <li><Link href="/blog" className="text-slate-400 hover:text-white text-xs block bg-white/5 px-3 py-1.5 rounded-lg hover:bg-white/10 transition w-fit mt-1">Blog Automotriz</Link></li>
+                                <li><Link href="/market" className="text-slate-400 hover:text-white text-xs block bg-white/5 px-3 py-1.5 rounded-lg hover:bg-white/10 transition w-fit">{t('footer_quick.global_marketplace')}</Link></li>
+                                <li><Link href="/map" className="text-slate-400 hover:text-white text-xs block bg-white/5 px-3 py-1.5 rounded-lg hover:bg-white/10 transition w-fit mt-1">{t('footer_quick.mapstore_247')}</Link></li>
+                                <li><Link href="/swipe" className="text-slate-400 hover:text-white text-xs block bg-primary-600/20 text-primary-400 px-3 py-1.5 rounded-lg hover:bg-primary-600/30 transition w-fit mt-1 border border-primary-500/20">{t('footer_quick.carmatch_swipe')}</Link></li>
+                                <li><Link href="/blog" className="text-slate-400 hover:text-white text-xs block bg-white/5 px-3 py-1.5 rounded-lg hover:bg-white/10 transition w-fit mt-1">{t('footer_quick.automotive_blog')}</Link></li>
                             </ul>
                         </div>
                     </div>

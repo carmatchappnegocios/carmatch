@@ -25,6 +25,7 @@ import {
 import { motion } from 'framer-motion'
 import { formatPrice } from '@/lib/vehicleTaxonomy'
 import { useSession } from 'next-auth/react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface MiniWebProps {
     business: {
@@ -51,6 +52,7 @@ interface MiniWebProps {
 }
 
 export default function MiniWebClient({ business }: MiniWebProps) {
+    const { t } = useLanguage()
     const mainImage = business.images[0] || null
     const gallery = business.images.slice(1)
     const { data: session } = useSession()
@@ -181,7 +183,7 @@ export default function MiniWebClient({ business }: MiniWebProps) {
                     {/* Left: Description & Services */}
                     <div className="lg:col-span-2 space-y-16">
                         <section>
-                            <h2 className="text-xs font-black uppercase tracking-[0.3em] text-primary-500 mb-6 italic">Sobre Nosotros</h2>
+                            <h2 className="text-xs font-black uppercase tracking-[0.3em] text-primary-500 mb-6 italic">{t('mini_web.about_us')}</h2>
                             <p className="text-xl md:text-2xl text-gray-400 leading-relaxed font-light">
                                 {business.description || "Bienvenidos a nuestro negocio oficial en CarMatch. Estamos comprometidos con la excelencia y la satisfacción de nuestros clientes en cada servicio que ofrecemos."}
                             </p>
@@ -189,7 +191,7 @@ export default function MiniWebClient({ business }: MiniWebProps) {
 
                         {business.services.length > 0 && (
                             <section>
-                                <h2 className="text-xs font-black uppercase tracking-[0.3em] text-primary-500 mb-8 italic">Nuestros Servicios</h2>
+                                <h2 className="text-xs font-black uppercase tracking-[0.3em] text-primary-500 mb-8 italic">{t('mini_web.our_services')}</h2>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {business.services.map((service, i) => (
                                         <div key={i} className="flex items-center gap-4 p-5 bg-white/5 border border-white/5 rounded-2xl group hover:border-primary-500/30 transition-all">
@@ -206,7 +208,7 @@ export default function MiniWebClient({ business }: MiniWebProps) {
                         {/* Professional Gallery Area */}
                         {gallery.length > 0 && (
                             <section>
-                                <h2 className="text-xs font-black uppercase tracking-[0.3em] text-primary-500 mb-8 italic">Galería de Trabajos</h2>
+                                <h2 className="text-xs font-black uppercase tracking-[0.3em] text-primary-500 mb-8 italic">{t('mini_web.work_gallery')}</h2>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     {gallery.map((img, i) => (
                                         <motion.div
@@ -225,7 +227,7 @@ export default function MiniWebClient({ business }: MiniWebProps) {
                     {/* Right: Info & Contact Card */}
                     <div className="space-y-8">
                         <div className="sticky top-24 p-8 bg-[#0c0f1a] border border-white/5 rounded-[40px] shadow-2xl">
-                            <h3 className="text-2xl font-black mb-8 italic uppercase tracking-tighter">Información</h3>
+                            <h3 className="text-2xl font-black mb-8 italic uppercase tracking-tighter">{t('mini_web.information')}</h3>
 
                             <div className="space-y-8">
                                 <div className="flex gap-5">
@@ -233,7 +235,7 @@ export default function MiniWebClient({ business }: MiniWebProps) {
                                         <MapPin size={24} />
                                     </div>
                                     <div>
-                                        <p className="text-xs font-black uppercase text-gray-500 mb-1 tracking-widest">Ubicación</p>
+                                        <p className="text-xs font-black uppercase text-gray-500 mb-1 tracking-widest">{t('mini_web.location')}</p>
                                         <p className="text-lg font-medium text-gray-200">{business.address}</p>
                                         <p className="text-lg text-primary-400">{business.city}</p>
                                     </div>
@@ -245,7 +247,7 @@ export default function MiniWebClient({ business }: MiniWebProps) {
                                             <Clock size={24} />
                                         </div>
                                         <div>
-                                            <p className="text-xs font-black uppercase text-gray-500 mb-1 tracking-widest">Horarios</p>
+                                            <p className="text-xs font-black uppercase text-gray-500 mb-1 tracking-widest">{t('mini_web.hours')}</p>
                                             <p className="text-lg font-medium text-gray-200">{business.hours}</p>
                                         </div>
                                     </div>
@@ -256,11 +258,11 @@ export default function MiniWebClient({ business }: MiniWebProps) {
                                         <Phone size={24} />
                                     </div>
                                     <div>
-                                        <p className="text-xs font-black uppercase text-gray-500 mb-1 tracking-widest">Teléfono</p>
+                                        <p className="text-xs font-black uppercase text-gray-500 mb-1 tracking-widest">{t('mini_web.phone')}</p>
                                         <p className="text-2xl font-black text-white tracking-widest">
                                             {session ? (business.phone || "Consultar") : "•••• ••••"}
                                         </p>
-                                        {!session && <p className="text-[10px] text-primary-400 mt-1 uppercase font-bold tracking-tight">Regístrate para ver</p>}
+                                        {!session && <p className="text-[10px] text-primary-400 mt-1 uppercase font-bold tracking-tight">{t('mini_web.register_to_see')}</p>}
                                     </div>
                                 </div>
                             </div>
@@ -296,7 +298,7 @@ export default function MiniWebClient({ business }: MiniWebProps) {
                                     </div>
                                 ) : (
                                     <div className="pt-6 text-center">
-                                        <p className="text-xs text-gray-500 italic mb-4">Inicia sesión para ver links sociales</p>
+                                        <p className="text-xs text-gray-500 italic mb-4">{t('mini_web.login_to_social')}</p>
                                         <div className="flex justify-center gap-4 opacity-20 grayscale pointer-events-none">
                                             <Facebook size={24} />
                                             <Instagram size={24} />
@@ -318,11 +320,11 @@ export default function MiniWebClient({ business }: MiniWebProps) {
                         <ShieldCheck size={16} />
                         Negocio Verificado Pro
                     </div>
-                    <p className="text-gray-500 text-sm mb-4 italic">Sitio web oficial impulsado por CarMatch Technology</p>
+                    <p className="text-gray-500 text-sm mb-4 italic">{t('mini_web.powered_by')}</p>
                     <div className="flex justify-center items-center gap-4 text-gray-600">
-                        <Link href="/terms" className="text-xs hover:text-white transition">Términos</Link>
+                        <Link href="/terms" className="text-xs hover:text-white transition">{t('mini_web.terms')}</Link>
                         <span className="w-1 h-1 bg-gray-600 rounded-full"></span>
-                        <Link href="/privacy" className="text-xs hover:text-white transition">Privacidad</Link>
+                        <Link href="/privacy" className="text-xs hover:text-white transition">{t('mini_web.privacy')}</Link>
                     </div>
                 </div>
             </footer>

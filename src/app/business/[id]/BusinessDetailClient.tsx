@@ -13,6 +13,7 @@ import ConfirmationModal from '@/components/ConfirmationModal'
 import OpeningHoursDisplay from '@/components/OpeningHoursDisplay'
 import ReviewList from '@/components/ReviewList'
 import SubscriptionBanner from '@/components/SubscriptionBanner'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface BusinessDetailProps {
     business: {
@@ -41,6 +42,7 @@ interface BusinessDetailProps {
 }
 
 export default function BusinessDetailClient({ business, currentUserId }: BusinessDetailProps) {
+    const { t } = useLanguage()
     const { data: session } = useSession()
     const router = useRouter()
     const [loading, setLoading] = useState(false)
@@ -155,7 +157,7 @@ export default function BusinessDetailClient({ business, currentUserId }: Busine
             title = 'Reactivar Negocio'
             message = '¿Deseas reactivar este negocio? Esto lo mantendrá visible en el mapa por un periodo extendido.'
             variant = 'info'
-            confirmLabel = 'Reactivar'
+            confirmLabel = t('business.reactivate')
         }
 
         setModal({
@@ -206,7 +208,7 @@ export default function BusinessDetailClient({ business, currentUserId }: Busine
                             className="bg-surface-highlight hover:bg-surface-highlight/80 text-text-primary p-3 rounded-2xl border border-white/5 flex flex-col items-center gap-1 min-w-[80px] transition"
                         >
                             <Edit3 size={20} className="text-primary-400" />
-                            <span className="text-[10px] font-bold uppercase">Editar</span>
+                            <span className="text-[10px] font-bold uppercase">{t('business.edit')}</span>
                         </Link>
 
                         {needsCreditToActivate ? (
@@ -216,7 +218,7 @@ export default function BusinessDetailClient({ business, currentUserId }: Busine
                                 className="bg-amber-500 hover:bg-amber-600 text-white p-3 rounded-2xl flex flex-col items-center gap-1 min-w-[80px] shadow-lg shadow-amber-900/40 transition"
                             >
                                 <Play size={20} />
-                                <span className="text-[10px] font-bold uppercase text-center px-1">Reactivar</span>
+                                <span className="text-[10px] font-bold uppercase text-center px-1">{t('business.reactivate')}</span>
                             </button>
                         ) : (
                             <button
@@ -228,7 +230,7 @@ export default function BusinessDetailClient({ business, currentUserId }: Busine
                                     }`}
                             >
                                 {business.isActive ? <Pause size={20} /> : <Play size={20} />}
-                                <span className="text-[10px] font-bold uppercase">{business.isActive ? 'Pausar' : 'Activar'}</span>
+                                <span className="text-[10px] font-bold uppercase">{business.isActive ? t('business.deactivate') : t('business.activate')}</span>
                             </button>
                         )}
                     </div>
@@ -261,7 +263,7 @@ export default function BusinessDetailClient({ business, currentUserId }: Busine
                 {/* Back Button */}
                 <Link href="/map" className="inline-flex items-center text-text-secondary hover:text-primary-400 mb-6 transition">
                     <ArrowLeft className="mr-2" size={20} />
-                    Volver a MapStore
+                    {t('business_detail.back_to_map')}
                 </Link>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -279,7 +281,7 @@ export default function BusinessDetailClient({ business, currentUserId }: Busine
                             ) : (
                                 <div className="flex flex-col items-center justify-center h-full text-text-secondary bg-surface-highlight/10">
                                     <MapPin size={48} className="mb-2 opacity-50" />
-                                    <span className="text-lg">Sin imagen disponible</span>
+                                    <span className="text-lg">{t('business_detail.no_image')}</span>
                                 </div>
                             )}
 
@@ -303,11 +305,11 @@ export default function BusinessDetailClient({ business, currentUserId }: Busine
                                 className="flex-1 bg-primary-600 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-primary-900/20 active:scale-95 transition"
                             >
                                 <Navigation size={20} />
-                                Ver en Mapa
+                                {t('business_detail.view_on_map')}
                             </button>
                             <ShareButton
                                 title={business.name}
-                                text={`¡Mira este negocio en CarMatch! ${business.name}`}
+                                text={`${t('business_detail.share_message')} ${business.name}`}
                                 url={`/map?id=${business.id}`}
                                 variant="minimal"
                                 className="bg-surface border border-surface-highlight rounded-xl w-14 flex items-center justify-center"
@@ -338,13 +340,13 @@ export default function BusinessDetailClient({ business, currentUserId }: Busine
                         <div className="bg-surface border border-surface-highlight rounded-3xl p-6 shadow-xl">
                             <div className="flex items-start justify-between mb-6">
                                 <div>
-                                    <h2 className="text-xl font-bold text-text-primary mb-1">Información del Negocio</h2>
-                                    <p className="text-sm text-text-secondary">Detalles públicos verificados</p>
+                                    <h2 className="text-xl font-bold text-text-primary mb-1">{t('business_detail.info_title')}</h2>
+                                    <p className="text-sm text-text-secondary">{t('business_detail.verified_details')}</p>
                                 </div>
                                 <div className="hidden lg:block">
                                     <ShareButton
                                         title={business.name}
-                                        text={`¡Mira este negocio en CarMatch! ${business.name}`}
+                                        text={`${t('business_detail.share_message')} ${business.name}`}
                                         url={`/map?id=${business.id}`}
                                         variant="minimal"
                                     />
@@ -354,7 +356,7 @@ export default function BusinessDetailClient({ business, currentUserId }: Busine
                             <div className="space-y-4">
                                 <InfoItem
                                     icon={<MapPin size={20} />}
-                                    label="Dirección"
+                                    label={t('business_detail.address')}
                                     value={business.address}
                                 />
 
@@ -368,21 +370,21 @@ export default function BusinessDetailClient({ business, currentUserId }: Busine
                                             <Phone size={20} />
                                         </div>
                                         <div className="flex-1">
-                                            <p className="text-sm text-text-secondary mb-1">Contacto</p>
+                                            <p className="text-sm text-text-secondary mb-1">{t('business_detail.contact')}</p>
                                             {session ? (
                                                 <p className="font-bold text-text-primary text-lg">
-                                                    {business.phone || 'No disponible'}
+                                                    {business.phone || t('business_detail.not_available')}
                                                 </p>
                                             ) : (
                                                 <div className="bg-surface-highlight/30 rounded-lg p-3 border border-white/5">
                                                     <p className="text-sm text-text-secondary italic mb-2">
-                                                        Inicia sesión para ver el número y contactar directamente.
+                                                        {t('business_detail.login_to_see')}
                                                     </p>
                                                     <Link
                                                         href={`/auth?callbackUrl=${encodeURIComponent(typeof window !== 'undefined' ? window.location.pathname : '')}`}
                                                         className="text-primary-400 font-bold text-sm hover:underline"
                                                     >
-                                                        Iniciar Sesión →
+                                                        {t('business_detail.login')}
                                                     </Link>
                                                 </div>
                                             )}
@@ -395,7 +397,7 @@ export default function BusinessDetailClient({ business, currentUserId }: Busine
                         {/* Description */}
                         {business.description && (
                             <div className="bg-surface border border-surface-highlight rounded-3xl p-6 shadow-xl">
-                                <h3 className="text-lg font-bold text-text-primary mb-3">Sobre nosotros</h3>
+                                <h3 className="text-lg font-bold text-text-primary mb-3">{t('business_detail.about_us')}</h3>
                                 <p className="text-gray-300 leading-relaxed whitespace-pre-line">
                                     {business.description}
                                 </p>
@@ -423,7 +425,7 @@ export default function BusinessDetailClient({ business, currentUserId }: Busine
                                 ) : (
                                     <>
                                         <Navigation size={24} />
-                                        <span className="text-lg">Ver Ubicación en Mapa</span>
+                                        <span className="text-lg">{t('business_detail.view_location')}</span>
                                     </>
                                 )}
                             </button>

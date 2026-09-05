@@ -2,8 +2,10 @@
 'use client'
 
 import { AlertTriangle, Ban, ShieldAlert, Flag, CheckCircle, XCircle } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function PublishingRulesPage() {
+    const { t } = useLanguage();
 
     return (
         <div className="min-h-screen bg-background pb-32">
@@ -13,9 +15,9 @@ export default function PublishingRulesPage() {
                     <div className="inline-block p-4 bg-red-500/10 rounded-full border border-red-500/20 mb-4 animate-pulse">
                         <ShieldAlert className="text-red-500" size={48} />
                     </div>
-                    <h1 className="text-4xl font-bold mb-2">Reglas de Publicación</h1>
+                    <h1 className="text-4xl font-bold mb-2">{t('publishing_rules.title')}</h1>
                     <p className="text-text-secondary text-sm">
-                        Mantengamos CarMatch Social seguro para todos
+                        {t('publishing_rules.subtitle')}
                     </p>
                 </div>
 
@@ -23,8 +25,7 @@ export default function PublishingRulesPage() {
                     {/* Introducción */}
                     <section className="bg-surface border border-surface-highlight p-6 rounded-2xl">
                         <p className="text-text-secondary">
-                            CarMatch Social es una comunidad de confianza. Para mantener la seguridad de todos,
-                            hemos establecido reglas claras sobre qué se puede y NO se puede publicar en la plataforma.
+                            {t('publishing_rules.intro')}
                         </p>
                     </section>
 
@@ -34,36 +35,36 @@ export default function PublishingRulesPage() {
                             <div className="p-2 bg-green-500/10 rounded-lg">
                                 <CheckCircle className="text-green-500" size={20} />
                             </div>
-                            <h2 className="text-2xl font-bold text-green-500 m-0">✅ Qué SÍ puedes publicar</h2>
+                            <h2 className="text-2xl font-bold text-green-500 m-0">{t('publishing_rules.what_to_publish')}</h2>
                         </div>
 
                         <div className="space-y-3">
                             <div className="flex items-start gap-3">
                                 <div className="mt-1">✅</div>
                                 <div>
-                                    <strong className="text-text-primary">Vehículos legítimos:</strong>
-                                    <p className="text-sm text-text-secondary">Autos, motos, camiones que sean de tu propiedad legal o tengas autorización para vender.</p>
+                                    <strong className="text-text-primary">{t('publishing_rules.legitimate_vehicles')}:</strong>
+                                    <p className="text-sm text-text-secondary">{t('publishing_rules.legitimate_vehicles_desc')}</p>
                                 </div>
                             </div>
                             <div className="flex items-start gap-3">
                                 <div className="mt-1">✅</div>
                                 <div>
-                                    <strong className="text-text-primary">Negocios automotrices:</strong>
-                                    <p className="text-sm text-text-secondary">Talleres, desponchadoras, refaccionarias, servicios legales y registrados.</p>
+                                    <strong className="text-text-primary">{t('publishing_rules.automotive_businesses')}:</strong>
+                                    <p className="text-sm text-text-secondary">{t('publishing_rules.automotive_businesses_desc')}</p>
                                 </div>
                             </div>
                             <div className="flex items-start gap-3">
                                 <div className="mt-1">✅</div>
                                 <div>
-                                    <strong className="text-text-primary">Fotos reales:</strong>
-                                    <p className="text-sm text-text-secondary">Imágenes auténticas del vehículo o negocio que estás publicando.</p>
+                                    <strong className="text-text-primary">{t('publishing_rules.real_photos')}:</strong>
+                                    <p className="text-sm text-text-secondary">{t('publishing_rules.real_photos_desc')}</p>
                                 </div>
                             </div>
                             <div className="flex items-start gap-3">
                                 <div className="mt-1">✅</div>
                                 <div>
-                                    <strong className="text-text-primary">Precios honestos:</strong>
-                                    <p className="text-sm text-text-secondary">Precios reales de mercado, sin engaños.</p>
+                                    <strong className="text-text-primary">{t('publishing_rules.honest_prices')}:</strong>
+                                    <p className="text-sm text-text-secondary">{t('publishing_rules.honest_prices_desc')}</p>
                                 </div>
                             </div>
                         </div>
@@ -75,7 +76,7 @@ export default function PublishingRulesPage() {
                             <div className="p-2 bg-red-500/10 rounded-lg">
                                 <XCircle className="text-red-500" size={20} />
                             </div>
-                            <h2 className="text-2xl font-bold text-red-500 m-0">❌ ESTRICTAMENTE PROHIBIDO</h2>
+                            <h2 className="text-2xl font-bold text-red-500 m-0">{t('publishing_rules.strictly_prohibited')}</h2>
                         </div>
 
                         <div className="space-y-4">
@@ -84,10 +85,9 @@ export default function PublishingRulesPage() {
                                 <div className="flex items-start gap-3">
                                     <Ban className="text-red-400 mt-1 flex-shrink-0" size={20} />
                                     <div>
-                                        <h3 className="text-lg font-bold text-red-400 mb-1">Vehículos Robados o Ilegales</h3>
+                                        <h3 className="text-lg font-bold text-red-400 mb-1">{t('publishing_rules.stolen_vehicles')}</h3>
                                         <p className="text-sm text-text-secondary mb-2">
-                                            Cualquier vehículo sin documentación legal, placas falsas, números de serie alterados,
-                                            bajo reporte de robo o procedencia ilegal.
+                                            {t('publishing_rules.stolen_vehicles_desc')}
                                         </p>
                                         <p className="text-xs text-red-300">
                                             <strong>Consecuencia:</strong> Eliminación inmediata, reporte a autoridades, veto permanente.
@@ -101,10 +101,9 @@ export default function PublishingRulesPage() {
                                 <div className="flex items-start gap-3">
                                     <AlertTriangle className="text-amber-400 mt-1 flex-shrink-0" size={20} />
                                     <div>
-                                        <h3 className="text-lg font-bold text-amber-400 mb-1">Fraudes y Estafas</h3>
+                                        <h3 className="text-lg font-bold text-amber-400 mb-1">{t('publishing_rules.frauds')}</h3>
                                         <p className="text-sm text-text-secondary mb-2">
-                                            Publicaciones con precios irrealmente bajos para atraer víctimas,
-                                            fotos de internet en vez del vehículo real, datos falsos, solicitar anticipo sin mostrar el vehículo.
+                                            {t('publishing_rules.frauds_desc')}
                                         </p>
                                         <p className="text-xs text-amber-300">
                                             <strong>Consecuencia:</strong> Eliminación, reporte, veto permanente y posible denuncia penal.
@@ -135,10 +134,9 @@ export default function PublishingRulesPage() {
                                 <div className="flex items-start gap-3">
                                     <Ban className="text-orange-400 mt-1 flex-shrink-0" size={20} />
                                     <div>
-                                        <h3 className="text-lg font-bold text-orange-400 mb-1">Spam y Publicidad No Autorizada</h3>
+                                        <h3 className="text-lg font-bold text-orange-400 mb-1">{t('publishing_rules.spam')}</h3>
                                         <p className="text-sm text-text-secondary mb-2">
-                                            Múltiples publicaciones del mismo vehículo, promoción de productos no relacionados,
-                                            links a competidores, publicidad de servicios ilegales.
+                                            {t('publishing_rules.spam_desc')}
                                         </p>
                                         <p className="text-xs text-orange-300">
                                             <strong>Consecuencia:</strong> Eliminación de publicaciones, suspensión temporal o veto.
@@ -152,9 +150,9 @@ export default function PublishingRulesPage() {
                                 <div className="flex items-start gap-3">
                                     <ShieldAlert className="text-purple-400 mt-1 flex-shrink-0" size={20} />
                                     <div>
-                                        <h3 className="text-lg font-bold text-purple-400 mb-1">Abuso del Sistema y Multicuentas</h3>
+                                        <h3 className="text-lg font-bold text-purple-400 mb-1">{t('publishing_rules.abuse')}</h3>
                                         <p className="text-sm text-text-secondary mb-2">
-                                            Crear múltiples cuentas para evadir filtros de seguridad, usar VPN/proxies para ocultar identidad o automatizar publicaciones.
+                                            {t('publishing_rules.abuse_desc')}
                                         </p>
                                         <p className="text-xs text-purple-300">
                                             <strong>Consecuencia:</strong> Eliminación de TODAS las cuentas asociadas y veto permanente.
@@ -168,9 +166,9 @@ export default function PublishingRulesPage() {
                                 <div className="flex items-start gap-3">
                                     <Ban className="text-blue-400 mt-1 flex-shrink-0" size={20} />
                                     <div>
-                                        <h3 className="text-lg font-bold text-blue-400 mb-1">Suplantación de Identidad</h3>
+                                        <h3 className="text-lg font-bold text-blue-400 mb-1">{t('publishing_rules.impersonation')}</h3>
                                         <p className="text-sm text-text-secondary mb-2">
-                                            Hacerse pasar por otra persona, empresa o institución. Usar fotos de perfil de terceros sin autorización.
+                                            {t('publishing_rules.impersonation_desc')}
                                         </p>
                                         <p className="text-xs text-blue-300">
                                             <strong>Consecuencia:</strong> Eliminación inmediata y veto permanente.
@@ -187,12 +185,12 @@ export default function PublishingRulesPage() {
                             <div className="p-2 bg-amber-500/10 rounded-lg">
                                 <Flag className="text-amber-500" size={20} />
                             </div>
-                            <h2 className="text-2xl font-bold text-amber-500 m-0">¿Viste algo sospechoso?</h2>
+                            <h2 className="text-2xl font-bold text-amber-500 m-0">{t('publishing_rules.reporting')}</h2>
                         </div>
 
                         <div className="space-y-3">
                             <p className="text-text-secondary">
-                                Si encuentras una publicación que viola nuestras reglas:
+                                {t('publishing_rules.reporting_desc')}
                             </p>
                             <ol className="list-decimal pl-6 space-y-2 text-text-secondary">
                                 <li><strong className="text-text-primary">Toca el botón de menú (⋮)</strong> en la publicación</li>
@@ -215,11 +213,11 @@ export default function PublishingRulesPage() {
                             <div className="p-2 bg-green-500/10 rounded-lg">
                                 <ShieldAlert className="text-green-500" size={20} />
                             </div>
-                            <h2 className="text-2xl font-bold text-green-500 m-0">Moderación y Verificación</h2>
+                            <h2 className="text-2xl font-bold text-green-500 m-0">{t('publishing_rules.moderation')}</h2>
                         </div>
 
                         <p className="text-text-secondary mb-3">
-                            CarMatch Social se reserva el derecho de:
+                            {t('publishing_rules.moderation_desc')}
                         </p>
                         <ul className="list-disc pl-6 space-y-1 text-text-secondary">
                             <li>Revisar todas las publicaciones antes de ser publicadas (en fase beta)</li>

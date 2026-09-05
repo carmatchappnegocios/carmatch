@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import * as Sentry from "@sentry/nextjs"
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface ErrorBoundaryProps {
     error: Error & { digest?: string }
@@ -14,10 +15,12 @@ interface ErrorBoundaryProps {
 export default function ErrorBoundary({
     error,
     reset,
-    title = 'Algo salió mal',
+    title = '',
     description,
     variant = 'sentry'
 }: ErrorBoundaryProps) {
+    const { t } = useLanguage()
+
     useEffect(() => {
         if (variant === 'sentry') {
             Sentry.captureException(error)
@@ -30,15 +33,15 @@ export default function ErrorBoundary({
         return (
             <div className="min-h-screen bg-surface flex items-center justify-center p-4">
                 <div className="text-center max-w-md">
-                    <h2 className="text-xl font-bold text-primary mb-2">{title}</h2>
+                    <h2 className="text-xl font-bold text-primary mb-2">{title || t('error_boundary.something_wrong')}</h2>
                     <p className="text-text-secondary text-sm mb-4">
-                        {description || error.message || 'Ocurrió un error inesperado. Intenta de nuevo.'}
+                        {description || error.message || t('error_boundary.unexpected_error')}
                     </p>
                     <button
                         onClick={reset}
                         className="px-4 py-2 bg-accent text-white rounded-lg text-sm"
                     >
-                        Intentar de nuevo
+                        {t('error_boundary.try_again')}
                     </button>
                 </div>
             </div>
@@ -53,20 +56,20 @@ export default function ErrorBoundary({
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
                     </svg>
                 </div>
-                <h2 className="text-xl font-bold text-text-primary mb-2">{title}</h2>
-                <p className="text-text-secondary mb-6 text-sm">{description || error.message || 'Ocurrió un error inesperado'}</p>
+                <h2 className="text-xl font-bold text-text-primary mb-2">{title || t('error_boundary.something_wrong')}</h2>
+                <p className="text-text-secondary mb-6 text-sm">{description || error.message || t('error_boundary.unexpected_error')}</p>
                 <div className="flex gap-3 justify-center">
                     <button
                         onClick={reset}
                         className="px-6 py-3 bg-primary-700 hover:bg-primary-600 text-white rounded-xl font-bold transition"
                     >
-                        Reintentar
+                        {t('error_boundary.retry')}
                     </button>
                     <a
                         href="/"
                         className="px-6 py-3 bg-surface hover:bg-surface-highlight text-text-primary rounded-xl font-bold transition border border-surface-highlight"
                     >
-                        Ir al Inicio
+                        {t('error_boundary.go_home')}
                     </a>
                 </div>
             </div>

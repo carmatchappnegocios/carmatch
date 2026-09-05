@@ -2,6 +2,7 @@
 "use client"
 
 import { useState, useRef, useEffect } from 'react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface SearchableSelectProps {
     options: string[]
@@ -26,6 +27,7 @@ export default function SearchableSelect({
     strict = false,
     renderOption
 }: SearchableSelectProps) {
+    const { t } = useLanguage()
     const [isOpen, setIsOpen] = useState(false)
     const [searchTerm, setSearchTerm] = useState(value)
     const [highlightedIndex, setHighlightedIndex] = useState(-1)
@@ -151,8 +153,8 @@ export default function SearchableSelect({
                             className={`w-full text-left px-4 py-3 text-sm flex items-center gap-3 transition-colors ${highlightedIndex === 0 ? 'bg-primary-700/20 text-primary-400' : 'text-text-primary hover:bg-surface-highlight'}`}
                         >
                             <div>
-                                <p className="font-bold">Usar: "{searchTerm}"</p>
-                                <p className="text-xs text-text-secondary">Opción personalizada</p>
+                                <p className="font-bold">{t('searchable_select.use_custom').replace('{value}', searchTerm)}</p>
+                                <p className="text-xs text-text-secondary">{t('searchable_select.custom_option')}</p>
                             </div>
                         </button>
                     )}
@@ -174,8 +176,8 @@ export default function SearchableSelect({
                     ) : (
                         !showCustomOption && (
                             <div className="px-4 py-8 text-center text-text-secondary">
-                                <p>No encontramos coincidencias</p>
-                                <p className="text-xs">Sigue escribiendo para agregarlo</p>
+                                <p>{t('searchable_select.no_matches')}</p>
+                                <p className="text-xs">{t('searchable_select.keep_typing')}</p>
                             </div>
                         )
                     )}

@@ -194,7 +194,7 @@ export default function BusinessRegisterPage() {
 
             {status === 'unauthenticated' && (
                 <div className="max-w-3xl w-full text-center py-20 space-y-6">
-                    <h2 className="text-2xl font-bold text-text-primary">Inicia sesión para registrar tu negocio</h2>
+                    <h2 className="text-2xl font-bold text-text-primary">{t('business_register.login_required')}</h2>
                     <p className="text-text-secondary">Necesitas una cuenta para gestionar tu negocio en CarMatch.</p>
                     <button
                         onClick={() => router.push('/auth')}
@@ -209,7 +209,7 @@ export default function BusinessRegisterPage() {
             <div className="max-w-3xl w-full space-y-8">
                 {/* Header */}
                 <div className="text-center">
-                    <h1 className="text-4xl font-bold text-text-primary mb-2">Registra tu Negocio</h1>
+                    <h1 className="text-4xl font-bold text-text-primary mb-2">{t('business_register.register_title')}</h1>
                     <p className="text-xl text-primary-400 font-medium">¡3 Meses GRATIS de Publicidad!</p>
                     <p className="text-text-secondary mt-2">Únete a la red de servicios automotrices más grande de la ciudad.</p>
                 </div>
@@ -226,11 +226,11 @@ export default function BusinessRegisterPage() {
 
                             {/* Nombre */}
                             <div>
-                                <label className="block text-text-primary font-bold mb-2">Nombre del Negocio</label>
+                                <label className="block text-text-primary font-bold mb-2">{t('business_register.business_name')}</label>
                                 <input
                                     type="text"
                                     required
-                                    placeholder="Ej. Taller Mecánico El Rápido"
+                                    placeholder={t('business_register.business_name_placeholder')}
                                     className="w-full px-4 py-3 bg-background border border-surface-highlight rounded-xl text-text-primary focus:border-primary-700 outline-none transition"
                                     value={formData.name}
                                     onChange={e => setFormData({ ...formData, name: e.target.value })}
@@ -239,7 +239,7 @@ export default function BusinessRegisterPage() {
 
                             {/* Categoría */}
                             <div>
-                                <label className="block text-text-primary font-bold mb-2">Categoría</label>
+                                <label className="block text-text-primary font-bold mb-2">{t('business_register.category')}</label>
                                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-h-[400px] overflow-y-auto p-1 custom-scrollbar">
                                     {[...BUSINESS_CATEGORIES]
                                         .sort((a, b) => (t(`map_store.categories.${a.id}`) || a.label).localeCompare(t(`map_store.categories.${b.id}`) || b.label))
@@ -264,7 +264,7 @@ export default function BusinessRegisterPage() {
 
                             {/* Descripción */}
                             <div>
-                                <label className="block text-text-primary font-bold mb-2">Descripción Corta</label>
+                                <label className="block text-text-primary font-bold mb-2">{t('business_register.description_short')}</label>
                                 <textarea
                                     required
                                     rows={2}
@@ -280,14 +280,14 @@ export default function BusinessRegisterPage() {
                         <div className="space-y-6">
                             <h3 className="text-lg font-bold text-text-primary border-b border-surface-highlight pb-2 flex items-center justify-between">
                                 <span>📍 Ubicación Exacta</span>
-                                <span className="text-xs font-normal text-text-secondary bg-surface-highlight px-2 py-1 rounded">Crucial para el mapa</span>
+                                <span className="text-xs font-normal text-text-secondary bg-surface-highlight px-2 py-1 rounded">{t('business_register.crucial_for_map')}</span>
                             </h3>
 
                             {/* Buscador de Dirección */}
                             <div className="flex gap-2">
                                 <input
                                     type="text"
-                                    placeholder="Buscar dirección (ej. Av. Reforma 222, CDMX)"
+                                    placeholder={t('business_register.search_address')}
                                     className="flex-1 px-4 py-3 bg-background border border-surface-highlight rounded-xl text-text-primary focus:border-primary-700 outline-none transition"
                                     value={searchQuery}
                                     onChange={e => setSearchQuery(e.target.value)}
@@ -319,7 +319,7 @@ export default function BusinessRegisterPage() {
                                     <p className="text-sm text-primary-400 mb-2 font-medium">💡 Verifica y corrige los datos si es necesario:</p>
                                 </div>
                                 <div className="space-y-1">
-                                    <label className="text-xs text-text-secondary">Calle</label>
+                                    <label className="text-xs text-text-secondary">{t('business_register.street')}</label>
                                     <input
                                         value={addressFields.street}
                                         onChange={e => setAddressFields({ ...addressFields, street: e.target.value })}
@@ -337,7 +337,7 @@ export default function BusinessRegisterPage() {
                                     />
                                 </div>
                                 <div className="space-y-1">
-                                    <label className="text-xs text-text-secondary">Colonia</label>
+                                    <label className="text-xs text-text-secondary">{t('business_register.neighborhood')}</label>
                                     <input
                                         value={addressFields.colony}
                                         onChange={e => setAddressFields({ ...addressFields, colony: e.target.value })}
@@ -346,7 +346,7 @@ export default function BusinessRegisterPage() {
                                     />
                                 </div>
                                 <div className="space-y-1">
-                                    <label className="text-xs text-text-secondary">Ciudad / Municipio</label>
+                                    <label className="text-xs text-text-secondary">{t('business_register.city')}</label>
                                     <input
                                         value={addressFields.city}
                                         onChange={e => setAddressFields({ ...addressFields, city: e.target.value })}

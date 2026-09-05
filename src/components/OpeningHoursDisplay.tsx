@@ -3,6 +3,7 @@
 
 import { Clock, ChevronDown, ChevronUp } from 'lucide-react'
 import { useState } from 'react'
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface DaySchedule {
     isOpen: boolean
@@ -24,27 +25,28 @@ interface OpeningHoursDisplayProps {
     hours: string | null
 }
 
-const DAYS_TRANSLATION: Record<keyof WeeklySchedule, string> = {
-    monday: 'Lunes',
-    tuesday: 'Martes',
-    wednesday: 'Miércoles',
-    thursday: 'Jueves',
-    friday: 'Viernes',
-    saturday: 'Sábado',
-    sunday: 'Domingo'
-}
-
-// Helper to format time (e.g., "14:00" -> "2:00 PM")
-function formatTime(time: string): string {
-    if (!time) return ''
-    const [hours, minutes] = time.split(':').map(Number)
-    const ampm = hours >= 12 ? 'PM' : 'AM'
-    const h = hours % 12 || 12
-    return `${h}:${minutes.toString().padStart(2, '0')} ${ampm}`
-}
-
 export default function OpeningHoursDisplay({ hours }: OpeningHoursDisplayProps) {
+    const { t } = useLanguage();
     const [isExpanded, setIsExpanded] = useState(false)
+
+    const DAYS_TRANSLATION: Record<keyof WeeklySchedule, string> = {
+        monday: t('opening_hours.monday'),
+        tuesday: t('opening_hours.tuesday'),
+        wednesday: t('opening_hours.wednesday'),
+        thursday: t('opening_hours.thursday'),
+        friday: t('opening_hours.friday'),
+        saturday: t('opening_hours.saturday'),
+        sunday: t('opening_hours.sunday')
+    }
+
+    // Helper to format time (e.g., "14:00" -> "2:00 PM")
+    function formatTime(time: string): string {
+        if (!time) return ''
+        const [h, minutes] = time.split(':').map(Number)
+        const ampm = h >= 12 ? 'PM' : 'AM'
+        const hour = h % 12 || 12
+        return `${hour}:${minutes.toString().padStart(2, '0')} ${ampm}`
+    }
 
     if (!hours) return null
 
@@ -68,7 +70,7 @@ export default function OpeningHoursDisplay({ hours }: OpeningHoursDisplayProps)
                     <Clock size={20} />
                 </div>
                 <div>
-                    <p className="text-sm text-text-secondary mb-1">Horario</p>
+                    <p className="text-sm text-text-secondary mb-1">{t('opening_hours.hours_label')}</p>
                     <p className="font-medium text-text-primary leading-snug">{hours}</p>
                 </div>
             </div>
@@ -90,7 +92,7 @@ export default function OpeningHoursDisplay({ hours }: OpeningHoursDisplayProps)
                 <Clock size={20} />
             </div>
             <div className="flex-1">
-                <p className="text-sm text-text-secondary mb-1">Horario</p>
+                <p className="text-sm text-text-secondary mb-1">{t('opening_hours.hours_label')}</p>
 
                 {/* Collapsed View (Today) */}
                 <button
@@ -100,7 +102,7 @@ export default function OpeningHoursDisplay({ hours }: OpeningHoursDisplayProps)
                     <div className="flex items-center justify-between">
                         <div>
                             <span className={`font-bold ${todaySchedule?.isOpen ? 'text-green-400' : 'text-red-400'} mr-2`}>
-                                {todaySchedule?.isOpen ? 'Abierto hoy' : 'Cerrado hoy'}
+                                {todaySchedule?.isOpen ? t('opening_hours.open_today') : t('opening_hours.closed_today')}
                             </span>
                             <span className="text-text-primary text-sm">
                                 {todaySchedule?.isOpen
@@ -130,7 +132,7 @@ export default function OpeningHoursDisplay({ hours }: OpeningHoursDisplayProps)
                                             {formatTime(dayData.open)} - {formatTime(dayData.close)}
                                         </span>
                                     ) : (
-                                        <span className="text-red-400/70 italic">Cerrado</span>
+                                        <span className="text-red-400/70 italic">{t('opening_hours.closed')}</span>
                                     )}
                                 </div>
                             )

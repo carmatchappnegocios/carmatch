@@ -3,8 +3,10 @@
 
 import Link from 'next/link'
 import { Cookie, Eye, Settings, Info, Shield } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function CookiesPage() {
+    const { t } = useLanguage();
 
     return (
         <div className="min-h-screen bg-background pb-32">
@@ -14,9 +16,9 @@ export default function CookiesPage() {
                     <div className="inline-block p-4 bg-orange-500/10 rounded-full border border-orange-500/20 mb-4">
                         <Cookie className="text-orange-500" size={48} />
                     </div>
-                    <h1 className="text-4xl font-bold mb-2">Política de Cookies</h1>
+                    <h1 className="text-4xl font-bold mb-2">{t('cookies_page.title')}</h1>
                     <p className="text-text-secondary text-sm">
-                        Última actualización: 6 de febrero de 2026
+                        {t('cookies_page.last_update')}
                     </p>
                 </div>
 
@@ -27,12 +29,10 @@ export default function CookiesPage() {
                             <div className="p-2 bg-blue-500/10 rounded-lg">
                                 <Info className="text-blue-500" size={20} />
                             </div>
-                            <h2 className="text-2xl font-bold text-blue-500 m-0">¿Qué son las Cookies?</h2>
+                            <h2 className="text-2xl font-bold text-blue-500 m-0">{t('cookies_page.what_are')}</h2>
                         </div>
                         <p className="text-text-secondary">
-                            Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo cuando
-                            visitas un sitio web. Nos ayudan a mejorar tu experiencia, recordar tus preferencias
-                            y analizar cómo usas nuestra plataforma.
+                            {t('cookies_page.what_are_desc')}
                         </p>
                     </section>
 
@@ -42,7 +42,7 @@ export default function CookiesPage() {
                             <div className="p-2 bg-green-500/10 rounded-lg">
                                 <Cookie className="text-green-500" size={20} />
                             </div>
-                            <h2 className="text-2xl font-bold text-green-500 m-0">Cookies que Utilizamos</h2>
+                            <h2 className="text-2xl font-bold text-green-500 m-0">{t('cookies_page.types_title')}</h2>
                         </div>
 
                         <div className="space-y-6">
@@ -50,11 +50,10 @@ export default function CookiesPage() {
                             <div>
                                 <h3 className="text-lg font-bold text-text-primary mb-2 flex items-center gap-2">
                                     <Shield size={18} className="text-red-400" />
-                                    Cookies Esenciales (Obligatorias)
+                                    {t('cookies_page.essential')}
                                 </h3>
                                 <p className="text-text-secondary text-sm mb-2">
-                                    Necesarias para el funcionamiento básico de la plataforma.
-                                    <strong className="text-red-400"> No se pueden desactivar.</strong>
+                                    {t('cookies_page.essential_desc')}
                                 </p>
                                 <ul className="list-disc pl-6 space-y-1 text-text-secondary text-sm">
                                     <li><strong className="text-text-primary">Sesión de usuario:</strong> Para mantenerte conectado</li>
@@ -67,10 +66,10 @@ export default function CookiesPage() {
                             <div className="border-t border-surface-highlight pt-4">
                                 <h3 className="text-lg font-bold text-text-primary mb-2 flex items-center gap-2">
                                     <Eye size={18} className="text-blue-400" />
-                                    Google Analytics (Analíticas)
+                                    {t('cookies_page.analytics')}
                                 </h3>
                                 <p className="text-text-secondary text-sm mb-2">
-                                    Usamos Google Analytics para analizar cómo los usuarios interactúan con la plataforma.
+                                    {t('cookies_page.analytics_desc')}
                                 </p>
                                 <ul className="list-disc pl-6 space-y-1 text-text-secondary text-sm mb-3">
                                     <li><strong className="text-text-primary">ID de medición:</strong> G-Q84TC96LDB</li>
@@ -98,10 +97,10 @@ export default function CookiesPage() {
                             <div className="border-t border-surface-highlight pt-4">
                                 <h3 className="text-lg font-bold text-text-primary mb-2 flex items-center gap-2">
                                     <Settings size={18} className="text-purple-400" />
-                                    Cookies Funcionales
+                                    {t('cookies_page.functional')}
                                 </h3>
                                 <p className="text-text-secondary text-sm mb-2">
-                                    Mejoran tu experiencia recordando tus preferencias.
+                                    {t('cookies_page.functional_desc')}
                                 </p>
                                 <ul className="list-disc pl-6 space-y-1 text-text-secondary text-sm">
                                     <li><strong className="text-text-primary">Filtros de búsqueda:</strong> Recuerda tus últimas búsquedas</li>
@@ -118,7 +117,7 @@ export default function CookiesPage() {
                             <div className="p-2 bg-amber-500/10 rounded-lg">
                                 <Settings className="text-amber-500" size={20} />
                             </div>
-                            <h2 className="text-2xl font-bold text-amber-500 m-0">Cómo Gestionar las Cookies</h2>
+                            <h2 className="text-2xl font-bold text-amber-500 m-0">{t('cookies_page.manage_title')}</h2>
                         </div>
 
                         <div className="space-y-4">
@@ -166,11 +165,10 @@ export default function CookiesPage() {
                             <div className="p-2 bg-gray-500/10 rounded-lg">
                                 <Info className="text-gray-400" size={20} />
                             </div>
-                            <h2 className="text-2xl font-bold text-gray-400 m-0">Actualizaciones</h2>
+                            <h2 className="text-2xl font-bold text-gray-400 m-0">{t('cookies_page.updates_title')}</h2>
                         </div>
                         <p className="text-text-secondary text-sm">
-                            CarMatch Social puede actualizar esta Política de Cookies periódicamente.
-                            Te notificaremos sobre cambios importantes mediante un aviso en la aplicación.
+                            {t('cookies_page.updates_desc')}
                         </p>
                     </section>
 
@@ -180,14 +178,10 @@ export default function CookiesPage() {
                             <div className="p-2 bg-primary-500/10 rounded-lg">
                                 <Info className="text-primary-500" size={20} />
                             </div>
-                            <h2 className="text-2xl font-bold text-primary-500 m-0">¿Preguntas?</h2>
+                            <h2 className="text-2xl font-bold text-primary-500 m-0">{t('cookies_page.questions_title')}</h2>
                         </div>
                         <p className="text-text-secondary text-sm">
-                            Si tienes dudas sobre cómo usamos las cookies, revisa nuestro{' '}
-                            <Link href="/privacy" className="text-primary-400 hover:text-primary-300 underline">
-                                Aviso de Privacidad
-                            </Link>{' '}
-                            o contáctanos a través del soporte en la aplicación.
+                            {t('cookies_page.questions_desc')}
                         </p>
                     </section>
 

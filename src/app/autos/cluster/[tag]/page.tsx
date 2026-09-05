@@ -5,6 +5,7 @@ import MarketClient from "../../../market/MarketClient"
 import { getCachedBrands, getCachedVehicleTypes, getCachedColors } from "@/lib/cached-data"
 import { serializeDecimal } from "@/lib/serialize"
 import { auth } from "@/lib/auth"
+import ClusterNotFound from "./ClusterNotFound"
 
 interface Props {
     params: Promise<{ tag: string }>
@@ -52,11 +53,7 @@ export default async function ClusterPage({ params }: Props) {
     const session = await auth()
 
     if (!cluster) {
-        return (
-            <div className="min-h-screen flex items-center justify-center p-6 text-center">
-                <h1 className="text-2xl font-bold">Catálogo no encontrado</h1>
-            </div>
-        )
+        return <ClusterNotFound />
     }
 
     const currentUser = session?.user?.email

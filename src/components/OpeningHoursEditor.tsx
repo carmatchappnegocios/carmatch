@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react'
 import { Clock, Copy, Check, Info } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface DaySchedule {
     isOpen: boolean
@@ -36,19 +37,20 @@ const DEFAULT_SCHEDULE: WeeklySchedule = {
     sunday: { ...DEFAULT_DAY, isOpen: false },
 }
 
-const DAYS_TRANSLATION: Record<keyof WeeklySchedule, string> = {
-    monday: 'Lunes',
-    tuesday: 'Martes',
-    wednesday: 'Miércoles',
-    thursday: 'Jueves',
-    friday: 'Viernes',
-    saturday: 'Sábado',
-    sunday: 'Domingo'
-}
-
 export default function OpeningHoursEditor({ value, onChange }: OpeningHoursEditorProps) {
+    const { t } = useLanguage();
     const [schedule, setSchedule] = useState<WeeklySchedule>(DEFAULT_SCHEDULE)
     const [isJsonMode, setIsJsonMode] = useState(false)
+
+    const DAYS_TRANSLATION: Record<keyof WeeklySchedule, string> = {
+        monday: t('opening_hours.monday'),
+        tuesday: t('opening_hours.tuesday'),
+        wednesday: t('opening_hours.wednesday'),
+        thursday: t('opening_hours.thursday'),
+        friday: t('opening_hours.friday'),
+        saturday: t('opening_hours.saturday'),
+        sunday: t('opening_hours.sunday')
+    }
 
     // Load initial value
     useEffect(() => {
@@ -121,7 +123,7 @@ export default function OpeningHoursEditor({ value, onChange }: OpeningHoursEdit
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-2">
                 <div className="flex items-center gap-2">
                     <Clock size={16} className="text-primary-400" />
-                    <span className="text-sm font-bold text-text-primary">Configurar Horario Semanal</span>
+                    <span className="text-sm font-bold text-text-primary">{t('opening_hours.title')}</span>
                 </div>
 
                 <div className="flex gap-2">
@@ -129,19 +131,19 @@ export default function OpeningHoursEditor({ value, onChange }: OpeningHoursEdit
                         type="button"
                         onClick={copyMondayToWeekdays}
                         className="text-xs bg-surface-highlight hover:bg-surface-highlight/80 text-text-secondary hover:text-text-primary px-3 py-1.5 rounded-lg transition border border-white/5 flex items-center gap-1"
-                        title="Copiar Lunes a Martes-Viernes"
+                        title={t('opening_hours.copy_monday_title')}
                     >
                         <Copy size={12} />
-                        <span>Lunes a L-V</span>
+                        <span>{t('opening_hours.copy_monday_to_weekdays')}</span>
                     </button>
                     <button
                         type="button"
                         onClick={copyMondayToAll}
                         className="text-xs bg-surface-highlight hover:bg-surface-highlight/80 text-text-secondary hover:text-text-primary px-3 py-1.5 rounded-lg transition border border-white/5 flex items-center gap-1"
-                        title="Copiar Lunes a toda la semana"
+                        title={t('opening_hours.copy_all_title')}
                     >
                         <Copy size={12} />
-                        <span>Todo</span>
+                        <span>{t('opening_hours.copy_to_all')}</span>
                     </button>
                 </div>
             </div>
@@ -151,7 +153,7 @@ export default function OpeningHoursEditor({ value, onChange }: OpeningHoursEdit
                 <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3 flex items-start gap-3">
                     <Info size={16} className="text-amber-400 mt-0.5 shrink-0" />
                     <div className="text-xs text-text-secondary">
-                        <p className="font-bold text-amber-400 mb-1">Formato de texto detectado</p>
+                        <p className="font-bold text-amber-400 mb-1">{t('opening_hours.text_format_detected')}</p>
                         <p>Actualmente tienes: <span className="text-white italic">"{value}"</span>.</p>
                         <p className="mt-1">Si modificas los controles de abajo, se sobrescribirá tu texto con el nuevo formato estructurado.</p>
                     </div>
@@ -191,7 +193,7 @@ export default function OpeningHoursEditor({ value, onChange }: OpeningHoursEdit
 
                             {/* Mobile Status Indicator (Closed) */}
                             {!schedule[day].isOpen && (
-                                <span className="text-xs text-text-secondary italic sm:hidden">Cerrado</span>
+                                <span className="text-xs text-text-secondary italic sm:hidden">{t('opening_hours.closed')}</span>
                             )}
                         </div>
 
@@ -204,7 +206,7 @@ export default function OpeningHoursEditor({ value, onChange }: OpeningHoursEdit
                                     onChange={(e) => updateDay(day, 'open', e.target.value)}
                                     className="bg-surface-highlight border-0 rounded-lg px-2 py-1 text-sm text-text-primary outline-none focus:ring-1 focus:ring-primary-500 w-[45%] sm:w-28"
                                 />
-                                <span className="text-text-secondary text-xs">a</span>
+                                <span className="text-text-secondary text-xs">{t('opening_hours.to')}</span>
                                 <input
                                     type="time"
                                     value={schedule[day].close}
@@ -213,9 +215,9 @@ export default function OpeningHoursEditor({ value, onChange }: OpeningHoursEdit
                                 />
                             </div>
                         ) : (
-                            <div className="flex-1 text-sm text-text-secondary italic hidden sm:block">
-                                Cerrado
-                            </div>
+                                <div className="flex-1 text-sm text-text-secondary italic hidden sm:block">
+                                    {t('opening_hours.closed')}
+                                </div>
                         )}
                     </div>
                 ))}
