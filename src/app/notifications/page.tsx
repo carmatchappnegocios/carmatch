@@ -100,7 +100,7 @@ export default function NotificationsPage() {
 
     if (status === 'loading' || loading) {
         return (
-            <div className="min-h-screen bg-background">
+            <div className="bg-background">
 
                 <div className="flex items-center justify-center" style={{ minHeight: 'calc(100vh - 80px)' }}>
                     <div className="text-text-secondary">{t('notifications.loading')}</div>
@@ -111,7 +111,7 @@ export default function NotificationsPage() {
 
     if (notifications.length === 0) {
         return (
-            <div className="min-h-screen bg-background">
+            <div className="bg-background">
 
                 <div className="flex items-center justify-center" style={{ minHeight: 'calc(100vh - 80px)' }}>
                     <div className="text-center max-w-md">
@@ -131,7 +131,7 @@ export default function NotificationsPage() {
     }
 
     return (
-        <div className="min-h-screen bg-background pb-20">
+        <div className="bg-background pb-20">
             <div className="container mx-auto px-4 py-8">
                 <div className="flex items-center justify-between mb-6">
                     <h1 className="text-3xl font-bold text-text-primary">{t('notifications.title')}</h1>

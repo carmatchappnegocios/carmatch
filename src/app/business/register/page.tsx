@@ -184,7 +184,7 @@ export default function BusinessRegisterPage() {
     }
 
     return (
-        <div className="min-h-screen bg-background flex flex-col items-center py-12 px-4">
+        <div className="bg-background flex flex-col items-center py-12 px-4">
 
             {status === 'loading' && (
                 <div className="max-w-3xl w-full flex items-center justify-center py-20">

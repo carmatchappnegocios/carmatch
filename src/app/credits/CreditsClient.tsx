@@ -164,7 +164,7 @@ export default function CreditsClient({ user }: CreditsClientProps) {
 
     if (!isTopupAction) {
         return (
-            <div className="min-h-screen bg-background px-4 py-8">
+            <div className="bg-background px-4 py-8">
                 <div className="max-w-2xl mx-auto">
                     <div className="bg-surface border border-surface-highlight rounded-3xl p-8 shadow-xl">
                         <div className="flex items-center gap-4 mb-8">
@@ -229,7 +229,7 @@ export default function CreditsClient({ user }: CreditsClientProps) {
     }
 
     return (
-        <div className="min-h-screen bg-background px-4 py-8">
+        <div className="bg-background px-4 py-8">
             <div className="max-w-4xl mx-auto space-y-8">
                 <div className="flex items-center gap-4 mb-4">
                     <button 

@@ -192,7 +192,7 @@ export default function EmergencyPage({
     return (
         <>
 
-            <div className="min-h-screen bg-background">
+            <div className="bg-background">
                 {/* Banner de Emergencia */}
                 <div className="bg-red-600 text-white p-4 flex items-center justify-between shadow-lg animate-pulse">
                     <div className="flex items-center gap-3">

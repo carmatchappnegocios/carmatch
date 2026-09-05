@@ -82,7 +82,7 @@ export default async function LocalDirectoryPage({ params }: Props) {
     }
 
     return (
-        <main className="min-h-screen bg-background">
+        <main className="bg-background">
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

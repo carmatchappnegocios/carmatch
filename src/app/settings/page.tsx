@@ -198,7 +198,7 @@ export default function SettingsPage() {
     ]
 
     return (
-        <div className="min-h-screen bg-background pb-20">
+        <div className="bg-background pb-20">
             {/* Header / Navigation */}
             <div className="sticky top-0 z-30 bg-surface/80 backdrop-blur-md border-b border-surface-highlight px-4 py-4">
                 <div className="max-w-2xl mx-auto flex items-center justify-between">

@@ -214,7 +214,7 @@ function AdminPanelContent() {
     ]
 
     return (
-        <div className="min-h-screen bg-black text-white font-sans selection:bg-primary-500/30 flex flex-col md:flex-row">
+        <div className="bg-black text-white font-sans selection:bg-primary-500/30 flex flex-col md:flex-row">
             <AdminSidebar 
                 activeView={activeView} 
                 setActiveView={setActiveView} 

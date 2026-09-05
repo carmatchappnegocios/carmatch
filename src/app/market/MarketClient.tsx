@@ -546,7 +546,7 @@ export default function MarketClient({
 
     return (
         <div
-            className="min-h-screen bg-background"
+            className="bg-background"
         >
 
 

@@ -828,7 +828,7 @@ export default function PublishClient() {
     }, [currentStep, coverImage, galleryImages, brand, model, year, price, city])
 
     return (
-        <div ref={topRef} className="min-h-screen bg-background pb-safe">
+        <div ref={topRef} className="bg-background pb-safe">
             <PortalAnimation show={showPortal} />
 
             <div className="container mx-auto px-4 py-8 pb-32 max-w-4xl">

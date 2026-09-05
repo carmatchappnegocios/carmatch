@@ -83,7 +83,7 @@ export default async function ModelPage({ params }: Props) {
     ])
 
     return (
-        <div className="min-h-screen bg-background">
+        <div className="bg-background">
             <div className="pt-24 px-6 max-w-7xl mx-auto">
                 <h1 className="text-4xl md:text-6xl font-black mb-2 text-text-primary uppercase tracking-tighter">
                     {brandName} <span className="text-primary-500">{modelName}</span>

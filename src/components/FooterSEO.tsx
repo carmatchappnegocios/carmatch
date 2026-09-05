@@ -63,7 +63,7 @@ const VehicleTypes = [
 export default function FooterSEO() {
     const { t } = useLanguage()
     return (
-        <footer className="w-full bg-slate-950 border-t border-slate-900 py-6 px-6 mt-8">
+        <footer className="w-full bg-slate-950 border-t border-slate-900 py-6 px-6 mt-4">
             <div className="max-w-7xl mx-auto">
                 <details className="group bg-slate-900/50 rounded-2xl border border-white/5 p-4 transition-all duration-300">
                     <summary className="cursor-pointer text-slate-400 hover:text-white text-sm sm:text-base font-bold flex items-center justify-between outline-none list-none marker:hidden">

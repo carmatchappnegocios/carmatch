@@ -91,7 +91,7 @@ export default function ProfileClient({ user, isOwner, vehiclesToShow }: Profile
     const formattedDate = new Date(user.createdAt).toLocaleDateString(locale === 'es' ? 'es-MX' : 'en-US', { month: 'long', year: 'numeric' })
 
     return (
-        <div className="min-h-screen bg-background" ref={topRef}>
+        <div className="bg-background" ref={topRef}>
             <div className="container mx-auto px-4 pt-8 pb-24 max-w-5xl">
                 {/* Header del Perfil */}
                 <div className="bg-surface rounded-2xl shadow-xl p-8 mb-8 border border-surface-highlight">

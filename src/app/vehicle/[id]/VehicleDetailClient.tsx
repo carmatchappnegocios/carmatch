@@ -262,7 +262,7 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
     }
 
     return (
-        <div className="min-h-screen bg-background pb-20">
+        <div className="bg-background pb-20">
             <div className="container mx-auto px-4 py-8 max-w-7xl">
                 {/* Back Button */}
                 <div className="flex justify-between items-center mb-6">

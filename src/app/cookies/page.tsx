@@ -9,7 +9,7 @@ export default function CookiesPage() {
     const { t } = useLanguage();
 
     return (
-        <div className="min-h-screen bg-background pb-32">
+        <div className="bg-background pb-32">
             <div className="container mx-auto px-4 pt-8 pb-8 max-w-4xl text-text-primary">
                 {/* Header */}
                 <div className="mb-8 text-center">

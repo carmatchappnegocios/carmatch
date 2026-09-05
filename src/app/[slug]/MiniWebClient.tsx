@@ -72,7 +72,7 @@ export default function MiniWebClient({ business }: MiniWebProps) {
     }
 
     return (
-        <div className="min-h-screen bg-[#050810] text-white selection:bg-primary-500/30">
+        <div className="bg-[#050810] text-white selection:bg-primary-500/30">
             {/* Header / Navbar Premium */}
             <nav className="fixed top-0 left-0 right-0 z-50 bg-[#050810]/80 backdrop-blur-xl border-b border-white/5">
                 <div className="container mx-auto px-4 h-16 flex items-center justify-between">

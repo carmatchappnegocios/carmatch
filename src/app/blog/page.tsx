@@ -23,7 +23,7 @@ export default function BlogPage() {
     const categories = getAllCategories()
 
     return (
-        <div className="min-h-screen bg-[#0a0a0f] text-white">
+        <div className="bg-[#0a0a0f] text-white">
             <div className="max-w-6xl mx-auto px-4 py-12">
                 {/* Header */}
                 <div className="text-center mb-12">

@@ -90,7 +90,7 @@ export default function MessagesPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-background">
+            <div className="bg-background">
 
                 <div className="flex items-center justify-center h-[calc(100dvh-64px-80px)] md:h-[calc(100vh-64px)]">
                     <div className="text-text-secondary">{t('messages.loading_chats')}</div>
@@ -101,7 +101,7 @@ export default function MessagesPage() {
 
     if (chats.length === 0) {
         return (
-            <div className="min-h-screen bg-background">
+            <div className="bg-background">
 
                 <div className="flex items-center justify-center h-[calc(100dvh-64px-80px)] md:h-[calc(100vh-64px)]">
                     <div className="text-center max-w-md">
@@ -125,7 +125,7 @@ export default function MessagesPage() {
     }
 
     return (
-        <div className="min-h-screen bg-background pb-20">
+        <div className="bg-background pb-20">
             <div className="container mx-auto px-4 py-8 max-w-4xl">
                 <h1 className="text-3xl font-bold text-text-primary mb-6">Mensajes</h1>
 

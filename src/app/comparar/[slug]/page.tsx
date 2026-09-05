@@ -74,7 +74,7 @@ export default async function ComparativePage({ params }: Props) {
     ]
 
     return (
-        <main className="min-h-screen bg-background pb-20">
+        <main className="bg-background pb-20">
 
 
             <div className="pt-24 pb-20 px-4 max-w-7xl mx-auto">

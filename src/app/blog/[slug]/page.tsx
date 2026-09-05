@@ -58,7 +58,7 @@ export default async function BlogPostPage({ params }: Props) {
         .slice(0, 2)
 
     return (
-        <div className="min-h-screen bg-[#0a0a0f] text-white">
+        <div className="bg-[#0a0a0f] text-white">
             <BlogPostClient post={post} relatedPosts={relatedPosts} />
 
             {/* JSON-LD */}

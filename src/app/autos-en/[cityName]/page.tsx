@@ -218,7 +218,7 @@ export default async function CityPage({
     }
 
     return (
-        <div className="min-h-screen bg-background">
+        <div className="bg-background">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
             <div className="pt-24 px-6 max-w-7xl mx-auto text-center md:text-left">
