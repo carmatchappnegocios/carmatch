@@ -73,6 +73,50 @@ export default function Header() {
         return Array.isArray(raw) ? raw : []
     }, [t, locale, pathname])
 
+    // 🎯 CTA personalizado cada 3er mensaje (2 ads + 1 CTA)
+    const personalizedCta = useMemo(() => {
+        if (!t) return null
+        const isMapContext = pathname?.startsWith('/map') || pathname?.startsWith('/map-store')
+
+        if (isMapContext) {
+            const key = session
+                ? 'common.dynamic_ctas.business_ctas_auth'
+                : 'common.dynamic_ctas.business_ctas_guest'
+            const ctas = t(key, { returnObjects: true })
+            return Array.isArray(ctas) && ctas.length > 0
+                ? ctas[Math.floor(Math.random() * ctas.length)]
+                : null
+        } else {
+            const key = session
+                ? 'common.dynamic_ctas.vehicle_ctas_auth'
+                : 'common.dynamic_ctas.vehicle_ctas_guest'
+            const ctas = t(key, { returnObjects: true })
+            return Array.isArray(ctas) && ctas.length > 0
+                ? ctas[Math.floor(Math.random() * ctas.length)]
+                : null
+        }
+    }, [pathname, session, t])
+
+    // Determinar qué mensaje mostrar: CTA cada 3er slot, ad genérico en los demás
+    const isCtaSlot = ctaIndex % 3 === 2
+    const displayCta = isCtaSlot && personalizedCta ? personalizedCta : (ctas[ctaIndex] || '')
+
+    // Click handler: CTA slots navegan a registro/publicación según contexto
+    const handleCtaClick = () => {
+        const isMapContext = pathname?.startsWith('/map') || pathname?.startsWith('/map-store')
+        if (isCtaSlot) {
+            // CTA personalizado: invitar a registrar
+            if (session) {
+                router.push(isMapContext ? '/my-businesses?action=new' : '/publish')
+            } else {
+                router.push(isMapContext ? '/my-businesses?action=new' : '/auth')
+            }
+        } else {
+            // Ad genérico: publicar/subir
+            router.push(isMapContext ? '/my-businesses?action=new' : '/publish')
+        }
+    }
+
     useEffect(() => {
         if (ctas.length > 0) {
             const interval = setInterval(() => {
@@ -328,69 +372,58 @@ export default function Header() {
                                 <div className="w-28 h-4 bg-white/10 animate-pulse rounded" />
                             </div>
                         ) : session ? (
-                            /* COMPACT STYLE: For Authenticated Users (Maximized Advertising) */
+                            /* COMPACT STYLE: For Authenticated Users */
                             <div
-                                onClick={(e) => {
-                                    const isMapContext = pathname?.startsWith('/map') || pathname?.startsWith('/map-store')
-                                    const publishVehiclePath = "/publish"
-                                    const publishBusinessPath = "/my-businesses?action=new"
-                                    const targetPath = isMapContext ? publishBusinessPath : publishVehiclePath
-
-                                    router.push(targetPath)
-                                }}
+                                onClick={handleCtaClick}
                                 className={`flex flex-col items-center sm:items-end cursor-pointer group active:scale-95 transition-transform ${isStandalone ? 'flex-1' : ''}`}
                             >
                                 <AnimatePresence mode="wait">
-                                    {(ctas[ctaIndex] || "").includes(' | ') && (
+                                    {displayCta.includes(' | ') && (
                                         <div className={`flex flex-col ${isStandalone ? 'items-center sm:items-end w-full' : 'items-end'}`}>
                                             <motion.span
                                                 key={`hook-auth-${ctaIndex}`}
                                                 initial={{ opacity: 0, y: -5 }}
                                                 animate={{ opacity: 1, y: 0 }}
                                                 exit={{ opacity: 0, y: 5 }}
-                                                className="text-[10px] md:text-xs text-slate-400 font-bold uppercase tracking-wider leading-none mb-0.5"
+                                                className={`text-[10px] md:text-xs font-bold uppercase tracking-wider leading-none mb-0.5 ${isCtaSlot ? 'text-green-400' : 'text-slate-400'}`}
                                             >
-                                                {(ctas[ctaIndex] || "").split(' | ')[0]}
+                                                {displayCta.split(' | ')[0]}
                                             </motion.span>
                                             <motion.span
                                                 key={`action-auth-${ctaIndex}`}
                                                 initial={{ opacity: 0, scale: 0.95 }}
                                                 animate={{ opacity: 1, scale: 1 }}
                                                 exit={{ opacity: 0, scale: 0.95 }}
-                                                className="text-xs md:text-base font-black text-accent-500 uppercase tracking-tight leading-none group-hover:text-accent-400 transition-colors text-center sm:text-right"
+                                                className={`text-xs md:text-base font-black uppercase tracking-tight leading-none transition-colors text-center sm:text-right ${isCtaSlot ? 'text-green-400 group-hover:text-green-300' : 'text-accent-500 group-hover:text-accent-400'}`}
                                             >
-                                                {(ctas[ctaIndex] || "").split(' | ')[1]}
+                                                {displayCta.split(' | ')[1]}
                                             </motion.span>
                                         </div>
                                     )}
                                 </AnimatePresence>
                             </div>
                         ) : (
-                            /* PROMINENT BUTTON STYLE: For Guests (More Space) */
+                            /* PROMINENT BUTTON STYLE: For Guests */
                             <div className={`flex flex-col xl:flex-row items-end xl:items-center gap-1 xl:gap-3 justify-end overflow-hidden ${isStandalone ? 'flex-1' : ''}`}>
                                 <AnimatePresence mode="wait">
-                                    {(ctas[ctaIndex] || "").includes(' | ') && (
+                                    {displayCta.includes(' | ') && (
                                             <motion.div
                                                 key={`hook-guest-${ctaIndex}`}
                                                 initial={{ opacity: 0, x: -5 }}
                                                 animate={{ opacity: 1, x: 0 }}
                                                 exit={{ opacity: 0, x: 5 }}
-                                                className={`block text-white/90 font-bold text-[10px] md:text-[10px] uppercase tracking-wide leading-tight text-right max-w-[120px] md:max-w-[250px] mb-0.5 ${pathname === '/swipe' ? 'hidden sm:block' : ''}`}
+                                                className={`block font-bold text-[10px] md:text-[10px] uppercase tracking-wide leading-tight text-right max-w-[120px] md:max-w-[250px] mb-0.5 ${isCtaSlot ? 'text-green-300' : 'text-white/90'} ${pathname === '/swipe' ? 'hidden sm:block' : ''}`}
                                             >
-                                                {(ctas[ctaIndex] || "").split(' | ')[0]}
+                                                {displayCta.split(' | ')[0]}
                                             </motion.div>
                                     )}
                                 </AnimatePresence>
 
                                 <div
-                                    onClick={(e) => {
-                                        const isMapContext = pathname?.startsWith('/map') || pathname?.startsWith('/map-store')
-                                        const targetPath = isMapContext ? "/my-businesses?action=new" : "/auth"
-                                        router.push(targetPath)
-                                    }}
+                                    onClick={handleCtaClick}
                                     className="relative group shrink-0 flex items-center cursor-pointer z-20"
                                 >
-                                    <div className="px-4 py-2 lg:px-6 lg:py-2.5 bg-accent-600 rounded-lg shadow-lg group-hover:bg-accent-500 transition-all active:scale-95 ring-1 ring-accent-500/30 flex items-center gap-2 pointer-events-none">
+                                    <div className={`px-4 py-2 lg:px-6 lg:py-2.5 rounded-lg shadow-lg group-hover:opacity-90 transition-all active:scale-95 ring-1 flex items-center gap-2 pointer-events-none ${isCtaSlot ? 'bg-green-600 ring-green-500/30' : 'bg-accent-600 ring-accent-500/30'}`}>
                                         <AnimatePresence mode="wait">
                                             <motion.span
                                                 key={`action-guest-${ctaIndex}`}
@@ -399,7 +432,7 @@ export default function Header() {
                                                 exit={{ opacity: 0, scale: 0.95 }}
                                                 className="text-white font-black text-xs sm:text-sm lg:text-base whitespace-nowrap uppercase tracking-wide truncate max-w-[160px] sm:max-w-none"
                                             >
-                                                {(ctas[ctaIndex] || t('common.login_vehicle')).split(' | ')[1] || t('common.login_vehicle')}
+                                                {displayCta.split(' | ')[1] || t('common.login_vehicle')}
                                             </motion.span>
                                         </AnimatePresence>
                                     </div>
