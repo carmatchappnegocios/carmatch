@@ -348,7 +348,7 @@ export default function MarketClient({
         params.set('lng', newLng)
         params.set('radius', newRadius)
         router.replace(`/market?${params.toString()}`)
-    }, [location?.latitude, location?.longitude, manualLocation?.latitude, manualLocation?.longitude, tierIndex])
+    }, [manualLocation?.latitude, manualLocation?.longitude, tierIndex])
 
     // 🔥 MOBILE PULL-TO-REFRESH OPTIMIZATION
     const [isTouchingTop, setIsTouchingTop] = useState(false)

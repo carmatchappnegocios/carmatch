@@ -222,7 +222,7 @@ export default function SwipeClient({ initialItems, currentUserId }: SwipeClient
         params.set('lng', newLng)
         params.set('radius', newRadius)
         router.replace(`/swipe?${params.toString()}`)
-    }, [location?.latitude, location?.longitude, manualLocation?.latitude, manualLocation?.longitude, tierIndex])
+    }, [manualLocation?.latitude, manualLocation?.longitude, tierIndex])
 
     // 🔄 DETECT PWA REFRESH: Re-shuffle when page becomes visible again
     useEffect(() => {
