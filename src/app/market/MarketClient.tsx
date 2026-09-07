@@ -277,27 +277,9 @@ export default function MarketClient({
         const isDefaultView = !searchParams.search && !searchParams.brand && !searchParams.category
 
         if (isDefaultView) {
-            const savedItemsOrder = sessionStorage.getItem('market_items_order')
-            if (savedItemsOrder && !searchParams.sort) {
-                try {
-                    const orderedIds = JSON.parse(savedItemsOrder)
-                    const orderedItems = orderedIds.map((id: string) => initialItems.find(it => it.id === id)).filter(Boolean)
-                    // Only restore if we have roughly the same content
-                    if (orderedItems.length > 0 && orderedItems.length === initialItems.length) {
-                        currentItems = orderedItems
-                    } else {
-                        // Reshuffle if mismatch
-                        currentItems = boostShuffleArray(initialItems)
-                        sessionStorage.setItem('market_items_order', JSON.stringify(currentItems.map(it => it.id)))
-                    }
-                } catch (e) {
-                    // Fallback shuffle
-                    currentItems = boostShuffleArray(initialItems)
-                }
-            } else if (!searchParams.sort || searchParams.sort === 'newest') {
-                // Initial shuffle
+            if (!searchParams.sort || searchParams.sort === 'newest') {
+                // Always shuffle on fresh load for random discovery
                 currentItems = boostShuffleArray(initialItems)
-                sessionStorage.setItem('market_items_order', JSON.stringify(currentItems.map(it => it.id)))
             }
         } else {
             // 🧠 SEARCH MODE: Trust server order absolutely
@@ -426,10 +408,8 @@ export default function MarketClient({
         setIsRefreshing(true)
 
         // 1. Force immediate local shuffle for "perceived" randomness
-        sessionStorage.removeItem('market_items_order')
         const freshOrder = boostShuffleArray(initialItems)
         setItems(freshOrder)
-        sessionStorage.setItem('market_items_order', JSON.stringify(freshOrder.map(it => it.id)))
 
         // 2. Refresh from server (Next.js server actions / router.refresh)
         router.refresh()

@@ -140,17 +140,9 @@ export default function SwipeClient({ initialItems, currentUserId }: SwipeClient
     // 🚀 RESTAURAR ESTADO DESDE SESSIONSTORAGE (Solo al montar - UNA VEZ)
     useEffect(() => {
         try {
-            const savedItems = sessionStorage.getItem('carmatch_swipe_items')
             const savedSeen = sessionStorage.getItem('carmatch_swipe_seen')
             const savedTier = sessionStorage.getItem('carmatch_swipe_tier')
 
-            if (savedItems) {
-                const parsedItems = JSON.parse(savedItems)
-                if (parsedItems.length > 0) {
-                    setShuffledItems(parsedItems)
-                    isFirstRun.current = false
-                }
-            }
             if (savedSeen) {
                 setSeenIds(new Set(JSON.parse(savedSeen)))
             }
@@ -199,10 +191,9 @@ export default function SwipeClient({ initialItems, currentUserId }: SwipeClient
     // 💾 GUARDAR ESTADO EN SESSIONSTORAGE
     useEffect(() => {
         if (!isFirstRun.current) {
-            sessionStorage.setItem('carmatch_swipe_items', JSON.stringify(shuffledItems))
             sessionStorage.setItem('carmatch_swipe_tier', tierIndex.toString())
         }
-    }, [shuffledItems, tierIndex])
+    }, [tierIndex])
 
     useEffect(() => {
         sessionStorage.setItem('carmatch_swipe_seen', JSON.stringify(Array.from(seenIds)))
