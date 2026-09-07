@@ -336,8 +336,13 @@ export default function MarketClient({
         const newLng = activeLoc.longitude.toString()
         const newRadius = RADIUS_TIERS[tierIndex].toString()
 
-        // Only update if values changed (avoid infinite loop)
-        if (params.get('lat') === newLat && params.get('lng') === newLng && params.get('radius') === newRadius) return
+        // Only update if values changed (avoid infinite loop) - numeric comparison with tolerance
+        const currentLat = parseFloat(params.get('lat') || '0')
+        const currentLng = parseFloat(params.get('lng') || '0')
+        const currentRadius = parseInt(params.get('radius') || '25')
+        if (Math.abs(currentLat - parseFloat(newLat)) < 0.00001 &&
+            Math.abs(currentLng - parseFloat(newLng)) < 0.00001 &&
+            currentRadius === parseInt(newRadius)) return
 
         params.set('lat', newLat)
         params.set('lng', newLng)
