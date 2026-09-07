@@ -440,8 +440,8 @@ export default async function MarketPage({
                 { user: { isAdmin: true } },
                 {
                     user: { isAdmin: false },
-                    latitude: { notNull: true, gte: bbox.minLat, lte: bbox.maxLat },
-                    longitude: { notNull: true, gte: bbox.minLng, lte: bbox.maxLng },
+                    latitude: { gte: bbox.minLat, lte: bbox.maxLat },
+                    longitude: { gte: bbox.minLng, lte: bbox.maxLng },
                 }
             ]
         })
