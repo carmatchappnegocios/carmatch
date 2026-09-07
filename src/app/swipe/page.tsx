@@ -9,6 +9,7 @@ import { redirect } from "next/navigation"
 import { prisma } from "@/lib/db"
 import SwipeClient from "./SwipeClient"
 import { serializeDecimal } from "@/lib/serialize"
+import { getBoundingBox } from "@/lib/geolocation"
 
 // 🎯 SEO METADATA (Safe to edit - No afecta lógica locked)
 export const metadata = {
@@ -46,7 +47,18 @@ export const metadata = {
     }
 }
 
-export default async function SwipePage() {
+interface SwipeSearchParams {
+    lat?: string
+    lng?: string
+    radius?: string
+}
+
+export default async function SwipePage({
+    searchParams: searchParamsPromise
+}: {
+    searchParams: Promise<SwipeSearchParams>
+}) {
+    const searchParams = await searchParamsPromise
     const session = await auth()
     const cookieStore = await cookies()
     const isSoftLogout = cookieStore.get('soft_logout')?.value === 'true'
@@ -83,9 +95,28 @@ export default async function SwipePage() {
         vehiclesWhere.country = { in: ['Mexico', 'México', 'MX'] }
     }
 
+    // 📍 SERVER-SIDE LOCATION FILTER: Bounding box por radio del usuario
+    const userLat = parseFloat(searchParams.lat || '0')
+    const userLng = parseFloat(searchParams.lng || '0')
+    const radiusKm = parseInt(searchParams.radius || '25')
+    const hasLocation = userLat !== 0 && userLng !== 0
+
+    if (hasLocation) {
+        const bbox = getBoundingBox(userLat, userLng, radiusKm)
+        // Admin vehicles bypass location filter (OR logic)
+        vehiclesWhere.OR = [
+            { user: { isAdmin: true } },
+            {
+                user: { isAdmin: false },
+                latitude: { notNull: true, gte: bbox.minLat, lte: bbox.maxLat },
+                longitude: { notNull: true, gte: bbox.minLng, lte: bbox.maxLng },
+            }
+        ]
+    }
+
     const vehicles = await prisma.vehicle.findMany({
         where: vehiclesWhere,
-        take: 100,
+        take: 200,
         select: {
             id: true,
             userId: true,

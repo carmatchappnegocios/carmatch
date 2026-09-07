@@ -344,6 +344,25 @@ export default function MarketClient({
         containerRef.current = document.documentElement as any
     }, [])
 
+    // 📍 SYNC LOCATION TO SERVER: Send lat/lng/radius via URL params
+    useEffect(() => {
+        const activeLoc = manualLocation || location
+        if (!activeLoc?.latitude || !activeLoc?.longitude) return
+
+        const params = new URLSearchParams(window.location.search)
+        const newLat = activeLoc.latitude.toString()
+        const newLng = activeLoc.longitude.toString()
+        const newRadius = RADIUS_TIERS[tierIndex].toString()
+
+        // Only update if values changed (avoid infinite loop)
+        if (params.get('lat') === newLat && params.get('lng') === newLng && params.get('radius') === newRadius) return
+
+        params.set('lat', newLat)
+        params.set('lng', newLng)
+        params.set('radius', newRadius)
+        router.replace(`/market?${params.toString()}`)
+    }, [location?.latitude, location?.longitude, manualLocation?.latitude, manualLocation?.longitude, tierIndex])
+
     // 🔥 MOBILE PULL-TO-REFRESH OPTIMIZATION
     const [isTouchingTop, setIsTouchingTop] = useState(false)
 

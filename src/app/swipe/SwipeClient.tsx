@@ -208,6 +208,25 @@ export default function SwipeClient({ initialItems, currentUserId }: SwipeClient
         sessionStorage.setItem('carmatch_swipe_seen', JSON.stringify(Array.from(seenIds)))
     }, [seenIds])
 
+    // 📍 SYNC LOCATION TO SERVER: Send lat/lng/radius via URL params
+    useEffect(() => {
+        const activeLoc = manualLocation || location
+        if (!activeLoc?.latitude || !activeLoc?.longitude) return
+
+        const params = new URLSearchParams(window.location.search)
+        const newLat = activeLoc.latitude.toString()
+        const newLng = activeLoc.longitude.toString()
+        const newRadius = RADIUS_TIERS[tierIndex].toString()
+
+        // Only update if values changed (avoid infinite loop)
+        if (params.get('lat') === newLat && params.get('lng') === newLng && params.get('radius') === newRadius) return
+
+        params.set('lat', newLat)
+        params.set('lng', newLng)
+        params.set('radius', newRadius)
+        router.replace(`/swipe?${params.toString()}`)
+    }, [location?.latitude, location?.longitude, manualLocation?.latitude, manualLocation?.longitude, tierIndex])
+
     useEffect(() => {
         if (locationLoading || !location || items.length === 0) return
 

@@ -9,6 +9,7 @@ import MarketClient from "./MarketClient"
 import { getCachedBrands, getCachedVehicleTypes, getCachedColors } from "@/lib/cached-data"
 import { serializeDecimal } from "@/lib/serialize"
 import { VEHICLE_CATEGORIES, COLORS, GLOBAL_SYNONYMS, BRANDS } from "@/lib/vehicleTaxonomy"
+import { getBoundingBox } from "@/lib/geolocation"
 import { interpretSearchQuery } from "@/lib/ai/searchInterpreter"
 
 import { Metadata } from 'next'
@@ -94,6 +95,9 @@ interface SearchParams {
     hours?: string
     cylinders?: string
     hp?: string
+    lat?: string
+    lng?: string
+    radius?: string
 }
 
 export default async function MarketPage({
@@ -421,6 +425,28 @@ export default async function MarketPage({
         })
     }
 
+    // 📍 SERVER-SIDE LOCATION FILTER: Bounding box por radio del usuario
+    const userLat = parseFloat(searchParams.lat || '0')
+    const userLng = parseFloat(searchParams.lng || '0')
+    const radiusKm = parseInt(searchParams.radius || '25')
+    const hasLocation = userLat !== 0 && userLng !== 0
+
+    if (hasLocation) {
+        const bbox = getBoundingBox(userLat, userLng, radiusKm)
+        // Admin vehicles bypass location filter (OR logic within AND)
+        if (!where.AND) where.AND = []
+        where.AND.push({
+            OR: [
+                { user: { isAdmin: true } },
+                {
+                    user: { isAdmin: false },
+                    latitude: { notNull: true, gte: bbox.minLat, lte: bbox.maxLat },
+                    longitude: { notNull: true, gte: bbox.minLng, lte: bbox.maxLng },
+                }
+            ]
+        })
+    }
+
     // Filtros de Características (Premium)
     if (searchParams.features) {
         const featuresList = searchParams.features.split(',').filter(Boolean)
@@ -544,7 +570,7 @@ export default async function MarketPage({
             }
         },
         orderBy,
-        take: 100 // Limit results to prevent abuse
+        take: 200 // Server-side location filter allows more results
     })
 
     const vehiclesWithFavoriteStatus = vehicles.map(vehicle => ({
