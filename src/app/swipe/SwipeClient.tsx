@@ -88,7 +88,7 @@ function boostShuffleArray(array: FeedItem[]): FeedItem[] {
 
 export default function SwipeClient({ initialItems, currentUserId }: SwipeClientProps) {
     const { t } = useLanguage()
-    const { location, loading: locationLoading, setManualLocation } = useLocation()
+    const { location, loading: locationLoading, manualLocation, setManualLocation } = useLocation()
     const router = useRouter()
     const { openModal } = useRestoreSessionModal()
 
