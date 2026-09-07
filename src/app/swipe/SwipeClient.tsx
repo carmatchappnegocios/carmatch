@@ -267,7 +267,7 @@ export default function SwipeClient({ initialItems, currentUserId }: SwipeClient
             return
         }
 
-        // 3. Si hay items nuevos, los mezclamos y los añadimos AL FINAL
+        // 3. Si hay items nuevos, re-mezclar TODO junto (viejos + nuevos)
         if (newItemsRaw.length > 0) {
             const newWithDist = newItemsRaw.map(item => ({
                 ...item,
@@ -279,9 +279,9 @@ export default function SwipeClient({ initialItems, currentUserId }: SwipeClient
                 )
             }))
 
-            // Mezclamos los nuevos items y los pegamos al final de los existentes
-            const shuffledNew = boostShuffleArray(newWithDist)
-            setShuffledItems(prev => [...prev, ...shuffledNew])
+            const allItems = [...shuffledItems, ...newWithDist]
+            const reshuffled = boostShuffleArray(allItems)
+            setShuffledItems(reshuffled)
         }
     }, [items, location?.city, locationLoading])
 
