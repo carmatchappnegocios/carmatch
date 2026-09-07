@@ -99,6 +99,7 @@ export default function SwipeClient({ initialItems, currentUserId }: SwipeClient
     const [seenIds, setSeenIds] = useState<Set<string>>(new Set())
     const [isInternalLoading, setIsInternalLoading] = useState(false)
     const [newVehiclesCount, setNewVehiclesCount] = useState(0)
+    const [refreshKey, setRefreshKey] = useState(0)
 
     // Modal State
     const [showLocationModal, setShowLocationModal] = useState(false)
@@ -218,6 +219,18 @@ export default function SwipeClient({ initialItems, currentUserId }: SwipeClient
         router.replace(`/swipe?${params.toString()}`)
     }, [location?.latitude, location?.longitude, manualLocation?.latitude, manualLocation?.longitude, tierIndex])
 
+    // 🔄 DETECT PWA REFRESH: Re-shuffle when page becomes visible again
+    useEffect(() => {
+        const handlePageShow = (e: PageTransitionEvent) => {
+            if (e.persisted) {
+                isFirstRun.current = true
+                setRefreshKey(prev => prev + 1)
+            }
+        }
+        window.addEventListener('pageshow', handlePageShow)
+        return () => window.removeEventListener('pageshow', handlePageShow)
+    }, [])
+
     useEffect(() => {
         if (locationLoading || !location || items.length === 0) return
 
@@ -283,7 +296,7 @@ export default function SwipeClient({ initialItems, currentUserId }: SwipeClient
             const reshuffled = boostShuffleArray(allItems)
             setShuffledItems(reshuffled)
         }
-    }, [items, location?.city, locationLoading])
+    }, [items, location?.city, locationLoading, refreshKey])
 
     const stablePool = shuffledItems
 
