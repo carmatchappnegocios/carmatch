@@ -137,6 +137,7 @@ export default function SwipeClient({ initialItems, currentUserId }: SwipeClient
     }, [initialItems])
 
     const isFirstRun = useRef(true)
+    const prevTierIndex = useRef(0)
 
     // 🚀 RESTAURAR ESTADO DESDE SESSIONSTORAGE (Solo al montar - UNA VEZ)
     useEffect(() => {
@@ -251,8 +252,10 @@ export default function SwipeClient({ initialItems, currentUserId }: SwipeClient
         const currentIds = new Set(shuffledItems.map(i => i.id))
         const newItemsRaw = validItems.filter(i => !currentIds.has(i.id))
 
-        // Si es el primer run o cambiamos de ciudad, reiniciamos el mazo
-        if (isFirstRun.current || (shuffledItems.length > 0 && shuffledItems[0].city !== location.city)) {
+        // Si es el primer run, cambiamos de ciudad, o EXPANDIMOS RADIO, reiniciamos el mazo
+        if (isFirstRun.current || 
+            (shuffledItems.length > 0 && shuffledItems[0].city !== location.city) ||
+            tierIndex !== prevTierIndex.current) {
             // Si el cambio es por ciudad, limpiamos storage
             if (shuffledItems.length > 0 && shuffledItems[0].city !== location.city) {
                 sessionStorage.removeItem('carmatch_swipe_items')
@@ -282,6 +285,7 @@ export default function SwipeClient({ initialItems, currentUserId }: SwipeClient
             const finalPool = tiers.reduce((acc, ss) => [...acc, ...boostShuffleArray(ss.items)], [] as any[])
             setShuffledItems(finalPool)
             isFirstRun.current = false
+            prevTierIndex.current = tierIndex
             return
         }
 
