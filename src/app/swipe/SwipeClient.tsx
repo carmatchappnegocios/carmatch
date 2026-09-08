@@ -305,7 +305,7 @@ export default function SwipeClient({ initialItems, currentUserId }: SwipeClient
             const reshuffled = boostShuffleArray(allItems)
             setShuffledItems(reshuffled)
         }
-    }, [items, location?.city, locationLoading, refreshKey])
+    }, [items, location?.city, locationLoading, refreshKey, tierIndex])
 
     const stablePool = shuffledItems
 
