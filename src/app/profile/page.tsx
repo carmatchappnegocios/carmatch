@@ -4,29 +4,16 @@ import { redirect } from "next/navigation"
 import { prisma } from "@/lib/db"
 import ProfileClient from "./ProfileClient"
 import { Suspense } from 'react'
+import { unstable_cache } from 'next/cache'
 
-export const dynamic = "force-dynamic"
-
-export default async function ProfilePage() {
-    let session
-    try {
-        session = await auth()
-    } catch (e) {
-        console.error("🔥 Error en auth() del ProfilePage:", e)
-        redirect("/auth")
-    }
-
-    if (!session?.user?.email) {
-        redirect("/auth")
-    }
-
-    try {
-        const user = await prisma.user.findUnique({
-            where: { email: session.user.email },
+const getCachedUser = unstable_cache(
+    async (email: string) => {
+        return prisma.user.findUnique({
+            where: { email },
             include: {
                 vehicles: {
                     orderBy: { createdAt: "asc" },
-                    take: 100,
+                    take: 50,
                     select: {
                         id: true, title: true, brand: true, model: true, version: true,
                         year: true, price: true, currency: true, images: true, city: true,
@@ -43,7 +30,27 @@ export default async function ProfilePage() {
                     },
                 }
             },
-        }) as any
+        })
+    },
+    ['profile-user'],
+    { revalidate: 300, tags: ['profile'] }
+)
+
+export default async function ProfilePage() {
+    let session
+    try {
+        session = await auth()
+    } catch (e) {
+        console.error("🔥 Error en auth() del ProfilePage:", e)
+        redirect("/auth")
+    }
+
+    if (!session?.user?.email) {
+        redirect("/auth")
+    }
+
+    try {
+        const user = await getCachedUser(session.user.email) as any
 
         if (!user) {
             console.error(`❌ Usuario no encontrado en DB para el email: ${session.user.email}`)

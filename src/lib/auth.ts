@@ -101,25 +101,7 @@ export const {
                 if (session?.name) token.name = session.name
             }
 
-            // Validate token against lastPasswordChange (token invalidation on password change)
-            if (token.id && token.lastPasswordChange) {
-                const now = Math.floor(Date.now() / 1000)
-                const iat = (token.iat as number) || 0
-                const hourInSeconds = 3600
-                if (now - iat > hourInSeconds || iat === 0) {
-                    const dbUser = await prisma.user.findUnique({
-                        where: { id: token.id as string },
-                        select: { lastPasswordChange: true }
-                    })
-                    if (dbUser?.lastPasswordChange) {
-                        const tokenTime = iat * 1000
-                        const passwordChangeTime = dbUser.lastPasswordChange.getTime()
-                        if (passwordChangeTime > tokenTime) {
-                            return null
-                        }
-                    }
-                }
-            }
+            // Token invalidation on password change - now handled via session update trigger
 
             return token
         },
