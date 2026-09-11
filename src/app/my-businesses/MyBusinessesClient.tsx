@@ -10,7 +10,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import { CATEGORY_COLORS, CATEGORY_EMOJIS, SERVICES_BY_CATEGORY, BUSINESS_CATEGORIES } from '@/lib/businessCategories'
 import ConfirmationModal from '@/components/ConfirmationModal'
-import { AlertTriangle, Clock, MapPin, Phone, Globe, Trash2, Edit, AlertCircle, Plus, Sparkles, ChevronRight, X, Image as ImageIcon, Briefcase, Info, CheckCircle, Pause, CreditCard, Play, ShieldCheck } from 'lucide-react'
+import { AlertTriangle, Clock, MapPin, Phone, Globe, Trash2, Edit, AlertCircle, Plus, Sparkles, ChevronRight, X, Image as ImageIcon, Briefcase, Info, CheckCircle, Pause, CreditCard, Play, ShieldCheck, ExternalLink } from 'lucide-react'
 import CategoryIcon from '@/components/CategoryIcon'
 import OpeningHoursEditor from '@/components/OpeningHoursEditor'
 import { toast } from "sonner"
@@ -989,10 +989,28 @@ export default function MyBusinessesClient() {
                                             {business.status === 'ACTIVE' ? <CheckCircle size={14} /> : <Pause size={14} />}
                                             {business.status === 'ACTIVE' ? t('business.status_active') : t('business.status_inactive')}
                                         </div>
+                                        {(business as any).hasMiniWeb && (
+                                            <div className="absolute top-2 right-2 z-20 flex items-center gap-1 px-2 py-1 bg-blue-600/80 rounded-full text-white text-xs font-medium">
+                                                <Globe size={12} />
+                                                MiniWeb
+                                            </div>
+                                        )}
                                     </div>
                                     <div className="p-4">
                                         <h3 className="font-bold text-text-primary text-lg mb-1">{business.name}</h3>
                                         <p className="text-sm text-text-secondary mb-3 capitalize">{business.category}</p>
+                                        {(business as any).hasMiniWeb && (business as any).slug && (
+                                            <a
+                                                href={`/${(business as any).slug}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center gap-1 text-xs text-primary-400 hover:text-primary-300 mb-2"
+                                            >
+                                                <Globe size={12} />
+                                                carmatchapp.net/{(business as any).slug}
+                                                <ExternalLink size={10} />
+                                            </a>
+                                        )}
                                         <div className="flex items-center gap-2 text-sm text-text-secondary">
                                             <MapPin size={14} className="text-primary-500" />
                                             <span>{business.city}</span>
@@ -1033,6 +1051,42 @@ export default function MyBusinessesClient() {
                                         >
                                             {t('business.edit')}
                                         </button>
+                                        {(business as any).hasMiniWeb ? (
+                                            <button
+                                                onClick={() => router.push(`/my-businesses/${business.id}/miniweb-editor`)}
+                                                className="px-3 py-2 bg-blue-900/20 text-blue-400 rounded-lg text-sm hover:bg-blue-900/30 transition flex items-center justify-center gap-1"
+                                                title="Editar MiniWeb"
+                                            >
+                                                <Globe size={16} />
+                                                <ExternalLink size={12} />
+                                            </button>
+                                        ) : (
+                                            <button
+                                                onClick={async () => {
+                                                    if (!confirm('Activar MiniWeb por 20 créditos?')) return
+                                                    try {
+                                                        const res = await fetch('/api/businesses/activate-miniweb', {
+                                                            method: 'POST',
+                                                            headers: { 'Content-Type': 'application/json' },
+                                                            body: JSON.stringify({ businessId: business.id })
+                                                        })
+                                                        const data = await res.json()
+                                                        if (res.ok) {
+                                                            toast.success('MiniWeb activada! Redirigiendo al editor...')
+                                                            router.push(`/my-businesses/${business.id}/miniweb-editor`)
+                                                        } else {
+                                                            toast.error(data.error || 'Error al activar MiniWeb')
+                                                        }
+                                                    } catch {
+                                                        toast.error('Error de conexión')
+                                                    }
+                                                }}
+                                                className="px-3 py-2 bg-primary-600/20 text-primary-400 rounded-lg text-sm hover:bg-primary-600/30 transition flex items-center justify-center gap-1"
+                                                title="Activar MiniWeb (20 créditos)"
+                                            >
+                                                <Globe size={16} />
+                                            </button>
+                                        )}
                                         {business.stripeSubscriptionId && (
                                             <button
                                                 onClick={async () => {

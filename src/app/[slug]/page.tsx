@@ -15,13 +15,40 @@ const reservedRoutes = ['market', 'swipe', 'map', 'map-store', 'profile', 'credi
 const getBusiness = cache(async (slug: string) => {
     return prisma.business.findUnique({
         where: { slug },
-        include: {
-            user: {
-                select: {
-                    name: true,
-                    image: true
-                }
-            }
+        select: {
+            id: true,
+            name: true,
+            category: true,
+            description: true,
+            address: true,
+            city: true,
+            state: true,
+            country: true,
+            phone: true,
+            whatsapp: true,
+            facebook: true,
+            instagram: true,
+            tiktok: true,
+            website: true,
+            telegram: true,
+            images: true,
+            services: true,
+            is24Hours: true,
+            hasEmergencyService: true,
+            hasHomeService: true,
+            hours: true,
+            hasMiniWeb: true,
+            slug: true,
+            latitude: true,
+            longitude: true,
+            miniWebTheme: true,
+            miniWebSections: true,
+            miniWebHero: true,
+            miniWebLogo: true,
+            miniWebSeo: true,
+            miniWebServices: true,
+            miniWebPromos: true,
+            miniWebFaq: true,
         }
     })
 })
@@ -41,20 +68,24 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
         }
     }
 
+    const seoTitle = (business.miniWebSeo as any)?.metaTitle || `${business.name} | Sitio Oficial en CarMatch`
+    const seoDescription = (business.miniWebSeo as any)?.metaDescription || business.description?.substring(0, 160) || `Visita el sitio oficial de ${business.name} en ${business.city}. Servicios de ${business.category}.`
+    const seoImage = (business.miniWebSeo as any)?.ogImage || business.images[0]
+
     return {
-        title: `${business.name} | Sitio Oficial en CarMatch`,
-        description: business.description?.substring(0, 160) || `Visita el sitio oficial de ${business.name} en ${business.city}. Servicios de ${business.category}.`,
+        title: seoTitle,
+        description: seoDescription,
         openGraph: {
             title: business.name,
-            description: business.description?.substring(0, 100) || `Explora ${business.name} en CarMatch.`,
-            images: business.images.length > 0 ? [business.images[0]] : [],
+            description: seoDescription.substring(0, 100),
+            images: seoImage ? [seoImage] : [],
             type: 'website',
         },
         twitter: {
             card: 'summary_large_image',
             title: business.name,
-            description: business.description?.substring(0, 100),
-            images: business.images.length > 0 ? [business.images[0]] : [],
+            description: seoDescription.substring(0, 100),
+            images: seoImage ? [seoImage] : [],
         }
     }
 }
@@ -93,7 +124,6 @@ export default async function MiniWebPage({ params, searchParams }: Props) {
         },
         "url": `https://www.carmatchapp.net/${slug}`,
         "knowsAbout": business.services,
-        // Contact details omitted as per privacy request (Registered users only)
         "provider": {
             "@type": "Organization",
             "name": "CarMatch",

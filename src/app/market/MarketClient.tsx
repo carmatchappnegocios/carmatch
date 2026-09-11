@@ -15,6 +15,8 @@ import dynamic from 'next/dynamic'
 import FavoriteButton from '@/components/FavoriteButton'
 import ShareButton from '@/components/ShareButton'
 import ReportImageButton from '@/components/ReportImageButton'
+import VehicleOfTheDayBanner from '@/components/VehicleOfTheDayBanner'
+import WatchButton from '@/components/WatchButton'
 import { formatPrice, formatNumber } from '@/lib/vehicleTaxonomy'
 import { generateVehicleSlug, generateBusinessSlug } from '@/lib/slug'
 
@@ -628,6 +630,7 @@ export default function MarketClient({
                         </div>
                     ) : (
                         <div className="animate-in fade-in duration-500">
+                            <VehicleOfTheDayBanner />
                             {filteredItems.length > 0 ? (
                                 <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 mb-8">
                                     {filteredItems.slice(0, visibleCount).map((item) => {
@@ -783,6 +786,13 @@ export default function MarketClient({
                                                                 rounded="rounded-full"
                                                                 className="shadow-md bg-surface border border-surface-highlight"
                                                             />
+                                                            {!isBusiness && (
+                                                                <WatchButton
+                                                                    vehicleId={item.id}
+                                                                    currentPrice={item.price || 0}
+                                                                    className="shadow-md"
+                                                                />
+                                                            )}
                                                         </div>
                                                     </div>
                                                 </div>

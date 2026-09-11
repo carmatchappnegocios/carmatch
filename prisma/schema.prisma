@@ -62,6 +62,8 @@ model User {
   trustedContact        User?                     @relation("TrustedContact", fields: [trustedContactId], references: [id])
   trustedBy             User[]                    @relation("TrustedContact")
   vehicles              Vehicle[]
+  vehicleWatches        VehicleWatch[]
+  priceDropNotifications PriceDropNotification[]
 
   @@index([email])
   @@index([city])
@@ -223,6 +225,9 @@ model Vehicle {
   notifications      Notification[]
   reports            Report[]
   user               User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  watches            VehicleWatch[]
+  priceDropNotifs    PriceDropNotification[]
+  vehicleOfTheDay    VehicleOfTheDay?
 
   @@index([userId])
   @@index([city])
@@ -283,6 +288,15 @@ model Business {
   stripeCustomerId     String?
   subscriptionStatus   String?                   @default("trialing")
   trialEndsAt          DateTime?
+  miniWebTheme        Json?
+  miniWebSections     Json?
+  miniWebHero         Json?
+  miniWebLogo         String?
+  miniWebSeo          Json?
+  miniWebServices     Json?
+  miniWebPromos       Json?
+  miniWebFaq          Json?
+  miniWebStats        Json?
   user                 User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
   analytics           BusinessAnalytics?
   favorites           BusinessFavorite[]
@@ -291,6 +305,8 @@ model Business {
   views               BusinessView[]
   notifications       Notification[]
   reports             Report[]
+  miniWebAppointments MiniWebAppointment[]
+  quoteRequests       QuoteRequest[]
 
   @@index([userId])
   @@index([category])
@@ -984,6 +1000,10 @@ enum NotificationType {
   PROFILE_VIEWED
   MESSAGE_RECEIVED
   APPOINTMENT_SCHEDULED
+  VEHICLE_OF_THE_DAY
+  PRICE_DROP
+  MINIWEB_APPOINTMENT
+  MINIWEB_QUOTE
 }
 
 enum ReportStatus {
@@ -1123,4 +1143,97 @@ model BlockedIdentity {
   @@index([blockedUserId])
   @@index([blockedByEmail])
   @@index([blockedByIp])
+}
+
+model VehicleOfTheDay {
+  id          String   @id @default(cuid())
+  vehicleId   String   @unique
+  date        DateTime @unique
+  score       Float
+  reason      String?
+  createdAt   DateTime @default(now())
+  vehicle     Vehicle  @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+
+  @@index([date])
+}
+
+model VehicleWatch {
+  id               String    @id @default(cuid())
+  userId           String
+  vehicleId        String
+  watchedPrice     Decimal   @db.Decimal(15, 2)
+  lastCheckedPrice Decimal?  @db.Decimal(15, 2)
+  isActive         Boolean   @default(true)
+  source           String    @default("favorite")
+  lastCheckedAt    DateTime?
+  createdAt        DateTime  @default(now())
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  vehicle          Vehicle   @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+  priceDropNotifs  PriceDropNotification[]
+
+  @@unique([userId, vehicleId])
+  @@index([userId])
+  @@index([vehicleId])
+  @@index([isActive])
+}
+
+model PriceDropNotification {
+  id          String   @id @default(cuid())
+  watchId     String
+  userId      String
+  vehicleId   String
+  oldPrice    Decimal  @db.Decimal(15, 2)
+  newPrice    Decimal  @db.Decimal(15, 2)
+  dropPercent Float
+  notifiedAt  DateTime @default(now())
+  isPushSent  Boolean  @default(false)
+  isRead      Boolean  @default(false)
+  watch       VehicleWatch @relation(fields: [watchId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  vehicle     Vehicle  @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([vehicleId])
+  @@index([notifiedAt])
+}
+
+model MiniWebAppointment {
+  id            String   @id @default(cuid())
+  businessId    String
+  clientName    String
+  clientPhone   String
+  clientEmail   String?
+  service       String
+  date          DateTime
+  time          String
+  description   String?
+  vehicleInfo   String?
+  status        String   @default("PENDING")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  business      Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@index([businessId])
+  @@index([status])
+}
+
+model QuoteRequest {
+  id            String   @id @default(cuid())
+  businessId    String
+  clientName    String
+  clientPhone   String
+  clientEmail   String?
+  vehicleInfo   String?
+  description   String
+  images        String[]
+  status        String   @default("PENDING")
+  quotedPrice   Decimal? @db.Decimal(15, 2)
+  quotedNotes   String?
+  quotedAt      DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  business      Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@index([businessId])
+  @@index([status])
 }

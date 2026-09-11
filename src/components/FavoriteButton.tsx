@@ -133,6 +133,17 @@ export default function FavoriteButton({
                 detail: { vehicleId, businessId, isFavorited: finalState }
             }))
 
+            // 🔄 Sincronizar watch con favorito
+            if (vehicleId && session) {
+                try {
+                    await fetch('/api/watches', {
+                        method: finalState ? 'POST' : 'DELETE',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ vehicleId, currentPrice: 0, source: 'favorite' }),
+                    })
+                } catch {}
+            }
+
         } catch (error) {
             console.error('Error:', error)
             // Revertir en caso de error
