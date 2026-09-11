@@ -21,6 +21,10 @@ export type NotificationType =
     | 'BUSINESS_AUTO_RENEWED'
     | 'BUSINESS_EXPIRED_NO_CREDITS'
     | 'BUSINESS_EXPIRES_2_DAYS'
+    | 'VEHICLE_OF_THE_DAY'
+    | 'PRICE_DROP'
+    | 'MINIWEB_APPOINTMENT'
+    | 'MINIWEB_QUOTE'
 
 interface CreateNotificationParams {
     userId: string

@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { MessageCircle, ThumbsUp, Star, Search, Eye, CheckCircle, Handshake, Calendar, RefreshCw, X, Bell } from 'lucide-react'
+import { MessageCircle, ThumbsUp, Star, Search, Eye, CheckCircle, Handshake, Calendar, RefreshCw, X, Bell, Trophy, TrendingDown, FileText } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 import type { Notification } from '@/types/notification'
 import { getRelativeTime } from '@/lib/format-utils'
@@ -86,6 +86,14 @@ export default function NotificationsDropdown({ isOpen, onClose }: Notifications
                 return <CheckCircle className={iconClass + " text-green-400"} />
             case 'APPOINTMENT_REJECTED':
                 return <X className={iconClass + " text-red-400"} />
+            case 'VEHICLE_OF_THE_DAY':
+                return <Trophy className={iconClass + " text-amber-400"} />
+            case 'PRICE_DROP':
+                return <TrendingDown className={iconClass + " text-green-400"} />
+            case 'MINIWEB_APPOINTMENT':
+                return <Calendar className={iconClass + " text-blue-400"} />
+            case 'MINIWEB_QUOTE':
+                return <FileText className={iconClass + " text-purple-400"} />
             default:
                 return <Bell className={iconClass + " text-primary-400"} />
         }

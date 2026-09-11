@@ -43,6 +43,14 @@
         {
             "path": "/api/cron/ai-health",
             "schedule": "0 4 * * *"
+        },
+        {
+            "path": "/api/cron/vehicle-of-the-day",
+            "schedule": "0 12 * * *"
+        },
+        {
+            "path": "/api/cron/price-monitor",
+            "schedule": "0 */6 * * *"
         }
     ]
 }
