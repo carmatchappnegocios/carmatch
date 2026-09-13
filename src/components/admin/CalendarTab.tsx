@@ -37,7 +37,7 @@ interface CalendarEntry {
     gatillo: string
     gatilloIcon: string
     hashtags: string[]
-    aiPromptMidjourney: string
+    aiPromptGemini: string
     aiPromptKling: string
     postingTime: string
     adConfig: AdConfig
@@ -125,12 +125,12 @@ function makeEntry(week: number, dayOffset: number, platform: string, title: str
         dayNum: baseDate.getDate(),
         month: months[baseDate.getMonth()],
         platform,
-        contentType: platform === 'facebook' ? 'post' : (platform === 'tiktok' || platform === 'instagram') ? 'reel' : 'post',
+        contentType: platform === 'tiktok' ? 'video' : platform === 'instagram' ? (dayOffset % 2 === 0 ? 'reel' : 'carousel') : (dayOffset % 3 === 0 ? 'video' : 'image'),
         title, hook, body, cta,
         gatillo,
         gatilloIcon: gatilloData.label,
         hashtags,
-        aiPromptMidjourney: midjourney,
+        aiPromptGemini: midjourney,
         aiPromptKling: kling,
         postingTime: time || '12:00 PM',
         adConfig,
@@ -315,7 +315,7 @@ export default function CalendarTab() {
     const [activeWeek, setActiveWeek] = useState(1)
     const [expandedDay, setExpandedDay] = useState<string | null>(null)
     const [editingMetrics, setEditingMetrics] = useState<string | null>(null)
-    const [showPrompt, setShowPrompt] = useState<{ entry: CalendarEntry; type: 'midjourney' | 'kling' } | null>(null)
+    const [showPrompt, setShowPrompt] = useState<{ entry: CalendarEntry; type: 'gemini' | 'kling' } | null>(null)
     const [showAdConfig, setShowAdConfig] = useState<CalendarEntry | null>(null)
     const [filterPlatform, setFilterPlatform] = useState('all')
     const [filterGatillo, setFilterGatillo] = useState('all')
@@ -385,7 +385,7 @@ export default function CalendarTab() {
                 >
                     <option value="all">Todos los gatillos</option>
                     {Object.entries(GATILLOS).map(([key, val]) => (
-                        <option key={key} value={key}>{val.icon} {val.label}</option>
+                        <option key={key} value={key}>{val.label}</option>
                     ))}
                 </select>
             </div>
@@ -514,10 +514,10 @@ export default function CalendarTab() {
                                     {/* Action Buttons */}
                                     <div className="flex flex-wrap gap-2">
                                         <button
-                                            onClick={() => setShowPrompt({ entry, type: 'midjourney' })}
+                                            onClick={() => setShowPrompt({ entry, type: 'gemini' })}
                                             className="flex items-center gap-1.5 px-3 py-1.5 bg-purple-500/20 text-purple-400 rounded-lg text-xs font-bold hover:bg-purple-500/30 transition-colors"
                                         >
-                                            <Sparkles className="w-3.5 h-3.5" /> Prompt Midjourney
+                                            <Sparkles className="w-3.5 h-3.5" /> Prompt Gemini
                                         </button>
                                         <button
                                             onClick={() => setShowPrompt({ entry, type: 'kling' })}
@@ -590,16 +590,16 @@ export default function CalendarTab() {
                     <div className="bg-surface-dark border border-white/10 rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto p-6 space-y-4" onClick={e => e.stopPropagation()}>
                         <div className="flex items-center justify-between">
                             <h3 className="text-lg font-black text-white">
-                                {showPrompt.type === 'midjourney' ? '🎨 Prompt Midjourney' : '⚡ Prompt Kling AI'}
+                                {showPrompt.type === 'gemini' ? '🎨 Prompt Gemini' : '⚡ Prompt Kling AI'}
                             </h3>
                             <button onClick={() => setShowPrompt(null)} className="p-1 hover:bg-white/10 rounded-lg"><X className="w-5 h-5 text-white" /></button>
                         </div>
                         <p className="text-sm text-white/60">{showPrompt.entry.title}</p>
                         <div className="bg-black/40 rounded-xl p-4 text-sm text-white/80 font-mono whitespace-pre-wrap">
-                            {showPrompt.type === 'midjourney' ? showPrompt.entry.aiPromptMidjourney : showPrompt.entry.aiPromptKling}
+                            {showPrompt.type === 'gemini' ? showPrompt.entry.aiPromptGemini : showPrompt.entry.aiPromptKling}
                         </div>
                         <button
-                            onClick={() => copyText(showPrompt.type === 'midjourney' ? showPrompt.entry.aiPromptMidjourney : showPrompt.entry.aiPromptKling, `prompt-${showPrompt.entry.id}`)}
+                            onClick={() => copyText(showPrompt.type === 'gemini' ? showPrompt.entry.aiPromptGemini : showPrompt.entry.aiPromptKling, `prompt-${showPrompt.entry.id}`)}
                             className="flex items-center gap-2 px-4 py-2 bg-primary-500/20 text-primary-400 rounded-lg text-sm font-bold hover:bg-primary-500/30 transition-colors"
                         >
                             {copiedId === `prompt-${showPrompt.entry.id}` ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
