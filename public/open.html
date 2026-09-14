@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CarMatch</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f172a;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .card {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            padding: 40px 30px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        
+        .close-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .logo {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #0ea5e9, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        
+        .highlight {
+            color: #22c55e;
+            font-weight: 700;
+        }
+        
+        .open-btn {
+            display: block;
+            width: 100%;
+            padding: 18px 24px;
+            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            margin: 24px 0 16px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+        }
+        
+        .open-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(14,165,233,0.4);
+        }
+        
+        .open-btn:active {
+            transform: translateY(0);
+        }
+        
+        .copy-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .copy-label {
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 8px;
+        }
+        
+        .copy-box {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        
+        .copy-input {
+            flex: 1;
+            padding: 10px 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: rgba(255,255,255,0.6);
+            font-size: 12px;
+            font-family: monospace;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .copy-btn {
+            padding: 10px 16px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+        
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .copy-btn.copied {
+            background: #22c55e;
+        }
+        
+        .ios-instructions {
+            display: none;
+            margin-top: 16px;
+            padding: 12px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            text-align: left;
+        }
+        
+        .ios-instructions p {
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 4px;
+        }
+        
+        .ios-instructions strong {
+            color: rgba(255,255,255,0.8);
+        }
+        
+        /* Hidden state when dismissed */
+        .card.hidden {
+            display: none;
+        }
+        
+        .normal-content {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .normal-content.visible {
+            display: block;
+        }
+        
+        .normal-content h2 {
+            color: rgba(255,255,255,0.6);
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card" id="escape-card">
+        <button class="close-btn" id="close-btn">✕</button>
+        
+        <div class="logo">🚗</div>
+        <h1>CarMatch</h1>
+        <p class="subtitle">Explora autos, talleres y servicios<br><span class="highlight">sin registrarse</span></p>
+        
+        <a href="#" class="open-btn" id="open-btn">Abrir en CarMatch</a>
+        
+        <div class="copy-section">
+            <p class="copy-label">También puedes copiar el link:</p>
+            <div class="copy-box">
+                <div class="copy-input" id="current-url"></div>
+                <button class="copy-btn" id="copy-btn">Copiar</button>
+            </div>
+        </div>
+        
+        <div class="ios-instructions" id="ios-instructions">
+            <p><strong>Safari se abrirá automáticamente.</strong></p>
+            <p>Si no se abre, toca el botón ⋯ y selecciona "Abrir en Safari".</p>
+        </div>
+    </div>
+    
+    <div class="normal-content" id="normal-content">
+        <h2>Redirigiendo...</h2>
+    </div>
+
+    <script>
+        (function() {
+            // Get URL parameter
+            const params = new URLSearchParams(window.location.search);
+            const targetUrl = params.get('url') || 'https://carmatchapp.net';
+            
+            // Detect platform
+            const ua = navigator.userAgent || '';
+            const isIOS = /iPhone|iPad|iPod/i.test(ua);
+            const isAndroid = /Android/i.test(ua);
+            const isFacebook = /FBAN|FBAV/i.test(ua);
+            const isInstagram = /Instagram/i.test(ua);
+            const isTikTok = /TikTok/i.test(ua);
+            const isInApp = isFacebook || isInstagram || isTikTok;
+            
+            // Elements
+            const card = document.getElementById('escape-card');
+            const normalContent = document.getElementById('normal-content');
+            const openBtn = document.getElementById('open-btn');
+            const closeBtn = document.getElementById('close-btn');
+            const copyInput = document.getElementById('current-url');
+            const copyBtn = document.getElementById('copy-btn');
+            const iosInstructions = document.getElementById('ios-instructions');
+            
+            // Set the URL to display
+            copyInput.textContent = targetUrl.replace('https://', '');
+            
+            // If not in in-app browser, redirect directly
+            if (!isInApp) {
+                window.location.href = targetUrl;
+                return;
+            }
+            
+            // Android: auto-redirect via intent://
+            if (isAndroid) {
+                const intentUrl = 'intent://' + targetUrl.replace(/^https?:\/\//, '') + '#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=' + encodeURIComponent(targetUrl) + ';end';
+                window.location.href = intentUrl;
+                
+                // Fallback: show card if intent doesn't work
+                setTimeout(function() {
+                    card.classList.remove('hidden');
+                }, 1500);
+                return;
+            }
+            
+            // iOS: show the escape card
+            if (isIOS) {
+                iosInstructions.style.display = 'block';
+            }
+            
+            // Open button click
+            openBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Try x-safari-https:// scheme (works on some iOS webviews)
+                if (isIOS) {
+                    window.location.href = 'x-safari-https://' + targetUrl.replace(/^https?:\/\//, '');
+                } else {
+                    window.location.href = targetUrl;
+                }
+                
+                // Fallback: open in new tab
+                setTimeout(function() {
+                    window.open(targetUrl, '_blank');
+                }, 500);
+            });
+            
+            // Close button - dismiss overlay
+            closeBtn.addEventListener('click', function() {
+                card.classList.add('hidden');
+                normalContent.classList.add('visible');
+            });
+            
+            // Copy button
+            copyBtn.addEventListener('click', function() {
+                navigator.clipboard.writeText(targetUrl).then(function() {
+                    copyBtn.textContent = '¡Copiado!';
+                    copyBtn.classList.add('copied');
+                    setTimeout(function() {
+                        copyBtn.textContent = 'Copiar';
+                        copyBtn.classList.remove('copied');
+                    }, 2000);
+                }).catch(function() {
+                    // Fallback for older browsers
+                    var textArea = document.createElement('textarea');
+                    textArea.value = targetUrl;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    copyBtn.textContent = '¡Copiado!';
+                    copyBtn.classList.add('copied');
+                    setTimeout(function() {
+                        copyBtn.textContent = 'Copiar';
+                        copyBtn.classList.remove('copied');
+                    }, 2000);
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
