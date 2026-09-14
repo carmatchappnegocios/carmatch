@@ -4,12 +4,13 @@ import { prisma } from '@/lib/db'
 import { deleteFromCloudinary } from '@/lib/cloudinary'
 
 /**
- * CRON JOB: Limpieza y Renovación Automática
- * Se ejecuta 1 vez al día.
+ * CRON JOB: Limpieza de Imágenes y Base de Datos
+ * Se ejecuta 1 vez al día a las 3 AM UTC.
+ * 
+ * NO maneja renovaciones - eso está en daily-maintenance.
  */
 export async function GET(request: NextRequest) {
     try {
-        // 🔐 Verificar firma de Cron (Vercel Cron)
         const authHeader = request.headers.get('authorization');
         if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
             return new Response('Unauthorized', { status: 401 });
@@ -18,93 +19,7 @@ export async function GET(request: NextRequest) {
         const log = []
         const today = new Date()
 
-        // 1. VEHÍCULOS VENCIDOS
-        const expiredVehicles = await prisma.vehicle.findMany({
-            where: {
-                status: 'ACTIVE',
-                expiresAt: { lt: today }
-            },
-            include: { user: true }
-        })
-
-        for (const v of expiredVehicles) {
-            if (v.user.credits > 0) {
-                // AUTO-RENEW
-                await prisma.$transaction([
-                    prisma.user.update({
-                        where: { id: v.userId },
-                        data: { credits: { decrement: 1 } }
-                    }),
-                    prisma.vehicle.update({
-                        where: { id: v.id },
-                        data: {
-                            expiresAt: new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000) // +30 días
-                        }
-                    }),
-                    prisma.creditTransaction.create({
-                        data: {
-                            userId: v.userId,
-                            amount: -1,
-                            description: `Renovación automática: ${v.brand} ${v.model}`,
-                            details: { vehicleId: v.id }
-                        }
-                    })
-                ])
-                log.push(`[RENEWED] Vehicle ${v.id} for user ${v.user.email}`)
-            } else {
-                // EXPIRE
-                await prisma.vehicle.update({
-                    where: { id: v.id },
-                    data: { status: 'INACTIVE' }
-                })
-                log.push(`[EXPIRED] Vehicle ${v.id} - No credits`)
-            }
-        }
-
-        // 2. NEGOCIOS VENCIDOS
-        const expiredBusinesses = await prisma.business.findMany({
-            where: {
-                isActive: true,
-                expiresAt: { lt: today }
-            },
-            include: { user: true }
-        })
-
-        for (const b of expiredBusinesses) {
-            if (b.user.credits > 0) {
-                // AUTO-RENEW
-                await prisma.$transaction([
-                    prisma.user.update({
-                        where: { id: b.userId },
-                        data: { credits: { decrement: 1 } }
-                    }),
-                    prisma.business.update({
-                        where: { id: b.id },
-                        data: {
-                            expiresAt: new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000) // +30 días
-                        }
-                    }),
-                    prisma.creditTransaction.create({
-                        data: {
-                            userId: b.userId,
-                            amount: -1,
-                            description: `Renovación automática Negocio: ${b.name}`,
-                            details: { businessId: b.id }
-                        }
-                    })
-                ])
-                log.push(`[RENEWED] Business ${b.id} for user ${b.user.email}`)
-            } else {
-                // EXPIRE
-                await prisma.business.update({
-                    where: { id: b.id },
-                    data: { isActive: false }
-                })
-                log.push(`[EXPIRED] Business ${b.id} - No credits`)
-            }
-        }
-
-        // 💰 3. AUTO-DELETE IMÁGENES ANTIGUAS
+        // 1. AUTO-DELETE IMÁGENES ANTIGUAS (vehículos SOLD/INACTIVE > 30 días)
         const thirtyDaysAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000)
 
         const oldVehicles = await prisma.vehicle.findMany({
@@ -139,12 +54,11 @@ export async function GET(request: NextRequest) {
             log.push(`[CLEANUP] Deleted ${deletedImagesCount} old images from Cloudinary and cleared image arrays for ${oldVehicles.length} vehicles.`)
         }
         
-        // 🧹 4. PODA DE TABLAS PESADAS (OPTIMIZACIÓN DE COSTOS)
+        // 2. PODA DE TABLAS PESADAS (OPTIMIZACIÓN DE COSTOS)
         const sevenDaysAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000)
         const fifteenDaysAgo = new Date(today.getTime() - 15 * 24 * 60 * 60 * 1000)
-        const thirtyDaysAgoData = thirtyDaysAgo // Reutilizar
+        const thirtyDaysAgoData = thirtyDaysAgo
 
-        // Limpieza de Logs y Analíticas por tiempo
         const { count: delSystemLogs } = await prisma.systemLog.deleteMany({ where: { createdAt: { lt: sevenDaysAgo } } })
         const { count: delAutoUpdates } = await prisma.autoUpdateLog.deleteMany({ where: { createdAt: { lt: fifteenDaysAgo } } })
         const { count: delAnalytics } = await prisma.analyticsEvent.deleteMany({ where: { createdAt: { lt: thirtyDaysAgoData } } })
@@ -152,12 +66,11 @@ export async function GET(request: NextRequest) {
         const { count: delOppLogs } = await prisma.opportunityLog.deleteMany({ where: { createdAt: { lt: thirtyDaysAgoData } } })
         const { count: delBusNotifLogs } = await prisma.businessNotificationLog.deleteMany({ where: { createdAt: { lt: thirtyDaysAgoData } } })
         
-        // 🚨 5. FRENO DE EMERGENCIA (MAX 150,000 REGISTROS)
+        // 3. FRENO DE EMERGENCIA (MAX 150,000 REGISTROS)
         const LIMIT = 150000
         let brakeSystemLogs = 0
         let brakeAnalytics = 0
 
-        // Freno para SystemLog
         const currentSystemLogs = await prisma.systemLog.count()
         if (currentSystemLogs > LIMIT) {
             const lastToKeep = await prisma.systemLog.findMany({
@@ -174,7 +87,6 @@ export async function GET(request: NextRequest) {
             }
         }
 
-        // Freno para AnalyticsEvent
         const currentAnalytics = await prisma.analyticsEvent.count()
         if (currentAnalytics > LIMIT) {
             const lastToKeep = await prisma.analyticsEvent.findMany({
@@ -191,7 +103,7 @@ export async function GET(request: NextRequest) {
             }
         }
 
-        // Limpieza de Notificaciones (Leídas y Fakes)
+        // 4. Limpieza de Notificaciones (Leídas y Fakes)
         const { count: delReadNotif } = await prisma.notification.deleteMany({ 
             where: { isRead: true, updatedAt: { lt: sevenDaysAgo } } 
         })
@@ -209,8 +121,6 @@ export async function GET(request: NextRequest) {
             success: true,
             processed: log,
             stats: {
-                vehiclesProcessed: expiredVehicles.length,
-                businessesProcessed: expiredBusinesses.length,
                 imagesDeleted: deletedImagesCount,
                 vehiclesCleaned: oldVehicles.length,
                 dbCleanup: {
@@ -229,7 +139,6 @@ export async function GET(request: NextRequest) {
                 }
             }
         })
-
 
     } catch (error) {
         console.error('Cron Error:', error)

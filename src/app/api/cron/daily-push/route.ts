@@ -4,8 +4,8 @@ import { prisma } from '@/lib/db'
 import { sendPushToUser } from '@/lib/pushService'
 
 /**
- * Endpoint para disparar las notificaciones diarias (Mañana y Noche)
- * En producción esto sería llamado por un Cron Job
+ * Endpoint para disparar notificaciones de engagement (Mañana y Noche)
+ * Los recordatorios de citas están en appointment-monitor (monitor.ts)
  */
 export async function GET(req: Request) {
     const authHeader = req.headers.get('authorization')
@@ -21,9 +21,8 @@ export async function GET(req: Request) {
         const title = isMorning ? '¡Buenos días! 🚗✨' : '¡Noche de CarMatch! 🌙'
         const body = isMorning
             ? 'Mira los nuevos vehículos publicados hoy en tu zona.'
-            : 'Checa si tienes nuevos mensajes o actualizaciones de tus citas.'
+            : 'Checa si tienes nuevos mensajes o actualizaciones de tus publicaciones.'
 
-        // 1. Notificaciones de Engagement General
         const activeSubscriptions = await prisma.pushSubscription.findMany({
             distinct: ['userId'],
             select: { userId: true }
@@ -37,47 +36,11 @@ export async function GET(req: Request) {
             })
         )
 
-        // 2. Recordatorios de Citas (Appointments) para hoy
-        const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-        const endOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59)
-
-        const todaysAppointments = await prisma.appointment.findMany({
-            where: {
-                date: {
-                    gte: startOfDay,
-                    lte: endOfDay
-                },
-                status: 'ACCEPTED'
-            },
-            include: {
-                chat: {
-                    select: {
-                        buyerId: true,
-                        sellerId: true,
-                        vehicle: { select: { title: true } }
-                    }
-                }
-            }
-        })
-
-        const appointmentPromises = todaysAppointments.flatMap(app => {
-            const reminderPayload = {
-                title: '📅 Recordatorio de Cita',
-                body: `Hoy tienes una reunión para ver: ${app.chat.vehicle.title} en ${app.location}.`,
-                url: `/messages/${app.chatId}`
-            }
-            return [
-                sendPushToUser(app.chat.buyerId, reminderPayload),
-                sendPushToUser(app.chat.sellerId, reminderPayload)
-            ]
-        })
-
-        await Promise.all([...engagementPromises, ...appointmentPromises])
+        await Promise.all(engagementPromises)
 
         return NextResponse.json({
             success: true,
             notifiedEngagement: activeSubscriptions.length,
-            notifiedAppointments: todaysAppointments.length,
             type: isMorning ? 'morning' : 'night'
         })
     } catch (error) {

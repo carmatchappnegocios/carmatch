@@ -59,6 +59,14 @@ async function processVehicleRenewals(now: Date) {
                     prisma.vehicle.update({
                         where: { id: vehicle.id },
                         data: { status: 'ACTIVE', expiresAt: newExpiresAt }
+                    }),
+                    prisma.creditTransaction.create({
+                        data: {
+                            userId: user.id,
+                            amount: -1,
+                            description: `Renovación automática: ${vehicle.title}`,
+                            details: { vehicleId: vehicle.id, type: 'AUTO_RENEWAL' }
+                        }
                     })
                 ])
                 await upsertNotification({
@@ -172,7 +180,15 @@ async function processBusinessRenewals(now: Date) {
                 const newExpiresAt = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000)
                 await prisma.$transaction([
                     prisma.user.update({ where: { id: user.id }, data: { credits: { decrement: 1 } } }),
-                    prisma.business.update({ where: { id: business.id }, data: { isActive: true, expiresAt: newExpiresAt } })
+                    prisma.business.update({ where: { id: business.id }, data: { isActive: true, expiresAt: newExpiresAt } }),
+                    prisma.creditTransaction.create({
+                        data: {
+                            userId: user.id,
+                            amount: -1,
+                            description: `Renovación automática Negocio: ${business.name}`,
+                            details: { businessId: business.id, type: 'AUTO_RENEWAL' }
+                        }
+                    })
                 ])
                 await upsertNotification({
                     userId: user.id,

@@ -309,7 +309,7 @@ export default function MapBoxStoreLocator({
             const handlePointClick = (e: mapboxgl.MapMouseEvent & { features?: mapboxgl.MapboxGeoJSONFeature[] }) => {
                 if (!e.features || !e.features[0]) return
 
-                const feature = e.features[0]
+                const feature = e.features[0] as any
                 const coordinates = (feature.geometry as any).coordinates.slice()
                 const props = feature.properties as any
 

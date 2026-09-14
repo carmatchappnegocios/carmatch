@@ -97,15 +97,10 @@ export async function processAppointmentSafety() {
                 const minsSinceLastCheck = timeSinceLastCheck / (1000 * 60)
 
                 if (minsSinceLastCheck >= 20) {
-                    // Verificar si ya ignoró demasiadas veces (Auto-finalización)
-                    if (app.missedResponseCount >= 2) {
-                        await finalizeAppointment(app.id)
-                        processed.push({ id: app.id, action: 'AUTO_FINISH' })
-                    } else {
-                        // Enviar nueva alerta de seguridad
-                        await sendSafetyCheck(app)
-                        processed.push({ id: app.id, action: 'SAFETY_CHECK' })
-                    }
+                    // Enviar nueva alerta de seguridad (sin auto-finalizar)
+                    // El usuario puede ignorarlas sin consecuencias
+                    await sendSafetyCheck(app)
+                    processed.push({ id: app.id, action: 'SAFETY_CHECK' })
                 }
             }
         }
@@ -136,13 +131,4 @@ async function sendSafetyCheck(app: any) {
     })
 }
 
-async function finalizeAppointment(id: string) {
-    await prisma.appointment.update({
-        where: { id },
-        data: {
-            status: 'FINISHED',
-            monitoringActive: false
-        }
-    })
-    console.log(`Cita ${id} finalizada automáticamente por inactividad.`)
-}
+

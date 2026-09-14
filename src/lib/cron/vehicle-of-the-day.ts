@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma'
+import { prisma } from '@/lib/db'
 
 export async function selectVehicleOfTheDay() {
   try {
@@ -20,7 +20,7 @@ export async function selectVehicleOfTheDay() {
       where: { createdAt: { gte: recentWinnerCutoff } },
       select: { vehicleId: true }
     })
-    const recentWinnerIds = recentWinners.map(w => w.vehicleId)
+    const recentWinnerIds = recentWinners.map((w: { vehicleId: string }) => w.vehicleId)
 
     const vehicles = await prisma.$queryRawUnsafe(`
       SELECT 
@@ -42,7 +42,7 @@ export async function selectVehicleOfTheDay() {
       WHERE v.status = 'ACTIVE'
         AND v."expiresAt" > NOW()
         AND (v."images" IS NOT NULL AND array_length(v."images", 1) >= 3)
-        ${recentWinnerIds.length > 0 ? `AND v.id NOT IN (${recentWinnerIds.map(id => `'${id}'`).join(',')})` : ''}
+        ${recentWinnerIds.length > 0 ? `AND v.id NOT IN (${recentWinnerIds.map((id: string) => `'${id}'`).join(',')})` : ''}
       GROUP BY v.id
       ORDER BY (
         (COUNT(DISTINCT f.id) * 3) +
@@ -88,7 +88,7 @@ export async function sendVehicleOfTheDayNotifications(vehicleOfTheDay: any) {
   try {
     const vehicle = await prisma.vehicle.findUnique({
       where: { id: vehicleOfTheDay.vehicleId },
-      select: { title: true, brand: true, model: true, price: true, city: true, images: true, currency: true }
+      select: { title: true, brand: true, model: true, year: true, price: true, city: true, images: true, currency: true }
     })
 
     if (!vehicle) return
@@ -97,7 +97,7 @@ export async function sendVehicleOfTheDayNotifications(vehicleOfTheDay: any) {
       select: { userId: true, endpoint: true, p256dh: true, auth: true }
     })
 
-    const uniqueUserIds = [...new Set(subscribers.map(s => s.userId))]
+    const uniqueUserIds = [...new Set(subscribers.map((s: { userId: string }) => s.userId))]
 
     for (const userId of uniqueUserIds) {
       await prisma.notification.create({

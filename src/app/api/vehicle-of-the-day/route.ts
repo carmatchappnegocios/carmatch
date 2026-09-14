@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
+import { prisma } from '@/lib/db'
 import { unstable_cache } from 'next/cache'
 
 const getCachedVehicleOfTheDay = unstable_cache(
