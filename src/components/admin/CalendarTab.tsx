@@ -400,12 +400,85 @@ export default function CalendarTab() {
     const [copiedId, setCopiedId] = useState<string | null>(null)
     const [entryStatuses, setEntryStatuses] = useState<Record<string, string>>({})
 
+    // Queue state - persisted in localStorage
+    const [publishedIds, setPublishedIds] = useState<string[]>(() => {
+        if (typeof window !== 'undefined') {
+            return JSON.parse(localStorage.getItem('carmatch-published') || '[]')
+        }
+        return []
+    })
+    const [skippedIds, setSkippedIds] = useState<string[]>(() => {
+        if (typeof window !== 'undefined') {
+            return JSON.parse(localStorage.getItem('carmatch-skipped') || '[]')
+        }
+        return []
+    })
+
+    // Persist to localStorage
+    useEffect(() => {
+        localStorage.setItem('carmatch-published', JSON.stringify(publishedIds))
+    }, [publishedIds])
+    useEffect(() => {
+        localStorage.setItem('carmatch-skipped', JSON.stringify(skippedIds))
+    }, [skippedIds])
+
+    // Dynamic date calculation - queue system
+    const getEntryDate = (entryIndex: number): Date => {
+        const today = new Date()
+        today.setHours(0, 0, 0, 0)
+        const completedBefore = ALL_ENTRIES.slice(0, entryIndex).filter(
+            e => publishedIds.includes(e.id) || skippedIds.includes(e.id)
+        ).length
+        const date = new Date(today)
+        date.setDate(date.getDate() + entryIndex - completedBefore)
+        return date
+    }
+
+    // Get today's entry (first pending one)
+    const todayEntry = ALL_ENTRIES.find(
+        e => !publishedIds.includes(e.id) && !skippedIds.includes(e.id)
+    ) || null
+
+    // Mark as published
+    const markPublished = (id: string) => {
+        setPublishedIds(prev => prev.includes(id) ? prev : [...prev, id])
+        setSkippedIds(prev => prev.filter(x => x !== id))
+    }
+
+    // Mark as skipped
+    const markSkipped = (id: string) => {
+        setSkippedIds(prev => prev.includes(id) ? prev : [...prev, id])
+        setPublishedIds(prev => prev.filter(x => x !== id))
+    }
+
+    // Restore to pending
+    const restoreEntry = (id: string) => {
+        setPublishedIds(prev => prev.filter(x => x !== id))
+        setSkippedIds(prev => prev.filter(x => x !== id))
+    }
+
+    // Queue stats
+    const queueStats = useMemo(() => {
+        const published = publishedIds.length
+        const skipped = skippedIds.length
+        const pending = ALL_ENTRIES.length - published - skipped
+        const totalBudget = ALL_ENTRIES.reduce((sum, e) => sum + (e.adConfig.enabled ? e.adConfig.budgetMXN : 0), 0)
+        return { published, skipped, pending, total: ALL_ENTRIES.length, totalBudget }
+    }, [publishedIds, skippedIds])
+
     const weekEntries = useMemo(() => {
-        let entries = ALL_ENTRIES.filter(e => e.week === activeWeek)
+        let entries = ALL_ENTRIES.filter(e => e.week === activeWeek).map((entry, idx) => {
+            const globalIdx = ALL_ENTRIES.findIndex(e => e.id === entry.id)
+            const dynamicDate = getEntryDate(globalIdx)
+            const isPublished = publishedIds.includes(entry.id)
+            const isSkipped = skippedIds.includes(entry.id)
+            const isToday = todayEntry?.id === entry.id
+            return { ...entry, dynamicDate, isPublished, isSkipped, isToday }
+        })
         if (filterPlatform !== 'all') entries = entries.filter(e => e.platform === filterPlatform)
         if (filterGatillo !== 'all') entries = entries.filter(e => e.gatillo === filterGatillo)
         return entries
-    }, [activeWeek, filterPlatform, filterGatillo])
+    }, [activeWeek, filterPlatform, filterGatillo, publishedIds, skippedIds, todayEntry])
 
     const weekStats = useMemo(() => {
         const entries = ALL_ENTRIES.filter(e => e.week === activeWeek)
@@ -439,9 +512,10 @@ export default function CalendarTab() {
                     <h3 className="text-3xl font-black italic tracking-tighter uppercase">Calendario</h3>
                 </div>
                 <div className="flex items-center gap-4 text-sm text-white/50">
-                    <span>📅 {overallStats.total} posts</span>
-                    <span>💰 ${(overallStats.totalBudget * 7).toLocaleString()} MXN total (12 sem)</span>
-                    <span>✅ {overallStats.published}/{overallStats.total} publicados</span>
+                    <span>📅 {queueStats.pending} pendientes</span>
+                    <span>💰 ${(queueStats.totalBudget * 7).toLocaleString()} MXN total (12 sem)</span>
+                    <span>✅ {queueStats.published}/{queueStats.total} publicados</span>
+                    {queueStats.skipped > 0 && <span>⏭️ {queueStats.skipped} saltados</span>}
                 </div>
             </div>
 
@@ -523,15 +597,35 @@ export default function CalendarTab() {
                     const gatilloData = GATILLOS[entry.gatillo] || { label: entry.gatillo, color: 'text-white' }
 
                     return (
-                        <div key={entry.id} className="bg-surface-dark border border-white/10 rounded-xl overflow-hidden">
+                        <div key={entry.id} className={`bg-surface-dark border rounded-xl overflow-hidden ${entry.isToday ? 'border-green-500/50 shadow-lg shadow-green-500/10' : entry.isPublished ? 'border-green-500/20 opacity-70' : entry.isSkipped ? 'border-yellow-500/20 opacity-50' : 'border-white/10'}`}>
                             {/* Day Header */}
                             <button
                                 onClick={() => setExpandedDay(isExpanded ? null : entry.id)}
                                 className="w-full p-4 flex items-center justify-between hover:bg-white/5 transition-colors text-left"
                             >
                                 <div className="flex items-center gap-3 flex-wrap">
-                                    <span className="text-xs text-white/40 font-mono">{entry.date}</span>
-                                    <span className="text-sm font-bold text-white/60">{entry.dayName} {entry.dayNum}</span>
+                                    {/* HOY indicator */}
+                                    {entry.isToday && (
+                                        <span className="px-2 py-0.5 bg-green-500 text-white rounded-full text-xs font-bold animate-pulse">
+                                            🟢 HOY
+                                        </span>
+                                    )}
+                                    {/* Published badge */}
+                                    {entry.isPublished && (
+                                        <span className="px-2 py-0.5 bg-green-500/20 text-green-400 rounded-full text-xs font-bold">
+                                            ✅ Publicado
+                                        </span>
+                                    )}
+                                    {/* Skipped badge */}
+                                    {entry.isSkipped && (
+                                        <span className="px-2 py-0.5 bg-yellow-500/20 text-yellow-400 rounded-full text-xs font-bold">
+                                            ⏭️ Saltado
+                                        </span>
+                                    )}
+                                    {/* Dynamic date */}
+                                    <span className="text-xs text-white/40 font-mono">
+                                        {entry.dynamicDate.toLocaleDateString('es-MX', { weekday: 'short', day: 'numeric', month: 'short' })}
+                                    </span>
                                     <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${platformConf.bgColor}`}>
                                         {platformConf.label}
                                     </span>
@@ -543,7 +637,6 @@ export default function CalendarTab() {
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <span className={`text-xs ${gatilloData.color}`}>{entry.gatilloIcon} {gatilloData.label}</span>
-                                    {entry.status === 'published' && <Check className="w-4 h-4 text-green-400" />}
                                     {isExpanded ? <ChevronUp className="w-4 h-4 text-white/40" /> : <ChevronDown className="w-4 h-4 text-white/40" />}
                                 </div>
                             </button>
@@ -652,27 +745,32 @@ export default function CalendarTab() {
                                             {copiedId === entry.id ? <Check className="w-3.5 h-3.5 text-green-400" /> : <Copy className="w-3.5 h-3.5" />}
                                             {copiedId === entry.id ? '¡Copiado!' : 'Copiar caption'}
                                         </button>
-                                        <button
-                                            onClick={() => setEntryStatuses(prev => ({ ...prev, [entry.id]: prev[entry.id] === 'published' ? 'pending' : 'published' }))}
-                                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
-                                                entryStatuses[entry.id] === 'published'
-                                                    ? 'bg-green-500/30 text-green-300'
-                                                    : 'bg-white/5 text-white/40 hover:bg-green-500/20 hover:text-green-400'
-                                            }`}
-                                        >
-                                            <Check className="w-3.5 h-3.5" />
-                                            {entryStatuses[entry.id] === 'published' ? 'Publicada ✓' : 'Marcar publicada'}
-                                        </button>
-                                        <button
-                                            onClick={() => setEntryStatuses(prev => ({ ...prev, [entry.id]: prev[entry.id] === 'skipped' ? 'pending' : 'skipped' }))}
-                                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
-                                                entryStatuses[entry.id] === 'skipped'
-                                                    ? 'bg-yellow-500/30 text-yellow-300'
-                                                    : 'bg-white/5 text-white/40 hover:bg-yellow-500/20 hover:text-yellow-400'
-                                            }`}
-                                        >
-                                            {entryStatuses[entry.id] === 'skipped' ? 'Saltada ✗' : 'Saltar'}
-                                        </button>
+
+                                        {/* Queue buttons */}
+                                        {!entry.isPublished && !entry.isSkipped && (
+                                            <>
+                                                <button
+                                                    onClick={() => markPublished(entry.id)}
+                                                    className="flex items-center gap-1.5 px-3 py-1.5 bg-green-500/20 text-green-400 rounded-lg text-xs font-bold hover:bg-green-500/30 transition-colors"
+                                                >
+                                                    <Check className="w-3.5 h-3.5" /> Publicado
+                                                </button>
+                                                <button
+                                                    onClick={() => markSkipped(entry.id)}
+                                                    className="flex items-center gap-1.5 px-3 py-1.5 bg-yellow-500/20 text-yellow-400 rounded-lg text-xs font-bold hover:bg-yellow-500/30 transition-colors"
+                                                >
+                                                    ⏭️ Saltado
+                                                </button>
+                                            </>
+                                        )}
+                                        {(entry.isPublished || entry.isSkipped) && (
+                                            <button
+                                                onClick={() => restoreEntry(entry.id)}
+                                                className="flex items-center gap-1.5 px-3 py-1.5 bg-white/10 text-white/60 rounded-lg text-xs font-bold hover:bg-white/20 transition-colors"
+                                            >
+                                                ↩️ Restaurar
+                                            </button>
+                                        )}
                                     </div>
 
                                     {/* Metrics Panel */}
