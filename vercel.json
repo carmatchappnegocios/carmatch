@@ -27,38 +27,6 @@
         {
             "path": "/api/cron/daily-maintenance",
             "schedule": "0 9 * * *"
-        },
-        {
-            "path": "/api/cron/engagement",
-            "schedule": "0 20 * * *"
-        },
-        {
-            "path": "/api/cron/cleanup",
-            "schedule": "0 3 * * *"
-        },
-        {
-            "path": "/api/cron/appointment-monitor",
-            "schedule": "*/15 * * * *"
-        },
-        {
-            "path": "/api/cron/update-vehicles",
-            "schedule": "0 0 * * 0"
-        },
-        {
-            "path": "/api/cron/update-taxonomy",
-            "schedule": "0 3 * * 0"
-        },
-        {
-            "path": "/api/cron/ai-health",
-            "schedule": "0 4 * * *"
-        },
-        {
-            "path": "/api/cron/vehicle-of-the-day",
-            "schedule": "0 12 * * *"
-        },
-        {
-            "path": "/api/cron/price-monitor",
-            "schedule": "0 */6 * * *"
         }
     ]
 }
