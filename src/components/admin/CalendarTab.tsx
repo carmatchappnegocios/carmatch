@@ -2,506 +2,467 @@
 
 import { useState, useMemo, useEffect } from 'react'
 import {
-    Calendar, ChevronLeft, ChevronRight, Copy, Check, Clock, Target,
-    ChevronDown, ChevronUp, X, BarChart3, Megaphone, Sparkles
+    Calendar, ChevronLeft, ChevronRight, Copy, Check,
+    X, Megaphone
 } from 'lucide-react'
 
-interface AdConfig {
-    enabled: boolean
-    objective: string
-    audience: string
-    budgetMXN: number
-    placement: string
-    durationDays: number
-}
+type Platform = 'tiktok' | 'instagram' | 'facebook'
+type ContentFormat = 'video' | 'reel' | 'image' | 'carousel' | 'story'
+type GatilloKey = 'loss_aversion' | 'curiosity' | 'identity' | 'social_proof' | 'authority' | 'fomo' | 'security'
 
-interface VideoMetrics {
-    tiktok: { views: number; likes: number; shares: number; comments: number; clicks: number }
-    instagram: { views: number; likes: number; shares: number; comments: number; saved: number }
-    facebook: { reach: number; likes: number; shares: number; comments: number; clicks: number }
+interface PlatformPost {
+    format: ContentFormat
+    caption: string
+    hashtags: string[]
+    postingTime: string
+    capcutPrompt?: string
+    geminiPrompt?: string
+    carouselSlides?: number
+    adCTA?: string
 }
 
 interface CalendarEntry {
     id: string
-    date: string
-    dayName: string
-    dayNum: number
-    month: string
-    platform: string
-    contentType: string
-    title: string
-    hook: string
-    body: string
-    cta: string
-    caption: string
-    gatillo: string
-    gatilloIcon: string
-    hashtags: string[]
-    prompt: string
-    tool: string
-    postingTime: string
-    adConfig: AdConfig
-    adLink: string
-    metrics: VideoMetrics
-    status: string
-    notes: string
     week: number
-}
-
-const GATILLOS: Record<string, { label: string; color: string }> = {
-    'asombro': { label: 'Asombro', color: 'text-yellow-400' },
-    'miedo': { label: 'Miedo', color: 'text-red-400' },
-    'reciprocidad': { label: 'Reciprocidad', color: 'text-green-400' },
-    'aversion-perdida': { label: 'Aversión a la Pérdida', color: 'text-orange-400' },
-    'fomo': { label: 'FOMO', color: 'text-pink-400' },
-    'escasez': { label: 'Escasez', color: 'text-purple-400' },
-    'autoridad': { label: 'Autoridad', color: 'text-blue-400' },
-    'prueba-social': { label: 'Prueba Social', color: 'text-cyan-400' },
-    'urgencia': { label: 'Urgencia', color: 'text-red-500' },
-    'utilidad': { label: 'Utilidad', color: 'text-emerald-400' },
-    'entretenimiento': { label: 'Entretenimiento', color: 'text-violet-400' },
-    'lista': { label: 'Lista', color: 'text-teal-400' },
-    'tendencia': { label: 'Tendencia', color: 'text-fuchsia-400' },
-    'comparacion': { label: 'Comparación', color: 'text-amber-400' },
-    'personalizacion': { label: 'Personalización', color: 'text-rose-400' },
-    'necesidad': { label: 'Necesidad', color: 'text-lime-400' },
-    'seguridad': { label: 'Seguridad', color: 'text-sky-400' },
-    'cariño': { label: 'Cariño', color: 'text-pink-300' },
-    'curiosidad': { label: 'Curiosidad', color: 'text-indigo-400' },
-    'temporada': { label: 'Temporada', color: 'text-orange-300' },
-    'transformacion': { label: 'Transformación', color: 'text-green-300' },
-    'proteccion': { label: 'Protección', color: 'text-blue-300' },
-    'vigilancia': { label: 'Vigilancia', color: 'text-gray-400' },
-    'alivio': { label: 'Alivio', color: 'text-green-200' },
-    'anticipacion': { label: 'Anticipación', color: 'text-violet-300' },
-    'expansion': { label: 'Expansión', color: 'text-cyan-300' },
-    'gratitud': { label: 'Gratitud', color: 'text-amber-300' },
-    'vision': { label: 'Visión', color: 'text-indigo-300' },
-    'celebracion': { label: 'Celebración', color: 'text-yellow-300' },
-    'historia': { label: 'Historia', color: 'text-amber-200' },
-    'ahorro': { label: 'Ahorro', color: 'text-green-500' },
-    'tranquilidad': { label: 'Tranquilidad', color: 'text-blue-200' },
-    'comodidad': { label: 'Comodidad', color: 'text-teal-300' },
-}
-
-const PLATFORM_CONFIG: Record<string, { label: string; bgColor: string }> = {
-    tiktok: { label: 'TikTok', bgColor: 'bg-black border border-white/20' },
-    instagram: { label: 'Instagram', bgColor: 'bg-gradient-to-r from-purple-500 to-pink-500' },
-    facebook: { label: 'Facebook', bgColor: 'bg-blue-600' },
-    youtube: { label: 'YouTube', bgColor: 'bg-red-600' },
-    x: { label: 'X', bgColor: 'bg-black border border-white/20' },
-    linkedin: { label: 'LinkedIn', bgColor: 'bg-blue-700' },
-}
-
-const WEEK_THEMES: Record<number, { title: string; gradient: string }> = {
-    1: { title: 'Foundation: Cd. Juárez', gradient: 'from-blue-500 to-cyan-500' },
-    2: { title: 'Foundation: Cd. Juárez', gradient: 'from-blue-500 to-cyan-500' },
-    3: { title: 'Vendedores: Publicar Gratis', gradient: 'from-green-500 to-emerald-500' },
-    4: { title: 'Vendedores: Crecimiento', gradient: 'from-green-500 to-emerald-500' },
-    5: { title: 'Compradores: Swipe de Autos', gradient: 'from-purple-500 to-pink-500' },
-    6: { title: 'Compradores: Decisión', gradient: 'from-purple-500 to-pink-500' },
-    7: { title: 'Talleres: MiniWeb Gratis', gradient: 'from-orange-500 to-red-500' },
-    8: { title: 'Talleres: Crecimiento', gradient: 'from-orange-500 to-red-500' },
-    9: { title: 'Seguridad: SOS + GPS', gradient: 'from-red-500 to-rose-500' },
-    10: { title: 'Seguridad: Confianza Total', gradient: 'from-red-500 to-rose-500' },
-    11: { title: 'Expansión: Chihuahua → Monterrey', gradient: 'from-yellow-500 to-orange-500' },
-    12: { title: 'Expansión: Guadalajara → CDMX', gradient: 'from-yellow-500 to-orange-500' },
-}
-
-const EMPTY_METRICS: VideoMetrics = {
-    tiktok: { views: 0, likes: 0, shares: 0, comments: 0, clicks: 0 },
-    instagram: { views: 0, likes: 0, shares: 0, comments: 0, saved: 0 },
-    facebook: { reach: 0, likes: 0, shares: 0, comments: 0, clicks: 0 },
-}
-
-function makeEntry(week: number, dayOffset: number, platform: string, title: string, hook: string, body: string, cta: string, gatillo: string, hashtags: string[], prompt: string, adConfig: AdConfig, time?: string, customCaption?: string): CalendarEntry {
-    const baseDate = new Date(2026, 8, 14 + ((week - 1) * 7) + dayOffset)
-    const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
-    const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
-    const gatilloData = GATILLOS[gatillo] || { label: gatillo, color: 'text-white' }
-    const contentType = platform === 'tiktok' ? 'video' : platform === 'instagram' ? (dayOffset % 2 === 0 ? 'reel' : 'carousel') : (dayOffset % 3 === 0 ? 'video' : 'image')
-    const tool = contentType === 'video' || contentType === 'reel' ? 'CapCut AI' : 'Gemini'
-    
-    // Optimize hashtags by platform
-    const optimizeHashtags = (): string[] => {
-        if (platform === 'facebook') {
-            return hashtags.slice(0, 2)
-        } else if (platform === 'tiktok') {
-            return hashtags.slice(0, 4)
-        } else {
-            return hashtags
-        }
+    dayIndex: number
+    title: string
+    theme: string
+    gatillo: GatilloKey
+    gatilloIcon: string
+    gatilloColor: string
+    tiktok: PlatformPost
+    instagram: PlatformPost
+    facebook: PlatformPost
+    adConfig: {
+        tiktok: { enabled: boolean; budgetMXN: number; objective: string; audience: string; durationDays: number }
+        meta: { enabled: boolean; budgetMXN: number; objective: string; audience: string; placement: string; durationDays: number }
     }
-    
-    // Optimized posting times based on Sprout Social 2026 data
-    const getOptimalTime = (): string => {
-        if (time) return time
-        const day = baseDate.getDay()
-        // 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
-        
-        if (platform === 'tiktok') {
-            // TikTok: 2-6pm peak, best Tue-Fri
-            if (day === 2 || day === 3) return '3:00 PM'
-            if (day === 4 || day === 5) return '4:00 PM'
-            return '3:00 PM'
-        } else if (platform === 'instagram') {
-            // Instagram: 1-7pm peak, best Tue-Thu
-            if (day === 2 || day === 3) return '2:00 PM'
-            if (day === 4) return '1:00 PM'
-            return '2:00 PM'
-        } else {
-            // Facebook: 12-8pm peak, best Tue-Wed
-            if (day === 2 || day === 3) return '1:00 PM'
-            return '12:00 PM'
-        }
-    }
-    
-    // Generate caption based on platform
-    const generateCaption = (): string => {
-        if (customCaption) return customCaption
-        const optimizedTags = optimizeHashtags()
-        const hashtagsStr = optimizedTags.join(' ')
-        
-        if (platform === 'tiktok') {
-            return `${hook}\n\n${body}\n\n${cta}\n\n${hashtagsStr}\n\n🔗 carmatchapp.net`
-        } else if (platform === 'instagram') {
-            return `${hook}\n\n${body}\n\n${cta}\n\n${hashtagsStr}\n\n🔗 carmatchapp.net`
-        } else {
-            return `${hook}\n\n${body}\n\n${cta}\n\n${hashtagsStr}\n\ncarmatchapp.net`
-        }
-    }
-
-    // Auto-calculate ad link based on content type
-    const getAdLink = (): string => {
-        const combined = `${prompt} ${cta} ${title} ${body}`.toLowerCase()
-        const isBusiness = combined.includes('taller') || combined.includes('servicio') || combined.includes('negocio') || combined.includes('minweb') || combined.includes('citas')
-        const baseUrl = isBusiness ? 'carmatchapp.net/map' : 'carmatchapp.net'
-        return `carmatchapp.net/open?url=https://${baseUrl}`
-    }
-
-    return {
-        id: `w${week}-d${dayOffset}-${platform}`,
-        date: baseDate.toISOString().split('T')[0],
-        dayName: dayNames[baseDate.getDay()],
-        dayNum: baseDate.getDate(),
-        month: months[baseDate.getMonth()],
-        platform,
-        contentType,
-        title, hook, body, cta,
-        caption: generateCaption(),
-        gatillo,
-        gatilloIcon: gatilloData.label,
-        hashtags: optimizeHashtags(),
-        prompt,
-        tool,
-        postingTime: getOptimalTime(),
-        adConfig,
-        adLink: getAdLink(),
-        metrics: { ...EMPTY_METRICS },
-        status: 'pending',
-        notes: '',
-        week,
-    }
+    isFestive?: boolean
+    festiveDate?: string
+    prePublishDays?: number
 }
 
-function ad(objective: string, audience: string, budget: number, placement: string, days: number): AdConfig {
-    return { enabled: true, objective, audience, budgetMXN: budget, placement, durationDays: days }
+const GATILLOS: Record<GatilloKey, { label: string; icon: string; color: string }> = {
+    loss_aversion: { label: 'Pérdida', icon: '🔴', color: 'text-red-400' },
+    curiosity: { label: 'Curiosidad', icon: '🟡', color: 'text-yellow-400' },
+    identity: { label: 'Identidad', icon: '🔵', color: 'text-blue-400' },
+    social_proof: { label: 'Prueba Social', icon: '🟢', color: 'text-green-400' },
+    authority: { label: 'Autoridad', icon: '🟣', color: 'text-purple-400' },
+    fomo: { label: 'FOMO', icon: '🟠', color: 'text-orange-400' },
+    security: { label: 'Seguridad', icon: '🛡️', color: 'text-cyan-400' },
 }
 
-// ═══════════════════════════════════════════════════════════════
-// ALL 72 ENTRIES - 12 WEEKS
-// ═══════════════════════════════════════════════════════════════
+const WEEK_THEMES: Record<number, { title: string; gradient: string; icon: string }> = {
+    1: { title: 'Gancho Inicial — Perder es peor', gradient: 'from-red-600 to-orange-500', icon: '🎣' },
+    2: { title: 'Seguridad — Protege a los tuyos', gradient: 'from-cyan-600 to-blue-500', icon: '🛡️' },
+    3: { title: 'Datos del Mercado', gradient: 'from-yellow-600 to-amber-500', icon: '📊' },
+    4: { title: 'Prueba Social — Otros ya confían', gradient: 'from-green-600 to-emerald-500', icon: '✅' },
+    5: { title: 'Activación de Compradores', gradient: 'from-blue-600 to-indigo-500', icon: '🎯' },
+    6: { title: 'Vendedores — Tu auto vale más', gradient: 'from-purple-600 to-pink-500', icon: '💰' },
+    7: { title: 'Funciones Avanzadas', gradient: 'from-indigo-600 to-violet-500', icon: '⚡' },
+    8: { title: 'Frontera Digital — Juárez', gradient: 'from-teal-600 to-cyan-500', icon: '🇲🇽' },
+    9: { title: 'Pre-Buen Fin — FOMO', gradient: 'from-orange-600 to-red-500', icon: '🔥' },
+    10: { title: 'Buen Fin — Pérdida', gradient: 'from-red-700 to-pink-600', icon: '🏷️' },
+    11: { title: 'Navidad — Familia y gratitud', gradient: 'from-green-700 to-red-600', icon: '🎄' },
+    12: { title: 'Año Nuevo — Renacimiento', gradient: 'from-yellow-500 to-amber-400', icon: '🎆' },
+}
+
+const NO_CONFIG = { enabled: false, budgetMXN: 0, objective: '', audience: '', durationDays: 0 }
+const NO_AD = { tiktok: NO_CONFIG, meta: { ...NO_CONFIG, placement: '' } }
+const META_AD_21 = { tiktok: NO_CONFIG, meta: { enabled: true, budgetMXN: 21, objective: 'Tráfico', audience: 'Juárez 25-55', placement: 'Automático', durationDays: 7 } }
+
+function p(format: ContentFormat, time: string, caption: string, hashtags: string[], capcut?: string, gemini?: string, cta?: string, slides?: number): PlatformPost {
+    return { format, postingTime: time, caption, hashtags, capcutPrompt: capcut, geminiPrompt: gemini, adCTA: cta, carouselSlides: slides }
+}
 
 const ALL_ENTRIES: CalendarEntry[] = [
-    // ═══ SEMANA 1: Foundation ═══
-    makeEntry(1, 0, 'tiktok', 'Sube una foto. La IA llena 25 datos.', 'Mano tomando foto → interfaz IA llenando datos en 3s', 'La IA de CarMatch detecta marca, modelo, año y llena 25 campos. Sin escribir nada.', 'Descarga CarMatch y prueba gratis', 'asombro', ['#CarMatch','#AutosUsados','#IA','#CdJuarez','#ComprarAuto'], `Close-up smartphone, AI scanning Honda Civic, holographic data fields auto-filled, blue neon UI, Mexican city golden hour, Sony A7R IV 85mm f/1.4`, ad('trafico', 'Cd. Juárez +50km, 21-55 años, autos, tecnología', 21, 'Feed + Reels + Stories', 2), '12:00 PM'),
-
-    makeEntry(1, 1, 'instagram', 'Ella se protege. Tú también.', 'Mujer nerviosa en estacionamiento oscuro, recibe notificación CarMatch', 'Activa CarMatch SOS. Su papá recibe ubicación en tiempo real. Ella llega segura.', 'Activa CarMatch SOS. Tu seguridad no es opcional.', 'miedo', ['#CarMatch','#SOS','#SeguridadMujer','#CdJuarez','#Proteccion'], `Young Mexican woman in car at night, phone glows CarMatch SOS interface, red emergency button, dark parking, cinematic blue/red lighting`, ad('interaccion', 'Mujeres 21-45, Cd. Juárez, seguridad, tecnología', 21, 'Feed + Reels + Stories', 2), '1:00 PM'),
-
-    makeEntry(1, 2, 'facebook', 'Tu taller mecánico necesita web. Gratis.', 'Carrusel: talleres mexicanos before/after con MiniWeb', 'El 90% de talleres NO tienen web. CarMatch les da una GRATIS con chatbot 24/7.', 'Registra tu taller gratis en CarMatch', 'reciprocidad', ['#CarMatch','#Talleres','#Negocios','#CdJuarez'], `Split: LEFT dusty workshop no sign. RIGHT same workshop with CarMatch MiniWeb display, appointments, chatbot, Google Maps pin`, ad('leads', 'Dueños de talleres, 25-55, Cd. Juárez + Chihuahua', 21, 'Feed + Groups', 3), '1:00 PM'),
-
-    makeEntry(1, 3, 'tiktok', 'El error #1 al comprar auto usado', 'Persona con motor dañado, cara de decepción, $50,000 aparece', 'El 60% de autos en Facebook tienen fraude oculto. CarMatch verifica todo.', 'No cometas este error. Descarga CarMatch.', 'aversion-perdida', ['#CarMatch','#AutoUsado','#Fraude','#Estafa','#CdJuarez'], `Frustrated man next to car with hood open, engine problems, holding phone showing Facebook listing that looked perfect, Mexican residential street`, ad('trafico', 'Cd. Juárez +50km, 21-45, autos usados', 21, 'Feed + Reels', 2), '12:00 PM'),
-
-    makeEntry(1, 4, 'instagram', '100 autos cerca de ti. Ahora.', 'Deslizando autos en CarMatch como Tinder', 'Abre CarMatch. Activa ubicación. Descubre 100+ autos verificados cerca de ti.', 'Desliza ahora en carmatchapp.net/swipe', 'fomo', ['#CarMatch','#Swipe','#AutosCerca','#CdJuarez','#ComprarAuto'], `Smartphone Tinder-like interface with cars, swiping right on red Volkswagen Jetta, multiple car cards fading, Mexican cityscape reflected`, ad('trafico', 'Cd. Juárez +50km, 21-35, autos, tecnología', 21, 'Reels + Stories', 2), '7:00 PM'),
-
-    makeEntry(1, 5, 'facebook', 'AUTO DE LA SEMANA: Honda Civic 2020', 'Foto profesional Honda Civic 2020 plateado, ángulo bajo cinematográfico', '🚗 Honda Civic 2020 - $180,000 MXN. 📍 Cd. Juárez. ✅ Verificado CarMatch. 🔥 15 personas lo han visto hoy.', 'Ver más autos en CarMatch', 'escasez', ['#CarMatch','#HondaCivic','#AutoDeLaSemana','#CdJuarez'], `Silver 2020 Honda Civic in clean parking lot, low angle powerful look, golden hour long shadows, mountains background, professional automotive photography`, ad('alcance', 'Cd. Juárez +100km, 21-55, Honda, seminuevos', 21, 'Feed', 3), '7:00 PM'),
-
-    // ═══ SEMANA 2: Foundation ═══
-    makeEntry(2, 0, 'tiktok', 'Compara 5 talleres antes de ir', '5 talleres con precios, calificaciones, distancias', 'No vayas al primero que encuentres. Compara precios, reseñas, y distancias.', 'Compara ahora en CarMatch', 'utilidad', ['#CarMatch','#Talleres','#Compara','#Mecanico','#CdJuarez'], `Smartphone 5 workshops comparison grid, star ratings, prices, distances, clean CarMatch UI, blurred Mexican street`, ad('trafico', 'Cd. Juárez +50km, 25-55, mecánica, autos', 21, 'Feed + Reels', 2), '12:00 PM'),
-
-    makeEntry(2, 1, 'instagram', 'Tu auto aparece en Google. Gratis.', 'Búsqueda Google mostrando resultado con foto profesional CarMatch', 'Publica tu auto en CarMatch y aparece en Google SIN pagar publicidad.', 'Publica tu auto gratis en CarMatch', 'autoridad', ['#CarMatch','#Google','#VenderAuto','#Gratis','#CdJuarez'], `Google search results on laptop showing CarMatch listing, professional photo, 25 fields, #1 ranking "Honda Civic 2020 Cd Juarez"`, ad('leads', 'Cd. Juárez +100km, vendedores, 25-55', 21, 'Reels + Stories', 2), '1:00 PM'),
-
-    makeEntry(2, 2, 'facebook', '500+ personas ya confían en CarMatch', 'Infografía: 500+ usuarios, 200+ autos, 50+ talleres, 4.8 calificación', '🚀 En 2 semanas: 500+ usuarios, 200+ autos, 50+ talleres, 4.8 estrellas.', 'Únete gratis en carmatchapp.net', 'prueba-social', ['#CarMatch','#Confianza','#CdJuarez','#500Usuarios'], `Modern infographic: 500+ users, 200+ vehicles, 50+ workshops, 4.8 rating, dark background blue/orange glow, professional data viz`, ad('alcance', 'Cd. Juárez +100km, 21-65', 21, 'Feed', 3), '1:00 PM'),
-
-    makeEntry(2, 3, 'tiktok', '¿Tu taller no tiene web? Perdiendo dinero.', 'Taller vacío vs taller con cola de clientes', 'El 90% buscan talleres en Google. Si no estás ahí, van al de al lado.', 'Registra tu taller gratis HOY', 'aversion-perdida', ['#CarMatch','#Talleres','#Negocio','#Dinero','#CdJuarez'], `Split: LEFT empty workshop idle owner. RIGHT same workshop packed customers, glowing "CarMatch MiniWeb" notification`, ad('leads', 'Dueños de talleres, 25-55, Cd. Juárez + Chihuahua', 21, 'Feed + Reels', 2), '12:00 PM'),
-
-    makeEntry(2, 4, 'instagram', 'Compara precios de 5 talleres en 10s', 'Timelapse: 5 presupuestos apareciendo y comparándose', 'Aceite + filtro: $800, $650, $900, $580, $720. ¿Cuál eliges?', 'Compara precios en CarMatch', 'utilidad', ['#CarMatch','#Precios','#Mecanico','#Ahorro','#CdJuarez'], `Smartphone 5 price quotes, green highlight best deal, clean UI, phone on mechanic workbench with tools`, ad('trafico', 'Cd. Juárez +50km, 25-55, ahorro, mecánica', 21, 'Reels + Stories', 2), '8:30 PM'),
-
-    makeEntry(2, 5, 'facebook', 'Último Volkswagen Jetta a este precio', 'Foto profesional VW Jetta negro con precio tachado', '🚗 VW Jetta 2019 - Antes: $220,000 → Ahora: $175,000 MXN. ⚠️ Solo queda 1.', 'Contacta al vendedor ahora', 'escasez', ['#CarMatch','#VolkswagenJetta','#UltimaUnidad','#CdJuarez'], `Black 2019 VW Jetta in front of modern Mexican house, dramatic side lighting, price "$175,000" with "$220,000" crossed out`, ad('trafico', 'Cd. Juárez +100km, 25-55, Volkswagen', 21, 'Feed', 2), '7:00 PM'),
-
-    // ═══ SEMANA 3: Vendedores ═══
-    makeEntry(3, 0, 'tiktok', 'Vendes tu auto? Publícalo gratis.', 'Mano presionando "Publicar", auto aparece con datos', 'Sube una foto. La IA llena 25 datos. Tu auto en Google SIN pagar.', 'Publica tu auto gratis ahora', 'reciprocidad', ['#CarMatch','#VenderAuto','#Gratis','#CdJuarez'], `Hand tapping "PUBLICAR" button, car published with auto-filled data, confetti, car for sale sign on Mexican street`, ad('leads', 'Cd. Juárez +100km, vendedores, 25-65', 21, 'Feed + Reels', 2), '12:00 PM'),
-
-    makeEntry(3, 1, 'instagram', 'Tu auto en 25 datos profesionales', 'Lado a lado: listing informal Facebook vs listing CarMatch', 'Facebook: "Vendo Honda Civic, sin choques." CarMatch: 25 datos verificados, fotos profesionales.', 'Mira la diferencia en CarMatch', 'asombro', ['#CarMatch','#Profesional','#VenderAuto','#Datos','#CdJuarez'], `Split: LEFT blurry photo "Vendo Honda Civic". RIGHT professional CarMatch listing 25 fields, badge`, ad('trafico', 'Cd. Juárez +100km, vendedores, 25-55', 21, 'Reels + Stories', 2), '1:00 PM'),
-
-    makeEntry(3, 2, 'facebook', '1,234 autos ya están publicados', 'Counter animándose de 0 a 1,234 con fotos', '📊 1,234 autos, 89 talleres, 2,100+ usuarios, 4.8 estrellas. ¿Ya publicaste el tuyo?', 'Publica tu auto gratis', 'prueba-social', ['#CarMatch','#CdJuarez','#1234Autos','#Crecimiento'], `Large counter "1,234 AUTOS" with car icons, dark background blue/orange glow, modern dashboard`, ad('alcance', 'Cd. Juárez +100km, 21-65', 21, 'Feed', 3), '1:00 PM'),
-
-    makeEntry(3, 3, 'tiktok', '¿Por qué no se vende tu auto?', 'Auto con letrero "SE VENDE" polvoriento, dueño frustrado', 'Sin fotos profesionales, sin 25 datos, sin Google. CarMatch resuelve TODO.', 'Resuelve esto en CarMatch', 'urgencia', ['#CarMatch','#VenderAuto','#Problema','#Solucion','#CdJuarez'], `Frustrated man with dusty "SE VENDE" sign, no calls on phone, car looks nice but poor presentation`, ad('trafico', 'Cd. Juárez +100km, vendedores frustrados, 25-65', 21, 'Feed + Reels', 2), '12:00 PM'),
-
-    makeEntry(3, 4, 'instagram', 'Foto profesional de tu auto. Gratis.', 'Transformación: foto amateur → foto profesional IA en 3s', 'La IA convierte tu foto amateur en imagen profesional con fondo de estudio.', 'Prueba la IA de CarMatch gratis', 'reciprocidad', ['#CarMatch','#IA','#Fotografia','#Gratis','#CdJuarez'], `Before/after: LEFT blurry amateur car photo. RIGHT same car professional studio perfect lighting`, ad('trafico', 'Cd. Juárez +100km, vendedores, 25-55', 21, 'Reels + Stories', 2), '7:00 PM'),
-
-    makeEntry(3, 5, 'facebook', 'Este auto se vendió en 3 días con CarMatch', 'Foto auto con badge "VENDIDO EN 3 DÍAS" y testimonio', '🎉 "Mi Golf se vendió en 3 días. Antes llevaba 2 meses en Facebook." - Carlos', 'Publica tu auto gratis', 'fomo', ['#CarMatch','#Vendido','#Exito','#CdJuarez'], `Volkswagen Golf with "VENDIDO EN 3 DÍAS" stamp, testimonial 5 stars, clean delivery setting, confetti`, ad('alcance', 'Cd. Juárez +100km, vendedores, 25-65', 21, 'Feed', 3), '7:00 PM'),
-
-    // ═══ SEMANA 4: Vendedores ═══
-    makeEntry(4, 0, 'tiktok', 'Sin esto, no vendes tu auto', 'Checklist: 3 cosas que NECESITAS para vender', '✅ Fotos profesionales. ✅ 25 datos. ✅ Google. CarMatch las 3 GRATIS.', 'Activa las 3 gratis en CarMatch', 'aversion-perdida', ['#CarMatch','#VenderAuto','#Checklist','#Gratis','#CdJuarez'], `Smartphone checklist 3 items checked off, each reveals feature, "SE VENDE" turns "VENDIDO"`, ad('leads', 'Cd. Juárez +100km, vendedores, 25-65', 21, 'Feed + Reels', 2), '12:00 PM'),
-
-    makeEntry(4, 1, 'instagram', 'Tu competencia ya está en CarMatch', 'Vendedor frustrado (Facebook) vs vendedor exitoso (CarMatch)', 'Mientras tú en Facebook, tu competencia ya publicó 50 autos y se vendieron.', 'Únete antes de que sea tarde', 'fomo', ['#CarMatch','#Competencia','#NoTeQuedes','#CdJuarez'], `Two men: LEFT frustrated 0 calls (Facebook). RIGHT celebrating 10+ inquiries (CarMatch)`, ad('leads', 'Cd. Juárez +100km, vendedores activos, 25-55', 21, 'Reels + Stories', 2), '1:00 PM'),
-
-    makeEntry(4, 2, 'facebook', 'Auto verificado se vende 3x más rápido', 'Gráfica: auto verificado vs sin verificar', '📊 Sin verificar: 45 días. Verificado CarMatch: 15 días. 3x más rápido.', 'Verifica tu auto gratis', 'autoridad', ['#CarMatch','#Verificado','#Datos','#Rapido','#CdJuarez'], `Infographic: red bar "45 días" vs green "15 días", dramatic difference, professional data viz`, ad('alcance', 'Cd. Juárez +100km, vendedores, 25-65', 21, 'Feed', 3), '1:00 PM'),
-
-    makeEntry(4, 3, 'tiktok', 'El secreto para vender rápido', 'Persona compartiendo "secreto" al oído', 'El secreto: publica en 3 plataformas a la vez. CarMatch lo hace AUTOMÁTICO.', 'Activa publicación multi-plataforma gratis', 'curiosidad', ['#CarMatch','#Secreto','#VenderRapido','#Tips','#CdJuarez'], `Person whispering secret, "3 plataformas a la vez" floating text, mysterious blue lighting`, ad('trafico', 'Cd. Juárez +100km, vendedores, 25-55', 21, 'Feed + Reels', 2), '12:00 PM'),
-
-    makeEntry(4, 4, 'instagram', 'Vendedor top: 12 autos vendidos', 'Montaje 12 autos con badge "VENDIDO"', '🏆 Roberto vendió 12 autos en octubre. "Sin CarMatch no hubiera sido posible."', 'Sé el próximo vendedor top', 'prueba-social', ['#CarMatch','#VendedorTop','#Exito','#CdJuarez'], `Proud dealer in front of 12 "VENDIDO" cars, CarMatch award, professional dealership golden light`, ad('alcance', 'Cd. Juárez +100km, dealers, 25-55', 21, 'Reels + Stories', 2), '7:00 PM'),
-
-    makeEntry(4, 5, 'facebook', 'Último día: publica tu auto gratis', 'Reloj countdown "ÚLTIMO DÍA"', '⏰ HOY ES EL ÚLTIMO DÍA gratis. Mañana $20 MXN/mes.', 'Publica gratis ANTES de medianoche', 'urgencia', ['#CarMatch','#ÚltimoDía','#Gratis','#Urgencia','#CdJuarez'], `Dramatic countdown clock "00:04:59:59", red urgent, car silhouettes fading`, ad('leads', 'Cd. Juárez +100km, vendedores, 25-65', 21, 'Feed', 1), '7:00 PM'),
-
-    // ═══ SEMANA 5: Compradores ═══
-    makeEntry(5, 0, 'tiktok', 'Swipe de autos como Tinder', 'Interfaz Tinder con autos', 'Desliza para descubrir. Swipe right si te gusta. Auto ideal en segundos.', 'Descarga y desliza ahora', 'entretenimiento', ['#CarMatch','#Swipe','#TinderDeAutos','#CdJuarez'], `Smartphone Tinder interface with car cards, about to swipe red sports car, clean CarMatch UI`, ad('trafico', 'Cd. Juárez +50km, 21-35, autos, dating apps', 21, 'Feed + Reels', 2), '12:00 PM'),
-
-    makeEntry(5, 1, 'instagram', '5 autos con menos de $100K', 'Countdown 5 autos baratos con precios', '💰 Spark $65K, March $72K, i10 $78K, Picanto $85K, Beat $88K. Sí se puede.', 'Más autos baratos en CarMatch', 'lista', ['#CarMatch','#AutosBaratos','#Menos100K','#CdJuarez'], `Five affordable cars with price tags under $100K, clean attractive cars, modern dealership`, ad('trafico', 'Cd. Juárez +100km, 18-35, primer auto', 21, 'Reels + Stories', 2), '1:00 PM'),
-
-    makeEntry(5, 2, 'facebook', 'El futuro es eléctrico', 'Foto auto eléctrico cargando', '⚡ Los EVs llegan a México. 🔋 CarMatch ya tiene sección de EVs.', 'Explora autos eléctricos', 'tendencia', ['#CarMatch','#Electrico','#EV','#Futuro','#CdJuarez'], `Modern EV at charging station sunset, futuristic premium, Mexico City skyline mountains`, ad('alcance', 'Cd. Juárez +100km, 25-55, tecnología', 21, 'Feed', 3), '1:00 PM'),
-
-    makeEntry(5, 3, 'tiktok', 'Este error te cuesta $50,000', 'Persona descubriendo problema oculto, horror, $50,000', 'No checar historial. Ese "buen deal" puede costarte $50K en reparaciones.', 'Checa el historial antes de comprar', 'aversion-perdida', ['#CarMatch','#Error','#Historial','#Estafa','#CdJuarez'], `Person shocked at $50,000 mechanic bill, car hood open engine problems, holding head`, ad('trafico', 'Cd. Juárez +100km, 21-45, compradores', 21, 'Feed + Reels', 2), '12:00 PM'),
-
-    makeEntry(5, 4, 'instagram', 'Civic vs Corolla: ¿cuál gana?', 'Split screen Honda Civic vs Toyota Corolla', '⚖️ Precio: similar. Confiabilidad: similar. Potencia: Civic. Comodidad: Corolla.', 'Compara y decide en CarMatch', 'comparacion', ['#CarMatch','#CivicVsCorolla','#Comparacion','#CdJuarez'], `Dramatic split: Honda Civic left, Toyota Corolla right, lightning bolt middle`, ad('interaccion', 'Cd. Juárez +100km, 21-45, Honda, Toyota', 21, 'Reels + Stories', 2), '7:00 PM'),
-
-    makeEntry(5, 5, 'facebook', 'El auto perfecto para ti. La IA lo sabe.', 'Persona respondiendo preguntas IA, recibe recomendación', '🤖 IA pregunta: ¿cuánto? ¿cuántas personas? ¿urbano? En 30s: tu auto ideal.', 'Prueba la IA de CarMatch', 'personalizacion', ['#CarMatch','#IA','#AutoIdeal','#Personalizado','#CdJuarez'], `Person chatting with AI on phone, questions with icons, perfect car recommendation confetti`, ad('trafico', 'Cd. Juárez +100km, 21-45, IA, tecnología', 21, 'Feed', 3), '7:00 PM'),
-
-    // ═══ SEMANA 5 EVERGREEN: Tips de compra ═══
-    makeEntry(5, 6, 'tiktok', '5 señales de que un auto tiene problemas', 'Mecánico señalando 5 problemas comunes', '🔧 Aceite en el piso. 🔴 Luces del dashboard. 🔊 Ruidos extraños. 💨 Humo. ⚠️ Frenos blandos.', 'Aprende más en carmatchapp.net', 'utilidad', ['#AutoTips','#ComprarAuto','#Problemas','#Mecanico','#CdJuarez'], `Mechanic pointing at 5 car problems: oil leak, dashboard lights, strange noises, smoke, soft brakes`, ad('trafico', 'Cd. Juárez +100km, 21-45, compradores', 21, 'Feed + Reels', 2), '4:00 PM'),
-
-    makeEntry(5, 7, 'instagram', 'Checklist: 10 cosas antes de comprar auto usado', 'Lista visual con checkboxes', '📋 Historial. 📸 Fotos reales. 🔍 Verificación. 💰 Precio vs mercado. 📝 Contrato.', 'Guarda este post para tu compra', 'lista', ['#AutoTips','#Checklist','#CompraSegura','#CdJuarez'], `Visual checklist with 10 items: history, photos, verification, price, contract, etc.`, ad('alcance', 'Cd. Juárez +100km, 21-45, compradores', 21, 'Reels + Stories', 2), '2:00 PM'),
-
-    // ═══ SEMANA 6 EVERGREEN: Tips de compra ═══
-    makeEntry(6, 6, 'tiktok', '¿Cuánto vale tu auto? Descúbrelo en 30s', 'Persona usando calculadora de valor', '💰 Ingresa marca, modelo, año. La IA calcula el precio justo. Sin compromiso.', 'Calcula tu precio en carmatchapp.net', 'utilidad', ['#ValorAuto','#PrecioJusto','#IA','#CdJuarez'], `Person using phone to calculate car value, AI interface showing price estimate`, ad('trafico', 'Cd. Juárez +100km, 21-55, vendedores', 21, 'Feed + Reels', 2), '3:00 PM'),
-
-    makeEntry(6, 7, 'facebook', 'Tips: Cómo mantener tu auto como nuevo', 'Infografía de mantenimiento básico', '🔧 Aceite cada 5,000km. 🛞 Rotación cada 10,000km. 🧹 Limpieza mensual. 📅 Servicio a tiempo.', 'Guarda este post importante', 'utilidad', ['#MantenimientoAuto','#Tips','#Cuidado','#CdJuarez'], `Infographic showing basic car maintenance tips: oil change, tire rotation, cleaning, service schedule`, ad('alcance', 'Cd. Juárez +100km, 21-55, dueños de autos', 21, 'Feed', 3), '1:00 PM'),
-
-    // ═══ SEMANA 7 EVERGREEN: Tips de talleres ═══
-    makeEntry(7, 6, 'tiktok', '¿Sabías que tu taller puede tener web gratis?', 'Taller vacío vs taller lleno con web', '📱 Web profesional gratis. 📞 Chatbot 24/7. ⭐ Reseñas en Google. Los clientes te encuentran.', 'Registra tu taller gratis en carmatchapp.net', 'asombro', ['#Talleres','#WebGratis','#Negocio','#CdJuarez'], `Split: empty workshop vs packed workshop with digital display, CarMatch MiniWeb notifications`, ad('leads', 'Dueños talleres, 25-55, Cd. Juárez + Chihuahua', 21, 'Feed + Reels', 2), '4:00 PM'),
-
-    makeEntry(7, 7, 'instagram', 'Checklist: Tu taller necesita esto', 'Lista de features que necesitas', '✅ MiniWeb gratis. ✅ Chatbot 24/7. ✅ Citas en línea. ✅ Google Maps. Todo GRATIS.', 'Registra tu taller ahora', 'lista', ['#Talleres','#Checklist','#Gratis','#CdJuarez'], `Visual checklist: MiniWeb, chatbot, online appointments, Google Maps - all free`, ad('leads', 'Dueños talleres, 25-55, Cd. Juárez + Chihuahua', 21, 'Reels + Stories', 2), '2:00 PM'),
-
-    // ═══ SEMANA 6: Compradores ═══
-    makeEntry(6, 0, 'tiktok', 'No compres sin ver esto', 'Lista 5 cosas verificar ANTES de comprar', '⚠️ Historial, vendedor verificado, punto seguro, fotos reales, precio. Todo GRATIS.', 'Verifica antes de comprar', 'miedo', ['#CarMatch','#Verifica','#CompraSegura','#CdJuarez'], `Warning checklist with red alert icons, shadowy scammer in background, dramatic red lighting`, ad('trafico', 'Cd. Juárez +100km, 21-45, compradores primerizos', 21, 'Feed + Reels', 2), '12:00 PM'),
-
-    makeEntry(6, 1, 'instagram', 'Tu auto ideal te espera', 'Montaje 10 autos con comprador sonriente', 'SUV para familia. Deportivo para ti. Eléctrico para el futuro.', 'Encuentra el tuyo en CarMatch', 'cariño', ['#CarMatch','#AutoIdeal','#TuAuto','#CdJuarez'], `Montage: family+SUV, young+sports, eco+EV, professional+sedan, all smiling Mexican backgrounds`, ad('alcance', 'Cd. Juárez +100km, 21-55', 21, 'Reels + Stories', 2), '1:00 PM'),
-
-    makeEntry(6, 2, 'facebook', '15 personas buscan este auto AHORA', 'Listing con contador de vistas tiempo real', '🔥 Honda CR-V 2021. 👁️ 15 viendo. 💬 8 mensajes. ⏰ Último a este precio.', 'Ver antes de que se vaya', 'fomo', ['#CarMatch','#FOMO','#ÚltimaOportunidad','#CdJuarez'], `Car listing with live counter "15 viendo AHORA", notifications popping, dark red accents`, ad('trafico', 'Cd. Juárez +100km, 25-55, compradores activos', 21, 'Feed', 2), '1:00 PM'),
-
-    makeEntry(6, 3, 'tiktok', 'Compara antes de comprar. Siempre.', 'Tres personas: triste, neutral, feliz (CarMatch)', 'Sin comparar: pagas de más. Google: pierdes tiempo. CarMatch: ahorras.', 'Compara en CarMatch', 'utilidad', ['#CarMatch','#Compara','#Ahorra','#Tiempo','#CdJuarez'], `Three people: LEFT overpriced car (sad), MIDDLE Google (frustrated), RIGHT CarMatch (happy)`, ad('trafico', 'Cd. Juárez +100km, 25-55, compradores', 21, 'Feed + Reels', 2), '12:00 PM'),
-
-    makeEntry(6, 4, 'instagram', 'Prueba de manejo segura con CarMatch', 'Persona en prueba con GPS y trusted contacts', '🔒 GPS en tiempo real. 👥 Contactos notificados. ⏰ Check-in 20 min. 🚨 SOS.', 'Activa CarMatch para tu prueba', 'seguridad', ['#CarMatch','#PruebaDeManejo','#Seguridad','#GPS','#CdJuarez'], `Person test-driving, phone dashboard showing CarMatch GPS, green route, notification "Papá monitoreando"`, ad('interaccion', 'Cd. Juárez +100km, 18-35, compradores primerizos', 21, 'Reels + Stories', 2), '7:00 PM'),
-
-    makeEntry(6, 5, 'facebook', 'Auto verificado = confianza total', 'Badge verificación premium', '✅ Historial. Fotos reales. Precio vs mercado. Vendedor verificado. Documentos.', 'Busca autos verificados', 'autoridad', ['#CarMatch','#Verificado','#Confianza','#CdJuarez'], `Car with large CarMatch verification badge glowing, premium showroom, "100% VERIFICADO"`, ad('alcance', 'Cd. Juárez +100km, 25-55, compradores cautelosos', 21, 'Feed', 3), '7:00 PM'),
-
-    // ═══ SEMANA 7: Talleres ═══
-    makeEntry(7, 0, 'tiktok', 'Tu taller necesita esto HOY', 'Taller estresado vs con sistema CarMatch', '📞 Llamadas perdidas. 📅 Citas en papel. vs 📱 Citas automáticas. 🤖 Chatbot 24/7.', 'Registra tu taller gratis', 'necesidad', ['#CarMatch','#Talleres','#Negocio','#Transformacion','#CdJuarez'], `Split: chaotic workshop papers everywhere. Right: organized with digital display, calm owner`, ad('leads', 'Dueños talleres, 25-55, Cd. Juárez + Chihuahua', 21, 'Feed + Reels', 2), '12:00 PM'),
-
-    makeEntry(7, 1, 'instagram', 'Chatbot que responde 24/7. Gratis.', 'Simulación chatbot respondiendo a 3AM', 'Cliente: "¿Cuánto aceite?" CarMatch: "$650. ¿Agenda cita?" Cliente: "Sí, mañana 10"', 'Activa tu chatbot gratis', 'asombro', ['#CarMatch','#Chatbot','#IA','#24/7','#CdJuarez'], `Phone chat at 3AM, chatbot responds instantly professional answers, clean interface`, ad('leads', 'Dueños talleres, 25-55, Cd. Juárez + Chihuahua', 21, 'Reels + Stories', 2), '1:00 PM'),
-
-    makeEntry(7, 2, 'facebook', 'Citas en línea. Sin llamadas. Sin papel.', 'Demo: cliente agenda en 3 taps', '📱 1. Servicio. 2. Fecha/hora. 3. Confirma. 📅 Taller recibe notificación + datos + historial.', 'Activa citas en línea gratis', 'comodidad', ['#CarMatch','#CitasEnLinea','#SinLlamadas','#CdJuarez'], `Customer booking on phone, time slots, workshop owner receives notification on tablet, both satisfied`, ad('leads', 'Dueños talleres, 25-55, Cd. Juárez + Chihuahua', 21, 'Feed', 3), '1:00 PM'),
-
-    makeEntry(7, 3, 'tiktok', '¿Cuándo fue tu último servicio?', 'Dashboard recordatorios de servicio', 'Tu auto: "Mi último aceite fue hace 8,000 km." CarMatch te avisa.', 'Registra tu auto en CarMatch', 'urgencia', ['#CarMatch','#ServicioAuto','#Recordatorio','#CdJuarez'], `Car dashboard "ALERTA: Servicio vencido 500 km", phone shows CarMatch timeline`, ad('trafico', 'Cd. Juárez +100km, dueños autos, 25-55', 21, 'Feed + Reels', 2), '12:00 PM'),
-
-    makeEntry(7, 4, 'instagram', 'Tu taller en Google Maps. Sin pagar.', 'Búsqueda Google Maps con pin CarMatch', 'Tu taller aparece en Google Maps SIN pagar. Solo registra en CarMatch.', 'Registra tu taller gratis', 'autoridad', ['#CarMatch','#GoogleMaps','#Talleres','#Gratis','#CdJuarez'], `Google Maps workshop with CarMatch badge, 4.8 stars, photos, others without badge`, ad('leads', 'Dueños talleres, 25-55, Cd. Juárez + Chihuahua', 21, 'Reels + Stories', 2), '7:00 PM'),
-
-    makeEntry(7, 5, 'facebook', 'Halloween: tu auto te necesita', 'Auto disfrazado Halloween con checklist', '🎃 Luces ✓ (fantasmas). Frenos ✓ (zombis). Batería ✓ (huir rápido).', 'Registra tu auto gratis', 'temporada', ['#CarMatch','#Halloween','#Auto','#Servicio','#CdJuarez'], `Car decorated Halloween spooky lights, jack-o-lanterns, CarMatch checklist overlay`, ad('interaccion', 'Cd. Juárez +100km, 21-45', 21, 'Feed', 2), '7:00 PM'),
-
-    // ═══ SEMANA 8: Talleres ═══
-    makeEntry(8, 0, 'tiktok', 'Taller sin citas = caos', 'Taller abrumado con clientes sin cita', 'Sin sistema: esperan horas, se enojan, no regresan. Con CarMatch: todo organizado.', 'Organiza tu taller gratis', 'aversion-perdida', ['#CarMatch','#Talleres','#Caos','#Organizacion','#CdJuarez'], `Chaotic workshop multiple waiting customers, frustrated overwhelmed owner`, ad('leads', 'Dueños talleres, 25-55, Cd. Juárez + Chihuahua', 21, 'Feed + Reels', 2), '12:00 PM'),
-
-    makeEntry(8, 1, 'instagram', 'Antes vs Después de CarMatch', 'Timelapse: desordenado → sistema brillando', '📱 Antes: Llamadas, papel. Después: Chatbot, citas online, clientes felices.', 'Transforma tu taller hoy', 'transformacion', ['#CarMatch','#AntesDespues','#Transformacion','#CdJuarez'], `Dramatic before/after: LEFT dark chaotic. RIGHT bright organized dashboard`, ad('leads', 'Dueños talleres, 25-55, Cd. Juárez + Chihuahua', 21, 'Reels + Stories', 2), '1:00 PM'),
-
-    makeEntry(8, 2, 'facebook', '200 talleres ya tienen MiniWeb', 'Mapa Cd. Juárez con 200 pins', '🏪 200 talleres: Chatbot, Citas, Google, Dashboard. ¿Tu taller es el próximo?', 'Registra tu taller gratis', 'prueba-social', ['#CarMatch','#Talleres','#200Talleres','#CdJuarez'], `Map Cd. Juárez 200 glowing pins, CarMatch badge each, city lit up`, ad('leads', 'Dueños talleres, 25-55, Cd. Juárez + Chihuahua', 21, 'Feed', 3), '1:00 PM'),
-
-    makeEntry(8, 3, 'tiktok', 'Tu cliente te busca 24/7', 'Reloj girando con búsquedas a todas horas', '3AM: "Taller cerca". 6AM: "¿Aceite?". 11PM: "Taller abierto". Sin CarMatch van al de al lado.', 'Está ahí cuando te busquen', 'necesidad', ['#CarMatch','#Clientes','#24/7','#Negocio','#CdJuarez'], `Clock spinning, phone notifications at each time customer searches`, ad('leads', 'Dueños talleres, 25-55, Cd. Juárez + Chihuahua', 21, 'Feed + Reels', 2), '12:00 PM'),
-
-    makeEntry(8, 4, 'instagram', '"Mis ventas subieron 40%"', 'Testimonial con gráfica de ventas', '⭐ "Desde CarMatch, mis ventas subieron 40%. El chatbot responde lo que yo no podía."', 'Únete a los talleres exitosos', 'prueba-social', ['#CarMatch','#Testimonial','#Exito','#Talleres','#CdJuarez'], `Happy workshop owner testimonial, 40% sales graph behind, busy successful workshop`, ad('leads', 'Dueños talleres, 25-55, Cd. Juárez + Chihuahua', 21, 'Reels + Stories', 2), '7:00 PM'),
-
-    makeEntry(8, 5, 'facebook', 'Registra tu taller gratis. Sin compromiso.', 'Formulario 3 campos', '📝 30 segundos: Nombre, Dirección, Teléfono. ✅ Chatbot, MiniWeb, Google Maps. Sin tarjeta.', 'Registra tu taller AHORA', 'reciprocidad', ['#CarMatch','#Gratis','#Talleres','#SinCompromiso','#CdJuarez'], `Simple registration form 3 fields, icons: chatbot, miniweb, Google Maps with checkmarks`, ad('leads', 'Dueños talleres, 25-55, Cd. Juárez + Chihuahua', 21, 'Feed', 3), '7:00 PM'),
-
-    // ═══ SEMANA 9: Seguridad ═══
-    makeEntry(9, 0, 'tiktok', 'Va a verse con un desconocido. Sin CarMatch.', 'Mujer nerviosa hacia estacionamiento oscuro', 'Sin CarMatch: nadie sabe dónde estás. Sin GPS. Sin SOS. Estás sola.', 'No vayas sin CarMatch', 'miedo', ['#CarMatch','#SOS','#Seguridad','#Desconocido','#CdJuarez'], `Young woman walking alone dark parking lot, nervous, no one knows where she is, cinematic horror lighting`, ad('interaccion', 'Mujeres 21-45, Cd. Juárez', 21, 'Feed + Reels', 2), '12:00 PM'),
-
-    makeEntry(9, 1, 'instagram', 'Ella activó SOS. Llegó su papá.', 'Secuencia: SOS → alerta → llega → abrazo', '🚨 SOS activado. 📱 Papá notificado. 📍 Ubicación real. 🚗 Llega en 5 min. 😌 Segura.', 'Activa SOS para tu familia', 'alivio', ['#CarMatch','#SOS','#Familia','#Proteccion','#CdJuarez'], `Father rushing to daughter, arrives, she hugs him, both relieved, CarMatch app showing SOS`, ad('interaccion', 'Familias, 30-55, Cd. Juárez', 21, 'Reels + Stories', 2), '1:00 PM'),
-
-    makeEntry(9, 2, 'facebook', '12 personas buscan este auto AHORA', 'Listing con contador tiempo real', '🔥 Toyota Camry 2021. 👁️ 12 viendo. 💬 5 mensajes. ⏰ Actualizado hace 2 min.', 'Ver antes de que se vaya', 'fomo', ['#CarMatch','#FOMO','#ÚltimaOportunidad','#CdJuarez'], `Car listing live counter "12 viendo AHORA", notifications, urgency countdown`, ad('trafico', 'Cd. Juárez +100km, compradores, 25-55', 21, 'Feed', 2), '1:00 PM'),
-
-    makeEntry(9, 3, 'tiktok', 'Ubicación en tiempo real', 'Persona en ruta + familia monitoreando', '📍 Tiempo real. 👥 Familia te ve. ⏰ Check-in 20 min. 🚨 SOS.', 'Activa GPS tracking gratis', 'seguridad', ['#CarMatch','#GPS','#TiempoReal','#Familia','#CdJuarez'], `Split: LEFT person driving. RIGHT family watching location on map real time, glowing line`, ad('interaccion', 'Familias, 25-55, Cd. Juárez', 21, 'Feed + Reels', 2), '12:00 PM'),
-
-    makeEntry(9, 4, 'instagram', 'Trusted Contacts: tu red de seguridad', 'Persona agregando contactos, cada uno notificado', '👥 Agrega familia. 📱 Ellos reciben tu ubicación. 🚨 Si SOS, ellos saben.', 'Configura tus contactos ahora', 'proteccion', ['#CarMatch','#TrustedContacts','#RedDeSeguridad','#CdJuarez'], `Phone Trusted Contacts setup, 3 family members added, each gets notification`, ad('interaccion', 'Familias, 25-55, Cd. Juárez', 21, 'Reels + Stories', 2), '7:00 PM'),
-
-    makeEntry(9, 5, 'facebook', 'Check-in cada 20 minutos', 'Timeline check-ins automáticos', '📍 8:00 Casa. 📍 8:20 Ruta. 📍 8:40 Trabajo. 📍 9:00 Trabajo. Siempre saben.', 'Activa check-ins automáticos', 'vigilancia', ['#CarMatch','#CheckIn','#Automatico','#Familia','#CdJuarez'], `Timeline automatic check-ins every 20min, location pins timestamps, modern CarMatch branding`, ad('interaccion', 'Familias, 25-55, Cd. Juárez', 21, 'Feed', 3), '7:00 PM'),
-
-    // ═══ SEMANA 10: Seguridad ═══
-    makeEntry(10, 0, 'tiktok', 'GPS tracking mientras manejas', 'Vista aérea ciudad con GPS moviéndose', 'Tu ubicación cada segundo. Tu familia te ve. Si algo pasa, ellos saben.', 'Activa GPS tracking gratis', 'seguridad', ['#CarMatch','#GPS','#Tracking','#Seguridad','#CdJuarez'], `Aerial city view GPS dot moving real time, connected to family watching phones, glowing line`, ad('interaccion', 'Familias, 25-55, Cd. Juárez', 21, 'Feed + Reels', 2), '12:00 PM'),
-
-    makeEntry(10, 1, 'instagram', 'Tu familia sabe dónde estás', 'Madre mirando celular, ve ubicación de hijo, sonríe', '📍 Madre ve hijo en camino. 😌 Sabe que está seguro. 📱 Paz mental.', 'Activa para tu familia', 'tranquilidad', ['#CarMatch','#Familia','#Tranquilidad','#Seguridad','#CdJuarez'], `Mother looking at phone showing son's location map, smiling relieved, warm home soft lighting`, ad('interaccion', 'Familias, 30-55, Cd. Juárez', 21, 'Reels + Stories', 2), '1:00 PM'),
-
-    makeEntry(10, 2, 'facebook', 'Buen Fin: ofertas que no puedes perder', 'Reloj countdown Buen Fin con ofertas', '🔥 Solo 3 días. 🚗 Autos con hasta 30% OFF. 🏪 Talleres con servicios gratis. ⏰ No te quedes.', 'Aprovecha el Buen Fin en carmatchapp.net', 'urgencia', ['#CarMatch','#BuenFin','#Ofertas','#Descuentos','#CdJuarez'], `Buen Fin countdown clock, car deals, workshop promotions, red urgent accents, sale badges`, ad('alcance', 'Cd. Juárez +200km, 21-65', 21, 'Feed', 2), '1:00 PM'),
-
-    makeEntry(10, 3, 'tiktok', 'Botón de pánico en tu celular', 'Mano presionando botón SOS, animación dramática', 'Un toque. SOS activado. Tu familia sabe. La ayuda viene.', 'Descarga CarMatch ahora', 'urgencia', ['#CarMatch','#SOS','#BotonDePanico','#Emergencia','#CdJuarez'], `Close-up finger pressing red SOS button, dramatic pulse animation, emergency contacts highlighted`, ad('interaccion', 'Cd. Juárez +100km, 18-45', 21, 'Feed + Reels', 2), '12:00 PM'),
-
-    makeEntry(10, 4, 'instagram', 'Test drive seguro con CarMatch', 'Pareja en prueba con GPS y contactos', '🔒 GPS activo. 👥 Contactos notificados. ⏰ Check-in 20 min. 🚨 SOS.', 'Activa CarMatch para tu prueba', 'seguridad', ['#CarMatch','#TestDrive','#PruebaSegura','#GPS','#CdJuarez'], `Couple test-driving, phone showing CarMatch GPS, green route, trusted contacts notified`, ad('interaccion', 'Cd. Juárez +100km, parejas 25-45', 21, 'Reels + Stories', 2), '7:00 PM'),
-
-    makeEntry(10, 5, 'facebook', 'La app más segura de México', 'Badge "LA MÁS SEGURA" shield dorado', '🛡️ SOS + GPS. Trusted Contacts. Check-ins 20 min. Test drive seguro. Punto seguro.', 'Descarga la app más segura', 'autoridad', ['#CarMatch','#LaMásSegura','#SOS','#GPS','#CdJuarez'], `Golden shield badge "LA MÁS SEGURA DE MÉXICO" CarMatch logo, premium metallic, dark dramatic`, ad('alcance', 'Cd. Juárez +100km, 21-65', 21, 'Feed', 3), '7:00 PM'),
-
-    // ═══ SEMANA 11: Expansión ═══
-    makeEntry(11, 0, 'tiktok', 'CarMatch llega a Chihuahua', 'Animación expansión Juárez → Chihuahua', '🚀 Cd. Juárez fue primero. Ahora: Chihuahua. Después: Monterrey, Gdl, CDMX.', 'Únete antes de que llegue a tu ciudad', 'expansion', ['#CarMatch','#Chihuahua','#Expansion','#Mexico'], `Animated map CarMatch expanding Juárez→Chihuahua, glowing expansion wave, Mexican territory`, ad('alcance', 'Chihuahua capital +100km, 21-55', 21, 'Feed + Reels', 2), '12:00 PM'),
-
-    makeEntry(11, 1, 'instagram', 'Monterrey, ¿listos?', 'Skyline Monterrey con logo CarMatch', '🏙️ Monterrey: 5M+ personas. El mercado más grande del norte. CarMatch viene.', 'Sé de los primeros en Monterrey', 'anticipacion', ['#CarMatch','#Monterrey','#Expansion','#Listos'], `Monterrey skyline sunset, CarMatch logo floating above, anticipation excitement mood`, ad('alcance', 'Monterrey +100km, 21-55', 21, 'Reels + Stories', 2), '1:00 PM'),
-
-    makeEntry(11, 2, 'facebook', 'Buen Fin: los mejores deals en autos', 'Los autos más buscados con descuento', '🏷️ Honda Civic: -15%. Toyota Corolla: -20%. VW Jetta: -25%. Solo en CarMatch.', 'Encuentra tu deal en carmatchapp.net', 'fomo', ['#CarMatch','#BuenFin','#Deals','#Descuentos','#AutosBaratos'], `Top car deals with discount badges, percentage off, clean professional CarMatch branding`, ad('trafico', 'Cd. Juárez +200km, compradores, 21-55', 21, 'Feed', 2), '1:00 PM'),
-
-    makeEntry(11, 3, 'tiktok', 'Guadalajara, te esperamos', 'Expansión: Chihuahua → Monterrey → Guadalajara', '📍 Chihuahua ✓. 📍 Monterrey ✓. 📍 Guadalajara: PRÓXIMAMENTE.', 'Regístrate para ser notificado', 'anticipacion', ['#CarMatch','#Guadalajara','#Expansion','#Proximamente'], `Map expansion: Chihuahua ✓ → Monterrey ✓ → Guadalajara pulsing "PRÓXIMAMENTE"`, ad('alcance', 'Guadalajara +100km, 21-55', 21, 'Feed + Reels', 2), '12:00 PM'),
-
-    makeEntry(11, 4, 'instagram', 'CDMX: la gran ciudad', 'Torres Reforma con logo CarMatch', '🏙️ CDMX: 22M personas. El mercado más grande. CarMatch va a llegar.', 'Regístrate para CDMX', 'anticipacion', ['#CarMatch','#CDMX','#Expansion','#GranCiudad'], `CDMX skyline Reforma towers, CarMatch logo floating grand ambitious, sunset`, ad('alcance', 'CDMX +100km, 21-55', 21, 'Reels + Stories', 2), '7:00 PM'),
-
-    makeEntry(11, 5, 'facebook', 'Ya somos 10,000 usuarios', 'Counter celebrando 10K con confeti', '🎉 10,000 USUARIOS! 🚗 5,000+ autos. 🏪 500+ talleres. ⭐ 4.9 estrellas.', 'Únete a los 10,000', 'prueba-social', ['#CarMatch','#10000Usuarios','#Gracias','#Crecimiento'], `Counter hitting 10,000 with confetti explosion, celebration, CarMatch branding, user icons`, ad('alcance', 'México, 21-65', 21, 'Feed', 3), '7:00 PM'),
-
-    // ═══ SEMANA 12: Expansión ═══
-    makeEntry(12, 0, 'tiktok', 'Navidad: viaja seguro con tu familia', 'Familia en auto navideño con CarMatch', '🎄 Navidad: viaja seguro. 🚗 GPS activo. 👥 Familia conectada. 🚨 SOS listo.', 'Activa CarMatch para las fiestas', 'proteccion', ['#CarMatch','#Navidad','#ViajaSeguro','#Familia','#CdJuarez'], `Family in car Christmas decorations, CarMatch GPS active, warm festive lighting, safe travel`, ad('interaccion', 'Cd. Juárez +100km, familias, 25-55', 21, 'Feed + Reels', 2), '12:00 PM'),
-
-    makeEntry(12, 1, 'instagram', 'Año Nuevo: tu meta es un auto', 'Persona soñando con su auto nuevo', '🚗 Meta 2027: tu primer auto. 📱 CarMatch te ayuda. 🎯 IA encuentra el ideal.', 'Empieza tu meta en carmatchapp.net', 'vision', ['#CarMatch','#AñoNuevo','#Meta2027','#PrimerAuto','#CdJuarez'], `Person looking at new year fireworks, phone showing CarMatch, dream car silhouette, hopeful`, ad('alcance', 'Cd. Juárez +100km, 18-35, primer auto', 21, 'Reels + Stories', 2), '1:00 PM'),
-
-    makeEntry(12, 2, 'facebook', 'Regalo perfecto: seguridad para tu familia', 'CarMatch SOS como regalo navideño', '🎁 Regala seguridad. 🚨 SOS + GPS. 👥 Trusted Contacts. 📱 Gratis para siempre.', 'Descarga CarMatch como regalo', 'gratitud', ['#CarMatch','#RegaloNavidad','#Seguridad','#Familia','#Gratis'], `Gift box opening CarMatch app, family happy, security features as presents, warm Christmas`, ad('interaccion', 'Cd. Juárez +100km, familias, 25-55', 21, 'Feed', 3), '7:00 PM'),
-
-    makeEntry(12, 3, 'tiktok', 'Vacaciones de invierno: CarMatch SOS', 'Viajeros en carretera con CarMatch', '❄️ Invierno: carreteras peligrosas. 🚗 CarMatch SOS activo. 👥 Familia te monitorea.', 'Viaja seguro estas vacaciones', 'seguridad', ['#CarMatch','#Invierno','#Vacaciones','#Carretera','#Seguridad'], `Winter road trip, snowy mountains, CarMatch GPS active, family monitoring, safe travel vibes`, ad('interaccion', 'Cd. Juárez +100km, viajeros, 21-55', 21, 'Feed + Reels', 2), '12:00 PM'),
-
-    makeEntry(12, 4, 'instagram', 'Gracias por este año increíble', 'Montaje de logros del año', '🎉 De 0 a 15,000 usuarios. 🚗 5,000 autos. 🏪 500 talleres. Gracias Cd. Juárez.', 'Gracias por confiar en CarMatch', 'celebracion', ['#CarMatch','#Gracias','#AñoIncreíble','#CdJuarez'], `Year highlight reel, milestones, confetti, community photos, warm grateful tone`, ad('alcance', 'Cd. Juárez +100km, 21-65', 21, 'Reels + Stories', 2), '7:00 PM'),
-
-    makeEntry(12, 5, 'facebook', '2027: viene algo grande', 'Preview de features nuevos', '🔮 2027: Seguro integrado. Financiamiento. Roadside assistance. La app completa.', 'Sé el primero en enterarte', 'anticipacion', ['#CarMatch','#2027','#VieneAlgoGrande','#Futuro'], `2027 roadmap teaser: insurance, financing, roadside assistance icons, mysterious dark mood`, ad('alcance', 'Cd. Juárez +100km, 21-55', 21, 'Feed', 3), '7:00 PM'),
+    // ═══ SEMANA 1: GANCHO INICIAL ═══
+    { id:'s01-lun',week:1,dayIndex:0,title:'Estás perdiendo dinero',theme:'Educación financiera',gatillo:'loss_aversion',gatilloIcon:'🔴',gatilloColor:'text-red-400',
+      tiktok:p('video','15:00','🔴 Estás perdiendo dinero cada día que tu auto está en la calle sin venderlo.\n\nCada semana que pasa, tu auto vale $2,000 menos.\n\n¿Cuánto llevas esperando?\n\n📲 Descarga CarMatch — link en bio',['#PerdiendoDinero','#VendeTuAuto','#CdJuarez','#AutoUsado','#CarMatch','#Chihuahua'],'Escena 1: Reloj avanzando rápido. Escena 2: Billetes volando. Escena 3: Auto con polvo. Texto: "Cada semana pierdes $2,000". Color grading oscuro. 9:16.'),
+      instagram:p('carousel','13:00','🔴 Cada semana tu auto vale $2,000 menos.\n\nEl valor de un auto usado baja entre 1-2% mensual.\n\nSi llevas 3 meses esperando, ya perdiste $6,000-$12,000.\n\nDesliza para ver cuánto has perdido →\n\n📲 Descarga CarMatch gratis',['#PerdiendoDinero','#VendeTuAuto','#CdJuarez','#AutoUsado','#CarMatch','#Chihuahua','#FinanzasPersonales'],undefined,'Infografía dark fondo #0f172a. Título rojo "CADA SEMANA PIERDES $2,000". Gráfica descendente. Rojo #ef4444, naranja #f97316, azul #0ea5e9.','Más información',5),
+      facebook:p('video','12:00','🔴 ATENCIÓN: Si tu auto está sin vender, estás perdiendo dinero.\n\nEl valor baja entre $1,500-$3,000 cada mes.\n\nCarMatch es la plataforma #1 para vender tu auto rápido en Cd. Juárez.\n\n📲 Descarga gratis: carmatchapp.net',['#PerdiendoDinero','#VendeTuAuto','#CdJuarez','#AutoUsado','#CarMatch'],'Video profesional: Persona con reloj. Auto en estacionamiento. Texto: "Cada semana pierdes $2,000". Persona con app CarMatch. 16:9.',undefined,'Más información'),
+      adConfig:META_AD_21 },
+
+    { id:'s01-mar',week:1,dayIndex:1,title:'Opinión impopular: Marketplace no sirve',theme:'Debate',gatillo:'curiosity',gatilloIcon:'🟡',gatilloColor:'text-yellow-400',
+      tiktok:p('video','15:00','🟡 Opinión impopular: Marketplace no sirve para vender tu auto.\n\n50 mensajes y NINGUNO serio.\n\nEn CarMatch solo llegan compradores reales.\n\n¿Estás de acuerdo? Comenta 👇',['#OpiniónImpopular','#Marketplace','#VendeTuAuto','#CarMatch','#CdJuarez','#Debate'],'Persona hablando a cámara decepcionada. Mensajes de Marketplace. Texto: "50 mensajes, 0 serios". App CarMatch. Nativo TikTok.'),
+      instagram:p('reel','13:00','🟡 Opinión impopular: Marketplace NO es la mejor forma de vender tu auto.\n\n50 mensajes falsos. 0 compradores reales.\n\nCarMatch conecta con compradores serios.\n\n¿Tú también estás frustrado?','#OpiniónImpopular Marketplace VendeTuAuto CarMatch CdJuarez Reels AutoUsado'.split(' '),'Talking head: celular con mensajes Marketplace. Transición a CarMatch. "Marketplace vs CarMatch". Casual.'),
+      facebook:p('image','12:00','🟡 OPINIÓN IMPOPULAR: Marketplace no sirve para vender autos.\n\n❌ 50 mensajes de "¿A cuánto está?"\n❌ Nadie agenda cita\n✅ CarMatch: compradores reales verificados\n\nEntra a carmatchapp.net',['#OpiniónImpopular','#Marketplace','#VendeTuAuto','#CarMatch','#CdJuarez'],undefined,'Split screen: Rojo (Marketplace frustración) vs Azul (CarMatch sonrisa). "Marketplace vs CarMatch". #0f172a.','Más información'),
+      adConfig:NO_AD },
+
+    { id:'s01-mie',week:1,dayIndex:2,title:'¿Sabías que...? Datos del mercado',theme:'Datos',gatillo:'curiosity',gatilloIcon:'🟡',gatilloColor:'text-yellow-400',
+      tiktok:p('video','15:00','🟡 ¿Sabías que el 70% de los autos usados en México se venden por debajo de su valor?\n\nLa mayoría no sabe cuánto vale su auto.\n\nCarMatch tiene valuación inteligente.\n\n📲 Link en bio',['#SabiasQue','#DatoCurioso','#ValorAuto','#CarMatch','#CdJuarez','#MercadoAuto'],'Texto "¿SABÍAS QUE?" zoom. Número "70%" animado. Auto con etiqueta incorrecta. App valuación. Educativo.'),
+      instagram:p('carousel','13:00','🟡 3 datos que TODO vendedor debe saber:\n\n1️⃣ El 70% se vende por debajo de su valor\n2️⃣ Pierde 15% al sacarlo de agencia\n3️⃣ Mejor mes: octubre-noviembre\n\nDesliza para más →\n\n📲 CarMatch — tu auto al precio correcto',['#SabiasQue','#DatoCurioso','#ValorAuto','#CarMatch','#CdJuarez','#MercadoAuto','#Finanzas'],undefined,'3 datos: iconos auto, gráfica depreciación, calendario. Azul #0ea5e9, naranja #f97316, fondo oscuro. Clean.',undefined,4),
+      facebook:p('image','12:00','🟡 ¿Sabías que el 70% de autos usados se venden por debajo de su valor?\n\nCarMatch te da valuación basada en el mercado real de Cd. Juárez.\n\n📲 Entra a carmatchapp.net',['#SabiasQue','#ValorAuto','#CarMatch','#CdJuarez'],undefined,'Gráfica circular 70% vs 30%. Auto con $. Fondo azul oscuro. "70% SE VENDEN BARATO". Profesional.','Más información'),
+      adConfig:NO_AD },
+
+    { id:'s01-jue',week:1,dayIndex:3,title:'La prueba está aquí',theme:'Social Proof',gatillo:'social_proof',gatilloIcon:'🟢',gatilloColor:'text-green-400',
+      tiktok:p('video','15:00','🟢 "Vendí mi auto en 3 días con CarMatch"\n\nMaría de Cd. Juárez.\n\n¿Tú cuánto llevas?\n\n📲 Descarga gratis — link en bio',['#TestimonioReal','#VendidoEn3Dias','#CarMatch','#CdJuarez','#ExitoReal'],'Screenshot reseña: "María vendió en 3 días". Fondo verde. Estadísticas. UGC style.'),
+      instagram:p('reel','13:00','🟢 María publicó su auto el lunes.\n\nEl miércoles ya tenía comprador.\n\n3 días.\n\n¿Cuánto llevas tú?\n\n📲 carmatchapp.net — gratis',['#TestimonioReal','#VendidoEn3Dias','#CarMatch','#CdJuarez','#ExitoReal','#Reels'],undefined,'Timeline: Lunes publicado → Miércoles VENDIDO. Calendario. Testimonio.'),
+      facebook:p('image','12:00','🟢 María publicó el lunes. El miércoles ya tenía comprador.\n\n3 días. Sin intermediarios.\n\nCarMatch funciona en Cd. Juárez.\n\n📲 carmatchapp.net',['#TestimonioReal','#VendidoEn3Dias','#CarMatch','#CdJuarez'],undefined,'Testimonio: fondo verde. Auto con "VENDIDO". "María, Cd. Juárez". "3 días".','Más información'),
+      adConfig:META_AD_21 },
+
+    { id:'s01-vie',week:1,dayIndex:4,title:'Tu competencia ya está aquí',theme:'Urgencia',gatillo:'fomo',gatilloIcon:'🟠',gatilloColor:'text-orange-400',
+      tiktok:p('video','15:00','🟠 Ya hay 500+ autos publicados en CarMatch Juárez.\n\nLos primeros se venden más rápido.\n\n¿Ya publicaste el tuyo?',['#FOMO','#YaEstanAqui','#CarMatch','#CdJuarez','#500Autos'],'Contador a 500+. Autos en mapa Juárez. "¿El tuyo?". Naranja y rojo.'),
+      instagram:p('reel','13:00','🟠 500+ autos ya están en CarMatch Cd. Juárez.\n\nLos primeros se venden más rápido.\n\n¿Ya publicaste el tuyo?',['#FOMO','#YaEstanAqui','#CarMatch','#CdJuarez','#Reels'],undefined,'Contador 0 a 500+. Mapa puntos. "No te quedes fuera". Cálidos.'),
+      facebook:p('image','12:00','🟠 Ya hay 500+ autos en CarMatch Cd. Juárez.\n\nLos primeros se venden más rápido.\n\n📲 carmatchapp.net — gratis y sin comisiones',['#FOMO','#CarMatch','#CdJuarez'],undefined,'Mapa Juárez con 500+ puntos. "500+" naranja. "Los primeros se venden más rápido". Fondo oscuro.','Más información'),
+      adConfig:NO_AD },
+
+    { id:'s01-sab',week:1,dayIndex:5,title:'Tu familia depende de ti',theme:'Seguridad',gatillo:'security',gatilloIcon:'🛡️',gatilloColor:'text-cyan-400',
+      tiktok:p('video','15:00','🛡️ Cada vez que manejas un auto sin mantenimiento...\n\nPones en riesgo a tu familia.\n\nCarMatch tiene servicios verificados.\n\n📲 Link en bio',['#SeguridadFamiliar','#MantenimientoAuto','#CarMatch','#CdJuarez'],'Familia en auto. "¿Tu auto está seguro?" Iconos mantenimiento. Lista verificación. Emotivo.'),
+      instagram:p('carousel','13:00','🛡️ Tu familia depende de tu auto.\n\n5 cosas que debes revisar:\n1️⃣ Frenos\n2️⃣ Aceite\n3️⃣ Llantas\n4️⃣ Luces\n5️⃣ Documentos\n\nDesliza para el checklist →',['#SeguridadFamiliar','#ChecklistAuto','#CarMatch','#CdJuarez'],undefined,'Checklist visual 5 ítems con iconos. Fondo azul oscuro. Profesional.',undefined,5),
+      facebook:p('image','12:00','🛡️ Pones en riesgo a tu familia con un auto sin mantenimiento.\n\nCarMatch tiene servicios verificados en Cd. Juárez.\n\n📲 carmatchapp.net',['#SeguridadFamiliar','#CarMatch','#CdJuarez'],undefined,'Familia feliz con auto. Iconos escudo. "Protege a los tuyos".','Más información'),
+      adConfig:NO_AD },
+
+    { id:'s01-dom',week:1,dayIndex:6,title:'Gracias Cd. Juárez',theme:'Comunidad',gatillo:'identity',gatilloIcon:'🔵',gatilloColor:'text-blue-400',
+      tiktok:p('video','15:00','🔵 Cd. Juárez,gracias por confiar en CarMatch.\n\nHECHOS EN JUÁREZ, para JUÁREZ.',['#GraciasJuarez','#HechoEnJuarez','#CarMatch','#OrgulloJuarense'],'Montaje puntos icónicos Juárez. "Gracias Cd. Juárez". Logo CarMatch. Música emotiva.'),
+      instagram:p('reel','13:00','🔵 Cd. Juárez,gracias.\n\nCarMatch nació aquí. Crece aquí.\nSomos de aquí.',['#GraciasJuarez','#HechoEnJuarez','#CarMatch','#OrgulloJuarense','#Reels'],undefined,'Puntos icónicos Juárez filtro cálido. "De Juárez, para Juárez". Storytelling.'),
+      facebook:p('image','12:00','🔵 Cd. Juárez,gracias por confiar.\n\nSomos hechos en Juárez, para Juárez.',['#GraciasJuarez','#HechoEnJuarez','#CarMatch'],undefined,'Skyline Juárez atardecer. "Gracias Cd. Juárez". Logo. Cálidos.'),
+      adConfig:NO_AD },
+
+    // ═══ SEMANA 2: SEGURIDAD ═══
+    { id:'s02-lun',week:2,dayIndex:0,title:'Estafas de autos: Cómo protegerte',theme:'Protección',gatillo:'security',gatilloIcon:'🛡️',gatilloColor:'text-cyan-400',
+      tiktok:p('video','15:00','🛡️ Cada mes hay 200+ estafas de autos en Juárez.\n\nNo seas víctima.\n\nCarMatch verifica compradores y vendedores.',['#EstafaAuto','#Protegete','#CarMatch','#CdJuarez','#CompraSegura'],'Alerta roja "ESTAFA". Ejemplos estafas. Verificación CarMatch. Escudo.'),
+      instagram:p('carousel','13:00','🛡️ 3 estafas comunes en Juárez:\n\n1️⃣ Cheque falsificado\n2️⃣ Documentos alterados\n3️⃣ "Te doy más si me dejas llevarlo"\n\nCómo protegerte → desliza',['#EstafaAuto','#Protegete','#CarMatch','#CdJuarez','#CompraSegura'],undefined,'3 estafas: iconos cheque, documentos, persona sospechosa. Rojo oscuro. Alerta.',undefined,6),
+      facebook:p('video','12:00','🛡️ 200+ estafas de autos reportadas en Cd. Juárez cada mes.\n\nNo vendas ni compres sin verificar.\n\nCarMatch verifica cada usuario.',['#EstafaAuto','#Protegete','#CarMatch','#CdJuarez'],'3 estafas con ejemplos. Solución verificación. Profesional.','Más información'),
+      adConfig:META_AD_21 },
+
+    { id:'s02-mar',week:2,dayIndex:1,title:'Tu auto vale más de lo que crees',theme:'Valuación',gatillo:'curiosity',gatilloIcon:'🟡',gatilloColor:'text-yellow-400',
+      tiktok:p('video','15:00','🟡 Tu auto puede valer $30,000 más de lo que crees.\n\nLa mayoría subestima.\n\nCarMatch te da la valuación correcta.',['#ValuaTuAuto','#MasDeLoQueCrees','#CarMatch','#CdJuarez'],'Persona sorprendida. "$180,000" vs "$150,000". App. Positivo.'),
+      instagram:p('reel','13:00','🟡 ¿Cuánto crees que vale tu auto?\n\nProbablemente $20,000-$40,000 MENOS.\n\nCarMatch: valuación real.',['#ValuaTuAuto','#MasDeLoQueCrees','#CarMatch','#CdJuarez','#Reels'],undefined,'"¿Cuánto vale?" Opciones. Revelar más alto. Sorpresa.'),
+      facebook:p('image','12:00','🟡 Tu auto puede valer $30,000 más de lo que crees.\n\nCarMatch te da la valuación precisa.',['#ValuaTuAuto','#CarMatch','#CdJuarez'],undefined,'Auto con dos etiquetas: tachada $150K, verde $180K. "¿Cuánto vale realmente?".','Más información'),
+      adConfig:NO_AD },
+
+    { id:'s02-mie',week:2,dayIndex:2,title:'Protege a tu familia: Mantenimiento',theme:'Cuidado',gatillo:'security',gatilloIcon:'🛡️',gatilloColor:'text-cyan-400',
+      tiktok:p('video','15:00','🛡️ Si no cambias el aceite a tiempo...\n\nTu motor se destruye.\n\nCarMatch tiene servicios verificados.',['#MantenimientoAuto','#ProtegeATusTuyos','#CarMatch','#CdJuarez'],'Motor viejo vs limpio. Taller verificado. "Mantenimiento = Seguridad".'),
+      instagram:p('carousel','13:00','🛡️ 4 señales de que necesitas mantenimiento YA:\n\n1️⃣ Ruido al frenar\n2️⃣ Aceite oscuro\n3️⃣ Luces dashboard\n4️⃣ Vibración al manejar\n\nNo esperes.',['#MantenimientoAuto','#SeñalesDeAlerta','#CarMatch','#CdJuarez'],undefined,'4 iconos alerta. Rojo/naranja. Fondo oscuro.',undefined,4),
+      facebook:p('image','12:00','🛡️ Si no cambias el aceite, tu motor se destruye.\n\n4 señales de mantenimiento YA.',['#MantenimientoAuto','#CarMatch','#CdJuarez'],undefined,'Auto con síntomas. Iconos advertencia. Azul oscuro.','Más información'),
+      adConfig:NO_AD },
+
+    { id:'s02-jue',week:2,dayIndex:3,title:'Vendedor real, comprador real',theme:'Verificación',gatillo:'social_proof',gatilloIcon:'🟢',gatilloColor:'text-green-400',
+      tiktok:p('video','15:00','🟢 En CarMatch, cada usuario es verificado.\n\nNo estafadores. No perdedores de tiempo.\n\nSolo gente real.',['#UsuariosReales','#Verificado','#CarMatch','#CdJuarez','#CompraSegura'],'Personas con badges verificación. App checkmarks. Confiable.'),
+      instagram:p('reel','13:00','🟢 Cada usuario pasa verificación.\n\nFoto, teléfono, email. Todo confirmado.\n\n¿Sabes con quién tratas?',['#UsuariosReales','#Verificado','#CarMatch','#CdJuarez','#Reels'],undefined,'Proceso verificación: foto → email → teléfono → badge verde. Clean.'),
+      facebook:p('image','12:00','🟢 Cada usuario verificado.\n\nNo estafadores. Solo gente real.',['#UsuariosReales','#Verificado','#CarMatch','#CdJuarez'],undefined,'Personas con badges verde. Escudo. "100% Verificados".','Más información'),
+      adConfig:META_AD_21 },
+
+    { id:'s02-vie',week:2,dayIndex:4,title:'Los más buscados de la semana',theme:'Tendencia',gatillo:'fomo',gatilloIcon:'🟠',gatilloColor:'text-orange-400',
+      tiktok:p('video','15:00','🟠 Los autos más buscados de Juárez.\n\n¿Ya publicaste el tuyo?','#Tendencia AutosBuscados CarMatch CdJuarez FOMO'.split(' '),'Lista autos buscados rápido. "AGOTADO" populares. Urgente.'),
+      instagram:p('reel','13:00','🟠 Top 3 buscados:\n1. Nissan Sentra\n2. VW Jetta\n3. Chevrolet Aveo\n\n¿El tuyo está?',['#Tendencia','#AutosBuscados','#CarMatch','#CdJuarez','#Reels'],undefined,'Top 3 con animación. Auto "VENDIDO". Momentum.'),
+      facebook:p('image','12:00','🟠 Autos más buscados:\n1. Nissan Sentra\n2. VW Jetta\n3. Chevrolet Aveo',['#Tendencia','#CarMatch','#CdJuarez'],undefined,'Top 3 ranking. Naranja. "Esta semana en Juárez".','Más información'),
+      adConfig:NO_AD },
+
+    { id:'s02-sab',week:2,dayIndex:5,title:'Juan vendió su truck en 2 horas',theme:'Testimonio',gatillo:'social_proof',gatilloIcon:'🟢',gatilloColor:'text-green-400',
+      tiktok:p('video','15:00','🟢 Juan tenía una truck que nadie compraba.\n\nLa publicó en CarMatch.\n\n3 llamadas en 2 horas.',['#HistoriaReal','#Vendido','#CarMatch','#CdJuarez','#ExitoReal'],'Truck solitaria → publicación → teléfono. "3 LLAMADAS EN 2 HORAS". UGC.'),
+      instagram:p('reel','13:00','🟢 Juan llevaba 2 meses sin vender.\n\nPublicó viernes. Sábado: 3 llamadas.',['#HistoriaReal','#Vendido','#CarMatch','#CdJuarez','#Reels'],undefined,'Timeline: 2 meses → publica → 3 llamadas. Testimonio.'),
+      facebook:p('image','12:00','🟢 2 meses vendiendo sin suerte. Publicó en CarMatch: 3 llamadas en 2 horas.',['#HistoriaReal','#CarMatch','#CdJuarez'],undefined,'Testimonio card: "Juan, Cd. Juárez". "3 llamadas en 2 horas". Verde.'),
+      adConfig:NO_AD },
+
+    { id:'s02-dom',week:2,dayIndex:6,title:'Domingo de revisión',theme:'Cuidado',gatillo:'security',gatilloIcon:'🛡️',gatilloColor:'text-cyan-400',
+      tiktok:p('video','15:00','🛡️ Domingo = revisar tu auto.\n\n5 minutos que te ahorran $50,000.',['#DomingoDeRevisión','#Mantenimiento','#CarMatch','#CdJuarez'],'Persona revisando auto domingo. Checklist. App recordatorio.'),
+      instagram:p('reel','13:00','🛡️ Domingo de revisión:\n✅ Aceite\n✅ Llantas\n✅ Frenos\n✅ Luces\n\n5 minutos = $50,000 ahorros.',['#DomingoDeRevisión','#Mantenimiento','#CarMatch','#CdJuarez','#Reels'],undefined,'5 revisiones 5 segundos. Checkmarks. Relajado.'),
+      facebook:p('image','12:00','🛡️ 5 minutos revisando tu auto te ahorran miles.',['#DomingoDeRevisión','#CarMatch','#CdJuarez'],undefined,'Auto domingo. Checklist. "5 minutos = $50,000".'),
+      adConfig:NO_AD },
+
+    // ═══ SEMANA 3: DATOS DEL MERCADO ═══
+    { id:'s03-lun',week:3,dayIndex:0,title:'El auto más vendido de Juárez',theme:'Datos',gatillo:'curiosity',gatilloIcon:'🟡',gatilloColor:'text-yellow-400',
+      tiktok:p('video','15:00','🟡 ¿Cuál es el auto más vendido en Juárez?\n\nNo es el que crees.',['#DatoDelMercado','#AutoMásVendido','#CarMatch','#CdJuarez'],'Encuesta: "¿Cuál crees?" Revelar sorpresa. Datos visuales.'),
+      instagram:p('carousel','13:00','🟡 Top 5 más vendidos Cd. Juárez:\n5. Honda Civic\n4. Toyota Corolla\n3. Chevrolet Aveo\n2. VW Jetta\n1. Nissan Sentra\n\n¿El tuyo está?',['#DatoDelMercado','#Top5','#CarMatch','#CdJuarez'],undefined,'Ranking 5-4-3-2-1 con fotos. Azul oscuro. Data visualization.',undefined,5),
+      facebook:p('image','12:00','🟡 Auto más vendido: Nissan Sentra.\n\nTop 5: Sentra, Jetta, Aveo, Corolla, Civic.',['#DatoDelMercado','#CarMatch','#CdJuarez'],undefined,'Lista top 5 ranking. Datos claros.','Más información'),
+      adConfig:NO_AD },
+
+    { id:'s03-mar',week:3,dayIndex:1,title:'Precio promedio: $145,000',theme:'Valuación',gatillo:'curiosity',gatilloIcon:'🟡',gatilloColor:'text-yellow-400',
+      tiktok:p('video','15:00','🟡 Promedio de auto usado en Juárez: $145,000.\n\n¿El tuyo vale más o menos?',['#ValorPromedio','#DatosJuárez','#CarMatch','#CdJuarez'],'Número "$145,000" animado. Gráfica. "¿El tuyo?". Data.'),
+      instagram:p('reel','13:00','🟡 Precio promedio: $145,000 MXN.\n\nEl tuyo puede valer más.\n\nDescúbrelo gratis.',['#ValorPromedio','#DatosJuárez','#CarMatch','#CdJuarez','#Reels'],undefined,'Número "$145,000" animación. Comparación. Sorpresa.'),
+      facebook:p('image','12:00','🟡 Promedio auto usado Juárez: $145,000.\n\n¿El tuyo vale más?',['#ValorPromedio','#CarMatch','#CdJuarez'],undefined,'Gráfica precios. $145K resaltado. Datos claros.','Más información'),
+      adConfig:META_AD_21 },
+
+    { id:'s03-mie',week:3,dayIndex:2,title:'Mejor mes para vender',theme:'Estrategia',gatillo:'authority',gatilloIcon:'🟣',gatilloColor:'text-purple-400',
+      tiktok:p('video','15:00','🟣 El mejor mes para vender tu auto es...\n\nOctubre.\n\n¿Por qué? Datos que nadie te dice.',['#MejorMes','#EstrategiaVenta','#CarMatch','#CdJuarez'],'Calendario octubre resaltado. Datos demanda. Autoritativo.'),
+      instagram:p('carousel','13:00','🟣 Mejor mes para vender: octubre-noviembre.\n\n1️⃣ Alta demanda pre-Buen Fin\n2️⃣ Bonos fin de año\n3️⃣ Más compradores activos\n\nPlanifica tu venta.',['#MejorMes','#EstrategiaVenta','#CarMatch','#CdJuarez'],undefined,'Calendario oct-nov naranja. Iconos demanda. Estratégico.',undefined,4),
+      facebook:p('image','12:00','🟣 Mejor mes: octubre.\n\nAlta demanda + bonos = mejor precio.',['#MejorMes','#CarMatch','#CdJuarez'],undefined,'Calendario octubre destacado. Demanda y dinero.'),
+      adConfig:NO_AD },
+
+    { id:'s03-jue',week:3,dayIndex:3,title:'500 autos vendidos en CarMatch',theme:'Milestone',gatillo:'social_proof',gatilloIcon:'🟢',gatilloColor:'text-green-400',
+      tiktok:p('video','15:00','🟢 500 autos vendidos en CarMatch Juárez.\n\nGracias a ustedes.',['#500Vendidos','#Milestone','#CarMatch','#CdJuarez'],'Contador a 500. Celebración. Autos "VENDIDO". "GRACIAS".'),
+      instagram:p('reel','13:00','🟢 500 autos vendidos.\n\n500 familias con su próximo auto.\n\nGracias Cd. Juárez.',['#500Vendidos','#Milestone','#CarMatch','#CdJuarez','#Reels'],undefined,'Contador animado 500. Autos mapa. Emotivo.'),
+      facebook:p('image','12:00','🟢 500 autos vendidos. Gracias.',['#500Vendidos','#CarMatch','#CdJuarez'],undefined,'500 grande verde. Autos checkmarks. Festivo.'),
+      adConfig:NO_AD },
+
+    { id:'s03-vie',week:3,dayIndex:4,title:'Se está agotando este modelo',theme:'Escasez',gatillo:'fomo',gatilloIcon:'🟠',gatilloColor:'text-orange-400',
+      tiktok:p('video','15:00','🟠 Este modelo se agota en Juárez.\n\nSolo quedan 12.',['#SeAgota','#Escasez','#CarMatch','#CdJuarez'],'Contador descendente 12... Autos desapareciendo. "ÚLTIMAS UNIDADES".'),
+      instagram:p('reel','13:00','🟠 Solo quedan 12 unidades.\n\nNo esperes.',['#SeAgota','#Escasez','#CarMatch','#CdJuarez','#Reels'],undefined,'Contador rápido. Autos desapareciendo. FOMO.'),
+      facebook:p('image','12:00','🟠 Solo quedan 12 unidades de este modelo.',['#SeAgota','#CarMatch','#CdJuarez'],undefined,'12 grande rojo. "ÚLTIMAS UNIDADES". Naranja.','Más información'),
+      adConfig:META_AD_21 },
+
+    { id:'s03-sab',week:3,dayIndex:5,title:'María vendió en 1 día',theme:'Testimonio',gatillo:'social_proof',gatilloIcon:'🟢',gatilloColor:'text-green-400',
+      tiktok:p('video','15:00','🟢 María publicó a las 10am.\nA las 6pm: comprador.\n\n1 día.',['#VendidoEn1Día','#HistoriaReal','#CarMatch','#CdJuarez'],'Reloj 10am→6pm. "VENDIDO". María sonriente.'),
+      instagram:p('reel','13:00','🟢 Publicó 10am, vendió 6pm.\n\n1 día. Sin intermediarios.',['#VendidoEn1Día','#HistoriaReal','#CarMatch','#CdJuarez','#Reels'],undefined,'Timeline: 10am→6pm. Reloj rápido.'),
+      facebook:p('image','12:00','🟢 María vendió en 1 día. Publicó 10am, vendió 6pm.',['#VendidoEn1Día','#CarMatch','#CdJuarez'],undefined,'Testimonio: "María" reloj 10-6. "VENDIDO".'),
+      adConfig:NO_AD },
+
+    { id:'s03-dom',week:3,dayIndex:6,title:'Domingo: revisa tus documentos',theme:'Organización',gatillo:'security',gatilloIcon:'🛡️',gatilloColor:'text-cyan-400',
+      tiktok:p('video','15:00','🛡️ ¿Tus documentos al día?\n\nRevisa el domingo.',['#DomingoDeDocumentos','#CarMatch','#CdJuarez'],'Checklist documentos. Relajado domingo.'),
+      instagram:p('reel','13:00','🛡️ Domingo de documentos:\n✅ Tenencia\n✅ Verificación\n✅ Seguro\n\n¿Todo al día?',['#DomingoDeDocumentos','#CarMatch','#CdJuarez','#Reels'],undefined,'Checklist documentos. Animación rápida.'),
+      facebook:p('image','12:00','🛡️ ¿Documentos al día?\n✅ Tenencia ✅ Verificación ✅ Seguro',['#DomingoDeDocumentos','#CarMatch','#CdJuarez'],undefined,'Checklist documentos iconos. Cálido.'),
+      adConfig:NO_AD },
+
+    // ═══ SEMANA 4: PRUEBA SOCIAL ═══
+    { id:'s04-lun',week:4,dayIndex:0,title:'3 razones por las que te compran',theme:'Psicología de venta',gatillo:'authority',gatilloIcon:'🟣',gatilloColor:'text-purple-400',
+      tiktok:p('video','15:00','🟣 3 razones por las que compran tu auto:\n1. Fotos buenas\n2. Precio justo\n3. Confianza\n\nCarMatch te da las 3.',['#RazonesParaComprar','#TipDeVenta','#CarMatch','#CdJuarez'],'3 razones con iconos: cámara, precio, escudo. Educativo.'),
+      instagram:p('carousel','13:00','🟣 3 razones:\n1️⃣ Fotos profesionales\n2️⃣ Precio justo\n3️⃣ Vendedor verificado\n\nCarMatch te da las 3.',['#RazonesParaComprar','#TipDeVenta','#CarMatch','#CdJuarez'],undefined,'3 cards: Fotos, Precio, Verificación. Moderno.',undefined,5),
+      facebook:p('image','12:00','🟣 3 razones: Fotos, Precio, Confianza. CarMatch te da las 3.',['#RazonesParaComprar','#CarMatch','#CdJuarez'],undefined,'3 iconos grandes. Púrpura oscuro.','Más información'),
+      adConfig:NO_AD },
+
+    { id:'s04-mar',week:4,dayIndex:1,title:'Carlos busca sedan — $120K-$150K',theme:'Demanda real',gatillo:'social_proof',gatilloIcon:'🟢',gatilloColor:'text-green-400',
+      tiktok:p('video','15:00','🟢 Carlos busca sedan en Juárez.\nPresupuesto: $120,000-$150,000.\n\n¿Le vendes el tuyo?',['#CompradorReal','#BuscaAuto','#CarMatch','#CdJuarez'],'Perfil comprador. Matching auto. "Vende a Carlos".'),
+      instagram:p('reel','13:00','🟢 Carlos busca sedan.\n$120K-$150K.\n\n¿Tu auto le sirve?\n\nPublica gratis.',['#CompradorReal','#BuscaAuto','#CarMatch','#CdJuarez','#Reels'],undefined,'"Comprador buscando" datos reales. Matching. Directo.'),
+      facebook:p('image','12:00','🟢 Carlos busca sedan Cd. Juárez.\n$120K-$150K.\n\n¿Le sirve el tuyo?',['#CompradorReal','#CarMatch','#CdJuarez'],undefined,'Card comprador: "Carlos busca sedan". Matching. Verde.'),
+      adConfig:NO_AD },
+
+    { id:'s04-mie',week:4,dayIndex:2,title:'Ana busca SUV — $150K-$200K',theme:'Demanda real',gatillo:'social_proof',gatilloIcon:'🟢',gatilloColor:'text-green-400',
+      tiktok:p('video','15:00','🟢 Ana busca SUV para su familia.\n$150,000-$200,000.',['#CompradoraReal','#BuscaSUV','#CarMatch','#CdJuarez'],'Perfil Ana. SUV familia. "Vende a Ana".'),
+      instagram:p('reel','13:00','🟢 Ana busca SUV familia.\n$150K-$200K.',['#CompradoraReal','#BuscaSUV','#CarMatch','#CdJuarez','#Reels'],undefined,'Ana buscando SUV. Familia feliz.'),
+      facebook:p('image','12:00','🟢 Ana busca SUV. $150K-$200K.',['#CompradoraReal','#CarMatch','#CdJuarez'],undefined,'Card: "Ana busca SUV". Familia. Verde.'),
+      adConfig:NO_AD },
+
+    { id:'s04-jue',week:4,dayIndex:3,title:'1,000 usuarios en CarMatch',theme:'Milestone',gatillo:'social_proof',gatilloIcon:'🟢',gatilloColor:'text-green-400',
+      tiktok:p('video','15:00','🟢 1,000 usuarios en CarMatch Juárez.\n\nGracias.',['#1000Usuarios','#Crecimiento','#CarMatch','#CdJuarez'],'Contador 1,000. Personas conectándose. "GRACIAS".'),
+      instagram:p('reel','13:00','🟢 1,000 usuarios.\n1,000 personas confiando.\n\nGracias.',['#1000Usuarios','#Crecimiento','#CarMatch','#CdJuarez','#Reels'],undefined,'Contador 1,000. Celebración. Emotivo.'),
+      facebook:p('image','12:00','🟢 1,000 usuarios. Gracias.',['#1000Usuarios','#CarMatch','#CdJuarez'],undefined,'1,000 grande. Personas conectadas.'),
+      adConfig:NO_AD },
+
+    { id:'s04-vie',week:4,dayIndex:4,title:'Último día de precio regular',theme:'Urgencia',gatillo:'fomo',gatilloIcon:'🟠',gatilloColor:'text-orange-400',
+      tiktok:p('video','15:00','🟠 Último día de este precio.\nMañana sube.',['#ÚltimoDía','#CarMatch','#CdJuarez'],'Reloj ticking. Precio cambiando. "ÚLTIMO DÍA".'),
+      instagram:p('reel','13:00','🟠 Último día de este precio.\nMañana sube.\n\nNo digas que no te avisamos.',['#ÚltimoDía','#CarMatch','#CdJuarez','#Reels'],undefined,'Conteo regresivo. Precio cambiando. FOMO.'),
+      facebook:p('image','12:00','🟠 Último día. Mañana sube.',['#ÚltimoDía','#CarMatch','#CdJuarez'],undefined,'Reloj. "ÚLTIMO DÍA" rojo. Tachadura. Naranja.','Más información'),
+      adConfig:META_AD_21 },
+
+    { id:'s04-sab',week:4,dayIndex:5,title:'50 autos vendidos esta semana',theme:'Momentum',gatillo:'social_proof',gatilloIcon:'🟢',gatilloColor:'text-green-400',
+      tiktok:p('video','15:00','🟢 50 autos vendidos esta semana.\n\n¿Ya publicaste el tuyo?',['#50Vendidos','#Momentum','#CarMatch','#CdJuarez'],'Contador hasta 50. Autos "VENDIDO". Momentum.'),
+      instagram:p('reel','13:00','🟢 50 autos vendidos solo esta semana.\n\nEl mercado está activo.',['#50Vendidos','#Momentum','#CarMatch','#CdJuarez','#Reels'],undefined,'Contador 50. Autos desapareciendo.'),
+      facebook:p('image','12:00','🟢 50 autos vendidos esta semana. Publica gratis.',['#50Vendidos','#CarMatch','#CdJuarez'],undefined,'50 grande. Checkmarks.'),
+      adConfig:NO_AD },
+
+    { id:'s04-dom',week:4,dayIndex:6,title:'Gracias por un mes increíble',theme:'Agradecimiento',gatillo:'identity',gatilloIcon:'🔵',gatilloColor:'text-blue-400',
+      tiktok:p('video','15:00','🔵 Un mes de CarMatch en Juárez.\n\nGracias. Esto apenas empieza.',['#UnMes','#Gracias','#CarMatch','#CdJuarez'],'Montaje primer mes. Logros. "GRACIAS".'),
+      instagram:p('reel','13:00','🔵 Un mes en Juárez.\n\nGracias. Esto solo empieza.',['#UnMes','#Gracias','#CarMatch','#CdJuarez','#Reels'],undefined,'Resumen mes. Gracias. Futuro.'),
+      facebook:p('image','12:00','🔵 Un mes. Gracias Cd. Juárez. Esto apenas empieza.',['#UnMes','#Gracias','#CarMatch','#CdJuarez'],undefined,'Calendario un mes. "GRACIAS". Azul.'),
+      adConfig:NO_AD },
 ]
 
-// ═══════════════════════════════════════════════════════════════
-// MAIN COMPONENT
-// ═══════════════════════════════════════════════════════════════
+// ═══ SEMANA 5-12: Generated ═══
+
+function genWeek5(): CalendarEntry[] {
+    const d: Array<{id:string;t:string;gatillo:GatilloKey;icon:string;color:string;tt:string;ig:string;fb:string;day:number}> = [
+      {id:'s05-lun',t:'¿Qué tipo de comprador eres?',gatillo:'identity',icon:'🔵',color:'text-blue-400',tt:'¿Sedan, SUV o pick-up?\n\nDescubre tu estilo.',ig:'¿Qué tipo de comprador eres?\n\nSedan = práctico\nSUV = familia\nPick-up = chamba',fb:'¿Sedan, SUV o pick-up?\n\nCarMatch tiene todo.',day:0},
+      {id:'s05-mar',t:'Los 5 autos más confiables',gatillo:'authority',icon:'🟣',color:'text-purple-400',tt:'Los 5 autos más confiables de la historia.\n\n¿El tuyo está?',ig:'Los 5 más confiables:\n1. Toyota Corolla\n2. Honda Civic\n3. Mazda 3\n4. Hyundai Elantra\n5. Nissan Sentra',fb:'Los 5 autos más confiables.\n\nCarMatch los tiene.',day:1},
+      {id:'s05-mie',t:'Prueba: ¿Vale la pena tu auto?',gatillo:'curiosity',icon:'🟡',color:'text-yellow-400',tt:'¿Vale la pena tu auto?\n\nDescúbrelo gratis.',ig:'¿Vale la pena tu auto?\n\nValuación gratis.',fb:'¿Vale la pena tu auto?\n\nValúalo gratis.',day:2},
+      {id:'s05-jue',t:'Comprador real vs browsers',gatillo:'social_proof',icon:'🟢',color:'text-green-400',tt:'El 80% solo mira. El 20% compra.\n\nCarMatch tiene compradores reales.',ig:'80% browsean. 20% compran.\n\nCarMatch: compradores reales.',fb:'80% miran, 20% compran.',day:3},
+      {id:'s05-vie',t:'Se fue tu modelo',gatillo:'fomo',icon:'🟠',color:'text-orange-400',tt:'Se vendió el último de tu modelo.\n\n¿Ya publicaste el tuyo?',ig:'Se fue el último de tu modelo.\n\n¿Ya publicaste?',fb:'Se vendió el último.\n\n¿Y el tuyo?',day:4},
+      {id:'s05-sab',t:'Tu auto soñado está aquí',gatillo:'identity',icon:'🔵',color:'text-blue-400',tt:'Tu auto soñado está en CarMatch.\n\nBúscalo.',ig:'Tu auto soñado está aquí.\n\nBúscalo.',fb:'Tu auto soñado está aquí.',day:5},
+      {id:'s05-dom',t:'Domingo de desear un auto',gatillo:'identity',icon:'🔵',color:'text-blue-400',tt:'Domingo: ¿de qué auto sueñas?\n\nMira los que hay.',ig:'Domingo de soñar.\n\n¿Qué auto quieres?',fb:'Domingo de soñar.',day:6},
+    ]
+    return d.map(e => ({
+      id:e.id,week:5,dayIndex:e.day,title:e.t,theme:'Activación Compradores',gatillo:e.gatillo,gatilloIcon:e.icon,gatilloColor:e.color,
+      tiktok:p('video','15:00',e.tt,['#CompradorActivo','#CarMatch','#CdJuarez']),
+      instagram:p('reel','13:00',e.ig,['#CompradorActivo','#CarMatch','#CdJuarez','#Reels']),
+      facebook:p('image','12:00',e.fb,['#CompradorActivo','#CarMatch','#CdJuarez']),
+      adConfig:NO_AD
+    }))
+}
+
+function genWeek6(): CalendarEntry[] {
+    const d: Array<{id:string;t:string;gatillo:GatilloKey;icon:string;color:string;tt:string;ig:string;fb:string;day:number}> = [
+      {id:'s06-lun',t:'Tu auto vale más de lo que crees',gatillo:'curiosity',icon:'🟡',color:'text-yellow-400',tt:'Tu auto vale $20,000 más.\n\nDescúbrelo.',ig:'Tu auto vale más.\n\nValúalo gratis.',fb:'Tu auto vale más de lo que crees.',day:0},
+      {id:'s06-mar',t:'Cómo sacarle fotos que vendan',gatillo:'authority',icon:'🟣',color:'text-purple-400',tt:'3 tips para fotos que venden.',ig:'Tips fotos:\n1. Luz natural\n2. Ángulo frontal\n3. Interior limpio',fb:'Fotos que venden: 3 tips.',day:1},
+      {id:'s06-mie',t:'¿A cuánto lo pongo?',gatillo:'curiosity',icon:'🟡',color:'text-yellow-400',tt:'¿A cuánto poner tu auto?\n\nCarMatch te dice.',ig:'¿A cuánto poner tu auto?\n\nValuación inteligente.',fb:'¿A cuánto poner tu auto?',day:2},
+      {id:'s06-jue',t:'Pedro vendió su pickup en 5 días',gatillo:'social_proof',icon:'🟢',color:'text-green-400',tt:'Pedro vendió su pickup en 5 días.',ig:'Pedro: pickup en 5 días.',fb:'Pedro vendió en 5 días.',day:3},
+      {id:'s06-vie',t:'No publicar = perder dinero',gatillo:'loss_aversion',icon:'🔴',color:'text-red-400',tt:'Cada día sin publicar = dinero perdido.',ig:'Sin publicar = perdiendo dinero.',fb:'Sin publicar = perdiendo dinero.',day:4},
+      {id:'s06-sab',t:'Vende sin comisiones',gatillo:'identity',icon:'🔵',color:'text-blue-400',tt:'Cero comisiones. Cero intermediarios.',ig:'Cero comisiones.\n\nVende directo.',fb:'Sin comisiones.',day:5},
+      {id:'s06-dom',t:'Domingo: prepárate para vender',gatillo:'security',icon:'🛡️',color:'text-cyan-400',tt:'Domingo: prepara tu auto para vender.',ig:'Domingo de preparación.',fb:'Domingo: prepara tu auto.',day:6},
+    ]
+    return d.map(e => ({
+      id:e.id,week:6,dayIndex:e.day,title:e.t,theme:'Vendedores',gatillo:e.gatillo,gatilloIcon:e.icon,gatilloColor:e.color,
+      tiktok:p('video','15:00',e.tt,['#VendeTuAuto','#CarMatch','#CdJuarez']),
+      instagram:p('reel','13:00',e.ig,['#VendeTuAuto','#CarMatch','#CdJuarez','#Reels']),
+      facebook:p('image','12:00',e.fb,['#VendeTuAuto','#CarMatch','#CdJuarez']),
+      adConfig:NO_AD
+    }))
+}
+
+function genWeek7(): CalendarEntry[] {
+    const d: Array<{id:string;t:string;gatillo:GatilloKey;icon:string;color:string;tt:string;ig:string;fb:string;day:number}> = [
+      {id:'s07-lun',t:'MapStore: Negocios verificados',gatillo:'authority',icon:'🟣',color:'text-purple-400',tt:'MapStore: talleres y negocios verificados.',ig:'MapStore: negocios verificados cerca de ti.',fb:'MapStore: negocios verificados.',day:0},
+      {id:'s07-mar',t:'GPS: servicios cerca',gatillo:'curiosity',icon:'🟡',color:'text-yellow-400',tt:'GPS: servicios de auto cerca de ti.',ig:'GPS: encuentra servicios cerca.',fb:'GPS: servicios cerca.',day:1},
+      {id:'s07-mie',t:'SmartInstallBanner explicado',gatillo:'authority',icon:'🟣',color:'text-purple-400',tt:'SmartInstallBanner: instala la app fácil.',ig:'SmartInstallBanner: instala en un tap.',fb:'Instala la app en un tap.',day:2},
+      {id:'s07-jue',t:'Notificaciones de precio',gatillo:'fomo',icon:'🟠',color:'text-orange-400',tt:'Te avisamos cuando baja el precio.',ig:'Alertas de precio.\n\nNo te pierdas nada.',fb:'Alertas de precio.',day:3},
+      {id:'s07-vie',t:'Favoritos: guarda tu auto ideal',gatillo:'identity',icon:'🔵',color:'text-blue-400',tt:'Guarda favoritos y compáralos.',ig:'Guarda favoritos y compáralos.',fb:'Guarda favoritos.',day:4},
+      {id:'s07-sab',t:'Chat directo con vendedor',gatillo:'social_proof',icon:'🟢',color:'text-green-400',tt:'Chatea directo con el vendedor.',ig:'Chat directo sin intermediarios.',fb:'Chat directo.',day:5},
+      {id:'s07-dom',t:'Domingo: explora la app',gatillo:'identity',icon:'🔵',color:'text-blue-400',tt:'Domingo: explora todo CarMatch.',ig:'Explora todo lo que CarMatch tiene.',fb:'Explora CarMatch.',day:6},
+    ]
+    return d.map(e => ({
+      id:e.id,week:7,dayIndex:e.day,title:e.t,theme:'Funciones',gatillo:e.gatillo,gatilloIcon:e.icon,gatilloColor:e.color,
+      tiktok:p('video','15:00',e.tt,['#Funciones','#CarMatch','#CdJuarez']),
+      instagram:p('reel','13:00',e.ig,['#Funciones','#CarMatch','#CdJuarez','#Reels']),
+      facebook:p('image','12:00',e.fb,['#Funciones','#CarMatch','#CdJuarez']),
+      adConfig:NO_AD
+    }))
+}
+
+function genWeek8(): CalendarEntry[] {
+    const d: Array<{id:string;t:string;gatillo:GatilloKey;icon:string;color:string;tt:string;ig:string;fb:string;day:number}> = [
+      {id:'s08-lun',t:'Hecho en Juárez, para Juárez',gatillo:'identity',icon:'🔵',color:'text-blue-400',tt:'CarMatch es de Juárez.\n\nPara Juárez.',ig:'De Juárez, para Juárez.\n\nCarMatch.',fb:'De Juárez, para Juárez.',day:0},
+      {id:'s08-mar',t:'La frontera más activa',gatillo:'authority',icon:'🟣',color:'text-purple-400',tt:'Juárez: la frontera más activa.\n\nTu auto se vende aquí.',ig:'Juárez: frontera más activa.',fb:'Frontera más activa.',day:1},
+      {id:'s08-mie',t:'Antes y después de CarMatch',gatillo:'social_proof',icon:'🟢',color:'text-green-400',tt:'Antes: 2 meses.\nDespués: 3 días.',ig:'Antes y después. Resultado: vendido.',fb:'Antes y después.',day:2},
+      {id:'s08-jue',t:'Orgullo juarense: autos',gatillo:'identity',icon:'🔵',color:'text-blue-400',tt:'Juárez tiene los mejores autos.\n\nOrgullo.',ig:'Juárez tiene los mejores autos.',fb:'Los mejores de Juárez.',day:3},
+      {id:'s08-vie',t:'Tu competencia ya está aquí',gatillo:'fomo',icon:'🟠',color:'text-orange-400',tt:'Tu vecino ya publicó.\n\n¿Y tú?',ig:'Tu vecino ya está en CarMatch.',fb:'Tu competencia ya publicó.',day:4},
+      {id:'s08-sab',t:'Sábado de paseo',gatillo:'identity',icon:'🔵',color:'text-blue-400',tt:'Sábado de paseo: mira autos.',ig:'Sábado de paseo virtual.',fb:'Sábado de paseo.',day:5},
+      {id:'s08-dom',t:'Gracias Juárez — mes 2',gatillo:'identity',icon:'🔵',color:'text-blue-400',tt:'2 meses en Juárez.\n\nGracias.',ig:'2 meses. Gracias.',fb:'2 meses. Gracias.',day:6},
+    ]
+    return d.map(e => ({
+      id:e.id,week:8,dayIndex:e.day,title:e.t,theme:'Juárez Pride',gatillo:e.gatillo,gatilloIcon:e.icon,gatilloColor:e.color,
+      tiktok:p('video','15:00',e.tt,['#JuárezPride','#CarMatch','#CdJuarez']),
+      instagram:p('reel','13:00',e.ig,['#JuárezPride','#CarMatch','#CdJuarez','#Reels']),
+      facebook:p('image','12:00',e.fb,['#JuárezPride','#CarMatch','#CdJuarez']),
+      adConfig:NO_AD
+    }))
+}
+
+function genWeek9(): CalendarEntry[] {
+    const d: Array<{id:string;t:string;gatillo:GatilloKey;icon:string;color:string;tt:string;ig:string;fb:string;day:number}> = [
+      {id:'s09-lun',t:'Buen Fin se acerca',gatillo:'fomo',icon:'🟠',color:'text-orange-400',tt:'El Buen Fin se acerca.\n\nPrepárate.',ig:'Buen Fin se acerca.',fb:'Buen Fin se acerca.',day:0},
+      {id:'s09-mar',t:'Precios del Buen Fin',gatillo:'loss_aversion',icon:'🔴',color:'text-red-400',tt:'Precios bajos del Buen Fin.\n\nNo esperes.',ig:'Precios del Buen Fin. No esperes.',fb:'Precios del Buen Fin.',day:1},
+      {id:'s09-mie',t:'Checklist pre-Buen Fin',gatillo:'authority',icon:'🟣',color:'text-purple-400',tt:'Checklist antes del Buen Fin.',ig:'Checklist: prepárate.',fb:'Checklist.',day:2},
+      {id:'s09-jue',t:'Ya hay lista de espera',gatillo:'fomo',icon:'🟠',color:'text-orange-400',tt:'Lista de espera para el Buen Fin.',ig:'Lista de espera.',fb:'Ya hay lista.',day:3},
+      {id:'s09-vie',t:'Último día pre-Buen Fin',gatillo:'loss_aversion',icon:'🔴',color:'text-red-400',tt:'Último día antes del Buen Fin.',ig:'Último día.',fb:'Último día.',day:4},
+      {id:'s09-sab',t:'Buen Fin empieza mañana',gatillo:'fomo',icon:'🟠',color:'text-orange-400',tt:'Mañana empieza el Buen Fin.',ig:'Mañana empieza.',fb:'Mañana.',day:5},
+      {id:'s09-dom',t:'Domingo de anticipación',gatillo:'fomo',icon:'🟠',color:'text-orange-400',tt:'Domingo de anticipación.',ig:'Domingo de anticipación.',fb:'Domingo.',day:6},
+    ]
+    return d.map(e => ({
+      id:e.id,week:9,dayIndex:e.day,title:e.t,theme:'Pre-Buen Fin',gatillo:e.gatillo,gatilloIcon:e.icon,gatilloColor:e.color,
+      tiktok:p('video','15:00',e.tt,['#BuenFin','#CarMatch','#CdJuarez']),
+      instagram:p('reel','13:00',e.ig,['#BuenFin','#CarMatch','#CdJuarez','#Reels']),
+      facebook:p('image','12:00',e.fb,['#BuenFin','#CarMatch','#CdJuarez']),
+      adConfig:NO_AD
+    }))
+}
+
+function genWeek10(): CalendarEntry[] {
+    const d: Array<{id:string;t:string;gatillo:GatilloKey;icon:string;color:string;tt:string;ig:string;fb:string;day:number;festive?:boolean;fDate?:string;preDays?:number}> = [
+      {id:'s10-lun',t:'Buen Fin: Ofertas de autos',gatillo:'loss_aversion',icon:'🔴',color:'text-red-400',tt:'Buen Fin: precios que no vuelven.',ig:'Buen Fin: ofertas reales.',fb:'Buen Fin: ofertas.',day:0,festive:true,fDate:'2026-11-27',preDays:3},
+      {id:'s10-mar',t:'50% descuento mantenimiento',gatillo:'loss_aversion',icon:'🔴',color:'text-red-400',tt:'50% descuento en mantenimiento.\n\nSolo Buen Fin.',ig:'50% descuento mantenimiento.',fb:'50% descuento.',day:1,festive:true,fDate:'2026-11-28'},
+      {id:'s10-mie',t:'Se agotó el primero',gatillo:'fomo',icon:'🟠',color:'text-orange-400',tt:'Se agotó en 1 hora.\n\n¿Vas a esperar?',ig:'Agotado en 1 hora.',fb:'Se agotó rápido.',day:2,festive:true,fDate:'2026-11-29'},
+      {id:'s10-jue',t:'Último día Buen Fin',gatillo:'loss_aversion',icon:'🔴',color:'text-red-400',tt:'Último día. Mañana se acabó.',ig:'Último día de ofertas.',fb:'Último día.',day:3,festive:true,fDate:'2026-11-30'},
+      {id:'s10-vie',t:'Buen Fin: RESUMEN',gatillo:'social_proof',icon:'🟢',color:'text-green-400',tt:'Buen Fin: autos vendidos. Gracias.',ig:'Resumen Buen Fin.',fb:'Resumen.',day:4,festive:true,fDate:'2026-12-01'},
+      {id:'s10-sab',t:'Post-Buen Fin: qué sigue',gatillo:'curiosity',icon:'🟡',color:'text-yellow-400',tt:'¿Qué sigue después del Buen Fin?',ig:'Después del Buen Fin.',fb:'Qué sigue.',day:5},
+      {id:'s10-dom',t:'Gracias por el Buen Fin',gatillo:'identity',icon:'🔵',color:'text-blue-400',tt:'Gracias por el Buen Fin.\n\nGracias Juárez.',ig:'Gracias Buen Fin.',fb:'Gracias.',day:6},
+    ]
+    return d.map(e => ({
+      id:e.id,week:10,dayIndex:e.day,title:e.t,theme:'Buen Fin',gatillo:e.gatillo,gatilloIcon:e.icon,gatilloColor:e.color,
+      tiktok:p('video','15:00',e.tt,['#BuenFin','#Ofertas','#CarMatch','#CdJuarez']),
+      instagram:p('reel','13:00',e.ig,['#BuenFin','#Ofertas','#CarMatch','#CdJuarez','#Reels']),
+      facebook:p('image','12:00',e.fb,['#BuenFin','#Ofertas','#CarMatch','#CdJuarez']),
+      adConfig:NO_AD,
+      isFestive:e.festive, festiveDate:e.fDate, prePublishDays:e.preDays
+    }))
+}
+
+function genWeek11(): CalendarEntry[] {
+    const d: Array<{id:string;t:string;gatillo:GatilloKey;icon:string;color:string;tt:string;ig:string;fb:string;day:number;festive?:boolean;fDate?:string;preDays?:number}> = [
+      {id:'s11-lun',t:'Navidad: Regala seguridad',gatillo:'security',icon:'🛡️',color:'text-cyan-400',tt:'Regala seguridad este Navidad.\n\nUn auto nuevo para tu familia.',ig:'Regala seguridad.',fb:'Navidad: regala seguridad.',day:0,festive:true,fDate:'2026-12-20',preDays:5},
+      {id:'s11-mar',t:'Navidad: 5 autos para regalar',gatillo:'identity',icon:'🔵',color:'text-blue-400',tt:'5 autos ideales para regalar.',ig:'5 autos para regalar.',fb:'5 autos para regalar.',day:1,festive:true,fDate:'2026-12-21',preDays:4},
+      {id:'s11-mie',t:'Navidad: Familia + auto',gatillo:'security',icon:'🛡️',color:'text-cyan-400',tt:'Tu familia merece un auto seguro.',ig:'Familia + auto seguro.',fb:'Familia + auto.',day:2,festive:true,fDate:'2026-12-22',preDays:3},
+      {id:'s11-jue',t:'Navidad: Ofertas navideñas',gatillo:'fomo',icon:'🟠',color:'text-orange-400',tt:'Ofertas navideñas. Solo esta semana.',ig:'Ofertas navideñas.',fb:'Ofertas.',day:3,festive:true,fDate:'2026-12-23',preDays:2},
+      {id:'s11-vie',t:'Feliz Navidad CarMatch',gatillo:'social_proof',icon:'🟢',color:'text-green-400',tt:'Feliz Navidad de parte de CarMatch.',ig:'Feliz Navidad.',fb:'Feliz Navidad.',day:4,festive:true,fDate:'2026-12-25'},
+      {id:'s11-sab',t:'Post-Navidad: qué sigue',gatillo:'curiosity',icon:'🟡',color:'text-yellow-400',tt:'Después de Navidad: qué sigue.',ig:'Post-Navidad.',fb:'Después.',day:5},
+      {id:'s11-dom',t:'Domingo de gratitud',gatillo:'identity',icon:'🔵',color:'text-blue-400',tt:'Gracias por este año increíble.',ig:'Gracias por este año.',fb:'Gracias.',day:6},
+    ]
+    return d.map(e => ({
+      id:e.id,week:11,dayIndex:e.day,title:e.t,theme:'Navidad',gatillo:e.gatillo,gatilloIcon:e.icon,gatilloColor:e.color,
+      tiktok:p('video','15:00',e.tt,['#Navidad','#CarMatch','#CdJuarez']),
+      instagram:p('reel','13:00',e.ig,['#Navidad','#CarMatch','#CdJuarez','#Reels']),
+      facebook:p('image','12:00',e.fb,['#Navidad','#CarMatch','#CdJuarez']),
+      adConfig:NO_AD,
+      isFestive:e.festive, festiveDate:e.fDate, prePublishDays:e.preDays
+    }))
+}
+
+function genWeek12(): CalendarEntry[] {
+    const d: Array<{id:string;t:string;gatillo:GatilloKey;icon:string;color:string;tt:string;ig:string;fb:string;day:number;festive?:boolean;fDate?:string;preDays?:number}> = [
+      {id:'s12-lun',t:'Año Nuevo: Auto nuevo',gatillo:'identity',icon:'🔵',color:'text-blue-400',tt:'2027: auto nuevo.\n\nEmpieza con CarMatch.',ig:'Año nuevo, auto nuevo.',fb:'Año nuevo, auto nuevo.',day:0,festive:true,fDate:'2026-12-30',preDays:2},
+      {id:'s12-mar',t:'Resolución: vender mi auto',gatillo:'loss_aversion',icon:'🔴',color:'text-red-400',tt:'Tu resolución: vender tu auto.\n\nEmpieza hoy.',ig:'Resolución: vender mi auto.',fb:'Resolución: vender.',day:1,festive:true,fDate:'2026-12-31',preDays:1},
+      {id:'s12-mie',t:'Feliz Año Nuevo 2027',gatillo:'identity',icon:'🔵',color:'text-blue-400',tt:'Feliz 2027.\n\nGracias por confiar.',ig:'Feliz 2027.',fb:'Feliz 2027.',day:2,festive:true,fDate:'2027-01-01'},
+      {id:'s12-jue',t:'Primer día de 2027',gatillo:'curiosity',icon:'🟡',color:'text-yellow-400',tt:'Primer día de 2027.\n\n¿Qué auto quieres?',ig:'Primer día de 2027.',fb:'Primer día.',day:3},
+      {id:'s12-vie',t:'Metas de auto 2027',gatillo:'identity',icon:'🔵',color:'text-blue-400',tt:'Metas 2027: auto nuevo.\n\nCarMatch te ayuda.',ig:'Metas 2027.',fb:'Metas 2027.',day:4},
+      {id:'s12-sab',t:'Año nuevo, nuevos autos',gatillo:'fomo',icon:'🟠',color:'text-orange-400',tt:'Nuevos autos para 2027.',ig:'Nuevos autos.',fb:'Nuevos autos 2027.',day:5},
+      {id:'s12-dom',t:'Gracias 2026 — Hola 2027',gatillo:'identity',icon:'🔵',color:'text-blue-400',tt:'Gracias 2026.\n\nHola 2027.\n\nGracias Juárez.',ig:'Gracias 2026. Hola 2027.',fb:'Gracias 2026. Hola 2027.',day:6,festive:true,fDate:'2027-01-01'},
+    ]
+    return d.map(e => ({
+      id:e.id,week:12,dayIndex:e.day,title:e.t,theme:'Año Nuevo',gatillo:e.gatillo,gatilloIcon:e.icon,gatilloColor:e.color,
+      tiktok:p('video','15:00',e.tt,['#AñoNuevo','#2027','#CarMatch','#CdJuarez']),
+      instagram:p('reel','13:00',e.ig,['#AñoNuevo','#2027','#CarMatch','#CdJuarez','#Reels']),
+      facebook:p('image','12:00',e.fb,['#AñoNuevo','#2027','#CarMatch','#CdJuarez']),
+      adConfig:NO_AD,
+      isFestive:e.festive, festiveDate:e.fDate, prePublishDays:e.preDays
+    }))
+}
+
+const ALL_ENTRIES_COMPLETE: CalendarEntry[] = [
+  ...ALL_ENTRIES,
+  ...genWeek5(), ...genWeek6(), ...genWeek7(), ...genWeek8(),
+  ...genWeek9(), ...genWeek10(), ...genWeek11(), ...genWeek12()
+]
+
+// ═══ COMPONENT ═══
 
 export default function CalendarTab() {
     const [activeWeek, setActiveWeek] = useState(1)
     const [expandedDay, setExpandedDay] = useState<string | null>(null)
-    const [editingMetrics, setEditingMetrics] = useState<string | null>(null)
-    const [showPrompt, setShowPrompt] = useState<CalendarEntry | null>(null)
     const [showAdConfig, setShowAdConfig] = useState<CalendarEntry | null>(null)
-    const [filterPlatform, setFilterPlatform] = useState('all')
     const [filterGatillo, setFilterGatillo] = useState('all')
     const [copiedId, setCopiedId] = useState<string | null>(null)
-    const [entryStatuses, setEntryStatuses] = useState<Record<string, string>>({})
+    const [activePlatformTab, setActivePlatformTab] = useState<Platform>('tiktok')
 
-    // Queue state - persisted in localStorage
     const [publishedIds, setPublishedIds] = useState<string[]>(() => {
-        if (typeof window !== 'undefined') {
-            return JSON.parse(localStorage.getItem('carmatch-published') || '[]')
-        }
+        if (typeof window !== 'undefined') return JSON.parse(localStorage.getItem('carmatch-published') || '[]')
         return []
     })
     const [skippedIds, setSkippedIds] = useState<string[]>(() => {
-        if (typeof window !== 'undefined') {
-            return JSON.parse(localStorage.getItem('carmatch-skipped') || '[]')
-        }
+        if (typeof window !== 'undefined') return JSON.parse(localStorage.getItem('carmatch-skipped') || '[]')
         return []
     })
 
-    // Persist to localStorage
-    useEffect(() => {
-        localStorage.setItem('carmatch-published', JSON.stringify(publishedIds))
-    }, [publishedIds])
-    useEffect(() => {
-        localStorage.setItem('carmatch-skipped', JSON.stringify(skippedIds))
-    }, [skippedIds])
+    useEffect(() => { localStorage.setItem('carmatch-published', JSON.stringify(publishedIds)) }, [publishedIds])
+    useEffect(() => { localStorage.setItem('carmatch-skipped', JSON.stringify(skippedIds)) }, [skippedIds])
 
-    // Dynamic date calculation - queue system
     const getEntryDate = (entryIndex: number): Date => {
-        const today = new Date()
-        today.setHours(0, 0, 0, 0)
-        const completedBefore = ALL_ENTRIES.slice(0, entryIndex).filter(
-            e => publishedIds.includes(e.id) || skippedIds.includes(e.id)
-        ).length
-        const date = new Date(today)
-        date.setDate(date.getDate() + entryIndex - completedBefore)
-        return date
+        const today = new Date(); today.setHours(0,0,0,0)
+        const completedBefore = ALL_ENTRIES_COMPLETE.slice(0, entryIndex).filter(e => publishedIds.includes(e.id) || skippedIds.includes(e.id)).length
+        const date = new Date(today); date.setDate(date.getDate() + entryIndex - completedBefore); return date
     }
 
-    // Get today's entry (first pending one)
-    const todayEntry = ALL_ENTRIES.find(
-        e => !publishedIds.includes(e.id) && !skippedIds.includes(e.id)
-    ) || null
+    const todayEntry = ALL_ENTRIES_COMPLETE.find(e => !publishedIds.includes(e.id) && !skippedIds.includes(e.id)) || null
 
-    // Mark as published
-    const markPublished = (id: string) => {
-        setPublishedIds(prev => prev.includes(id) ? prev : [...prev, id])
-        setSkippedIds(prev => prev.filter(x => x !== id))
-    }
+    const markPublished = (id: string) => { setPublishedIds(p => p.includes(id)?p:[...p,id]); setSkippedIds(p=>p.filter(x=>x!==id)) }
+    const markSkipped = (id: string) => { setSkippedIds(p => p.includes(id)?p:[...p,id]); setPublishedIds(p=>p.filter(x=>x!==id)) }
+    const restoreEntry = (id: string) => { setPublishedIds(p=>p.filter(x=>x!==id)); setSkippedIds(p=>p.filter(x=>x!==id)) }
 
-    // Mark as skipped
-    const markSkipped = (id: string) => {
-        setSkippedIds(prev => prev.includes(id) ? prev : [...prev, id])
-        setPublishedIds(prev => prev.filter(x => x !== id))
-    }
-
-    // Restore to pending
-    const restoreEntry = (id: string) => {
-        setPublishedIds(prev => prev.filter(x => x !== id))
-        setSkippedIds(prev => prev.filter(x => x !== id))
-    }
-
-    // Queue stats
     const queueStats = useMemo(() => {
-        const published = publishedIds.length
-        const skipped = skippedIds.length
-        const pending = ALL_ENTRIES.length - published - skipped
-        const totalBudget = ALL_ENTRIES.reduce((sum, e) => sum + (e.adConfig.enabled ? e.adConfig.budgetMXN : 0), 0)
-        return { published, skipped, pending, total: ALL_ENTRIES.length, totalBudget }
+        const published = publishedIds.length, skipped = skippedIds.length, pending = ALL_ENTRIES_COMPLETE.length - published - skipped
+        return { published, skipped, pending, total: ALL_ENTRIES_COMPLETE.length }
     }, [publishedIds, skippedIds])
 
     const weekEntries = useMemo(() => {
-        let entries = ALL_ENTRIES.filter(e => e.week === activeWeek).map((entry, idx) => {
-            const globalIdx = ALL_ENTRIES.findIndex(e => e.id === entry.id)
-            const dynamicDate = getEntryDate(globalIdx)
-            const isPublished = publishedIds.includes(entry.id)
-            const isSkipped = skippedIds.includes(entry.id)
-            const isToday = todayEntry?.id === entry.id
-            return { ...entry, dynamicDate, isPublished, isSkipped, isToday }
+        let entries = ALL_ENTRIES_COMPLETE.filter(e => e.week === activeWeek).map(entry => {
+            const globalIdx = ALL_ENTRIES_COMPLETE.findIndex(e => e.id === entry.id)
+            return { ...entry, dynamicDate: getEntryDate(globalIdx), isPublished: publishedIds.includes(entry.id), isSkipped: skippedIds.includes(entry.id), isToday: todayEntry?.id === entry.id }
         })
-        if (filterPlatform !== 'all') entries = entries.filter(e => e.platform === filterPlatform)
         if (filterGatillo !== 'all') entries = entries.filter(e => e.gatillo === filterGatillo)
         return entries
-    }, [activeWeek, filterPlatform, filterGatillo, publishedIds, skippedIds, todayEntry])
-
-    const weekStats = useMemo(() => {
-        const entries = ALL_ENTRIES.filter(e => e.week === activeWeek)
-        const totalBudget = entries.reduce((sum, e) => sum + (e.adConfig.enabled ? e.adConfig.budgetMXN : 0), 0)
-        const platforms = [...new Set(entries.map(e => e.platform))]
-        const gatillos = [...new Set(entries.map(e => e.gatillo))]
-        return { total: entries.length, totalBudget, platforms, gatillos }
-    }, [activeWeek])
-
-    const overallStats = useMemo(() => {
-        const total = ALL_ENTRIES.length
-        const totalBudget = ALL_ENTRIES.reduce((sum, e) => sum + (e.adConfig.enabled ? e.adConfig.budgetMXN : 0), 0)
-        const published = ALL_ENTRIES.filter(e => e.status === 'published').length
-        return { total, totalBudget, published }
-    }, [])
-
-    const copyText = (text: string, id: string) => {
-        navigator.clipboard.writeText(text)
-        setCopiedId(id)
-        setTimeout(() => setCopiedId(null), 2000)
-    }
+    }, [activeWeek, filterGatillo, publishedIds, skippedIds, todayEntry])
 
     const theme = WEEK_THEMES[activeWeek] || WEEK_THEMES[1]
+
+    const copyText = (text: string, id: string) => { navigator.clipboard.writeText(text); setCopiedId(id); setTimeout(()=>setCopiedId(null),2000) }
 
     return (
         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -513,7 +474,6 @@ export default function CalendarTab() {
                 </div>
                 <div className="flex items-center gap-4 text-sm text-white/50">
                     <span>📅 {queueStats.pending} pendientes</span>
-                    <span>💰 ${(queueStats.totalBudget * 7).toLocaleString()} MXN total (12 sem)</span>
                     <span>✅ {queueStats.published}/{queueStats.total} publicados</span>
                     {queueStats.skipped > 0 && <span>⏭️ {queueStats.skipped} saltados</span>}
                 </div>
@@ -521,70 +481,36 @@ export default function CalendarTab() {
 
             {/* Filters */}
             <div className="flex flex-wrap gap-3">
-                <select
-                    value={filterPlatform}
-                    onChange={(e) => setFilterPlatform(e.target.value)}
-                    className="bg-surface-dark border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:border-primary-500"
-                >
-                    <option value="all">Todas las plataformas</option>
-                    <option value="tiktok">TikTok</option>
-                    <option value="instagram">Instagram</option>
-                    <option value="facebook">Facebook</option>
-                </select>
-                <select
-                    value={filterGatillo}
-                    onChange={(e) => setFilterGatillo(e.target.value)}
-                    className="bg-surface-dark border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:border-primary-500"
-                >
+                <select value={filterGatillo} onChange={e=>setFilterGatillo(e.target.value)} className="bg-surface-dark border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:border-primary-500">
                     <option value="all">Todos los gatillos</option>
-                    {Object.entries(GATILLOS).map(([key, val]) => (
-                        <option key={key} value={key}>{val.label}</option>
-                    ))}
+                    {Object.entries(GATILLOS).map(([k,v])=><option key={k} value={k}>{v.icon} {v.label}</option>)}
                 </select>
+                <div className="flex bg-surface-dark border border-white/10 rounded-lg overflow-hidden">
+                    {(['tiktok','instagram','facebook'] as Platform[]).map(pl=>(
+                        <button key={pl} onClick={()=>setActivePlatformTab(pl)} className={`px-3 py-2 text-xs font-bold transition-colors ${activePlatformTab===pl?'bg-primary-500 text-white':'text-white/50 hover:text-white'}`}>
+                            {pl==='tiktok'?'🎵 TikTok':pl==='instagram'?'📸 Instagram':'👥 Facebook'}
+                        </button>
+                    ))}
+                </div>
             </div>
 
             {/* Week Navigation */}
             <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-thin">
-                <button
-                    onClick={() => setActiveWeek(w => Math.max(1, w - 1))}
-                    disabled={activeWeek === 1}
-                    className="p-1 rounded-lg hover:bg-white/10 disabled:opacity-30 text-white"
-                >
-                    <ChevronLeft className="w-5 h-5" />
-                </button>
-                {Array.from({ length: 12 }, (_, i) => i + 1).map(w => (
-                    <button
-                        key={w}
-                        onClick={() => setActiveWeek(w)}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${
-                            activeWeek === w
-                                ? `bg-gradient-to-r ${WEEK_THEMES[w]?.gradient || 'from-blue-500 to-cyan-500'} text-white shadow-lg`
-                                : 'bg-white/5 text-white/50 hover:bg-white/10 hover:text-white'
-                        }`}
-                    >
+                <button onClick={()=>setActiveWeek(w=>Math.max(1,w-1))} disabled={activeWeek===1} className="p-1 rounded-lg hover:bg-white/10 disabled:opacity-30 text-white"><ChevronLeft className="w-5 h-5"/></button>
+                {Array.from({length:12},(_,i)=>i+1).map(w=>(
+                    <button key={w} onClick={()=>setActiveWeek(w)} className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${activeWeek===w?`bg-gradient-to-r ${WEEK_THEMES[w]?.gradient||'from-blue-500 to-cyan-500'} text-white shadow-lg`:'bg-white/5 text-white/50 hover:bg-white/10 hover:text-white'}`}>
                         S{w}
                     </button>
                 ))}
-                <button
-                    onClick={() => setActiveWeek(w => Math.min(12, w + 1))}
-                    disabled={activeWeek === 12}
-                    className="p-1 rounded-lg hover:bg-white/10 disabled:opacity-30 text-white"
-                >
-                    <ChevronRight className="w-5 h-5" />
-                </button>
+                <button onClick={()=>setActiveWeek(w=>Math.min(12,w+1))} disabled={activeWeek===12} className="p-1 rounded-lg hover:bg-white/10 disabled:opacity-30 text-white"><ChevronRight className="w-5 h-5"/></button>
             </div>
 
             {/* Week Summary */}
             <div className={`bg-gradient-to-r ${theme.gradient} bg-opacity-10 rounded-xl p-4 border border-white/10`}>
                 <div className="flex items-center justify-between flex-wrap gap-2">
                     <div>
-                        <h4 className="text-lg font-black text-white">Semana {activeWeek}: {theme.title}</h4>
-                        <p className="text-sm text-white/70">{weekStats.total} posts • {weekStats.platforms.map(p => PLATFORM_CONFIG[p]?.label || p).join(', ')}</p>
-                    </div>
-                    <div className="text-right">
-                        <p className="text-2xl font-black text-white">${weekStats.totalBudget * 7} MXN</p>
-                        <p className="text-xs text-white/50">${weekStats.totalBudget}/día × 7 días</p>
-                        <p className="text-xs text-white/40 mt-1">Total 12 semanas: ${(overallStats.totalBudget * 7).toLocaleString()} MXN</p>
+                        <h4 className="text-lg font-black text-white">{theme.icon} Semana {activeWeek}: {theme.title}</h4>
+                        <p className="text-sm text-white/70">{weekEntries.length} días × 3 plataformas = {weekEntries.length*3} publicaciones</p>
                     </div>
                 </div>
             </div>
@@ -593,216 +519,75 @@ export default function CalendarTab() {
             <div className="space-y-3">
                 {weekEntries.map(entry => {
                     const isExpanded = expandedDay === entry.id
-                    const platformConf = PLATFORM_CONFIG[entry.platform] || { label: entry.platform, bgColor: 'bg-gray-600' }
-                    const gatilloData = GATILLOS[entry.gatillo] || { label: entry.gatillo, color: 'text-white' }
+                    const gatilloData = GATILLOS[entry.gatillo]
+                    const post = entry[activePlatformTab]
 
                     return (
-                        <div key={entry.id} className={`bg-surface-dark border rounded-xl overflow-hidden ${entry.isToday ? 'border-green-500/50 shadow-lg shadow-green-500/10' : entry.isPublished ? 'border-green-500/20 opacity-70' : entry.isSkipped ? 'border-yellow-500/20 opacity-50' : 'border-white/10'}`}>
-                            {/* Day Header */}
-                            <button
-                                onClick={() => setExpandedDay(isExpanded ? null : entry.id)}
-                                className="w-full p-4 flex items-center justify-between hover:bg-white/5 transition-colors text-left"
-                            >
+                        <div key={entry.id} className={`bg-surface-dark border rounded-xl overflow-hidden ${entry.isToday?'border-green-500/50 shadow-lg shadow-green-500/10':entry.isPublished?'border-green-500/20 opacity-70':entry.isSkipped?'border-yellow-500/20 opacity-50':'border-white/10'}`}>
+                            <button onClick={()=>setExpandedDay(isExpanded?null:entry.id)} className="w-full p-4 flex items-center justify-between hover:bg-white/5 transition-colors text-left">
                                 <div className="flex items-center gap-3 flex-wrap">
-                                    {/* HOY indicator */}
-                                    {entry.isToday && (
-                                        <span className="px-2 py-0.5 bg-green-500 text-white rounded-full text-xs font-bold animate-pulse">
-                                            🟢 HOY
-                                        </span>
-                                    )}
-                                    {/* Published badge */}
-                                    {entry.isPublished && (
-                                        <span className="px-2 py-0.5 bg-green-500/20 text-green-400 rounded-full text-xs font-bold">
-                                            ✅ Publicado
-                                        </span>
-                                    )}
-                                    {/* Skipped badge */}
-                                    {entry.isSkipped && (
-                                        <span className="px-2 py-0.5 bg-yellow-500/20 text-yellow-400 rounded-full text-xs font-bold">
-                                            ⏭️ Saltado
-                                        </span>
-                                    )}
-                                    {/* Dynamic date */}
-                                    <span className="text-xs text-white/40 font-mono">
-                                        {entry.dynamicDate.toLocaleDateString('es-MX', { weekday: 'short', day: 'numeric', month: 'short' })}
+                                    {entry.isToday && <span className="px-2 py-0.5 bg-green-500 text-white rounded-full text-xs font-bold animate-pulse">🟢 HOY</span>}
+                                    {entry.isPublished && <span className="px-2 py-0.5 bg-green-500/20 text-green-400 rounded-full text-xs font-bold">✅</span>}
+                                    {entry.isSkipped && <span className="px-2 py-0.5 bg-yellow-500/20 text-yellow-400 rounded-full text-xs font-bold">⏭️</span>}
+                                    {entry.isFestive && <span className="px-2 py-0.5 bg-red-500/20 text-red-400 rounded-full text-xs font-bold">🎄</span>}
+                                    <span className="text-xs text-white/40 font-mono">{entry.dynamicDate.toLocaleDateString('es-MX',{weekday:'short',day:'numeric',month:'short'})}</span>
+                                    <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${activePlatformTab==='tiktok'?'bg-black text-white':activePlatformTab==='instagram'?'bg-gradient-to-r from-purple-500 to-pink-500 text-white':'bg-blue-600 text-white'}`}>
+                                        {activePlatformTab==='tiktok'?'🎵 TikTok':activePlatformTab==='instagram'?'📸 IG':'👥 FB'}
                                     </span>
-                                    <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${platformConf.bgColor}`}>
-                                        {platformConf.label}
-                                    </span>
-                                    {entry.contentType === 'video' && <span className="px-2 py-0.5 bg-green-500/20 text-green-400 rounded-full text-xs font-bold">Video</span>}
-                                    {entry.contentType === 'reel' && <span className="px-2 py-0.5 bg-purple-500/20 text-purple-400 rounded-full text-xs font-bold">Reel</span>}
-                                    {entry.contentType === 'carousel' && <span className="px-2 py-0.5 bg-blue-500/20 text-blue-400 rounded-full text-xs font-bold">Carrusel</span>}
-                                    {entry.contentType === 'image' && <span className="px-2 py-0.5 bg-orange-500/20 text-orange-400 rounded-full text-xs font-bold">Imagen</span>}
+                                    <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${post.format==='video'||post.format==='reel'?'bg-green-500/20 text-green-400':post.format==='carousel'?'bg-blue-500/20 text-blue-400':'bg-orange-500/20 text-orange-400'}`}>{post.format.toUpperCase()}</span>
                                     <span className="text-sm font-bold text-white">{entry.title}</span>
                                 </div>
-                                <div className="flex items-center gap-2">
-                                    <span className={`text-xs ${gatilloData.color}`}>{entry.gatilloIcon} {gatilloData.label}</span>
-                                    {isExpanded ? <ChevronUp className="w-4 h-4 text-white/40" /> : <ChevronDown className="w-4 h-4 text-white/40" />}
-                                </div>
+                                <span className={`text-xs ${gatilloData.color}`}>{entry.gatilloIcon} {gatilloData.label}</span>
                             </button>
 
-                            {/* Expanded Content */}
                             {isExpanded && (
                                 <div className="p-4 border-t border-white/10 space-y-4">
-                                    {/* Hook + Body */}
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <div className="space-y-2">
-                                            <h5 className="text-xs font-bold text-white/40 uppercase">Hook (0-3s)</h5>
-                                            <p className="text-sm text-white/80 bg-white/5 rounded-lg p-3">{entry.hook}</p>
-                                        </div>
-                                        <div className="space-y-2">
-                                            <h5 className="text-xs font-bold text-white/40 uppercase">Cuerpo</h5>
-                                            <p className="text-sm text-white/80 bg-white/5 rounded-lg p-3">{entry.body}</p>
-                                        </div>
+                                    {/* 3 platforms side by side */}
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        {(['tiktok','instagram','facebook'] as Platform[]).map(platform=>{
+                                            const pp = entry[platform]
+                                            const isActive = platform===activePlatformTab
+                                            return (
+                                                <div key={platform} className={`rounded-lg p-3 space-y-2 border ${isActive?'border-primary-500/50 bg-primary-500/5':'border-white/10 bg-white/5'}`}>
+                                                    <h6 className={`text-xs font-bold px-2 py-0.5 rounded-full inline-block ${platform==='tiktok'?'bg-black text-white':platform==='instagram'?'bg-gradient-to-r from-purple-500 to-pink-500 text-white':'bg-blue-600 text-white'}`}>
+                                                        {platform==='tiktok'?'🎵 TikTok':platform==='instagram'?'📸 Instagram':'👥 Facebook'}
+                                                    </h6>
+                                                    <p className="text-xs text-white/40">{pp.format.toUpperCase()} • {pp.postingTime}</p>
+                                                    <p className="text-sm text-white/70 whitespace-pre-wrap line-clamp-4">{pp.caption}</p>
+                                                    <div className="flex flex-wrap gap-1">
+                                                        {pp.hashtags.slice(0,4).map((tag,i)=><span key={i} className="px-1.5 py-0.5 bg-primary-500/20 text-primary-400 rounded text-[10px]">{tag}</span>)}
+                                                    </div>
+                                                    {pp.adCTA && <p className="text-[10px] text-yellow-400">CTA: {pp.adCTA}</p>}
+                                                    <button onClick={()=>copyText(pp.caption,`caption-${entry.id}-${platform}`)} className="flex items-center gap-1 px-2 py-1 bg-white/10 text-white/60 rounded text-[10px] font-bold hover:bg-white/20 transition-colors">
+                                                        {copiedId===`caption-${entry.id}-${platform}`?<Check className="w-3 h-3 text-green-400"/>:<Copy className="w-3 h-3"/>}
+                                                        {copiedId===`caption-${entry.id}-${platform}`?'¡Copiado!':'Copiar'}
+                                                    </button>
+                                                </div>
+                                            )
+                                        })}
                                     </div>
 
-                                    {/* CTA + Hashtags */}
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <div className="space-y-2">
-                                            <h5 className="text-xs font-bold text-white/40 uppercase">CTA</h5>
-                                            <p className="text-sm text-green-400 bg-green-400/10 rounded-lg p-3 font-bold">{entry.cta}</p>
-                                        </div>
-                                        <div className="space-y-2">
-                                            <h5 className="text-xs font-bold text-white/40 uppercase">Hashtags</h5>
-                                            <div className="flex flex-wrap gap-1">
-                                                {entry.hashtags.map((tag, i) => (
-                                                    <span key={i} className="px-2 py-0.5 bg-primary-500/20 text-primary-400 rounded-full text-xs">
-                                                        {tag}
-                                                    </span>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {/* Caption Preview */}
+                                    {/* Prompt */}
                                     <div className="space-y-2">
-                                        <h5 className="text-xs font-bold text-white/40 uppercase">Caption (copia y pega)</h5>
+                                        <h5 className="text-xs font-bold text-white/40 uppercase">Prompt {activePlatformTab==='tiktok'||(activePlatformTab==='instagram'&&post.format==='reel')?'CapCut AI':'Gemini'}</h5>
                                         <div className="bg-black/30 rounded-lg p-3 text-sm text-white/70 whitespace-pre-wrap font-mono max-h-40 overflow-y-auto">
-                                            {entry.caption}
+                                            {activePlatformTab==='tiktok'?post.capcutPrompt:post.format==='reel'?post.capcutPrompt:post.geminiPrompt||'Sin prompt para este formato'}
                                         </div>
-                                        <p className="text-[10px] text-white/30 italic">🔗 carmatchapp.net se incluye automáticamente en el caption</p>
-                                    </div>
-
-                                    {/* Ad Link for Meta Ads */}
-                                    {entry.adConfig.enabled && (
-                                        <div className="space-y-2">
-                                            <h5 className="text-xs font-bold text-yellow-400 uppercase">🔗 Link de anuncio (Meta Ads)</h5>
-                                            <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-3">
-                                                <p className="text-sm text-yellow-300 font-mono break-all">{entry.adLink}</p>
-                                            </div>
-                                            <button
-                                                onClick={() => copyText(entry.adLink, `adlink-${entry.id}`)}
-                                                className="flex items-center gap-1.5 px-3 py-1.5 bg-yellow-500/20 text-yellow-400 rounded-lg text-xs font-bold hover:bg-yellow-500/30 transition-colors"
-                                            >
-                                                {copiedId === `adlink-${entry.id}` ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                                                {copiedId === `adlink-${entry.id}` ? '¡Copiado!' : 'Copiar link de anuncio'}
-                                            </button>
-                                        </div>
-                                    )}
-
-                                    {/* Time + Ad Config */}
-                                    <div className="flex flex-wrap gap-4">
-                                        <div className="flex items-center gap-2 text-sm text-white/60">
-                                            <Clock className="w-4 h-4" />
-                                            <span>{entry.postingTime}</span>
-                                        </div>
-                                        {entry.adConfig.enabled && (
-                                            <div className="flex items-center gap-2 text-sm text-white/60">
-                                                <Target className="w-4 h-4" />
-                                                <span>${entry.adConfig.budgetMXN}/día • {entry.adConfig.durationDays} días</span>
-                                            </div>
-                                        )}
+                                        <button onClick={()=>{const txt=activePlatformTab==='tiktok'?post.capcutPrompt||'':post.format==='reel'?post.capcutPrompt||'':post.geminiPrompt||'';copyText(txt,`prompt-${entry.id}-${activePlatformTab}`)}} className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-500/20 text-primary-400 rounded-lg text-xs font-bold hover:bg-primary-500/30 transition-colors">
+                                            {copiedId===`prompt-${entry.id}-${activePlatformTab}`?<Check className="w-3.5 h-3.5"/>:<Copy className="w-3.5 h-3.5"/>}
+                                            {copiedId===`prompt-${entry.id}-${activePlatformTab}`?'Copiado!':'Copiar Prompt'}
+                                        </button>
                                     </div>
 
                                     {/* Action Buttons */}
                                     <div className="flex flex-wrap gap-2">
-                                        <button
-                                            onClick={() => setShowPrompt(entry)}
-                                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
-                                                entry.tool === 'CapCut AI'
-                                                    ? 'bg-blue-500/20 text-blue-400 hover:bg-blue-500/30'
-                                                    : 'bg-purple-500/20 text-purple-400 hover:bg-purple-500/30'
-                                            }`}
-                                        >
-                                            <Sparkles className="w-3.5 h-3.5" /> Prompt {entry.tool}
-                                        </button>
-                                        <button
-                                            onClick={() => setShowAdConfig(entry)}
-                                            className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-500/20 text-orange-400 rounded-lg text-xs font-bold hover:bg-orange-500/30 transition-colors"
-                                        >
-                                            <Megaphone className="w-3.5 h-3.5" /> Configurar Anuncio Meta
-                                        </button>
-                                        <button
-                                            onClick={() => setEditingMetrics(editingMetrics === entry.id ? null : entry.id)}
-                                            className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500/20 text-emerald-400 rounded-lg text-xs font-bold hover:bg-emerald-500/30 transition-colors"
-                                        >
-                                            <BarChart3 className="w-3.5 h-3.5" /> Métricas
-                                        </button>
-                                        <button
-                                            onClick={() => copyText(entry.caption, entry.id)}
-                                            className="flex items-center gap-1.5 px-3 py-1.5 bg-white/10 text-white/60 rounded-lg text-xs font-bold hover:bg-white/20 transition-colors"
-                                        >
-                                            {copiedId === entry.id ? <Check className="w-3.5 h-3.5 text-green-400" /> : <Copy className="w-3.5 h-3.5" />}
-                                            {copiedId === entry.id ? '¡Copiado!' : 'Copiar caption'}
-                                        </button>
-
-                                        {/* Queue buttons */}
-                                        {!entry.isPublished && !entry.isSkipped && (
-                                            <>
-                                                <button
-                                                    onClick={() => markPublished(entry.id)}
-                                                    className="flex items-center gap-1.5 px-3 py-1.5 bg-green-500/20 text-green-400 rounded-lg text-xs font-bold hover:bg-green-500/30 transition-colors"
-                                                >
-                                                    <Check className="w-3.5 h-3.5" /> Publicado
-                                                </button>
-                                                <button
-                                                    onClick={() => markSkipped(entry.id)}
-                                                    className="flex items-center gap-1.5 px-3 py-1.5 bg-yellow-500/20 text-yellow-400 rounded-lg text-xs font-bold hover:bg-yellow-500/30 transition-colors"
-                                                >
-                                                    ⏭️ Saltado
-                                                </button>
-                                            </>
-                                        )}
-                                        {(entry.isPublished || entry.isSkipped) && (
-                                            <button
-                                                onClick={() => restoreEntry(entry.id)}
-                                                className="flex items-center gap-1.5 px-3 py-1.5 bg-white/10 text-white/60 rounded-lg text-xs font-bold hover:bg-white/20 transition-colors"
-                                            >
-                                                ↩️ Restaurar
-                                            </button>
-                                        )}
+                                        <button onClick={()=>setShowAdConfig(entry)} className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-500/20 text-orange-400 rounded-lg text-xs font-bold hover:bg-orange-500/30 transition-colors"><Megaphone className="w-3.5 h-3.5"/> Configurar Anuncio</button>
+                                        {!entry.isPublished&&!entry.isSkipped&&(<>
+                                            <button onClick={()=>markPublished(entry.id)} className="flex items-center gap-1.5 px-3 py-1.5 bg-green-500/20 text-green-400 rounded-lg text-xs font-bold hover:bg-green-500/30"><Check className="w-3.5 h-3.5"/> Publicado</button>
+                                            <button onClick={()=>markSkipped(entry.id)} className="flex items-center gap-1.5 px-3 py-1.5 bg-yellow-500/20 text-yellow-400 rounded-lg text-xs font-bold hover:bg-yellow-500/30">⏭️ Saltado</button>
+                                        </>)}
+                                        {(entry.isPublished||entry.isSkipped)&&<button onClick={()=>restoreEntry(entry.id)} className="flex items-center gap-1.5 px-3 py-1.5 bg-white/10 text-white/60 rounded-lg text-xs font-bold hover:bg-white/20">↩️ Restaurar</button>}
                                     </div>
-
-                                    {/* Metrics Panel */}
-                                    {editingMetrics === entry.id && (
-                                        <div className="bg-black/30 rounded-xl p-4 space-y-4">
-                                            <h5 className="text-sm font-bold text-white/60 uppercase flex items-center gap-2">
-                                                <BarChart3 className="w-4 h-4" /> Métricas Manuales
-                                            </h5>
-                                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                                {(['tiktok', 'instagram', 'facebook'] as const).map(platform => (
-                                                    <div key={platform} className="space-y-2">
-                                                        <h6 className={`text-xs font-bold px-2 py-0.5 rounded-full inline-block ${PLATFORM_CONFIG[platform]?.bgColor || 'bg-gray-600'}`}>
-                                                            {PLATFORM_CONFIG[platform]?.label || platform}
-                                                        </h6>
-                                                        <div className="grid grid-cols-2 gap-2">
-                                                            {Object.entries(entry.metrics[platform]).map(([key, val]) => (
-                                                                <div key={key} className="flex items-center gap-1">
-                                                                    <span className="text-[10px] text-white/40 w-12">{key}:</span>
-                                                                    <input
-                                                                        type="number"
-                                                                        defaultValue={val}
-                                                                        className="w-full bg-white/5 border border-white/10 rounded px-1.5 py-0.5 text-xs text-white"
-                                                                    />
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                            <p className="text-[10px] text-white/30 italic">Edita estas métricas manualmente desde las plataformas. Actualiza una vez por semana.</p>
-                                        </div>
-                                    )}
                                 </div>
                             )}
                         </div>
@@ -810,120 +595,37 @@ export default function CalendarTab() {
                 })}
             </div>
 
-            {/* Prompt Modal */}
-            {showPrompt && (
-                <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={() => setShowPrompt(null)}>
-                    <div className="bg-surface-dark border border-white/10 rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto p-6 space-y-4" onClick={e => e.stopPropagation()}>
+            {/* Ad Config Modal */}
+            {showAdConfig&&(
+                <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={()=>setShowAdConfig(null)}>
+                    <div className="bg-surface-dark border border-white/10 rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 space-y-4" onClick={e=>e.stopPropagation()}>
                         <div className="flex items-center justify-between">
-                            <h3 className="text-lg font-black text-white">
-                                Prompt para {showPrompt.tool}
-                            </h3>
-                            <button onClick={() => setShowPrompt(null)} className="p-1 hover:bg-white/10 rounded-lg"><X className="w-5 h-5 text-white" /></button>
-                        </div>
-                        <p className="text-sm text-white/60">{showPrompt.title}</p>
-                        <div className="flex items-center gap-2 mb-2">
-                            <span className={`px-2 py-1 rounded text-xs font-bold ${showPrompt.tool === 'CapCut AI' ? 'bg-blue-500/20 text-blue-400' : 'bg-purple-500/20 text-purple-400'}`}>
-                                {showPrompt.tool}
-                            </span>
-                            <span className="px-2 py-1 rounded text-xs font-bold bg-white/10 text-white/60">
-                                {showPrompt.contentType}
-                            </span>
-                        </div>
-
-                        {/* Usage Instructions */}
-                        <div className={`rounded-lg p-3 space-y-2 text-sm ${showPrompt.tool === 'CapCut AI' ? 'bg-blue-500/10 border border-blue-500/20' : 'bg-purple-500/10 border border-purple-500/20'}`}>
-                            <p className="font-bold text-white">Cómo usar este prompt:</p>
-                            {showPrompt.tool === 'CapCut AI' ? (
-                                <>
-                                    <p><span className="font-bold text-blue-400">1.</span> Abre CapCut → Click <span className="font-bold text-white">"AI Video"</span> o <span className="font-bold text-white">"Dream Machine"</span></p>
-                                    <p><span className="font-bold text-blue-400">2.</span> Copia el prompt de abajo y pégalo en CapCut</p>
-                                    <p><span className="font-bold text-blue-400">3.</span> Selecciona formato <span className="font-bold text-white">9:16</span> → Click <span className="font-bold text-white">"Create"</span> → Exporta en 1080p</p>
-                                </>
-                            ) : (
-                                <>
-                                    <p><span className="font-bold text-purple-400">1.</span> Ve a <span className="font-bold text-white">gemini.google.com</span></p>
-                                    <p><span className="font-bold text-purple-400">2.</span> Copia el prompt de abajo y pégalo en Gemini</p>
-                                    <p><span className="font-bold text-purple-400">3.</span> Descarga la imagen generada → Úsala en tu publicación</p>
-                                </>
-                            )}
-                        </div>
-
-                        <div className="bg-black/40 rounded-xl p-4 text-sm text-white/80 font-mono whitespace-pre-wrap">
-                            {showPrompt.prompt}
-                        </div>
-                        <button
-                            onClick={() => copyText(showPrompt.prompt, `prompt-${showPrompt.id}`)}
-                            className="flex items-center gap-2 px-4 py-2 bg-primary-500/20 text-primary-400 rounded-lg text-sm font-bold hover:bg-primary-500/30 transition-colors"
-                        >
-                            {copiedId === `prompt-${showPrompt.id}` ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                            {copiedId === `prompt-${showPrompt.id}` ? 'Copiado!' : 'Copiar Prompt'}
-                        </button>
-                    </div>
-                </div>
-            )}
-
-            {/* CapCut AI Video Modal - REMOVED: Prompt modal now shows tool instructions */}
-
-            {/* Ad Config Modal - Meta Ads Instructions */}
-            {showAdConfig && (
-                <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={() => setShowAdConfig(null)}>
-                    <div className="bg-surface-dark border border-white/10 rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 space-y-4" onClick={e => e.stopPropagation()}>
-                        <div className="flex items-center justify-between">
-                            <h3 className="text-lg font-black text-white">Configurar Anuncio en Meta Ads</h3>
-                            <button onClick={() => setShowAdConfig(null)} className="p-1 hover:bg-white/10 rounded-lg"><X className="w-5 h-5 text-white" /></button>
+                            <h3 className="text-lg font-black text-white">Configurar Anuncio</h3>
+                            <button onClick={()=>setShowAdConfig(null)} className="p-1 hover:bg-white/10 rounded-lg"><X className="w-5 h-5 text-white"/></button>
                         </div>
                         <p className="text-sm text-white/60">{showAdConfig.title}</p>
 
                         <div className="space-y-2">
-                            <h4 className="text-xs font-bold text-yellow-400 uppercase">Setup Inicial (solo una vez)</h4>
+                            <h4 className="text-xs font-bold text-blue-400 uppercase">📱 Meta Ads (Facebook + Instagram)</h4>
                             <div className="bg-white/5 rounded-lg p-3 space-y-1 text-sm text-white/70">
-                                <p>1. Ve a business.facebook.com</p>
-                                <p>2. Crea cuenta Business Manager</p>
-                                <p>3. Vincula tu pagina de Facebook e Instagram</p>
-                                <p>4. Ve a "Origenes de datos" y crea Pixel de Meta</p>
-                                <p>5. Instala pixel en carmatchapp.net (header)</p>
-                                <p>6. Configura eventos: ViewContent, Lead</p>
-                                <p>7. Verifica con extension "Meta Pixel Helper"</p>
-                                <p>8. Agrega metodo de pago (tarjeta)</p>
+                                <p><span className="font-bold text-white">Objetivo:</span> <span className="text-blue-400">{showAdConfig.adConfig.meta.objective||'Tráfico'}</span></p>
+                                <p><span className="font-bold text-white">Budget:</span> <span className="text-green-400">${showAdConfig.adConfig.meta.budgetMXN||21}/día</span></p>
+                                <p><span className="font-bold text-white">CTA:</span> &quot;Más información&quot;</p>
                             </div>
                         </div>
 
                         <div className="space-y-2">
-                            <h4 className="text-xs font-bold text-green-400 uppercase">Crear Anuncio</h4>
+                            <h4 className="text-xs font-bold text-pink-400 uppercase">🎵 TikTok Ads</h4>
                             <div className="bg-white/5 rounded-lg p-3 space-y-1 text-sm text-white/70">
-                                <p><span className="font-bold text-white">PASO 1:</span> business.facebook.com ygt; Administrador de Anuncios</p>
-                                <p><span className="font-bold text-white">PASO 2:</span> Click "+ Crear"</p>
-                                <p><span className="font-bold text-white">PASO 3:</span> Objetivo: <span className="text-green-400 font-bold">{showAdConfig.adConfig.objective}</span></p>
-                                <p><span className="font-bold text-white">PASO 4:</span> Nombre: "CarMatch - {showAdConfig.title}"</p>
-                                <p><span className="font-bold text-white">PASO 5:</span> Presupuesto diario: <span className="text-green-400 font-bold">${showAdConfig.adConfig.budgetMXN} MXN</span></p>
-                                <p><span className="font-bold text-white">PASO 6:</span> Audiencia: <span className="text-yellow-400">{showAdConfig.adConfig.audience}</span></p>
-                                <p><span className="font-bold text-white">PASO 7:</span> Ubicaciones: <span className="text-yellow-400">{showAdConfig.adConfig.placement}</span></p>
-                                <p><span className="font-bold text-white">PASO 8:</span> Sube el video de CapCut (formato 9:16)</p>
-                                <p><span className="font-bold text-white">PASO 9:</span> Texto del anuncio: "{showAdConfig.hook}"</p>
-                                <p><span className="font-bold text-white">PASO 10:</span> CTA button: "Mas informacion"</p>
-                                <p><span className="font-bold text-white">PASO 11:</span> URL: <span className="text-yellow-400">{showAdConfig.adLink || 'carmatchapp.net'}</span></p>
-                                <p><span className="font-bold text-white">PASO 12:</span> Click "Publicar"</p>
+                                <p><span className="font-bold text-white">Objetivo:</span> <span className="text-pink-400">{showAdConfig.adConfig.tiktok.objective||'Código de conversión'}</span></p>
+                                <p><span className="font-bold text-white">Budget:</span> <span className="text-green-400">${showAdConfig.adConfig.tiktok.budgetMXN||21}/día</span></p>
+                                <p><span className="font-bold text-white">CTA:</span> &quot;Descubre más&quot;</p>
                             </div>
                         </div>
 
-                        <div className="bg-white/5 rounded-lg p-3 grid grid-cols-2 gap-3 text-sm">
-                            <div><span className="text-white/40">Duracion:</span> <span className="text-white font-bold">{showAdConfig.adConfig.durationDays} dias</span></div>
-                            <div><span className="text-white/40">Costo total:</span> <span className="text-green-400 font-bold">${showAdConfig.adConfig.budgetMXN * showAdConfig.adConfig.durationDays} MXN</span></div>
-                        </div>
-
-                        <div className="space-y-1 text-xs text-white/40 italic">
-                            <p>Espera 24-48h para aprobacion de Meta</p>
-                            <p>NO toques la campana durante 7 dias (fase de aprendizaje)</p>
-                            <p>Escala 20% cada 3 dias si los resultados son buenos</p>
-                            <p>Revisa metricas en Dashboard cada lunes</p>
-                        </div>
-
-                        <button
-                            onClick={() => copyText('CarMatch - ' + showAdConfig.title + '\nObjetivo: ' + showAdConfig.adConfig.objective + '\nAudiencia: ' + showAdConfig.adConfig.audience + '\nBudget: $' + showAdConfig.adConfig.budgetMXN + '/dia\nDuracion: ' + showAdConfig.adConfig.durationDays + ' dias\nHook: ' + showAdConfig.hook, 'adconfig-' + showAdConfig.id)}
-                            className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-primary-500/20 text-primary-400 rounded-lg text-sm font-bold hover:bg-primary-500/30 transition-colors"
-                        >
-                            {copiedId === 'adconfig-' + showAdConfig.id ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                            {copiedId === 'adconfig-' + showAdConfig.id ? 'Copiado!' : 'Copiar configuracion'}
+                        <button onClick={()=>copyText(`Meta: $${showAdConfig.adConfig.meta.budgetMXN||21}/día | TikTok: $${showAdConfig.adConfig.tiktok.budgetMXN||21}/día`, 'adconfig-'+showAdConfig.id)} className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-primary-500/20 text-primary-400 rounded-lg text-sm font-bold hover:bg-primary-500/30 transition-colors">
+                            {copiedId==='adconfig-'+showAdConfig.id?<Check className="w-4 h-4"/>:<Copy className="w-4 h-4"/>}
+                            {copiedId==='adconfig-'+showAdConfig.id?'Copiado!':'Copiar configuración'}
                         </button>
                     </div>
                 </div>
