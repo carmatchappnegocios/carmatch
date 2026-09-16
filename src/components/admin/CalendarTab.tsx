@@ -78,7 +78,7 @@ function entry(
  gatilloIcon: GATILLOS[gatillo].icon,
  format, platforms, caption, hashtags,
  postingTimes: TIMES,
- ...opts,
+ .opts,
  }
 }
 
@@ -92,47 +92,47 @@ const ALL_ENTRIES: CalendarEntry[] = [
  ['tiktok', 'instagram', 'facebook'],
  '🔴 Estás perdiendo dinero cada día que tu auto está en la calle sin venderlo.\n\nCada semana que pasa, tu auto vale $2,000 menos.\n\n¿Cuánto llevas esperando?\n\n📲 Descarga CarMatch — link en bio',
  ['#PerdiendoDinero', '#VendeTuAuto', '#CdJuarez', '#AutoUsado', '#CarMatch'],
- { creenModel: 'Seedance 2.0', creenPrompt: 'Scene 1 (3s): Close-up of a clock spinning fast on a wall, urgency feeling, dark room. Scene 2 (3s): Bills of Mexican pesos flying away from a dusty parked car in an empty lot. Scene 3 (3s): Same dusty car sitting idle with time passing effect, dark mood. Scene 4 (3s): Person picking up phone, CarMatch app opens on screen, expression changes to hope. Cinematic dark blue-orange color grading, 9:16 vertical. No text or subtitles in the video.' }),
+ { creenModel: 'Seedance 2.0', creenPrompt: 'Scene 1 (3s): Close-up of a clock spinning fast on a wall, urgency feeling, dark room. Scene 2 (3s): Bills of Mexican pesos flying away from a dusty parked car in an empty lot. Scene 3 (3s): Same dusty car sitting idle with time passing effect, dark mood. Scene 4 (3s): Person picking up phone, CarMatch app opens on screen, expression changes to hope. Cinematic dark blue-orange color grading, 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.' }),
 
  entry('s01-mar', 2, 1, 'Opinión impopular: Marketplace no sirve', 'Debate', 'curiosity', 'video',
  ['tiktok', 'instagram', 'facebook'],
  '🟡 Opinión impopular: Marketplace no sirve para vender tu auto.\n\n50 mensajes y NINGUNO serio.\n\nEn CarMatch solo llegan compradores reales.\n\n¿Estás de acuerdo? Comenta 👇',
  ['#OpiniónImpopular', '#Marketplace', '#VendeTuAuto', '#CarMatch', '#CdJuarez'],
- { creenModel: 'Seedance 2.0', creenPrompt: 'Person talking directly to camera with frustrated expression, casual room background. Quick cut to phone screen showing dozens of unread messages. Transition to CarMatch app notification showing serious buyer. TikTok native style, casual, authentic. 9:16 vertical. No text or subtitles in the video.' }),
+ { creenModel: 'Seedance 2.0', creenPrompt: 'Person talking directly to camera with frustrated expression, casual room background. Quick cut to phone screen showing dozens of unread messages. Transition to CarMatch app notification showing serious buyer. TikTok native style, casual, authentic. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.' }),
 
- entry('s01-mie', 3, 1, '¿Sabías que...? 70% se venden barato', 'Datos', 'curiosity', 'carrusel',
+ entry('s01-mie', 3, 1, '¿Sabías que.? 70% se venden barato', 'Datos', 'curiosity', 'carrusel',
  ['instagram', 'facebook'],
  '🟡 3 datos que TODO vendedor debe saber:\n\n1️⃣ El 70% de autos se venden por debajo de su valor\n2️⃣ Pierde 15% solo al sacarlo de agencia\n3️⃣ El mejor mes para vender es octubre\n\nDesliza para más →\n\n📲 CarMatch — tu auto al precio correcto',
  ['#SabiasQue', '#DatoCurioso', '#ValorAuto', '#CarMatch', '#CdJuarez', '#Finanzas'],
  { carouselSlides: [
  { slideNumber: 1, prompt: 'Dark infographic style, background #0f172a. Large bold red text "70%" in center with downward arrow. Below in white: "SE VENDEN POR DEBAJO DE SU VALOR". Small car silhouette icon. Clean, modern, professional design.', textOverlay: '70% se venden por debajo de su valor' },
- { slideNumber: 2, prompt: 'Bar chart infographic showing car value declining from left to right. First bar high labeled "Agencia", last bar low labeled "3 meses después". Red gradient.. Dark background #0f172a.', textOverlay: 'Pierde 15% al sacarlo de agencia' },
- { slideNumber: 3, prompt: 'Calendar infographic, October and November highlighted in orange/gold.. Car icon with dollar sign. Dark background #0f172a. Clean modern design.', textOverlay: 'Octubre-noviembre: mejor mes para vender' },
+ { slideNumber: 2, prompt: 'Bar chart infographic showing car value declining from left to right. First bar high labeled "Agencia", last bar low labeled "3 meses después". Red gradient. Dark background #0f172a.', textOverlay: 'Pierde 15% al sacarlo de agencia' },
+ { slideNumber: 3, prompt: 'Calendar infographic, October and November highlighted in orange/gold. Car icon with dollar sign. Dark background #0f172a. Clean modern design.', textOverlay: 'Octubre-noviembre: mejor mes para vender' },
  ]}),
 
  entry('s01-jue', 4, 1, 'María vendió en 3 días', 'Social Proof', 'social_proof', 'video',
  ['tiktok', 'instagram', 'facebook'],
  '🟢 "Vendí mi auto en 3 días con CarMatch"\n\nMaría de Cd. Juárez.\n\n¿Tú cuánto llevas?\n\n📲 Descarga gratis — link en bio',
  ['#TestimonioReal', '#VendidoEn3Dias', '#CarMatch', '#CdJuarez', '#ExitoReal'],
- { creenModel: 'Seedance 2.0', creenPrompt: 'Screenshot-style testimonial card: "María, Cd. Juárez — Vendí en 3 días" with green checkmark. Background soft green gradient. Transition to calendar animation: Monday "PUBLICADO" → Wednesday "VENDIDO" with stamp effect. UGC authentic style. 9:16 vertical.' }),
+ { creenModel: 'Seedance 2.0', creenPrompt: 'Screenshot-style testimonial card: "María, Cd. Juárez — Vendí en 3 días" with green checkmark. Background soft green gradient. Transition to calendar animation: Monday "PUBLICADO" → Wednesday "VENDIDO" with stamp effect. UGC authentic style. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.' }),
 
  entry('s01-vie', 5, 1, '500+ autos publicados en Juárez', 'Urgencia', 'fomo', 'video',
  ['tiktok', 'instagram', 'facebook'],
  '🟠 Ya hay 500+ autos publicados en CarMatch Juárez.\n\nLos primeros se venden más rápido.\n\n¿Ya publicaste el tuyo?',
  ['#FOMO', '#YaEstanAqui', '#CarMatch', '#CdJuarez', '#500Autos'],
- { creenModel: 'Seedance 2.0', creenPrompt: 'Counter rapidly ascending from 0 to 500+ with car icons popping up on a map of Cd. Juárez. Orange and red color scheme. Final text "¿EL TUYO?" in bold. Urgency feeling, fast cuts. 9:16 vertical.' }),
+ { creenModel: 'Seedance 2.0', creenPrompt: 'Counter rapidly ascending from 0 to 500+ with car icons popping up on a map of Cd. Juárez. Orange and red color scheme. Final text "¿EL TUYO?" in bold. Urgency feeling, fast cuts. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.' }),
 
  entry('s01-sab', 6, 1, 'Tu familia depende de ti', 'Seguridad', 'security', 'video',
  ['tiktok', 'instagram', 'facebook'],
- '🛡️ Cada vez que manejas un auto sin mantenimiento...\n\nPones en riesgo a tu familia.\n\nCarMatch tiene servicios verificados.',
+ '🛡️ Cada vez que manejas un auto sin mantenimiento.\n\nPones en riesgo a tu familia.\n\nCarMatch tiene servicios verificados.',
  ['#SeguridadFamiliar', '#MantenimientoAuto', '#CarMatch', '#CdJuarez'],
- { creenModel: 'Sora 2 Pro', creenPrompt: 'Family in a car, warm lighting. Cut to icons of car maintenance: oil, brakes, tires, lights. Final shot: checklist with green checkmarks appearing one by one. Emotional, warm tone. 9:16 vertical. No text or subtitles in the video.' }),
+ { creenModel: 'Sora 2 Pro', creenPrompt: 'Family in a car, warm lighting. Cut to icons of car maintenance: oil, brakes, tires, lights. Final shot: checklist with green checkmarks appearing one by one. Emotional, warm tone. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.' }),
 
  entry('s01-dom', 7, 1, 'Gracias Cd. Juárez 🇲🇽', 'Independencia', 'identity', 'imagen',
  ['facebook'],
  '🇲🇽 Cd. Juárez,gracias por confiar en CarMatch.\n\nHECHOS EN JUÁREZ, para JUÁREZ.\n\nFeliz Día de la Independencia.',
  ['#GraciasJuarez', '#16DeSeptiembre', '#CarMatch', '#OrgulloJuarense', '#VivaMéxico'],
- { geminiPrompt: 'Mexican flag waving majestically over Cd. Juárez skyline at golden hour. Confetti in Mexican flag colors (green, white, red) falling.. Warm, patriotic, emotional. Professional quality.' }),
+ { geminiPrompt: 'Mexican flag waving majestically over Cd. Juárez skyline at golden hour. Confetti in Mexican flag colors (green, white, red) falling. Warm, patriotic, emotional. Professional quality.' }),
 
  // ════════════ SEMANA 2: SEGURIDAD ════════════
 
@@ -140,20 +140,20 @@ const ALL_ENTRIES: CalendarEntry[] = [
  ['tiktok', 'instagram', 'facebook'],
  '🛡️ Cada mes hay 200+ estafas de autos en Juárez.\n\nNo seas víctima.\n\nCarMatch verifica compradores y vendedores.',
  ['#EstafaAuto', '#Protegete', '#CarMatch', '#CdJuarez', '#CompraSegura'],
- { creenModel: 'Seedance 2.0', creenPrompt: 'Red alert screen "ESTAFA" flashing. Examples of common scams: fake check, altered documents. Transition to CarMatch verification badge animation — shield with checkmark. Reassuring tone shift. 9:16 vertical.' }),
+ { creenModel: 'Seedance 2.0', creenPrompt: 'Red alert screen "ESTAFA" flashing. Examples of common scams: fake check, altered documents. Transition to CarMatch verification badge animation — shield with checkmark. Reassuring tone shift. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.' }),
 
  entry('s02-mar', 9, 2, 'Tu auto vale más de lo que crees', 'Valuación', 'curiosity', 'video',
  ['tiktok', 'instagram', 'facebook'],
  '🟡 Tu auto puede valer $30,000 más de lo que crees.\n\nLa mayoría subestima.\n\nCarMatch te da la valuación correcta.',
  ['#ValuaTuAuto', '#MasDeLoQueCrees', '#CarMatch', '#CdJuarez'],
- { creenModel: 'Seedance 2.0', creenPrompt: 'Person looking at phone with surprised expression. Phone screen shows "$150,000" crossed out and "$180,000" appearing in green. Positive, surprising moment. Transition to CarMatch app valuation screen. 9:16 vertical.' }),
+ { creenModel: 'Seedance 2.0', creenPrompt: 'Person looking at phone with surprised expression. Phone screen shows "$150,000" crossed out and "$180,000" appearing in green. Positive, surprising moment. Transition to CarMatch app valuation screen. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.' }),
 
  entry('s02-mie', 10, 2, '4 señales de mantenimiento YA', 'Cuidado', 'security', 'carrusel',
  ['instagram', 'facebook'],
  '🛡️ 4 señales de que necesitas mantenimiento YA:\n\n1️⃣ Ruido al frenar\n2️⃣ Aceite oscuro\n3️⃣ Luces del dashboard\n4️⃣ Vibración al manejar\n\nNo esperes a que sea tarde.',
  ['#MantenimientoAuto', '#SeñalesDeAlerta', '#CarMatch', '#CdJuarez'],
  { carouselSlides: [
- { slideNumber: 1, prompt: 'Warning icon with brake disc. Red alert style.. Dark background. Clean infographic.', textOverlay: 'Ruido extraño al frenar' },
+ { slideNumber: 1, prompt: 'Warning icon with brake disc. Red alert style. Dark background. Clean infographic.', textOverlay: 'Ruido extraño al frenar' },
  { slideNumber: 2, prompt: 'Oil dipstick showing dark dirty oil vs clean golden oil comparison. Red circle on dirty side. Dark background.', textOverlay: 'Aceite oscuro en el dipstick' },
  { slideNumber: 3, prompt: 'Car dashboard with warning lights illuminated. Red and orange alert icons. Dark background.', textOverlay: 'Luces del dashboard encendidas' },
  { slideNumber: 4, prompt: 'Steering wheel with vibration motion lines. Warning symbol. Dark background.', textOverlay: 'Vibración al manejar' },
@@ -163,7 +163,7 @@ const ALL_ENTRIES: CalendarEntry[] = [
  ['tiktok', 'instagram', 'facebook'],
  '🟢 En CarMatch, cada usuario pasa verificación.\n\nFoto, teléfono, email. Todo confirmado.\n\n¿Sabes con quién tratas?',
  ['#UsuariosReales', '#Verificado', '#CarMatch', '#CdJuarez'],
- { creenModel: 'Seedance 2.0', creenPrompt: 'Verification process animation: phone icon → photo icon → email icon → green checkmark badge appearing. People silhouettes getting verified one by one. Clean, trustworthy design. Green and white colors. 9:16 vertical.' }),
+ { creenModel: 'Seedance 2.0', creenPrompt: 'Verification process animation: phone icon → photo icon → email icon → green checkmark badge appearing. People silhouettes getting verified one by one. Clean, trustworthy design. Green and white colors. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.' }),
 
  entry('s02-vie', 12, 2, 'Los más buscados de la semana', 'Tendencia', 'fomo', 'imagen',
  ['facebook'],
@@ -175,13 +175,13 @@ const ALL_ENTRIES: CalendarEntry[] = [
  ['tiktok', 'instagram', 'facebook'],
  '🟢 Juan tenía una truck que nadie compraba.\n\nLa publicó en CarMatch.\n\n3 llamadas en 2 horas.',
  ['#HistoriaReal', '#Vendido', '#CarMatch', '#CdJuarez'],
- { creenModel: 'Seedance 2.0', creenPrompt: 'Lone truck sitting in dusty lot, sad mood. Cut to phone notification popping up. Person answering phone with smile. UGC authentic style. 9:16 vertical. No text or subtitles in the video.' }),
+ { creenModel: 'Seedance 2.0', creenPrompt: 'Lone truck sitting in dusty lot, sad mood. Cut to phone notification popping up. Person answering phone with smile. UGC authentic style. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.' }),
 
  entry('s02-dom', 14, 2, 'Domingo de revisión', 'Cuidado', 'security', 'imagen',
  ['facebook'],
  '🛡️ Domingo = revisar tu auto.\n\n5 minutos que te ahorran $50,000.\n\n✅ Aceite ✅ Llantas ✅ Frenos ✅ Luces',
  ['#DomingoDeRevisión', '#Mantenimiento', '#CarMatch', '#CdJuarez'],
- { geminiPrompt: 'Car parked on Sunday morning, warm light. Floating checklist with green checkmarks: Aceite, Llantas, Frenos, Luces.. Calm, reassuring tone.' }),
+ { geminiPrompt: 'Car parked on Sunday morning, warm light. Floating checklist with green checkmarks: Aceite, Llantas, Frenos, Luces. Calm, reassuring tone.' }),
 
  // ════════════ SEMANA 3: DATOS DEL MERCADO ════════════
 
@@ -201,14 +201,14 @@ const ALL_ENTRIES: CalendarEntry[] = [
  ['tiktok', 'instagram', 'facebook'],
  '🟡 Promedio de auto usado en Juárez: $145,000.\n\n¿El tuyo vale más o menos?\n\nDescúbrelo gratis.',
  ['#ValorPromedio', '#DatosJuárez', '#CarMatch', '#CdJuarez'],
- { creenModel: 'Seedance 2.0', creenPrompt: 'Large number "$145,000" animating onto screen with counting effect. Background graph showing price distribution. Car silhouette with question mark. Text "¿EL TUYO?" appearing. Data-driven visual style. 9:16 vertical.' }),
+ { creenModel: 'Seedance 2.0', creenPrompt: 'Large number "$145,000" animating onto screen with counting effect. Background graph showing price distribution. Car silhouette with question mark. Text "¿EL TUYO?" appearing. Data-driven visual style. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.' }),
 
  entry('s03-mie', 17, 3, 'Mejor mes para vender: octubre', 'Estrategia', 'authority', 'carrusel',
  ['instagram', 'facebook'],
  '🟣 Mejor mes para vender: octubre-noviembre.\n\n1️⃣ Alta demanda pre-Buen Fin\n2️⃣ Bonos de fin de año\n3️⃣ Más compradores activos\n\nPlanifica tu venta.',
  ['#MejorMes', '#EstrategiaVenta', '#CarMatch', '#CdJuarez'],
  { carouselSlides: [
- { slideNumber: 1, prompt: 'Calendar with October highlighted in bright orange. Car icon with dollar sign.. Dark background.', textOverlay: 'Octubre: el mejor mes para vender' },
+ { slideNumber: 1, prompt: 'Calendar with October highlighted in bright orange. Car icon with dollar sign. Dark background.', textOverlay: 'Octubre: el mejor mes para vender' },
  { slideNumber: 2, prompt: 'Upward arrow with "DEMANDA ALTA" text. Shopping cart icons. Orange accent. Dark background.', textOverlay: 'Alta demanda pre-Buen Fin' },
  { slideNumber: 3, prompt: 'Money bag icon with "BONOS" text. Dollar signs. Gold accent on dark background.', textOverlay: 'Bonos de fin de año = mejor precio' },
  ]}),
@@ -217,25 +217,25 @@ const ALL_ENTRIES: CalendarEntry[] = [
  ['tiktok', 'instagram', 'facebook'],
  '🟢 500 autos vendidos en CarMatch Juárez.\n\nGracias a ustedes.',
  ['#500Vendidos', '#Milestone', '#CarMatch', '#CdJuarez'],
- { creenModel: 'Seedance 2.0', creenPrompt: 'Counter animation going from 0 to 500 with car icons appearing. Confetti celebration effect.. "GRACIAS Cd. Juárez" fade in. Celebratory mood. 9:16 vertical.' }),
+ { creenModel: 'Seedance 2.0', creenPrompt: 'Counter animation going from 0 to 500 with car icons appearing. Confetti celebration effect. "GRACIAS Cd. Juárez" fade in. Celebratory mood. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.' }),
 
  entry('s03-vie', 19, 3, 'Se agotó — solo quedan 12', 'Escasez', 'fomo', 'video',
  ['tiktok', 'instagram', 'facebook'],
  '🟠 Este modelo se agota en Juárez.\n\nSolo quedan 12 unidades.\n\n¿Vas a esperar?',
  ['#SeAgota', '#Escasez', '#CarMatch', '#CdJuarez'],
- { creenModel: 'Seedance 2.0', creenPrompt: 'Counter descending: 12, 11, 10... cars disappearing from inventory grid. Red urgency colors. Text "ÚLTIMAS UNIDADES" pulsing. Fast-paced, urgent editing. 9:16 vertical.' }),
+ { creenModel: 'Seedance 2.0', creenPrompt: 'Counter descending: 12, 11, 10. cars disappearing from inventory grid. Red urgency colors. Text "ÚLTIMAS UNIDADES" pulsing. Fast-paced, urgent editing. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.' }),
 
  entry('s03-sab', 20, 3, 'María vendió en 1 día', 'Testimonio', 'social_proof', 'video',
  ['tiktok', 'instagram', 'facebook'],
  '🟢 María publicó a las 10am.\n\nA las 6pm: comprador.\n\n1 día.',
  ['#VendidoEn1Día', '#HistoriaReal', '#CarMatch', '#CdJuarez'],
- { creenModel: 'Seedance 2.0', creenPrompt: 'Clock animation: 10:00 AM "PUBLICADO" → 6:00 PM "VENDIDO" stamp. Calendar flip effect. María smiling with phone. Green success colors. 9:16 vertical.' }),
+ { creenModel: 'Seedance 2.0', creenPrompt: 'Clock animation: 10:00 AM "PUBLICADO" → 6:00 PM "VENDIDO" stamp. Calendar flip effect. María smiling with phone. Green success colors. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.' }),
 
  entry('s03-dom', 21, 3, 'Domingo: revisa tus documentos', 'Organización', 'security', 'imagen',
  ['facebook'],
  '🛡️ ¿Tus documentos al día?\n\n✅ Tenencia ✅ Verificación ✅ Seguro\n\nRevisa el domingo.',
  ['#DomingoDeDocumentos', '#CarMatch', '#CdJuarez'],
- { geminiPrompt: 'Checklist of car documents with green checkmarks: Tenencia, Verificación, Seguro. Calm Sunday morning light. Dark background..' }),
+ { geminiPrompt: 'Checklist of car documents with green checkmarks: Tenencia, Verificación, Seguro. Calm Sunday morning light. Dark background.' }),
 
  // ════════════ SEMANA 4: PRUEBA SOCIAL ════════════
 
@@ -244,64 +244,64 @@ const ALL_ENTRIES: CalendarEntry[] = [
  '🟣 3 razones por las que compran tu auto:\n\n1️⃣ Fotos profesionales\n2️⃣ Precio justo\n3️⃣ Vendedor verificado\n\nCarMatch te da las 3.',
  ['#RazonesParaComprar', '#TipDeVenta', '#CarMatch', '#CdJuarez'],
  { carouselSlides: [
- { slideNumber: 1, prompt: 'Camera icon with sparkles.. Purple accent. Dark background.', textOverlay: '1. Fotos que captan atención' },
- { slideNumber: 2, prompt: 'Price tag icon with checkmark.. Green accent. Dark background.', textOverlay: '2. Precio que genera confianza' },
- { slideNumber: 3, prompt: 'Shield with checkmark icon.. Blue accent. Dark background.', textOverlay: '3. Confianza que cierra la venta' },
+ { slideNumber: 1, prompt: 'Camera icon with sparkles. Purple accent. Dark background.', textOverlay: '1. Fotos que captan atención' },
+ { slideNumber: 2, prompt: 'Price tag icon with checkmark. Green accent. Dark background.', textOverlay: '2. Precio que genera confianza' },
+ { slideNumber: 3, prompt: 'Shield with checkmark icon. Blue accent. Dark background.', textOverlay: '3. Confianza que cierra la venta' },
  ]}),
 
  entry('s04-mar', 23, 4, 'Carlos busca sedan — $120K-$150K', 'Demanda Real', 'social_proof', 'video',
  ['tiktok', 'instagram', 'facebook'],
  '🟢 Carlos busca sedan en Juárez.\n\nPresupuesto: $120,000-$150,000.\n\n¿Le vendes el tuyo?',
  ['#CompradorReal', '#BuscaAuto', '#CarMatch', '#CdJuarez'],
- { creenModel: 'Seedance 2.0', creenPrompt: 'Buyer profile card: "Carlos, Cd. Juárez — Busca sedan — $120K-$150K". Car matching animation connecting buyer to vehicle. Green match indicator. Clean, modern UI style. 9:16 vertical.' }),
+ { creenModel: 'Seedance 2.0', creenPrompt: 'Buyer profile card: "Carlos, Cd. Juárez — Busca sedan — $120K-$150K". Car matching animation connecting buyer to vehicle. Green match indicator. Clean, modern UI style. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.' }),
 
  entry('s04-mie', 24, 4, 'Ana busca SUV — $150K-$200K', 'Demanda Real', 'social_proof', 'video',
  ['tiktok', 'instagram', 'facebook'],
  '🟢 Ana busca SUV para su familia.\n\n$150,000-$200,000.\n\n¿Tu auto le sirve?',
  ['#CompradoraReal', '#BuscaSUV', '#CarMatch', '#CdJuarez'],
- { creenModel: 'Seedance 2.0', creenPrompt: 'Buyer profile: "Ana — Busca SUV para familia — $150K-$200K". Family silhouette next to SUV icon. Matching animation. Warm family colors. 9:16 vertical.' }),
+ { creenModel: 'Seedance 2.0', creenPrompt: 'Buyer profile: "Ana — Busca SUV para familia — $150K-$200K". Family silhouette next to SUV icon. Matching animation. Warm family colors. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.' }),
 
  entry('s04-jue', 25, 4, '1,000 usuarios en CarMatch', 'Milestone', 'social_proof', 'video',
  ['tiktok', 'instagram', 'facebook'],
  '🟢 1,000 usuarios en CarMatch Juárez.\n\n1,000 personas confiando.\n\nGracias.',
  ['#1000Usuarios', '#Crecimiento', '#CarMatch', '#CdJuarez'],
- { creenModel: 'Seedance 2.0', creenPrompt: 'Counter going to 1,000 with people icons connecting on a network map of Cd. Juárez. Celebration confetti. "GRACIAS" in large text. Green and blue colors. 9:16 vertical.' }),
+ { creenModel: 'Seedance 2.0', creenPrompt: 'Counter going to 1,000 with people icons connecting on a network map of Cd. Juárez. Celebration confetti. "GRACIAS" in large text. Green and blue colors. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.' }),
 
  entry('s04-vie', 26, 4, 'Último día de este precio', 'Urgencia', 'fomo', 'video',
  ['tiktok', 'instagram', 'facebook'],
  '🟠 Último día de este precio.\n\nMañana sube.\n\nNo digas que no te avisamos.',
  ['#ÚltimoDía', '#CarMatch', '#CdJuarez'],
- { creenModel: 'Seedance 2.0', creenPrompt: 'Ticking clock countdown. Price tag with "$" being crossed out and higher price appearing.. Urgency, fast cuts. 9:16 vertical.' }),
+ { creenModel: 'Seedance 2.0', creenPrompt: 'Ticking clock countdown. Price tag with "$" being crossed out and higher price appearing. Urgency, fast cuts. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.' }),
 
  entry('s04-sab', 27, 4, '50 autos vendidos esta semana', 'Momentum', 'social_proof', 'imagen',
  ['facebook'],
  '🟢 50 autos vendidos solo esta semana.\n\nEl mercado está activo.\n\n¿Ya publicaste el tuyo?',
  ['#50Vendidos', '#Momentum', '#CarMatch', '#CdJuarez'],
- { geminiPrompt: 'Large number "50" in green with car icons and checkmarks.. Dark background. Momentum energy.' }),
+ { geminiPrompt: 'Large number "50" in green with car icons and checkmarks. Dark background. Momentum energy.' }),
 
  entry('s04-dom', 28, 4, 'Gracias por un mes increíble', 'Agradecimiento', 'identity', 'imagen',
  ['facebook'],
  '🔵 Un mes de CarMatch en Juárez.\n\nGracias. Esto apenas empieza.',
  ['#UnMes', '#Gracias', '#CarMatch', '#CdJuarez'],
- { geminiPrompt: 'Month 1 celebration graphic. Calendar icon with "1" and confetti.. Blue gradient background. Warm, grateful tone.' }),
+ { geminiPrompt: 'Month 1 celebration graphic. Calendar icon with "1" and confetti. Blue gradient background. Warm, grateful tone.' }),
 ]
 
 // ═══ WEEKS 5-12 GENERATED ═══
 
 function genWeek5(): CalendarEntry[] {
  const d: Array<{id:string;dn:number;t:string;th:string;g:GatilloKey;f:Format;cap:string;tags:string[];cp?:string;cm?:string;gp?:string}> = [
- {id:'s05-lun',dn:29,t:'¿Qué tipo de comprador eres?',th:'Identidad',g:'identity',f:'video',cap:'🔵 ¿Sedan, SUV o pick-up?\n\nDescubre cuál es tu estilo.\n\n📲 Link en bio',tags:['#CompradorActivo','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'Split screen showing three car types: sedan (practical, blue), SUV (family, warm), pick-up (work, rugged).. Each side lights up as mentioned. 9:16 vertical.'},
+ {id:'s05-lun',dn:29,t:'¿Qué tipo de comprador eres?',th:'Identidad',g:'identity',f:'video',cap:'🔵 ¿Sedan, SUV o pick-up?\n\nDescubre cuál es tu estilo.\n\n📲 Link en bio',tags:['#CompradorActivo','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'Split screen showing three car types: sedan (practical, blue), SUV (family, warm), pick-up (work, rugged). Each side lights up as mentioned. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.'},
  {id:'s05-mar',dn:30,t:'Los 5 autos más confiables',th:'Autoridad',g:'authority',f:'carrusel',cap:'🟣 Los 5 autos más confiables:\n1. Toyota Corolla\n2. Honda Civic\n3. Mazda 3\n4. Hyundai Elantra\n5. Nissan Sentra\n\n¿El tuyo está?',tags:['#AutosConfiables','#Top5','#CarMatch','#CdJuarez']},
- {id:'s05-mie',dn:31,t:'Prueba: ¿vale tu auto?',th:'Curiosidad',g:'curiosity',f:'video',cap:'🟡 ¿Vale la pena tu auto?\n\nDescúbrelo gratis en CarMatch.',tags:['#ValuaTuAuto','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'Person typing car info into phone. Valuation result appears: price in green with upward arrow. Surprised happy expression. "¿VALE MÁS DE LO QUE CREES?" text. 9:16 vertical.'},
- {id:'s05-jue',dn:32,t:'80% miran, 20% compran',th:'Prueba Social',g:'social_proof',f:'video',cap:'🟢 El 80% solo mira.\n\nEl 20% compra.\n\nCarMatch tiene compradores reales.',tags:['#CompradoresReales','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'Pie chart: 80% gray "SOLO MIRAN", 20% green "COMPRAN DE VERDAD". Transition to CarMatch buyer notification. Data visualization style. 9:16 vertical.'},
- {id:'s05-vie',dn:33,t:'Se fue tu modelo',th:'Urgencia',g:'fomo',f:'imagen',cap:'🟠 Se vendió el último de tu modelo.\n\n¿Ya publicaste el tuyo?',tags:['#SeFue','#FOMO','#CarMatch','#CdJuarez'],gp:'Car silhouette fading away with "VENDIDO" stamp in red.. Dark background.'},
- {id:'s05-sab',dn:34,t:'Tu auto soñado está aquí',th:'Identidad',g:'identity',f:'video',cap:'🔵 Tu auto soñado está en CarMatch.\n\nBúscalo ahora.',tags:['#AutoSoñado','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'Dreamy sequence: person imagining their ideal car. Car appears with sparkle effect.. Hopeful, aspirational mood. 9:16 vertical.'},
- {id:'s05-dom',dn:35,t:'Domingo de desear un auto',th:'Identidad',g:'identity',f:'imagen',cap:'🔵 Domingo: ¿de qué auto sueñas?\n\nMira los que hay en CarMatch.',tags:['#DomingoDeSoñar','#CarMatch','#CdJuarez'],gp:'Cozy Sunday scene, person looking at car listings on phone. Warm lighting..'},
+ {id:'s05-mie',dn:31,t:'Prueba: ¿vale tu auto?',th:'Curiosidad',g:'curiosity',f:'video',cap:'🟡 ¿Vale la pena tu auto?\n\nDescúbrelo gratis en CarMatch.',tags:['#ValuaTuAuto','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'Person typing car info into phone. Valuation result appears: price in green with upward arrow. Surprised happy expression. "¿VALE MÁS DE LO QUE CREES?" text. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.'},
+ {id:'s05-jue',dn:32,t:'80% miran, 20% compran',th:'Prueba Social',g:'social_proof',f:'video',cap:'🟢 El 80% solo mira.\n\nEl 20% compra.\n\nCarMatch tiene compradores reales.',tags:['#CompradoresReales','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'Pie chart: 80% gray "SOLO MIRAN", 20% green "COMPRAN DE VERDAD". Transition to CarMatch buyer notification. Data visualization style. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.'},
+ {id:'s05-vie',dn:33,t:'Se fue tu modelo',th:'Urgencia',g:'fomo',f:'imagen',cap:'🟠 Se vendió el último de tu modelo.\n\n¿Ya publicaste el tuyo?',tags:['#SeFue','#FOMO','#CarMatch','#CdJuarez'],gp:'Car silhouette fading away with "VENDIDO" stamp in red. Dark background.'},
+ {id:'s05-sab',dn:34,t:'Tu auto soñado está aquí',th:'Identidad',g:'identity',f:'video',cap:'🔵 Tu auto soñado está en CarMatch.\n\nBúscalo ahora.',tags:['#AutoSoñado','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'Dreamy sequence: person imagining their ideal car. Car appears with sparkle effect. Hopeful, aspirational mood. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.'},
+ {id:'s05-dom',dn:35,t:'Domingo de desear un auto',th:'Identidad',g:'identity',f:'imagen',cap:'🔵 Domingo: ¿de qué auto sueñas?\n\nMira los que hay en CarMatch.',tags:['#DomingoDeSoñar','#CarMatch','#CdJuarez'],gp:'Cozy Sunday scene, person looking at car listings on phone. Warm lighting.'},
  ]
  return d.map(x => entry(x.id,x.dn,5,x.t,x.th,x.g,x.f,
  x.f==='imagen'?['facebook']:['tiktok','instagram','facebook'],
  x.cap,x.tags,{ creenModel:x.cm, creenPrompt:x.cp, geminiPrompt:x.gp,
- ...(x.f==='carrusel'?{carouselSlides:[ // add default slides for carruseles
+ .(x.f==='carrusel'?{carouselSlides:[ // add default slides for carruseles
  {slideNumber:1,prompt:'Slide 1 infographic, dark background.',textOverlay:x.tags[0]},
  {slideNumber:2,prompt:'Slide 2 infographic, dark background.',textOverlay:'Dato 2'},
  {slideNumber:3,prompt:'Slide 3 infographic, dark background.',textOverlay:'Dato 3'},
@@ -311,12 +311,12 @@ function genWeek5(): CalendarEntry[] {
 
 function genWeek6(): CalendarEntry[] {
  const d: Array<{id:string;dn:number;t:string;th:string;g:GatilloKey;f:Format;cap:string;tags:string[];cm?:string;cp?:string;gp?:string}> = [
- {id:'s06-lun',dn:36,t:'Tu auto vale más de lo que crees',th:'Valuación',g:'curiosity',f:'video',cap:'🟡 Tu auto vale $20,000 más.\n\nDescúbrelo.',tags:['#ValuaTuAuto','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'Person shocked looking at phone. Price comparison: low crossed out, higher value revealed. "VALE MÁS DE LO QUE CREES" text. 9:16 vertical.'},
+ {id:'s06-lun',dn:36,t:'Tu auto vale más de lo que crees',th:'Valuación',g:'curiosity',f:'video',cap:'🟡 Tu auto vale $20,000 más.\n\nDescúbrelo.',tags:['#ValuaTuAuto','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'Person shocked looking at phone. Price comparison: low crossed out, higher value revealed. "VALE MÁS DE LO QUE CREES" text. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.'},
  {id:'s06-mar',dn:37,t:'3 tips para fotos que venden',th:'Tips',g:'authority',f:'carrusel',cap:'🟣 Tips fotos:\n1. Luz natural\n2. Ángulo frontal\n3. Interior limpio\n\nCarMatch te guía.',tags:['#TipsFotos','#VendeTuAuto','#CarMatch','#CdJuarez']},
- {id:'s06-mie',dn:38,t:'¿A cuánto poner tu auto?',th:'Valuación',g:'curiosity',f:'video',cap:'🟡 ¿A cuánto poner tu auto?\n\nCarMatch te dice.',tags:['#A_cuánto','#Valuación','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'Person confused with price tag. CarMatch valuation tool calculates. Green checkmark with correct price. "EL PRECIO JUSTO" text. 9:16 vertical.'},
- {id:'s06-jue',dn:39,t:'Pedro vendió pickup en 5 días',th:'Testimonio',g:'social_proof',f:'video',cap:'🟢 Pedro vendió su pickup en 5 días.\n\nCarMatch funciona.',tags:['#TestimonioReal','#Vendido','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'Testimonial card: "Pedro, Cd. Juárez — Pickup vendida en 5 días". Timeline animation. Green success theme. UGC style. 9:16 vertical.'},
- {id:'s06-vie',dn:40,t:'Sin publicar = perdiendo dinero',th:'Pérdida',g:'loss_aversion',f:'video',cap:'🔴 Cada día sin publicar = dinero perdido.\n\nPublica gratis.',tags:['#PérdidaDeDinero','#VendeTuAuto','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'Money counter decreasing while car sits idle. Calendar days flying by. "CADA DÍA PIERDES $700" text in red. Urgency feeling. 9:16 vertical.'},
- {id:'s06-sab',dn:41,t:'Vende sin comisiones',th:'Identidad',g:'identity',f:'imagen',cap:'🔵 Cero comisiones.\n\nCero intermediarios.\n\nVende directo.',tags:['#SinComisiones','#CarMatch','#CdJuarez'],gp:' crossed-out commission percentage "0%" with money staying in hand.. Dark background.'},
+ {id:'s06-mie',dn:38,t:'¿A cuánto poner tu auto?',th:'Valuación',g:'curiosity',f:'video',cap:'🟡 ¿A cuánto poner tu auto?\n\nCarMatch te dice.',tags:['#A_cuánto','#Valuación','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'Person confused with price tag. CarMatch valuation tool calculates. Green checkmark with correct price. "EL PRECIO JUSTO" text. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.'},
+ {id:'s06-jue',dn:39,t:'Pedro vendió pickup en 5 días',th:'Testimonio',g:'social_proof',f:'video',cap:'🟢 Pedro vendió su pickup en 5 días.\n\nCarMatch funciona.',tags:['#TestimonioReal','#Vendido','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'Testimonial card: "Pedro, Cd. Juárez — Pickup vendida en 5 días". Timeline animation. Green success theme. UGC style. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.'},
+ {id:'s06-vie',dn:40,t:'Sin publicar = perdiendo dinero',th:'Pérdida',g:'loss_aversion',f:'video',cap:'🔴 Cada día sin publicar = dinero perdido.\n\nPublica gratis.',tags:['#PérdidaDeDinero','#VendeTuAuto','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'Money counter decreasing while car sits idle. Calendar days flying by. "CADA DÍA PIERDES $700" text in red. Urgency feeling. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.'},
+ {id:'s06-sab',dn:41,t:'Vende sin comisiones',th:'Identidad',g:'identity',f:'imagen',cap:'🔵 Cero comisiones.\n\nCero intermediarios.\n\nVende directo.',tags:['#SinComisiones','#CarMatch','#CdJuarez'],gp:' crossed-out commission percentage "0%" with money staying in hand. Dark background.'},
  {id:'s06-dom',dn:42,t:'Domingo: prepárate para vender',th:'Preparación',g:'security',f:'imagen',cap:'🛡️ Domingo: prepara tu auto para vender.\n\nLimpieza + fotos + precio.',tags:['#DomingoDePreparación','#CarMatch','#CdJuarez'],gp:'Car being washed and polished on Sunday morning. Checklist floating: Limpieza ✓, Fotos ✓, Precio ✓. Warm light.'},
  ]
  return d.map(x => entry(x.id,x.dn,6,x.t,x.th,x.g,x.f,
@@ -327,13 +327,13 @@ function genWeek6(): CalendarEntry[] {
 function genWeek7(): CalendarEntry[] {
  // Week 7: Día de Muertos + Funciones
  const d: Array<{id:string;dn:number;t:string;th:string;g:GatilloKey;f:Format;cap:string;tags:string[];cm?:string;cp?:string;gp?:string;fest?:boolean;fDate?:string;pre?:number}> = [
- {id:'s07-lun',dn:43,t:'MapStore: Negocios verificados',th:'Funciones',g:'authority',f:'video',cap:'🟣 MapStore: talleres y negocios verificados cerca de ti.',tags:['#MapStore','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'Map interface showing verified business pins popping up around Cd. Juárez. Green checkmarks on each. "NEGOCIOS VERIFICADOS" text. 9:16 vertical.'},
- {id:'s07-mar',dn:44,t:'GPS: servicios cerca de ti',th:'Funciones',g:'curiosity',f:'video',cap:'🟡 GPS: servicios de auto cerca de ti.',tags:['#GPS','#ServiciosCerca','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'GPS navigation screen showing nearby car services with distance indicators. "SERVICIOS CERCA DE TI" text. Blue tech style. 9:16 vertical.'},
+ {id:'s07-lun',dn:43,t:'MapStore: Negocios verificados',th:'Funciones',g:'authority',f:'video',cap:'🟣 MapStore: talleres y negocios verificados cerca de ti.',tags:['#MapStore','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'Map interface showing verified business pins popping up around Cd. Juárez. Green checkmarks on each. "NEGOCIOS VERIFICADOS" text. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.'},
+ {id:'s07-mar',dn:44,t:'GPS: servicios cerca de ti',th:'Funciones',g:'curiosity',f:'video',cap:'🟡 GPS: servicios de auto cerca de ti.',tags:['#GPS','#ServiciosCerca','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'GPS navigation screen showing nearby car services with distance indicators. "SERVICIOS CERCA DE TI" text. Blue tech style. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.'},
  {id:'s07-mie',dn:45,t:'Recuerda: tu familia depende de ti',th:'Día de Muertos',g:'security',f:'carrusel',cap:'💀 Día de Muertos: recuerda a los que ya no están.\n\nCuida tu auto para cuidar a los tuyos.\n\nCarMatch te protege.',tags:['#DíaDeMuertos','#Recuerda','#CarMatch','#CdJuarez'],fest:true,fDate:'2026-11-01',pre:3},
  {id:'s07-jue',dn:46,t:'Notificaciones de precio',th:'Funciones',g:'fomo',f:'imagen',cap:'🟠 Te avisamos cuando baja el precio.\n\nNo te pierdas nada.',tags:['#AlertasDePrecio','#CarMatch','#CdJuarez'],gp:'Bell notification icon with price tag dropping. "ALERTA DE PRECIO" text. Orange accent.'},
  {id:'s07-vie',dn:47,t:'Guarda favoritos y compáralos',th:'Funciones',g:'identity',f:'imagen',cap:'🔵 Guarda favoritos y compáralos.\n\nTu auto ideal a un tap.',tags:['#Favoritos','#CarMatch','#CdJuarez'],gp:'Heart icon with multiple car silhouettes. Comparison view. "GUARDA TUS FAVORITOS" text. Blue accent.'},
  {id:'s07-sab',dn:48,t:'Chat directo con vendedor',th:'Funciones',g:'social_proof',f:'imagen',cap:'🟢 Chatea directo con el vendedor.\n\nSin intermediarios.',tags:['#ChatDirecto','#CarMatch','#CdJuarez'],gp:'Chat bubble interface between buyer and seller. Green checkmarks. "DIRECTO, SIN INTERMEDIARIOS" text.'},
- {id:'s07-dom',dn:49,t:'Día de Muertos: paz y descanso',th:'Día de Muertos',g:'identity',f:'imagen',cap:'💀 Día de Muertos: paz y descanso.\n\nRecuerda a los tuyos.',tags:['#DíaDeMuertos','#Paz','#CarMatch','#CdJuarez'],gp:'Ofrenda with candles and marigolds. Peaceful, respectful.. Dark background.',fest:true,fDate:'2026-11-02'},
+ {id:'s07-dom',dn:49,t:'Día de Muertos: paz y descanso',th:'Día de Muertos',g:'identity',f:'imagen',cap:'💀 Día de Muertos: paz y descanso.\n\nRecuerda a los tuyos.',tags:['#DíaDeMuertos','#Paz','#CarMatch','#CdJuarez'],gp:'Ofrenda with candles and marigolds. Peaceful, respectful. Dark background.',fest:true,fDate:'2026-11-02'},
  ]
  return d.map(x => entry(x.id,x.dn,7,x.t,x.th,x.g,x.f,
  x.f==='imagen'?['facebook']:['tiktok','instagram','facebook'],
@@ -343,13 +343,13 @@ function genWeek7(): CalendarEntry[] {
 
 function genWeek8(): CalendarEntry[] {
  const d: Array<{id:string;dn:number;t:string;th:string;g:GatilloKey;f:Format;cap:string;tags:string[];cm?:string;cp?:string;gp?:string}> = [
- {id:'s08-lun',dn:50,t:'De Juárez, para Juárez',th:'Orgullo',g:'identity',f:'video',cap:'🔵 CarMatch es de Juárez.\n\nPara Juárez.',tags:['#JuárezPride','#HechoEnJuarez','#CarMatch'],cm:'Seedance 2.0',cp:'Cd. Juárez skyline montage: puente, centro, monumentos.. Emotional music mood. 9:16 vertical.'},
- {id:'s08-mar',dn:51,t:'Frontera más activa de México',th:'Orgullo',g:'authority',f:'imagen',cap:'🟣 Juárez: la frontera más activa.\n\nTu auto se vende aquí.',tags:['#FronteraDigital','#CarMatch','#CdJuarez'],gp:'Cd. Juárez border bridge at sunset.. Purple accent.'},
- {id:'s08-mie',dn:52,t:'Antes y después de CarMatch',th:'Transformación',g:'social_proof',f:'video',cap:'🟢 Antes: 2 meses vendiendo.\n\nDespués: 3 días.',tags:['#AntesYDespués','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'Split screen before/after: Left "2 MESES" with sad face and dusty car. Right "3 DÍAS" with happy face and "VENDIDO" stamp. Transformation effect. 9:16 vertical.'},
- {id:'s08-jue',dn:53,t:'Orgullo juarense: los mejores autos',th:'Orgullo',g:'identity',f:'imagen',cap:'🔵 Juárez tiene los mejores autos.\n\nOrgullo juarense.',tags:['#OrgulloJuarense','#CarMatch','#CdJuarez'],gp:'Cars lined up with Cd. Juárez flag.. Patriotic blue.'},
- {id:'s08-vie',dn:54,t:'Tu vecino ya publicó',th:'FOMO',g:'fomo',f:'video',cap:'🟠 Tu vecino ya publicó su auto.\n\n¿Y tú?',tags:['#FOMO','#YaPublicó','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'Neighbor waving from next house with car keys. Phone notification: "Tu vecino publicó en CarMatch". "¿Y EL TUYO?" text. 9:16 vertical.'},
- {id:'s08-sab',dn:55,t:'Sábado de paseo virtual',th:'Diversión',g:'identity',f:'imagen',cap:'🔵 Sábado de paseo: mira autos en CarMatch.',tags:['#SábadoDePaseo','#CarMatch','#CdJuarez'],gp:'Person relaxing on couch browsing car listings on phone. Cozy Saturday vibes..'},
- {id:'s08-dom',dn:56,t:'Gracias Juárez — 2 meses',th:'Agradecimiento',g:'identity',f:'imagen',cap:'🔵 2 meses en Juárez.\n\nGracias.',tags:['#2Meses','#Gracias','#CarMatch','#CdJuarez'],gp:'Calendar showing 2 months. Heart icon.. Blue background.'},
+ {id:'s08-lun',dn:50,t:'De Juárez, para Juárez',th:'Orgullo',g:'identity',f:'video',cap:'🔵 CarMatch es de Juárez.\n\nPara Juárez.',tags:['#JuárezPride','#HechoEnJuarez','#CarMatch'],cm:'Seedance 2.0',cp:'Cd. Juárez skyline montage: puente, centro, monumentos. Emotional music mood. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.'},
+ {id:'s08-mar',dn:51,t:'Frontera más activa de México',th:'Orgullo',g:'authority',f:'imagen',cap:'🟣 Juárez: la frontera más activa.\n\nTu auto se vende aquí.',tags:['#FronteraDigital','#CarMatch','#CdJuarez'],gp:'Cd. Juárez border bridge at sunset. Purple accent.'},
+ {id:'s08-mie',dn:52,t:'Antes y después de CarMatch',th:'Transformación',g:'social_proof',f:'video',cap:'🟢 Antes: 2 meses vendiendo.\n\nDespués: 3 días.',tags:['#AntesYDespués','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'Split screen before/after: Left "2 MESES" with sad face and dusty car. Right "3 DÍAS" with happy face and "VENDIDO" stamp. Transformation effect. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.'},
+ {id:'s08-jue',dn:53,t:'Orgullo juarense: los mejores autos',th:'Orgullo',g:'identity',f:'imagen',cap:'🔵 Juárez tiene los mejores autos.\n\nOrgullo juarense.',tags:['#OrgulloJuarense','#CarMatch','#CdJuarez'],gp:'Cars lined up with Cd. Juárez flag. Patriotic blue.'},
+ {id:'s08-vie',dn:54,t:'Tu vecino ya publicó',th:'FOMO',g:'fomo',f:'video',cap:'🟠 Tu vecino ya publicó su auto.\n\n¿Y tú?',tags:['#FOMO','#YaPublicó','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'Neighbor waving from next house with car keys. Phone notification: "Tu vecino publicó en CarMatch". "¿Y EL TUYO?" text. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.'},
+ {id:'s08-sab',dn:55,t:'Sábado de paseo virtual',th:'Diversión',g:'identity',f:'imagen',cap:'🔵 Sábado de paseo: mira autos en CarMatch.',tags:['#SábadoDePaseo','#CarMatch','#CdJuarez'],gp:'Person relaxing on couch browsing car listings on phone. Cozy Saturday vibes.'},
+ {id:'s08-dom',dn:56,t:'Gracias Juárez — 2 meses',th:'Agradecimiento',g:'identity',f:'imagen',cap:'🔵 2 meses en Juárez.\n\nGracias.',tags:['#2Meses','#Gracias','#CarMatch','#CdJuarez'],gp:'Calendar showing 2 months. Heart icon. Blue background.'},
  ]
  return d.map(x => entry(x.id,x.dn,8,x.t,x.th,x.g,x.f,
  x.f==='imagen'?['facebook']:['tiktok','instagram','facebook'],
@@ -358,9 +358,9 @@ function genWeek8(): CalendarEntry[] {
 
 function genWeek9(): CalendarEntry[] {
  const d: Array<{id:string;dn:number;t:string;th:string;g:GatilloKey;f:Format;cap:string;tags:string[];cm?:string;cp?:string;gp?:string;fest?:boolean;fDate?:string;pre?:number}> = [
- {id:'s09-lun',dn:57,t:'Día de la Revolución: México avanza',th:'Revolución',g:'identity',f:'video',cap:'🇲🇽 Día de la Revolución.\n\nMéxico avanza. Tú también.',tags:['#Revolución','#16DeNoviembre','#CarMatch','#CdJuarez'],cm:'Sora 2 Pro',cp:'Historical revolution imagery transitioning to modern Cd. Juárez progress. Mexican flag colors.. Patriotic, inspiring. 9:16 vertical.',fest:true,fDate:'2026-11-16',pre:3},
- {id:'s09-mar',dn:58,t:'Buen Fin se acerca',th:'Pre-Buen Fin',g:'fomo',f:'video',cap:'🟠 El Buen Fin se acerca.\n\nPrepárate.',tags:['#BuenFin','#SeAcerca','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'Calendar pages flipping to November 27. Countdown timer. "BUEN FIN SE ACERCA" text pulsing in orange. Excitement building. 9:16 vertical.'},
- {id:'s09-mie',dn:59,t:'Precios bajos del Buen Fin',th:'Pre-Buen Fin',g:'loss_aversion',f:'imagen',cap:'🔴 Precios bajos del Buen Fin.\n\nNo esperes.',tags:['#BuenFin','#PreciosBajos','#CarMatch','#CdJuarez'],gp:'Price tags dropping down with "BAJA" arrows. Red urgency..'},
+ {id:'s09-lun',dn:57,t:'Día de la Revolución: México avanza',th:'Revolución',g:'identity',f:'video',cap:'🇲🇽 Día de la Revolución.\n\nMéxico avanza. Tú también.',tags:['#Revolución','#16DeNoviembre','#CarMatch','#CdJuarez'],cm:'Sora 2 Pro',cp:'Historical revolution imagery transitioning to modern Cd. Juárez progress. Mexican flag colors. Patriotic, inspiring. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.',fest:true,fDate:'2026-11-16',pre:3},
+ {id:'s09-mar',dn:58,t:'Buen Fin se acerca',th:'Pre-Buen Fin',g:'fomo',f:'video',cap:'🟠 El Buen Fin se acerca.\n\nPrepárate.',tags:['#BuenFin','#SeAcerca','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'Calendar pages flipping to November 27. Countdown timer. "BUEN FIN SE ACERCA" text pulsing in orange. Excitement building. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.'},
+ {id:'s09-mie',dn:59,t:'Precios bajos del Buen Fin',th:'Pre-Buen Fin',g:'loss_aversion',f:'imagen',cap:'🔴 Precios bajos del Buen Fin.\n\nNo esperes.',tags:['#BuenFin','#PreciosBajos','#CarMatch','#CdJuarez'],gp:'Price tags dropping down with "BAJA" arrows. Red urgency.'},
  {id:'s09-jue',dn:60,t:'Checklist pre-Buen Fin',th:'Preparación',g:'authority',f:'carrusel',cap:'🟣 Checklist antes del Buen Fin:\n1️⃣ Define tu presupuesto\n2️⃣ investiga modelos\n3️⃣ Compara precios\n\nDesliza.',tags:['#Checklist','#BuenFin','#CarMatch','#CdJuarez']},
  {id:'s09-vie',dn:61,t:'Ya hay lista de espera',th:'FOMO',g:'fomo',f:'imagen',cap:'🟠 Lista de espera para el Buen Fin.\n\n¿Ya estás?',tags:['#ListaDeEspera','#BuenFin','#CarMatch','#CdJuarez'],gp:'Queue line of people silhouettes. "LISTA DE ESPERA" text in orange. "¿YA ESTÁS?" at bottom.'},
  {id:'s09-sab',dn:62,t:'Mañana empieza el Buen Fin',th:'FOMO',g:'fomo',f:'imagen',cap:'🟠 Mañana empieza el Buen Fin.\n\nNo te lo pierdas.',tags:['#BuenFin','#Mañana','#CarMatch','#CdJuarez'],gp:'Calendar with tomorrow circled in red. "MAÑANA EMPIEZA" text. Countdown "0 DÍAS".'},
@@ -374,10 +374,10 @@ function genWeek9(): CalendarEntry[] {
 
 function genWeek10(): CalendarEntry[] {
  const d: Array<{id:string;dn:number;t:string;th:string;g:GatilloKey;f:Format;cap:string;tags:string[];cm?:string;cp?:string;gp?:string;fest?:boolean;fDate?:string;pre?:number}> = [
- {id:'s10-lun',dn:64,t:'Buen Fin: Ofertas de autos',th:'Buen Fin',g:'loss_aversion',f:'video',cap:'🏷️ Buen Fin: precios que no vuelven.\n\nSolo esta semana.',tags:['#BuenFin','#Ofertas','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'Price tags with slashes through high prices. New low prices appearing in green. "BUEN FIN" logo with sparkles. Exciting deal energy. 9:16 vertical.',fest:true,fDate:'2026-11-27',pre:3},
+ {id:'s10-lun',dn:64,t:'Buen Fin: Ofertas de autos',th:'Buen Fin',g:'loss_aversion',f:'video',cap:'🏷️ Buen Fin: precios que no vuelven.\n\nSolo esta semana.',tags:['#BuenFin','#Ofertas','#CarMatch','#CdJuarez'],cm:'Seedance 2.0',cp:'Price tags with slashes through high prices. New low prices appearing in green. "BUEN FIN" logo with sparkles. Exciting deal energy. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.',fest:true,fDate:'2026-11-27',pre:3},
  {id:'s10-mar',dn:65,t:'50% descuento mantenimiento',th:'Buen Fin',g:'loss_aversion',f:'imagen',cap:'🏷️ 50% descuento en mantenimiento.\n\nSolo Buen Fin.',tags:['#BuenFin','#50Porciento','#Descuento','#CarMatch'],gp:'Big "50%" in red with "DESCUENTO" text. Car maintenance icons. "SOLO BUEN FIN" badge.'},
- {id:'s10-mie',dn:66,t:'Se agotó en 1 hora',th:'Buen Fin',g:'fomo',f:'video',cap:'🟠 Se agotó en 1 hora.\n\n¿Vas a esperar?',tags:['#SeAgotó','#BuenFin','#FOMO','#CarMatch'],cm:'Seedance 2.0',cp:'Counter going from available to "AGOTADO" in 1 hour. Fast clock. "¿VAS A ESPERAR?" text in red. FOMO urgency. 9:16 vertical.'},
- {id:'s10-jue',dn:67,t:'Último día Buen Fin',th:'Buen Fin',g:'loss_aversion',f:'video',cap:'🏷️ Último día. Mañana se acabó.\n\nNo digas que no te avisamos.',tags:['#ÚltimoDía','#BuenFin','#CarMatch'],cm:'Seedance 2.0',cp:'Countdown to midnight. "ÚLTIMO DÍA" in red. Price tags disappearing. "MAÑANA SE ACABÓ" warning. Urgency. 9:16 vertical.'},
+ {id:'s10-mie',dn:66,t:'Se agotó en 1 hora',th:'Buen Fin',g:'fomo',f:'video',cap:'🟠 Se agotó en 1 hora.\n\n¿Vas a esperar?',tags:['#SeAgotó','#BuenFin','#FOMO','#CarMatch'],cm:'Seedance 2.0',cp:'Counter going from available to "AGOTADO" in 1 hour. Fast clock. "¿VAS A ESPERAR?" text in red. FOMO urgency. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.'},
+ {id:'s10-jue',dn:67,t:'Último día Buen Fin',th:'Buen Fin',g:'loss_aversion',f:'video',cap:'🏷️ Último día. Mañana se acabó.\n\nNo digas que no te avisamos.',tags:['#ÚltimoDía','#BuenFin','#CarMatch'],cm:'Seedance 2.0',cp:'Countdown to midnight. "ÚLTIMO DÍA" in red. Price tags disappearing. "MAÑANA SE ACABÓ" warning. Urgency. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.'},
  {id:'s10-vie',dn:68,t:'Buen Fin: resumen',th:'Buen Fin',g:'social_proof',f:'imagen',cap:'🟢 Buen Fin: autos vendidos.\n\nGracias.',tags:['#BuenFin','#Resumen','#Gracias','#CarMatch'],gp:'Summary infographic: cars sold during Buen Fin. Checkmarks. "GRACIAS Cd. JUÁREZ" in green.'},
  {id:'s10-sab',dn:69,t:'Después del Buen Fin',th:'Post-Buen Fin',g:'curiosity',f:'imagen',cap:'🟡 Después del Buen Fin: qué sigue.\n\nNavidad se acerca.',tags:['#PostBuenFin','#QuéSigue','#CarMatch'],gp:'Calendar transitioning from November to December. "QUÉ SIGUE?" text. Winter colors appearing.'},
  {id:'s10-dom',dn:70,t:'Gracias por el Buen Fin',th:'Agradecimiento',g:'identity',f:'imagen',cap:'🔵 Gracias por el Buen Fin.\n\nGracias Juárez.',tags:['#GraciasBuenFin','#CarMatch','#CdJuarez'],gp:'Heart with "GRACIAS" text. CarMatch logo. Warm gratitude tone.'},
@@ -390,10 +390,10 @@ function genWeek10(): CalendarEntry[] {
 
 function genWeek11(): CalendarEntry[] {
  const d: Array<{id:string;dn:number;t:string;th:string;g:GatilloKey;f:Format;cap:string;tags:string[];cm?:string;cp?:string;gp?:string;fest?:boolean;fDate?:string;pre?:number}> = [
- {id:'s11-lun',dn:71,t:'Navidad: regala seguridad',th:'Navidad',g:'security',f:'video',cap:'🎄 Regala seguridad este Navidad.\n\nUn auto nuevo para tu familia.',tags:['#Navidad','#RegalaSeguridad','#CarMatch'],cm:'Sora 2 Pro',cp:'Family gathered around Christmas tree. Gift box opens to reveal car keys. Warm golden lighting.. Emotional, heartfelt. 9:16 vertical.',fest:true,fDate:'2026-12-20',pre:5},
+ {id:'s11-lun',dn:71,t:'Navidad: regala seguridad',th:'Navidad',g:'security',f:'video',cap:'🎄 Regala seguridad este Navidad.\n\nUn auto nuevo para tu familia.',tags:['#Navidad','#RegalaSeguridad','#CarMatch'],cm:'Sora 2 Pro',cp:'Family gathered around Christmas tree. Gift box opens to reveal car keys. Warm golden lighting. Emotional, heartfelt. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.',fest:true,fDate:'2026-12-20',pre:5},
  {id:'s11-mar',dn:72,t:'5 autos ideales para regalar',th:'Navidad',g:'identity',f:'carrusel',cap:'🎄 5 autos ideales para regalar:\n1. Nissan Sentra\n2. VW Jetta\n3. Chevrolet Aveo\n4. Toyota Corolla\n5. Honda Civic\n\nDesliza.',tags:['#Navidad','#AutosParaRegalar','#CarMatch'],fest:true,fDate:'2026-12-21',pre:4},
- {id:'s11-mie',dn:73,t:'Familia + auto seguro',th:'Navidad',g:'security',f:'imagen',cap:'🎄 Tu familia merece un auto seguro.\n\nNavidad en CarMatch.',tags:['#Familia','#AutoSeguro','#Navidad','#CarMatch'],gp:'Happy family next to safe car. Christmas lights..',fest:true,fDate:'2026-12-22',pre:3},
- {id:'s11-jue',dn:74,t:'Ofertas navideñas',th:'Navidad',g:'fomo',f:'video',cap:'🎄 Ofertas navideñas.\n\nSolo esta semana.',tags:['#OfertasNavideñas','#Navidad','#CarMatch'],cm:'Seedance 2.0',cp:'Christmas-wrapped price tags with discounts. Snowflakes falling. "OFERTAS NAVIDEñas" in red and green. Festive urgency. 9:16 vertical.',fest:true,fDate:'2026-12-23',pre:2},
+ {id:'s11-mie',dn:73,t:'Familia + auto seguro',th:'Navidad',g:'security',f:'imagen',cap:'🎄 Tu familia merece un auto seguro.\n\nNavidad en CarMatch.',tags:['#Familia','#AutoSeguro','#Navidad','#CarMatch'],gp:'Happy family next to safe car. Christmas lights.',fest:true,fDate:'2026-12-22',pre:3},
+ {id:'s11-jue',dn:74,t:'Ofertas navideñas',th:'Navidad',g:'fomo',f:'video',cap:'🎄 Ofertas navideñas.\n\nSolo esta semana.',tags:['#OfertasNavideñas','#Navidad','#CarMatch'],cm:'Seedance 2.0',cp:'Christmas-wrapped price tags with discounts. Snowflakes falling. "OFERTAS NAVIDEñas" in red and green. Festive urgency. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.',fest:true,fDate:'2026-12-23',pre:2},
  {id:'s11-vie',dn:75,t:'Feliz Navidad CarMatch',th:'Navidad',g:'identity',f:'imagen',cap:'🎄 Feliz Navidad de parte de CarMatch.\n\nGracias por confiar.',tags:['#FelizNavidad','#CarMatch'],gp:'Christmas scene with CarMatch logo. "FELIZ NAVIDAD" in gold. Warm, festive.',fest:true,fDate:'2026-12-25'},
  {id:'s11-sab',dn:76,t:'Post-Navidad: qué sigue',th:'Post-Navidad',g:'curiosity',f:'imagen',cap:'🟡 Después de Navidad: qué sigue.\n\nAño Nuevo se acerca.',tags:['#PostNavidad','#QuéSigue','#CarMatch'],gp:'Calendar transitioning to January. "¿QUÉ SIGUE?" text. New year colors.'},
  {id:'s11-dom',dn:77,t:'Domingo de gratitud',th:'Gratitud',g:'identity',f:'imagen',cap:'🔵 Gracias por este año increíble.\n\nGracias Cd. Juárez.',tags:['#Gratitud','#Gracias','#CarMatch','#CdJuarez'],gp:'Heart with "GRACIAS 2026" text. Warm, grateful tone. Blue background.'},
@@ -406,7 +406,7 @@ function genWeek11(): CalendarEntry[] {
 
 function genWeek12(): CalendarEntry[] {
  const d: Array<{id:string;dn:number;t:string;th:string;g:GatilloKey;f:Format;cap:string;tags:string[];cm?:string;cp?:string;gp?:string;fest?:boolean;fDate?:string;pre?:number}> = [
- {id:'s12-lun',dn:78,t:'Año Nuevo: auto nuevo',th:'Año Nuevo',g:'identity',f:'video',cap:'🎆 2027: auto nuevo.\n\nEmpieza el año con CarMatch.',tags:['#AñoNuevo','#2027','#CarMatch'],cm:'Seedance 2.0',cp:'Fireworks over Cd. Juárez skyline. Calendar flipping to 2027. New car appearing.. Celebratory. 9:16 vertical.',fest:true,fDate:'2026-12-30',pre:2},
+ {id:'s12-lun',dn:78,t:'Año Nuevo: auto nuevo',th:'Año Nuevo',g:'identity',f:'video',cap:'🎆 2027: auto nuevo.\n\nEmpieza el año con CarMatch.',tags:['#AñoNuevo','#2027','#CarMatch'],cm:'Seedance 2.0',cp:'Fireworks over Cd. Juárez skyline. Calendar flipping to 2027. New car appearing. Celebratory. 9:16 vertical. Silent video, no audio, no text. Post-production in CapCut: Mexican Spanish voiceover (TTS), auto captions, background music.',fest:true,fDate:'2026-12-30',pre:2},
  {id:'s12-mar',dn:79,t:'Resolución: vender mi auto',th:'Año Nuevo',g:'loss_aversion',f:'imagen',cap:'🔴 Tu resolución 2027: vender tu auto.\n\nEmpieza hoy.',tags:['#Resolución2027','#VendeTuAuto','#CarMatch'],gp:'New Year resolution list with "VENDER MI AUTO" highlighted in red. Checkmark. Bold text.'},
  {id:'s12-mie',dn:80,t:'Feliz Año Nuevo 2027',th:'Año Nuevo',g:'identity',f:'imagen',cap:'🎆 Feliz 2027.\n\nGracias por confiar en CarMatch.',tags:['#FelizAñoNuevo','#2027','#CarMatch'],gp:'2027 in gold with fireworks. "FELIZ AÑO NUEVO" text. Festive, celebratory.',fest:true,fDate:'2027-01-01'},
  {id:'s12-jue',dn:81,t:'Primer día de 2027',th:'Año Nuevo',g:'curiosity',f:'imagen',cap:'🟡 Primer día de 2027.\n\n¿Qué auto quieres?',tags:['#PrimerDía2027','#CarMatch'],gp:'Fresh calendar page "1 de enero 2027". Question mark with car silhouette. "¿QUÉ AUTO QUIERES?" text.'},
@@ -421,9 +421,9 @@ function genWeek12(): CalendarEntry[] {
 }
 
 const ALL_ENTRIES_COMPLETE: CalendarEntry[] = [
- ...ALL_ENTRIES,
- ...genWeek5(), ...genWeek6(), ...genWeek7(), ...genWeek8(),
- ...genWeek9(), ...genWeek10(), ...genWeek11(), ...genWeek12(),
+ .ALL_ENTRIES,
+ .genWeek5(), .genWeek6(), .genWeek7(), .genWeek8(),
+ .genWeek9(), .genWeek10(), .genWeek11(), .genWeek12(),
 ]
 
 // ═══ COMPONENT ═══
@@ -465,8 +465,8 @@ export default function CalendarTab() {
  return { total, published, skipped, pending }
  }, [filteredEntries, publishedIds, skippedIds])
 
- const markPublished = (id: string) => { setPublishedIds(p => p.includes(id)?p:[...p,id]); setSkippedIds(p=>p.filter(x=>x!==id)) }
- const markSkipped = (id: string) => { setSkippedIds(p => p.includes(id)?p:[...p,id]); setPublishedIds(p=>p.filter(x=>x!==id)) }
+ const markPublished = (id: string) => { setPublishedIds(p => p.includes(id)?p:[.p,id]); setSkippedIds(p=>p.filter(x=>x!==id)) }
+ const markSkipped = (id: string) => { setSkippedIds(p => p.includes(id)?p:[.p,id]); setPublishedIds(p=>p.filter(x=>x!==id)) }
  const restoreEntry = (id: string) => { setPublishedIds(p=>p.filter(x=>x!==id)); setSkippedIds(p=>p.filter(x=>x!==id)) }
 
  const copyText = (text: string, id: string) => { navigator.clipboard.writeText(text); setCopiedId(id); setTimeout(()=>setCopiedId(null),2000) }
