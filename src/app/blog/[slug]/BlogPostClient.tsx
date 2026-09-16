@@ -1,6 +1,8 @@
 'use client'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 import { Calendar, Clock, User, ArrowLeft, Tag } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 
@@ -25,6 +27,8 @@ interface BlogPostClientProps {
 
 export default function BlogPostClient({ post, relatedPosts }: BlogPostClientProps) {
     const { t } = useLanguage()
+    const { data: session } = useSession()
+    const router = useRouter()
 
     return (
         <article className="max-w-3xl mx-auto px-4 py-12">
@@ -119,12 +123,12 @@ export default function BlogPostClient({ post, relatedPosts }: BlogPostClientPro
             <div className="mt-12 p-6 bg-primary-500/10 rounded-2xl border border-primary-500/20 text-center">
                 <h3 className="text-xl font-bold mb-2">¿Necesitas vender o comprar un auto?</h3>
                 <p className="text-zinc-400 mb-4">{t('blog_related.publish_free')}</p>
-                <Link
-                    href="/publish"
+                <button
+                    onClick={() => session ? router.push('/publish') : router.push('/auth?callbackUrl=%2Fpublish')}
                     className="inline-flex items-center gap-2 px-6 py-3 bg-primary-500 text-white rounded-xl font-bold hover:bg-primary-600 transition-colors"
                 >
                     Publicar Gratis
-                </Link>
+                </button>
             </div>
         </article>
     )

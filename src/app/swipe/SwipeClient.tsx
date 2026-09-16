@@ -9,6 +9,7 @@ import SwipeFeed from '@/components/SwipeFeed'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { MapPin, RefreshCw, Search, Plus } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { calculateDistance, searchCity, searchCities, normalizeCountryCode, LocationData } from '@/lib/geolocation'
 import { useRestoreSessionModal } from '@/hooks/useRestoreSessionModal'
@@ -90,6 +91,7 @@ export default function SwipeClient({ initialItems, currentUserId }: SwipeClient
     const { t } = useLanguage()
     const { location, loading: locationLoading, manualLocation, setManualLocation } = useLocation()
     const router = useRouter()
+    const { data: session } = useSession()
     const { openModal } = useRestoreSessionModal()
 
     // 🎯 Memoize items to prevent reference changes causing expensive recalculations
@@ -564,13 +566,13 @@ export default function SwipeClient({ initialItems, currentUserId }: SwipeClient
 
                             <div className="mt-4 pt-4 border-t border-white/10 w-full flex flex-col items-center">
                                 <p className="text-xs text-text-secondary mb-3 uppercase tracking-wider">{t('market.cant_find_desc')}</p>
-                                <Link
-                                    href="/publish"
+                                <button
+                                    onClick={() => session ? router.push('/publish') : router.push('/auth?callbackUrl=%2Fpublish')}
                                     className="w-full py-4 bg-white text-primary-900 rounded-2xl font-bold transition shadow-xl active:scale-95 flex items-center justify-center gap-2"
                                 >
                                     <Plus size={20} />
                                     {t('swipe.publish') || t('market.publish_cta')}
-                                </Link>
+                                </button>
                             </div>
                         </div>
                     </div>

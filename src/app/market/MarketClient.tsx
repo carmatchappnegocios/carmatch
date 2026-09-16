@@ -7,6 +7,7 @@ import { MapPin, Search, Loader2, Plus, RefreshCw, MessageSquare } from 'lucide-
 import AIChatWidget from '@/components/AIChatWidget'
 
 import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { useLocation } from '@/contexts/LocationContext'
@@ -112,6 +113,7 @@ export default function MarketClient({
     const { t, locale } = useLanguage()
     const [aiReasoning, setAiReasoning] = useState(initialAiReasoning)
     const router = useRouter()
+    const { data: session } = useSession()
 
     // 🔥 USANDO CONTEXTO GLOBAL
     const { location, loading: locationLoading, manualLocation, setManualLocation } = useLocation()
@@ -851,13 +853,13 @@ export default function MarketClient({
                                                         {t('market.generate_money_title')}
                                                     </h3>
 
-                                                    <Link
-                                                        href="/publish"
+                                                    <button
+                                                        onClick={() => session ? router.push('/publish') : router.push('/auth?callbackUrl=%2Fpublish')}
                                                         className="inline-flex items-center gap-2 px-6 py-3 bg-white text-primary-900 rounded-xl hover:bg-white/90 transition font-black uppercase tracking-wide shadow-lg text-sm group-hover:scale-105 transform duration-200"
                                                     >
                                                         <Plus size={18} strokeWidth={3} />
                                                         {t('market.convert_to_money')}
-                                                    </Link>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -918,13 +920,13 @@ export default function MarketClient({
                                         </button>
 
                                         {/* Botón de publicar vehículo en estado vacío */}
-                                        <Link
-                                            href="/publish"
+                                        <button
+                                            onClick={() => session ? router.push('/publish') : router.push('/auth?callbackUrl=%2Fpublish')}
                                             className="inline-flex items-center gap-2 px-5 sm:px-8 py-3 sm:py-4 bg-white text-primary-900 rounded-xl hover:bg-white/90 transition font-bold shadow-lg justify-center text-sm sm:text-base"
                                         >
                                             <Plus size={20} />
                                             {t('market.publish_cta')}
-                                        </Link>
+                                        </button>
                                     </div>
                                 </div>
                             )}

@@ -104,16 +104,12 @@ export default function Header() {
     // Click handler: CTA slots navegan a registro/publicación según contexto
     const handleCtaClick = () => {
         const isMapContext = pathname?.startsWith('/map') || pathname?.startsWith('/map-store')
-        if (isCtaSlot) {
-            // CTA personalizado: invitar a registrar
-            if (session) {
-                router.push(isMapContext ? '/my-businesses?action=new' : '/publish')
-            } else {
-                router.push(isMapContext ? '/my-businesses?action=new' : '/auth')
-            }
+        const target = isMapContext ? '/my-businesses?action=new' : '/publish'
+        const authTarget = isMapContext ? '/auth?callbackUrl=%2Fmy-businesses%3Faction%3Dnew' : '/auth?callbackUrl=%2Fpublish'
+        if (session) {
+            router.push(target)
         } else {
-            // Ad genérico: publicar/subir
-            router.push(isMapContext ? '/my-businesses?action=new' : '/publish')
+            router.push(authTarget)
         }
     }
 

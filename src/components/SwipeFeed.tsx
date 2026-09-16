@@ -1,6 +1,8 @@
 
 // ✅ DISEÑO DE TARJETAS VALIDADO - ASÍ DEBE SER
 import { useState, useRef } from 'react'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 import { motion, useMotionValue, useTransform, PanInfo, AnimatePresence } from 'framer-motion'
 import { X as XIcon, ThumbsUp, MapPin, Plus, ArrowRight } from 'lucide-react'
 
@@ -249,6 +251,8 @@ interface SwipeFeedProps {
 
 export default function SwipeFeed({ items, onLike, onDislike, onNeedMore }: SwipeFeedProps) {
     const { t } = useLanguage()
+    const { data: session } = useSession()
+    const router = useRouter()
     const [isSwiping, setIsSwiping] = useState(false)
     const [exitX, setExitX] = useState<number | undefined>(undefined)
 
@@ -306,13 +310,13 @@ export default function SwipeFeed({ items, onLike, onDislike, onNeedMore }: Swip
 
                 <div className="mt-8 pt-8 border-t border-white/10 w-full flex flex-col items-center">
                     <p className="text-sm text-text-secondary mb-4">{t('market.cant_find_desc')}</p>
-                    <Link
-                        href="/publish"
+                    <button
+                        onClick={() => session ? router.push('/publish') : router.push('/auth?callbackUrl=%2Fpublish')}
                         className="px-8 py-4 bg-white text-primary-900 rounded-xl font-bold text-lg hover:bg-white/90 transition flex items-center gap-2 shadow-xl"
                     >
                         <Plus size={20} />
                         {t('swipe.publish') || t('market.publish_cta')}
-                    </Link>
+                    </button>
                 </div>
             </div >
 
