@@ -77,9 +77,9 @@ function entry(
  id, dayNumber, week, title, theme, gatillo,
  gatilloIcon: GATILLOS[gatillo].icon,
  format, platforms, caption, hashtags,
- postingTimes: TIMES,
- .opts,
- }
+  postingTimes: TIMES,
+  ...opts,
+  }
 }
 
 // ─── DATA: 84 ENTRIES ─────────────────────────────
@@ -301,7 +301,7 @@ function genWeek5(): CalendarEntry[] {
  return d.map(x => entry(x.id,x.dn,5,x.t,x.th,x.g,x.f,
  x.f==='imagen'?['facebook']:['tiktok','instagram','facebook'],
  x.cap,x.tags,{ creenModel:x.cm, creenPrompt:x.cp, geminiPrompt:x.gp,
- .(x.f==='carrusel'?{carouselSlides:[ // add default slides for carruseles
+ ...(x.f==='carrusel'?{carouselSlides:[ // add default slides for carruseles
  {slideNumber:1,prompt:'Slide 1 infographic, dark background.',textOverlay:x.tags[0]},
  {slideNumber:2,prompt:'Slide 2 infographic, dark background.',textOverlay:'Dato 2'},
  {slideNumber:3,prompt:'Slide 3 infographic, dark background.',textOverlay:'Dato 3'},
@@ -421,9 +421,9 @@ function genWeek12(): CalendarEntry[] {
 }
 
 const ALL_ENTRIES_COMPLETE: CalendarEntry[] = [
- .ALL_ENTRIES,
- .genWeek5(), .genWeek6(), .genWeek7(), .genWeek8(),
- .genWeek9(), .genWeek10(), .genWeek11(), .genWeek12(),
+ ...ALL_ENTRIES,
+ ...genWeek5(), ...genWeek6(), ...genWeek7(), ...genWeek8(),
+ ...genWeek9(), ...genWeek10(), ...genWeek11(), ...genWeek12(),
 ]
 
 // ═══ COMPONENT ═══
@@ -465,8 +465,8 @@ export default function CalendarTab() {
  return { total, published, skipped, pending }
  }, [filteredEntries, publishedIds, skippedIds])
 
- const markPublished = (id: string) => { setPublishedIds(p => p.includes(id)?p:[.p,id]); setSkippedIds(p=>p.filter(x=>x!==id)) }
- const markSkipped = (id: string) => { setSkippedIds(p => p.includes(id)?p:[.p,id]); setPublishedIds(p=>p.filter(x=>x!==id)) }
+ const markPublished = (id: string) => { setPublishedIds(p => p.includes(id)?p:[...p,id]); setSkippedIds(p=>p.filter(x=>x!==id)) }
+ const markSkipped = (id: string) => { setSkippedIds(p => p.includes(id)?p:[...p,id]); setPublishedIds(p=>p.filter(x=>x!==id)) }
  const restoreEntry = (id: string) => { setPublishedIds(p=>p.filter(x=>x!==id)); setSkippedIds(p=>p.filter(x=>x!==id)) }
 
  const copyText = (text: string, id: string) => { navigator.clipboard.writeText(text); setCopiedId(id); setTimeout(()=>setCopiedId(null),2000) }
