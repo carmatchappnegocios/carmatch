@@ -11,6 +11,7 @@ import RestoreSessionModal from "@/components/RestoreSessionModal";
 import { Toaster } from "sonner";
 
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import FacebookPixel from "@/components/FacebookPixel";
 import CookieConsentBanner from "@/components/CookieConsentBanner";
 import FooterSEO from "@/components/FooterSEO";
 import BetaSessionTracker from "@/components/BetaSessionTracker";
@@ -137,6 +138,7 @@ export default function RootLayout({
             <body className={`${inter.className} min-h-screen-safe bg-[#0f172a]`} style={{ background: '#0f172a' }}>
                 <ClientViewportFix />
                 <GoogleAnalytics />
+                <FacebookPixel />
                 <Providers>
                     <Toaster position="top-center" richColors closeButton />
                     <PushNotificationRequest />
