@@ -244,7 +244,7 @@ function AdminPanelContent() {
                         >
                             {activeView === 'overview' && <OverviewTab stats={stats} handleRunAnalyst={handleRunAnalyst} isAnalyzing={isAnalyzing} aiAnalysis={aiAnalysis} setActiveView={setActiveView} />}
                             {activeView === 'intelligence' && <IntelligenceTab stats={stats} />}
-                            {activeView === 'users' && <UsersTab users={stats.users.recent} />}
+                            {activeView === 'users' && <UsersTab initialUsers={stats.users.recent} />}
                             {activeView === 'inventory' && <InventoryTab vehicles={stats.vehicles.recent} />}
                             {activeView === 'map-store' && <MapStoreTab businesses={stats.businesses.recent} />}
                             {activeView === 'ai-hub' && <AiHubTab />}
