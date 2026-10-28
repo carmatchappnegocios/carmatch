@@ -255,7 +255,7 @@ export default function Header() {
     const totalUnread = unreadMessages + unreadNotifications
 
     return (
-        <header className="sticky top-0 w-full z-[1001] bg-slate-900 border-b border-white/5 shadow-lg shrink-0 pointer-events-auto">
+        <header className="sticky top-0 w-full z-[1001] bg-slate-950 border-b border-white/10 shadow-lg shrink-0 pointer-events-auto">
             <div className="w-full px-2 md:px-4 py-2 md:py-4">
                 <div className="flex items-center justify-between gap-2">
                     {/* LEFT GROUP: Logo + Platform Badges */}

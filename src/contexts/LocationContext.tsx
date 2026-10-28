@@ -75,9 +75,9 @@ export function LocationProvider({
             localStorage.setItem('carmatch_precise_location', enabled ? '1' : '0')
             localStorage.setItem('carmatch_location_prompt', 'asked')
         }
-        // Si se activa, pedir GPS inmediatamente
+        // Si se activa, pedir GPS tras un breve retraso para evitar recarga brusca
         if (enabled) {
-            fetchLocation(true)
+            setTimeout(() => fetchLocation(true), 300)
         }
     // fetchLocation se agrega más abajo como dependencia
     // eslint-disable-next-line react-hooks/exhaustive-deps

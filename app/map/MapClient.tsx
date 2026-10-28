@@ -316,7 +316,7 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                 </div>
 
                 {/* 📱 BOTONES FLOTANTES (MAPA - MOBILE ONLY) */}
-                <div className="absolute top-6 left-6 z-30 flex flex-col gap-3 lg:hidden">
+                <div className="absolute top-6 left-6 z-[60] flex flex-col gap-3 lg:hidden">
                     {!showSidebar && (
                         <button
                             onClick={() => setShowSidebar(true)}

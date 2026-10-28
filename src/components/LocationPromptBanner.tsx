@@ -10,7 +10,7 @@ export default function LocationPromptBanner() {
 
     return (
         <div className="fixed bottom-6 left-0 right-0 z-50 p-4 animate-in slide-in-from-bottom duration-500">
-            <div className="max-w-5xl mx-auto bg-surface border-2 border-primary-500/30 rounded-2xl shadow-2xl backdrop-blur-xl">
+            <div className="max-w-5xl mx-auto bg-slate-900/95 border-2 border-primary-500/50 rounded-2xl shadow-2xl backdrop-blur-xl">
                 <div className="p-4 md:p-6">
                     <div className="flex items-start justify-between mb-3">
                         <div className="flex items-center gap-2">
