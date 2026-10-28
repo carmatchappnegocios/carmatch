@@ -317,15 +317,13 @@ export default function MapClient({ businesses, user }: MapClientProps) {
 
                 {/* 📱 BOTONES FLOTANTES (MAPA - MOBILE ONLY) */}
                 <div className="absolute top-6 left-6 z-[60] flex flex-col gap-3 lg:hidden">
-                    {!showSidebar && (
                         <button
-                            onClick={() => setShowSidebar(true)}
+                            onClick={() => setShowSidebar(!showSidebar)}
                             className="w-fit px-5 py-2.5 bg-surface/90 backdrop-blur-md text-white/80 rounded-full shadow-xl font-bold uppercase tracking-wider border border-white/10 flex items-center gap-2 active:scale-95 hover:bg-surface transition-all"
                         >
                             <Settings2 size={18} />
-                            <span className="text-xs">{t('map_store.show_filters')}</span>
+                            <span className="text-xs">{showSidebar ? t('map_store.hide_filters') : t('map_store.show_filters')}</span>
                         </button>
-                    )}
                 </div>
 
                 {/* 🗂️ PANEL DE FILTROS (PERSISTENT DESKTOP / OVERLAY MOBILE) */}
