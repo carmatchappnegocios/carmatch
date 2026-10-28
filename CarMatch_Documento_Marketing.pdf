@@ -1,0 +1,264 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Count 5 /Kids [5 0 R 6 0 R 7 0 R 8 0 R 9 0 R] >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 10 0 R >>
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 11 0 R >>
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 12 0 R >>
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 13 0 R >>
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 14 0 R >>
+endobj
+10 0 obj
+<< /Length 5174 >>
+stream
+BT 9 Tf 0.42 0.42 0.48 rg 1 0 0 1 72 795 Tm (CarMatch  .  Documento oficial para contenido  .  carmatchapp.net) Tj ET
+BT /F2 23 Tf 0.012 0.412 0.631 rg 1 0 0 1 72.0 770.0 Tm (CarMatch \227 Documento oficial para) Tj ET
+BT /F2 23 Tf 0.012 0.412 0.631 rg 1 0 0 1 72.0 742.0 Tm (contenido) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 707.0 Tm (Documento de referencia para el asistente de marketing. Toda la informaci\363n de este) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 692.0 Tm (documento proviene del repositorio del proyecto y del sitio oficial carmatchapp.net, consultado) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 677.0 Tm (el 26 de octubre de 2026. Lo que no est\341 confirmado aparece marcado como [POR) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 662.0 Tm (CONFIRMAR].) Tj ET
+0.87 0.88 0.91 RG 0.8 w 72 646.0 m 540 646.0 l S
+BT /F2 16 Tf 0.012 0.412 0.631 rg 1 0 0 1 72.0 616.0 Tm (1. Qu\351 es CarMatch) Tj ET
+0.87 0.88 0.91 RG 0.8 w 72 598.0 m 540 598.0 l S
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 582.0 Tm (CarMatch es una app de citas para comprar y vender carros: conecta a personas que quieren) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 567.0 Tm (comprar o vender un veh\355culo con concesionarios y vendedores verificados. El usuario ve un) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 552.0 Tm (carro a la vez y decide con dos toques: deslizar a la derecha para guardar, a la izquierda para) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 537.0 Tm (descartar, igual que Tinder.) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 515.0 Tm (Frase oficial \(src/locales/es.json\): \223Zero Comisiones \267 SOS 24/7\224. T\355tulo SEO oficial) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 500.0 Tm (\(src/app/layout.tsx\): \223CarMatch - Encuentra tu pr\363ximo carro | Tinder of Cars\224. Se posiciona) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 485.0 Tm (p\372blicamente como \223Tinder of Cars\224 \(public/llms.txt\).) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 463.0 Tm (Idea central de la marca: las personas no saben que necesitan un carro hasta verlo.) Tj ET
+0.87 0.88 0.91 RG 0.8 w 72 447.0 m 540 447.0 l S
+BT /F2 16 Tf 0.012 0.412 0.631 rg 1 0 0 1 72.0 417.0 Tm (2. Las tres partes de CarMatch) Tj ET
+0.87 0.88 0.91 RG 0.8 w 72 399.0 m 540 399.0 l S
+BT /F2 12.5 Tf 0.976 0.451 0.086 rg 1 0 0 1 72.0 377.0 Tm (2.1 MarketCar \(para compradores y vendedores\)) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 357.0 Tm (MarketCar es el feed de compra y venta de veh\355culos: un carrusel infinito de publicaciones con) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 342.0 Tm (fotos. Cada tarjeta muestra fotos, precio, a\361o, kilometraje, transmisi\363n, placas enmascaradas,) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 327.0 Tm (ciudad y estado, vendedor verificado, distancia y un badge si ya est\341 \223Vendido\224. El comprador) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 312.0 Tm (ve solo un carro a la vez y decide con dos toques.) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 290.0 Tm (La app decide qu\351 carro mostrarle a cada persona: no es un listado para recorrer, es un feed) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 275.0 Tm (que aprende de tus decisiones, tus b\372squedas y tus filtros guardados. Cuanto m\341s usas la app,) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 260.0 Tm (mejores son los carros que te aparecen primero. Deslizar a la derecha guarda el carro en) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 245.0 Tm (Favoritos; a la izquierda lo descarta.) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 223.0 Tm (Disponible hoy: compra y venta entre usuarios \(C2C\) y de concesionarios verificados \(B2C\).) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 208.0 Tm (Vender es gratis para cualquier usuario. El plan premium Business \(299 MXN/mes\) permite) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 193.0 Tm (destacar publicaciones, aparecer primero, ver qui\351nes dieron like y un l\355mite mensual de autos) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 178.0 Tm (destacados.) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 156.0 Tm (Planeado: MarketCar B2B entre concesionarios, con verificaci\363n, comisi\363n negociada entre las) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 141.0 Tm (partes, pago integrado y log\355stica para transporte de veh\355culos.) Tj ET
+BT /F2 12.5 Tf 0.976 0.451 0.086 rg 1 0 0 1 72.0 113.0 Tm (2.2 Swipe \(el deslizamiento que une las dos partes\)) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 93.0 Tm (MarketCar y MapStore usan el mismo deslizamiento: cada tarjeta se arrastra a un lado. Si la) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 78.0 Tm (flecha y el fondo se ponen verdes y la tarjeta se va a la derecha, esa publicaci\363n se guarda. Si) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 63.0 Tm (se ponen rojos y se va a la izquierda, se descarta. Se puede arrastrar con el dedo y con el) Tj ET
+BT 9 Tf 0.42 0.42 0.48 rg 1 0 0 1 72 34 Tm (Pagina 1  .  Fuente: repositorio y sitio oficial, consultado el 26 de octubre de 2026) Tj ET
+endstream
+endobj
+11 0 obj
+<< /Length 5203 >>
+stream
+BT 9 Tf 0.42 0.42 0.48 rg 1 0 0 1 72 795 Tm (CarMatch  .  Documento oficial para contenido  .  carmatchapp.net) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 770.0 Tm (mouse, en celular y en escritorio.) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 748.0 Tm (El descarte se comporta igual en las dos partes: la app lo recuerda y no vuelve a mostrar esa) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 733.0 Tm (publicaci\363n. Un mismo sitio o carro no aparece dos veces en la misma sesi\363n de deslizamiento.) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 718.0 Tm (La diferencia es qu\351 se est\341 descartando: en MapStore es un lugar, en MarketCar es un carro.) Tj ET
+BT /F2 12.5 Tf 0.976 0.451 0.086 rg 1 0 0 1 72.0 690.0 Tm (2.3 MapStore \(para negocios y usuarios\)) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 670.0 Tm (MapStore es el mapa de negocios verificados: un mapa en vivo con filtros por categor\355a, estado) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 655.0 Tm (y precio, marcadores por categor\355a, distancia y ruta, y deslizamiento sobre fichas de negocios.) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 633.0 Tm (Estado actual: mapa con 41 categor\355as de negocio \(36 registrables y 5 solo visibles\), filtros por) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 618.0 Tm (precio y ciudad, buscador con inteligencia de proximidad y sin resultados inventados, ficha con) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 603.0 Tm (rese\361as verificadas \(solo usuarios con cuenta que han estado en el negocio pueden puntuar y) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 588.0 Tm (comentar\), horarios por estado \(abierto, cierra pronto, cerrado\), promociones y quejas \(visibles) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 573.0 Tm (solo para el due\361o del negocio\).) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 551.0 Tm (Adem\341s hoy: cualquier persona puede agregar negocios de forma colaborativa \(similar a Waze) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 536.0 Tm (o Google Maps, sin cuenta\). Cada negocio nuevo creado por la comunidad entra en una cola) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 521.0 Tm (de revisi\363n del equipo de CarMatch.) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 499.0 Tm (Planeado: chats directos a los negocios desde su ficha, pagos dentro de la app y sistema de) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 484.0 Tm (reservas \(citas\) para talleres, dentistas, consultorios y otros servicios.) Tj ET
+0.87 0.88 0.91 RG 0.8 w 72 468.0 m 540 468.0 l S
+BT /F2 16 Tf 0.012 0.412 0.631 rg 1 0 0 1 72.0 438.0 Tm (3. C\363mo se usa) Tj ET
+0.87 0.88 0.91 RG 0.8 w 72 420.0 m 540 420.0 l S
+BT /F2 12.5 Tf 0.976 0.451 0.086 rg 1 0 0 1 72.0 398.0 Tm (3.1 Compra y venta de carros) Tj ET
+0.012 0.412 0.631 rg 72.0 358.0 3 23.0 re f
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 378.0 Tm (1.  Abre la app: la primera pantalla es el feed de carros, con la barra de b\372squeda arriba.) Tj ET
+0.012 0.412 0.631 rg 72.0 319.0 3 38.0 re f
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 354.0 Tm (2.  Busca o desliza: escribe modelo, marca o ciudad, o deja que la app te muestre carros de) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 339.0 Tm (a uno.) Tj ET
+0.012 0.412 0.631 rg 72.0 295.0 3 23.0 re f
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 315.0 Tm (3.  Desliza: a la derecha para guardar, a la izquierda para descartar.) Tj ET
+0.012 0.412 0.631 rg 72.0 271.0 3 23.0 re f
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 291.0 Tm (4.  Guarda los que te gusten: los que dieron derecha quedan en Favoritos.) Tj ET
+0.012 0.412 0.631 rg 72.0 247.0 3 23.0 re f
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 267.0 Tm (5.  Contacta al vendedor: desde la ficha del carro, con mensajes o llamada.) Tj ET
+0.012 0.412 0.631 rg 72.0 223.0 3 23.0 re f
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 243.0 Tm (6.  Sin intermediarios: la app no cobra comisi\363n por comprar ni por vender.) Tj ET
+BT /F2 12.5 Tf 0.976 0.451 0.086 rg 1 0 0 1 72.0 213.0 Tm (3.2 Registro de tu negocio en MapStore) Tj ET
+0.35 0.6 0.78 rg 72.0 158.0 3 38.0 re f
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 193.0 Tm (Costo: gratis. El registro de un negocio no tiene costo y la cuenta de usuario tampoco) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 178.0 Tm (\(src/lib/businessMonetization.ts: entrada gratis, monetizaci\363n posterior\).) Tj ET
+0.35 0.6 0.78 rg 72.0 119.0 3 38.0 re f
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 154.0 Tm (Requisitos: nombre del negocio, categor\355a, ciudad y datos de contacto b\341sicos; tener cuenta) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 139.0 Tm (en la app.) Tj ET
+0.35 0.6 0.78 rg 72.0 80.0 3 38.0 re f
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 115.0 Tm (Horario de atenci\363n para la revisi\363n del negocio: 24 horas, 7 d\355as a la semana \(colaboraci\363n) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 100.0 Tm (24/7, es decir, cualquier d\355a a cualquier hora, sin horario administrativo\).) Tj ET
+BT 9 Tf 0.42 0.42 0.48 rg 1 0 0 1 72 34 Tm (Pagina 2  .  Fuente: repositorio y sitio oficial, consultado el 26 de octubre de 2026) Tj ET
+endstream
+endobj
+12 0 obj
+<< /Length 4774 >>
+stream
+BT 9 Tf 0.42 0.42 0.48 rg 1 0 0 1 72 795 Tm (CarMatch  .  Documento oficial para contenido  .  carmatchapp.net) Tj ET
+0.35 0.6 0.78 rg 72.0 720.0 3 53.0 re f
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 770.0 Tm (Verificaci\363n: la cuenta del negocio se activa cuando el equipo de CarMatch aprueba el) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 755.0 Tm (registro; hasta entonces queda en cola de revisi\363n y todav\355a no aparece en el mapa. Tiempo) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 740.0 Tm (de respuesta exacto: [POR CONFIRMAR].) Tj ET
+0.35 0.6 0.78 rg 72.0 681.0 3 38.0 re f
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 716.0 Tm (Qu\351 es gratis: registrar el negocio, crear la cuenta, subir fotos, responder rese\361as y aparecer) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 701.0 Tm (en el mapa. Qu\351 es de pago: el plan Business \(299 MXN/mes\) con destacados y prioridad.) Tj ET
+BT /F2 12.5 Tf 0.976 0.451 0.086 rg 1 0 0 1 72.0 671.0 Tm (3.3 Uso general de la app) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 651.0 Tm (Paso 1: descargar la app en iOS o Android. Paso 2: crear cuenta con Google. Paso 3: deslizar) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 636.0 Tm (y descubrir. Frase oficial de instalaci\363n \(src/locales/es.json\): \223Dos toques para encontrar tu) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 621.0 Tm (pr\363ximo carro\224.) Tj ET
+0.87 0.88 0.91 RG 0.8 w 72 605.0 m 540 605.0 l S
+BT /F2 16 Tf 0.012 0.412 0.631 rg 1 0 0 1 72.0 575.0 Tm (4. Problemas que resuelve) Tj ET
+0.87 0.88 0.91 RG 0.8 w 72 557.0 m 540 557.0 l S
+0.79 0.16 0.16 rg 72.0 506.0 3 38.0 re f
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 541.0 Tm (Perder tiempo buscando carro por carro: en vez de recorrer listados, la app te muestra un) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 526.0 Tm (carro a la vez y t\372 decides con dos toques.) Tj ET
+0.79 0.16 0.16 rg 72.0 467.0 3 38.0 re f
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 502.0 Tm (Comprar a ciegas: rese\361as reales, fotos verificadas y perfiles de vendedores y negocios) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 487.0 Tm (verificados.) Tj ET
+0.79 0.16 0.16 rg 72.0 413.0 3 53.0 re f
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 463.0 Tm (No saber si un negocio est\341 abierto: horarios por estado \(abierto, cierra pronto, cerrado\) y la) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 448.0 Tm (referencia oficial de \223una llantera abierta a las 3 AM\224 para emergencias reales) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 433.0 Tm (\(public/llms.txt\).) Tj ET
+0.79 0.16 0.16 rg 72.0 389.0 3 23.0 re f
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 409.0 Tm (Vender con intermediarios y comisiones: la frase oficial es \223Zero Comisiones\224.) Tj ET
+0.79 0.16 0.16 rg 72.0 350.0 3 38.0 re f
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 385.0 Tm (Encontrar servicios cerca de ti: busca por precio, ciudad o categor\355a con 41 categor\355as y m\341s) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 370.0 Tm (de 1,266,379 negocios activos en el mapa.) Tj ET
+0.87 0.88 0.91 RG 0.8 w 72 352.0 m 540 352.0 l S
+BT /F2 16 Tf 0.012 0.412 0.631 rg 1 0 0 1 72.0 322.0 Tm (5. N\372meros reales) Tj ET
+0.87 0.88 0.91 RG 0.8 w 72 304.0 m 540 304.0 l S
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 288.0 Tm (Fuentes: sitio oficial consultado el 26 de octubre de 2026 \(endpoints p\372blicos) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 273.0 Tm (/api/public/businesses, /api/public/vehicles y sitemap.xml\) y archivos del repositorio.) Tj ET
+0.976 0.451 0.086 rg 72.0 229.0 3 25.0 re f
+BT /F2 13 Tf 0.976 0.451 0.086 rg 1 0 0 1 84.0 251.0 Tm (1,266,379 negocios activos en el mapa \(dato p\372blico importado\)) Tj ET
+0.976 0.451 0.086 rg 72.0 203.0 3 25.0 re f
+BT /F2 13 Tf 0.976 0.451 0.086 rg 1 0 0 1 84.0 225.0 Tm (183,619 hospitales \267 166,597 electrolineras) Tj ET
+0.976 0.451 0.086 rg 72.0 160.0 3 42.0 re f
+BT /F2 13 Tf 0.976 0.451 0.086 rg 1 0 0 1 84.0 199.0 Tm (0 negocios de mec\341nico, llantera, gr\372as o refacciones en el conteo por) Tj ET
+BT /F2 13 Tf 0.976 0.451 0.086 rg 1 0 0 1 84.0 182.0 Tm (categor\355a) Tj ET
+0.976 0.451 0.086 rg 72.0 134.0 3 25.0 re f
+BT /F2 13 Tf 0.976 0.451 0.086 rg 1 0 0 1 84.0 156.0 Tm (41 categor\355as de negocio en total: 36 registrables y 5 solo visibles) Tj ET
+0.976 0.451 0.086 rg 72.0 91.0 3 42.0 re f
+BT /F2 13 Tf 0.976 0.451 0.086 rg 1 0 0 1 84.0 130.0 Tm (60 ciudades en las p\341ginas p\372blicas /autos-en/: 23 de M\351xico \(22) Tj ET
+BT /F2 13 Tf 0.976 0.451 0.086 rg 1 0 0 1 84.0 113.0 Tm (ciudades \372nicas\) y 37 de otros pa\355ses) Tj ET
+BT 9 Tf 0.42 0.42 0.48 rg 1 0 0 1 72 34 Tm (Pagina 3  .  Fuente: repositorio y sitio oficial, consultado el 26 de octubre de 2026) Tj ET
+endstream
+endobj
+13 0 obj
+<< /Length 4708 >>
+stream
+BT 9 Tf 0.42 0.42 0.48 rg 1 0 0 1 72 795 Tm (CarMatch  .  Documento oficial para contenido  .  carmatchapp.net) Tj ET
+0.976 0.451 0.086 rg 72.0 731.0 3 42.0 re f
+BT /F2 13 Tf 0.976 0.451 0.086 rg 1 0 0 1 84.0 770.0 Tm (22 idiomas soportados por la interfaz \(src/locales\); llms.txt indica 21) Tj ET
+BT /F2 13 Tf 0.976 0.451 0.086 rg 1 0 0 1 84.0 753.0 Tm (idiomas) Tj ET
+0.976 0.451 0.086 rg 72.0 688.0 3 42.0 re f
+BT /F2 13 Tf 0.976 0.451 0.086 rg 1 0 0 1 84.0 727.0 Tm (2 veh\355culos activos publicados por usuarios, ambos en Chihuahua,) Tj ET
+BT /F2 13 Tf 0.976 0.451 0.086 rg 1 0 0 1 84.0 710.0 Tm (publicados el 27 de agosto de 2026) Tj ET
+0.976 0.451 0.086 rg 72.0 662.0 3 25.0 re f
+BT /F2 13 Tf 0.976 0.451 0.086 rg 1 0 0 1 84.0 684.0 Tm (299 MXN/mes: plan Business, el \372nico plan de pago) Tj ET
+0.976 0.451 0.086 rg 72.0 636.0 3 25.0 re f
+BT /F2 13 Tf 0.976 0.451 0.086 rg 1 0 0 1 84.0 658.0 Tm (0 costo de registro de negocio \267 0 comisi\363n por venta \267 0 costo de cuenta) Tj ET
+0.976 0.451 0.086 rg 72.0 593.0 3 42.0 re f
+BT /F2 13 Tf 0.976 0.451 0.086 rg 1 0 0 1 84.0 632.0 Tm (84 publicaciones en el calendario de contenido oficial) Tj ET
+BT /F2 13 Tf 0.976 0.451 0.086 rg 1 0 0 1 84.0 615.0 Tm (\(src/components/admin/CalendarTab.tsx\)) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 589.0 Tm (Usuarios registrados totales de CarMatch: [POR CONFIRMAR].) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 567.0 Tm (Nota importante: el volumen de negocios proviene de datos p\372blicos importados; no representa) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 552.0 Tm (negocios registrados ni verificados manualmente en CarMatch.) Tj ET
+0.87 0.88 0.91 RG 0.8 w 72 536.0 m 540 536.0 l S
+BT /F2 16 Tf 0.012 0.412 0.631 rg 1 0 0 1 72.0 506.0 Tm (6. Material para generar contenido) Tj ET
+0.87 0.88 0.91 RG 0.8 w 72 488.0 m 540 488.0 l S
+BT /F2 12.5 Tf 0.976 0.451 0.086 rg 1 0 0 1 72.0 466.0 Tm (6.1 Pantallas principales para pedir im\341genes) Tj ET
+0.55 0.57 0.62 rg 72.0 411.0 3 38.0 re f
+BT /F1 11 Tf 0.36 0.38 0.44 rg 1 0 0 1 84.0 446.0 Tm (1. Feed MarketCar \(escritorio\): carrusel central con un carro, precio, ficha r\341pida y lados) Tj ET
+BT /F1 11 Tf 0.36 0.38 0.44 rg 1 0 0 1 84.0 431.0 Tm (verde \(guardar\) y rojo \(descartar\).) Tj ET
+0.55 0.57 0.62 rg 72.0 387.0 3 23.0 re f
+BT /F1 11 Tf 0.36 0.38 0.44 rg 1 0 0 1 84.0 407.0 Tm (2. Ficha de carro en la app: fotos, precio y especificaciones, botones de contacto.) Tj ET
+0.55 0.57 0.62 rg 72.0 348.0 3 38.0 re f
+BT /F1 11 Tf 0.36 0.38 0.44 rg 1 0 0 1 84.0 383.0 Tm (3. Mapa MapStore: mapa con marcadores, barra de filtros por categor\355a y tarjeta de negocio) Tj ET
+BT /F1 11 Tf 0.36 0.38 0.44 rg 1 0 0 1 84.0 368.0 Tm (abajo.) Tj ET
+0.55 0.57 0.62 rg 72.0 309.0 3 38.0 re f
+BT /F1 11 Tf 0.36 0.38 0.44 rg 1 0 0 1 84.0 344.0 Tm (4. Tira de tarjetas: varias publicaciones con la flecha de deslizamiento, verde a un lado y rojo) Tj ET
+BT /F1 11 Tf 0.36 0.38 0.44 rg 1 0 0 1 84.0 329.0 Tm (al otro.) Tj ET
+0.55 0.57 0.62 rg 72.0 270.0 3 38.0 re f
+BT /F1 11 Tf 0.36 0.38 0.44 rg 1 0 0 1 84.0 305.0 Tm (5. Pantalla de registro de negocio: formulario con categor\355as y el mensaje \223Registra tu) Tj ET
+BT /F1 11 Tf 0.36 0.38 0.44 rg 1 0 0 1 84.0 290.0 Tm (negocio gratis\224.) Tj ET
+0.55 0.57 0.62 rg 72.0 231.0 3 38.0 re f
+BT /F1 11 Tf 0.36 0.38 0.44 rg 1 0 0 1 84.0 266.0 Tm (6. Fotos de vida real: una persona decidiendo entre dos opciones en el m\363vil, con un coche) Tj ET
+BT /F1 11 Tf 0.36 0.38 0.44 rg 1 0 0 1 84.0 251.0 Tm (aparcado de fondo.) Tj ET
+BT /F2 12.5 Tf 0.976 0.451 0.086 rg 1 0 0 1 72.0 221.0 Tm (6.2 Tres mensajes clave) Tj ET
+0.976 0.451 0.086 rg 72.0 164.0 3 40.0 re f
+BT /F2 12 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 201.0 Tm (1. Zero Comisiones, SOS 24/7: no cobramos nada por comprar ni por vender, y) Tj ET
+BT /F2 12 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 185.0 Tm (ayudamos a cualquier hora.) Tj ET
+0.976 0.451 0.086 rg 72.0 123.0 3 40.0 re f
+BT /F2 12 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 160.0 Tm (2. Dos toques para encontrar tu pr\363ximo carro: deslizar y listo; la app aprende) Tj ET
+BT /F2 12 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 144.0 Tm (de tus gustos.) Tj ET
+0.976 0.451 0.086 rg 72.0 82.0 3 40.0 re f
+BT /F2 12 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 119.0 Tm (3. Registra tu negocio gratis en MapStore: aparece en el mapa 24 horas al d\355a, 7) Tj ET
+BT /F2 12 Tf 0.07 0.09 0.15 rg 1 0 0 1 84.0 103.0 Tm (d\355as a la semana.) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 78.0 Tm (Cierre recomendado: \223Descarga CarMatch y empieza a deslizar\224.) Tj ET
+BT 9 Tf 0.42 0.42 0.48 rg 1 0 0 1 72 34 Tm (Pagina 4  .  Fuente: repositorio y sitio oficial, consultado el 26 de octubre de 2026) Tj ET
+endstream
+endobj
+14 0 obj
+<< /Length 528 >>
+stream
+BT 9 Tf 0.42 0.42 0.48 rg 1 0 0 1 72 795 Tm (CarMatch  .  Documento oficial para contenido  .  carmatchapp.net) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 770.0 Tm (Regla de contenido: no inventar cifras, fechas ni funciones. Si un dato no est\341 en este) Tj ET
+BT /F1 11 Tf 0.07 0.09 0.15 rg 1 0 0 1 72.0 755.0 Tm (documento, marcarlo como [POR CONFIRMAR] antes de publicar.) Tj ET
+BT 9 Tf 0.42 0.42 0.48 rg 1 0 0 1 72 34 Tm (Pagina 5  .  Fuente: repositorio y sitio oficial, consultado el 26 de octubre de 2026) Tj ET
+endstream
+endobj
+xref
+0 15
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000139 00000 n 
+0000000236 00000 n 
+0000000338 00000 n 
+0000000475 00000 n 
+0000000612 00000 n 
+0000000749 00000 n 
+0000000886 00000 n 
+0000001023 00000 n 
+0000006249 00000 n 
+0000011504 00000 n 
+0000016330 00000 n 
+0000021090 00000 n 
+trailer
+<< /Size 15 /Root 1 0 R >>
+startxref
+21669
+%%EOF
