@@ -20,6 +20,22 @@ export const authConfig: NextAuthConfig = {
         maxAge: 7 * 24 * 60 * 60,
     },
     callbacks: {
+        // Propagar el rol admin al token (middleware/edge) — igual que en auth.ts
+        async jwt({ token, user }) {
+            if (user) {
+                // @ts-ignore
+                token.isAdmin = !!(user as any).isAdmin
+            }
+            return token
+        },
+        // Sin este callback, la sesión del middleware solo trae name/email/image
+        // y el guard de /admin bloquearía incluso al admin real.
+        async session({ session, token }) {
+            // @ts-ignore
+            session.user.isAdmin = !!(token as any).isAdmin ||
+                (!!session.user.email && session.user.email === process.env.ADMIN_EMAIL)
+            return session
+        },
         async authorized({ auth, request: { nextUrl } }) {
             const isLoggedIn = !!auth
             const pathname = nextUrl.pathname

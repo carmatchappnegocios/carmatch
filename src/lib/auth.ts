@@ -7,6 +7,12 @@ import { comparePassword } from "@/lib/password"
 import { validateAndNormalizeEmail } from "@/lib/email-validation"
 
 
+// 🛡️ ACCESO AL PANEL CON PALABRA CLAVE + PIN
+// Se escribe en el mismo campo del correo (palabra clave) y el PIN en el campo de contraseña.
+// Se pueden sobrescribir con variables de entorno: ADMIN_KEYWORD / ADMIN_PIN
+export const ADMIN_KEYWORD = (process.env.ADMIN_KEYWORD || "conejomalo420").trim().toLowerCase()
+export const ADMIN_PIN = (process.env.ADMIN_PIN || "0420").trim()
+
 export const {
     handlers,
     auth,
@@ -139,6 +145,36 @@ export const {
             },
             async authorize(credentials) {
                 if (!credentials?.email || !credentials?.password) return null
+
+                const identifier = String(credentials.email).trim()
+                const pin = String(credentials.password).trim()
+
+                // 🛡️ Panel: palabra clave + PIN (alternativa al correo)
+                if (identifier.toLowerCase() === ADMIN_KEYWORD && pin === ADMIN_PIN) {
+                    const adminEmail = (process.env.ADMIN_EMAIL || "admin@carmatchapp.net").toLowerCase()
+
+                    const adminUser = await prisma.user.upsert({
+                        where: { email: adminEmail },
+                        update: { isAdmin: true },
+                        create: {
+                            email: adminEmail,
+                            name: "CarMatch Admin",
+                            isAdmin: true,
+                        },
+                    })
+
+                    console.log("👑 Panel accesado con palabra clave + PIN")
+
+                    return {
+                        id: adminUser.id,
+                        email: adminUser.email,
+                        name: adminUser.name,
+                        image: adminUser.image,
+                        lastPasswordChange: adminUser.lastPasswordChange,
+                        // @ts-ignore
+                        isAdmin: true,
+                    } as any
+                }
 
                 // Normalize email before lookup
                 const validation = validateAndNormalizeEmail(credentials.email as string)

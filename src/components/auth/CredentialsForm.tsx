@@ -23,6 +23,9 @@ export default function CredentialsForm({ linkedEmail, forceOnlyLinked }: { link
         password: ""
     })
 
+    // 🛡️ Acceso al panel: si el campo del correo no contiene "@", se asume palabra clave (PIN)
+    const isPanelAccess = isLogin && !!form.email.trim() && !form.email.includes("@")
+
     const sendVerificationEmail = async (email: string) => {
         try {
             await fetch("/api/auth/verify-email", {
@@ -58,7 +61,8 @@ export default function CredentialsForm({ linkedEmail, forceOnlyLinked }: { link
                     setError(t("auth.invalid_credentials"))
                     setIsLoading(false)
                 } else {
-                    window.location.href = "/"
+                    // Palabra clave del panel → directo al panel; correo normal → app
+                    window.location.href = isPanelAccess ? "/admin" : "/"
                 }
             } else {
                 // Register
@@ -221,8 +225,9 @@ export default function CredentialsForm({ linkedEmail, forceOnlyLinked }: { link
                 <div className="bg-[#0F1523] rounded-xl border border-surface flex items-center px-4 focus-within:border-primary-500 focus-within:ring-1 focus-within:ring-primary-500 transition-all">
                     <Mail className="w-5 h-5 text-gray-400" />
                     <input
-                        type="email"
+                        type="text"
                         required
+                        autoComplete={isLogin ? "username" : "email"}
                         placeholder={t("auth.email_placeholder")}
                         value={form.email}
                         onChange={e => setForm({ ...form, email: e.target.value })}
@@ -239,7 +244,7 @@ export default function CredentialsForm({ linkedEmail, forceOnlyLinked }: { link
                         placeholder={t("auth.password_placeholder")}
                         value={form.password}
                         onChange={e => setForm({ ...form, password: e.target.value })}
-                        minLength={6}
+                        minLength={isPanelAccess ? 4 : 6}
                         className="w-full bg-transparent border-none text-white focus:ring-0 pl-3 pr-10 py-3.5 text-sm outline-none placeholder:text-gray-500"
                     />
                     <button
