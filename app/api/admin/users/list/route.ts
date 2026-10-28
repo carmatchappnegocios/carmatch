@@ -60,8 +60,7 @@ export async function GET(request: NextRequest) {
                             select: {
                                 maxDuration: true,
                                 lastPing: true,
-                                deviceOS: true,
-                                isActive: true
+                                deviceOS: true
                             }
                         }
                     })
