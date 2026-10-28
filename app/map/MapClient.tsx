@@ -342,9 +342,8 @@ export default function MapClient({ businesses, user }: MapClientProps) {
 
                     {/* Filter Panel (Sidebar Content) */}
                     <div className={`
-                        relative h-full w-[88%] max-w-[320px] lg:w-[300px] bg-slate-900/95 backdrop-blur-2xl border-r border-white/10 shadow-[20px_0_50px_rgba(0,0,0,0.5)] lg:shadow-none flex flex-col transition-transform duration-300 ease-out transform pointer-events-auto
-                        ${showSidebar ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-                    `}>
+                        relative h-full w-[88%] max-w-[320px] lg:w-[300px] bg-slate-900/95 backdrop-blur-2xl border-r border-white/10 shadow-[20px_0_50px_rgba(0,0,0,0.5)] lg:shadow-none flex flex-col transition-transform duration-300 ease-out pointer-events-auto
+                    `} style={{ transform: showSidebar ? 'translateX(0)' : 'translateX(-100%)' }}>
                         <div className="flex-1 overflow-y-auto custom-scrollbar p-0 flex flex-col h-full bg-transparent">
                             {/* 1. HEADER CON BOTÓN DE PUBLICAR */}
                             <div className="flex items-center justify-between px-6 py-5 border-b border-white/5 gap-4">
