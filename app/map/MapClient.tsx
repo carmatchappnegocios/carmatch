@@ -333,8 +333,9 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                 <div className="lg:static lg:w-[300px] lg:shrink-0 lg:flex lg:flex-col lg:h-full lg:border-r lg:border-white/10 lg:bg-slate-900/95 lg:backdrop-blur-2xl lg:shadow-[20px_0_50px_rgba(0,0,0,0.5)] hidden">
                     {/* Filter Panel (Sidebar Content) - Desktop version */}
                     <div className="flex flex-col h-full bg-transparent">
-                        <div className="flex-1 overflow-y-auto custom-scrollbar p-0 flex flex-col h-full bg-transparent">
-                            <div className="px-6 py-3 space-y-4 flex-1">
+                        {/* Scrollable Content Area */}
+                        <div className="flex-1 overflow-y-auto custom-scrollbar p-0 bg-transparent">
+                            <div className="px-6 py-3 space-y-4">
                                 {/* 2. PREGUNTAR AL EXPERTO (NUEVA IA CONVERSACIONAL) */}
                                 <div className="space-y-4">
                                     <AIChatWidget context="map"
@@ -420,32 +421,32 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            {/* Footer - Botón Publicar Negocio + Ver Mapa y Lista */}
-                            <div className="p-4 space-y-3 border-t border-white/5 bg-white/[0.02]">
-                                <Link
-                                    href="/my-businesses?action=new"
-                                    onClick={(e) => {
-                                        if (user && isSoftLogout()) {
-                                            e.preventDefault()
-                                            openModal(
-                                                t('common2.session_expired'),
-                                                () => { /* Restauración en modal */ }
-                                            )
-                                        }
-                                    }}
-                                    className="w-full py-3 bg-accent-600 text-white rounded-2xl shadow-lg font-black uppercase tracking-wider border border-accent-500/50 flex items-center justify-center gap-2 active:scale-95 hover:bg-accent-500 transition-all text-sm"
-                                >
-                                    <Plus size={18} />
-                                    <span>{t('map_store.publish_business')}</span>
-                                </Link>
-                                <button
-                                    onClick={() => setShowSidebar(false)}
-                                    className="w-full py-3 bg-primary-700 text-white rounded-2xl font-black uppercase tracking-[0.2em] shadow-xl hover:bg-primary-600 active:scale-95 transition-all"
-                                >
-                                    {t('map_store.view_list')}
-                                </button>
-                            </div>
+                        {/* Footer Sticky - Botón Publicar Negocio + Ver Mapa y Lista */}
+                        <div className="p-4 space-y-3 border-t border-white/5 bg-white/[0.02] flex-shrink-0">
+                            <Link
+                                href="/my-businesses?action=new"
+                                onClick={(e) => {
+                                    if (user && isSoftLogout()) {
+                                        e.preventDefault()
+                                        openModal(
+                                            t('common2.session_expired'),
+                                            () => { /* Restauración en modal */ }
+                                        )
+                                    }
+                                }}
+                                className="w-full py-3 bg-accent-600 text-white rounded-2xl shadow-lg font-black uppercase tracking-wider border border-accent-500/50 flex items-center justify-center gap-2 active:scale-95 hover:bg-accent-500 transition-all text-sm"
+                            >
+                                <Plus size={18} />
+                                <span>{t('map_store.publish_business')}</span>
+                            </Link>
+                            <button
+                                onClick={() => setShowSidebar(false)}
+                                className="w-full py-3 bg-primary-700 text-white rounded-2xl font-black uppercase tracking-[0.2em] shadow-xl hover:bg-primary-600 active:scale-95 transition-all"
+                            >
+                                {t('map_store.view_list')}
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -461,18 +462,20 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                     {/* Mobile Filter Panel Content */}
                     <div className="relative h-full w-[88%] max-w-[320px] bg-slate-900/95 backdrop-blur-2xl border-r border-white/10 shadow-[20px_0_50px_rgba(0,0,0,0.5)] flex flex-col transition-transform duration-300 ease-out pointer-events-auto"
                         style={{ transform: showSidebar ? 'translateX(0)' : 'translateX(-100%)' }}>
-                        <div className="flex-1 overflow-y-auto custom-scrollbar p-0 flex flex-col h-full bg-transparent">
-                            {/* Header solo con botón cerrar */}
-                            <div className="flex items-center justify-end px-4 py-3 border-b border-white/5">
-                                <button
-                                    onClick={() => setShowSidebar(false)}
-                                    className="p-1 text-white/40 hover:text-white transition-colors"
-                                >
-                                    <Plus size={24} className="rotate-45" />
-                                </button>
-                            </div>
+                        
+                        {/* Header solo con botón cerrar - Fixed at top */}
+                        <div className="flex items-center justify-end px-4 py-3 border-b border-white/5 flex-shrink-0">
+                            <button
+                                onClick={() => setShowSidebar(false)}
+                                className="p-1 text-white/40 hover:text-white transition-colors"
+                            >
+                                <Plus size={24} className="rotate-45" />
+                            </button>
+                        </div>
 
-                            <div className="px-6 py-3 space-y-4 flex-1">
+                        {/* Scrollable Content Area */}
+                        <div className="flex-1 overflow-y-auto custom-scrollbar p-0 bg-transparent">
+                            <div className="px-6 py-3 space-y-4">
                                 {/* 2. PREGUNTAR AL EXPERTO (NUEVA IA CONVERSACIONAL) */}
                                 <div className="space-y-4">
                                     <AIChatWidget context="map"
@@ -560,32 +563,32 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            {/* Footer Mobile - Botón Publicar Negocio + Ver Mapa y Lista */}
-                            <div className="p-4 space-y-3 border-t border-white/5 bg-white/[0.02]">
-                                <Link
-                                    href="/my-businesses?action=new"
-                                    onClick={(e) => {
-                                        if (user && isSoftLogout()) {
-                                            e.preventDefault()
-                                            openModal(
-                                                t('common2.session_expired'),
-                                                () => { /* Restauración en modal */ }
-                                            )
-                                        }
-                                    }}
-                                    className="w-full py-3 bg-accent-600 text-white rounded-2xl shadow-lg font-black uppercase tracking-wider border border-accent-500/50 flex items-center justify-center gap-2 active:scale-95 hover:bg-accent-500 transition-all text-sm"
-                                >
-                                    <Plus size={18} />
-                                    <span>{t('map_store.publish_business')}</span>
-                                </Link>
-                                <button
-                                    onClick={() => setShowSidebar(false)}
-                                    className="w-full py-3 bg-primary-700 text-white rounded-2xl font-black uppercase tracking-[0.2em] shadow-xl hover:bg-primary-600 active:scale-95 transition-all"
-                                >
-                                    {t('map_store.view_list')}
-                                </button>
-                            </div>
+                        {/* Footer Mobile Sticky - Botón Publicar Negocio + Ver Mapa y Lista */}
+                        <div className="p-4 space-y-3 border-t border-white/5 bg-white/[0.02] flex-shrink-0">
+                            <Link
+                                href="/my-businesses?action=new"
+                                onClick={(e) => {
+                                    if (user && isSoftLogout()) {
+                                        e.preventDefault()
+                                        openModal(
+                                            t('common2.session_expired'),
+                                            () => { /* Restauración en modal */ }
+                                        )
+                                    }
+                                }}
+                                className="w-full py-3 bg-accent-600 text-white rounded-2xl shadow-lg font-black uppercase tracking-wider border border-accent-500/50 flex items-center justify-center gap-2 active:scale-95 hover:bg-accent-500 transition-all text-sm"
+                            >
+                                <Plus size={18} />
+                                <span>{t('map_store.publish_business')}</span>
+                            </Link>
+                            <button
+                                onClick={() => setShowSidebar(false)}
+                                className="w-full py-3 bg-primary-700 text-white rounded-2xl font-black uppercase tracking-[0.2em] shadow-xl hover:bg-primary-600 active:scale-95 transition-all"
+                            >
+                                {t('map_store.view_list')}
+                            </button>
                         </div>
                     </div>
                 </div>
