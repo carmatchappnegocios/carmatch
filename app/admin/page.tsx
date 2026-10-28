@@ -49,8 +49,8 @@ const BetaSessionsTab = dynamic<any>(() => import('@/components/admin/BetaSessio
 const CalendarTab = dynamic<any>(() => import('@/components/admin/CalendarTab'), { ssr: false })
 const EmailAliasesTab = dynamic<any>(() => import('@/components/admin/EmailAliasesTab'), { ssr: false })
 import ManageCreditsModal from '@/components/admin/ManageCreditsModal'
-import { testGeminiHealth, AiHealthReport } from '@/app/admin/actions/ai-health-actions'
-import { scoutGlobalStations } from '@/app/admin/actions/scout-actions'
+import { testGeminiHealth, AiHealthReport } from './actions/ai-health-actions'
+import { scoutGlobalStations } from './actions/scout-actions'
 import { toast } from "sonner"
 
 type AdminView = 'overview' | 'users' | 'inventory' | 'map-store' | 'intelligence' | 'reports' | 'logs' | 'ai-hub' | 'costs' | 'calendario' | 'email' | 'more'
