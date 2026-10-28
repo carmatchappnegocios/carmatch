@@ -322,12 +322,11 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                 <div className="absolute top-6 left-6 z-[60] lg:hidden">
                     <button
                         onClick={() => setShowSidebar(!showSidebar)}
-                        className="w-fit px-5 py-2.5 bg-surface/90 backdrop-blur-md text-white/80 rounded-full shadow-xl font-bold uppercase tracking-wider border border-white/10 flex items-center gap-2 active:scale-95 hover:bg-surface transition-all"
+                        className="w-fit px-5 py-2.5 bg-slate-900 text-white rounded-full shadow-xl font-bold uppercase tracking-wider border border-white/20 flex items-center gap-2 active:scale-95 hover:bg-slate-800 transition-all"
                     >
                         <Settings2 size={18} />
                         <span className="text-xs">{showSidebar ? t('map_store.hide_filters') : t('map_store.show_filters')}</span>
                     </button>
-                </div>
 
                 {/* 🗂️ PANEL DE FILTROS - Desktop: siempre visible | Mobile: overlay minimizable */}
                 <div className="lg:static lg:w-[300px] lg:shrink-0 lg:flex lg:flex-col lg:h-full lg:border-r lg:border-white/10 lg:bg-slate-900/95 lg:backdrop-blur-2xl lg:shadow-[20px_0_50px_rgba(0,0,0,0.5)] hidden">
@@ -424,7 +423,7 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                         </div>
 
                         {/* Footer Sticky - Botón Publicar Negocio + Ver Mapa y Lista */}
-                        <div className="p-4 space-y-3 border-t border-white/5 bg-white/[0.02] flex-shrink-0">
+                        <div className="p-4 space-y-3 border-t border-white/10 bg-slate-900/50 flex-shrink-0">
                             <Link
                                 href="/my-businesses?action=new"
                                 onClick={(e) => {
@@ -566,7 +565,7 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                         </div>
 
                         {/* Footer Mobile Sticky - Botón Publicar Negocio + Ver Mapa y Lista */}
-                        <div className="p-4 space-y-3 border-t border-white/5 bg-white/[0.02] flex-shrink-0">
+                        <div className="p-4 space-y-3 border-t border-white/10 bg-slate-900/50 flex-shrink-0">
                             <Link
                                 href="/my-businesses?action=new"
                                 onClick={(e) => {
