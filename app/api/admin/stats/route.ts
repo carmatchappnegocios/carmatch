@@ -12,13 +12,25 @@ export async function GET(request: NextRequest) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
         }
 
-        // Use session.isAdmin (set by auth callback with case-insensitive email + DB fallback)
-        // Also check email case-insensitive as backup
-        const isAdmin = !!(session.user as any).isAdmin || 
-            (session.user.email && process.env.ADMIN_EMAIL && 
-                session.user.email.toLowerCase() === process.env.ADMIN_EMAIL.toLowerCase())
+        // Robust admin check: 1) session.isAdmin, 2) email match, 3) direct DB query
+        let isAdmin = !!(session.user as any).isAdmin
+        if (!isAdmin && session.user.email && process.env.ADMIN_EMAIL) {
+            isAdmin = session.user.email.toLowerCase() === process.env.ADMIN_EMAIL.toLowerCase()
+        }
+        if (!isAdmin && session.user.email) {
+            // Direct DB fallback - query user by email and check isAdmin flag
+            const dbUser = await prisma.user.findUnique({
+                where: { email: session.user.email.toLowerCase() },
+                select: { isAdmin: true, id: true }
+            })
+            isAdmin = !!dbUser?.isAdmin
+            if (isAdmin) {
+                console.log('[Admin Stats] Admin verified via direct DB query:', session.user.email)
+            }
+        }
         
         if (!isAdmin) {
+            console.warn('[Admin Stats] Access denied for:', session.user.email)
             return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
         }
 

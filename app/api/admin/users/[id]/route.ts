@@ -15,11 +15,14 @@ export async function PATCH(
 
         console.log(`🔍 Admin Action: Patching user by ${session.user.email}`)
 
-        const isAdminMaster = session.user.email === process.env.ADMIN_EMAIL
+        // Robust admin check: 1) email match (case-insensitive), 2) DB isAdmin
+        const isAdminMaster = session.user.email && process.env.ADMIN_EMAIL 
+            ? session.user.email.toLowerCase() === process.env.ADMIN_EMAIL.toLowerCase()
+            : false
 
         if (!isAdminMaster) {
             const admin = await prisma.user.findUnique({
-                where: { email: session.user.email },
+                where: { email: session.user.email.toLowerCase() },
                 select: { isAdmin: true }
             })
 
@@ -112,11 +115,14 @@ export async function DELETE(
             return NextResponse.json({ error: 'No autenticado' }, { status: 401 })
         }
 
-        const isAdminMaster = session.user.email === process.env.ADMIN_EMAIL
+        // Robust admin check: 1) email match (case-insensitive), 2) DB isAdmin
+        const isAdminMaster = session.user.email && process.env.ADMIN_EMAIL 
+            ? session.user.email.toLowerCase() === process.env.ADMIN_EMAIL.toLowerCase()
+            : false
 
         if (!isAdminMaster) {
             const admin = await prisma.user.findUnique({
-                where: { email: session.user.email },
+                where: { email: session.user.email.toLowerCase() },
                 select: { isAdmin: true }
             })
 
