@@ -1178,6 +1178,7 @@
     "map_store": {
         "view_list": "Ver Mapa y Lista",
         "show_filters": "Mostrar Filtros",
+        "hide_filters": "Ocultar Filtros",
         "results_found": "resultados encontrados",
         "loading": "Cargando Mapa...",
         "loading_location": "Obteniendo tu ubicación...",

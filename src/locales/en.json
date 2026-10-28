@@ -1144,6 +1144,7 @@
     "map_store": {
         "view_list": "Show Map and List",
         "show_filters": "Show Filters",
+        "hide_filters": "Hide Filters",
         "results_found": "results found",
         "loading": "Loading Map...",
         "loading_location": "Getting your location...",
