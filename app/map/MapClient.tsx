@@ -340,7 +340,7 @@ export default function MapClient({ businesses, user }: MapClientProps) {
 
                     {/* Filter Panel (Sidebar Content) */}
                     <div className={`
-                        relative h-full w-[85%] max-w-[340px] lg:w-full bg-surface/95 backdrop-blur-2xl border-r border-white/10 shadow-[20px_0_50px_rgba(0,0,0,0.4)] lg:shadow-none flex flex-col transition-transform duration-300 ease-out transform pointer-events-auto
+                        relative h-full w-[88%] max-w-[320px] lg:w-[300px] bg-slate-900/95 backdrop-blur-2xl border-r border-white/10 shadow-[20px_0_50px_rgba(0,0,0,0.5)] lg:shadow-none flex flex-col transition-transform duration-300 ease-out transform pointer-events-auto
                         ${showSidebar ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
                     `}>
                         <div className="flex-1 overflow-y-auto custom-scrollbar p-0 flex flex-col h-full bg-transparent">
@@ -358,7 +358,7 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                                             )
                                         }
                                     }}
-                                    className="flex-1 py-2.5 bg-accent-600 text-white rounded-lg shadow-lg font-black uppercase tracking-wider border border-accent-500/50 flex items-center justify-center gap-2 active:scale-95 hover:bg-accent-500 transition-all text-xs"
+                                    className="flex-1 py-2.5 bg-accent-600 text-white rounded-2xl shadow-lg font-black uppercase tracking-wider border border-accent-500/50 flex items-center justify-center gap-2 active:scale-95 hover:bg-accent-500 transition-all text-xs"
                                 >
                                     <Plus size={16} />
                                     <span>{t('map_store.publish_business')}</span>
@@ -424,12 +424,12 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                                                     <button
                                                         onClick={() => toggleCategory(cat.id)}
                                                         className={`
-                                                            w-full flex items-center gap-3 py-1.5 px-3 rounded-xl transition-all group
+                                                            w-full flex items-center gap-3 py-1.5 px-3 rounded-2xl transition-all group
                                                             ${isSelected ? 'bg-white/10 ring-1 ring-white/10' : 'hover:bg-white/5'}
                                                         `}
                                                     >
                                                         <div
-                                                            className="w-8 h-8 rounded-xl border flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-sm shrink-0"
+                                                            className="w-8 h-8 rounded-2xl border flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-sm shrink-0"
                                                             style={{
                                                                 backgroundColor: `${cat.color}20`,
                                                                 borderColor: isSelected ? cat.color : `${cat.color}40`,
