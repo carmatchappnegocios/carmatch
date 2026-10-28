@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { testGeminiHealth } from '../../admin/actions/ai-health-actions'
+import { testGeminiHealth } from '../../../admin/actions/ai-health-actions'
 
 export const dynamic = 'force-dynamic'
 
