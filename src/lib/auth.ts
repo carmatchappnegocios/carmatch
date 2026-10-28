@@ -84,13 +84,25 @@ export const {
                 session.user.image = (token.picture as string) || session.user.image
                 session.user.name = (token.name as string) || session.user.name
 
-                if (session.user.email === process.env.ADMIN_EMAIL) {
-                    // @ts-ignore
-                    session.user.isAdmin = true
-                } else {
-                    // @ts-ignore
-                    session.user.isAdmin = !!token.isAdmin
+                // Check admin status: 1) token.isAdmin (from authorize/jwt), 2) email match (case-insensitive), 3) database isAdmin flag
+                let isAdmin = !!token.isAdmin
+                if (!isAdmin && session.user.email && process.env.ADMIN_EMAIL) {
+                    isAdmin = session.user.email.toLowerCase() === process.env.ADMIN_EMAIL.toLowerCase()
                 }
+                if (!isAdmin && session.user.id) {
+                    // Fallback: check database directly
+                    try {
+                        const dbUser = await prisma.user.findUnique({
+                            where: { id: session.user.id },
+                            select: { isAdmin: true }
+                        })
+                        isAdmin = !!dbUser?.isAdmin
+                    } catch (e) {
+                        console.warn('[Auth] Failed to fetch admin status from DB:', e)
+                    }
+                }
+                // @ts-ignore
+                session.user.isAdmin = isAdmin
             }
             return session
         },
