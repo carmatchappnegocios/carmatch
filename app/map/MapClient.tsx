@@ -39,6 +39,10 @@ export default function MapClient({ businesses, user }: MapClientProps) {
     const [showSidebar, setShowSidebar] = useState(false) // Mobile toggle
     const [searchQuery, setSearchQuery] = useState('') // 🔍 NEW: AI search query state
     const [mapKey, setMapKey] = useState(() => Math.random()) // Force map remount
+    // Asegurar que el panel inicia cerrado en móvil
+    useEffect(() => {
+        setShowSidebar(false)
+    }, [])
     const [showLocationModal, setShowLocationModal] = useState(false)
     const [cityInput, setCityInput] = useState('')
     const [stateInput, setStateInput] = useState('')
