@@ -696,13 +696,13 @@ function UsersTab({ initialUsers }: { initialUsers: any[] }) {
                 // Filter users based on beta/regular toggle
                 let filtered = data.users
                 if (showOnlyBeta) {
-                    filtered = filtered.filter(u => u.betaToday)
+                    filtered = filtered.filter((u: any) => u.betaToday)
                 } else if (showOnlyRegular) {
-                    filtered = filtered.filter(u => !u.betaToday)
+                    filtered = filtered.filter((u: any) => !u.betaToday)
                 }
                 if (searchTerm.trim()) {
                     const term = searchTerm.toLowerCase()
-                    filtered = filtered.filter(u =>
+                    filtered = filtered.filter((u: any) =>
                         u.name?.toLowerCase().includes(term) ||
                         u.email?.toLowerCase().includes(term)
                     )
@@ -720,13 +720,13 @@ function UsersTab({ initialUsers }: { initialUsers: any[] }) {
     useEffect(() => {
         let filtered = allUsers
         if (showOnlyBeta) {
-            filtered = filtered.filter(u => u.betaToday)
+            filtered = filtered.filter((u: any) => u.betaToday)
         } else if (showOnlyRegular) {
-            filtered = filtered.filter(u => !u.betaToday)
+            filtered = filtered.filter((u: any) => !u.betaToday)
         }
         if (searchTerm.trim()) {
             const term = searchTerm.toLowerCase()
-            filtered = filtered.filter(u =>
+            filtered = filtered.filter((u: any) =>
                 u.name?.toLowerCase().includes(term) ||
                 u.email?.toLowerCase().includes(term)
             )
