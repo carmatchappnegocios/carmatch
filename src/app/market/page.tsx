@@ -1,17 +1,5 @@
 
 export const dynamic = 'force-dynamic'
-
-import { Suspense } from 'react'
-
-export default async function MarketPage() {
-  const session = await auth();
-  return (
-    <Suspense fallback={<div>Loading market...</div>}>
-      <MarketClient session={session} />
-    </Suspense>
-  );
-}
-
 import { auth } from "@/lib/auth"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
