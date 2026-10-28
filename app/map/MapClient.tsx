@@ -327,6 +327,7 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                         <Settings2 size={18} />
                         <span className="text-xs">{showSidebar ? t('map_store.hide_filters') : t('map_store.show_filters')}</span>
                     </button>
+                </div>
 
                 {/* 🗂️ PANEL DE FILTROS - Desktop: siempre visible | Mobile: overlay minimizable */}
                 <div className="lg:static lg:w-[300px] lg:shrink-0 lg:flex lg:flex-col lg:h-full lg:border-r lg:border-white/10 lg:bg-slate-900/95 lg:backdrop-blur-2xl lg:shadow-[20px_0_50px_rgba(0,0,0,0.5)] hidden">
