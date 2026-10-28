@@ -656,19 +656,89 @@ function BetaTimeCard({ betaToday }: { betaToday: { maxDuration: number; lastPin
     )
 }
 
-function UsersTab({ users }: { users: any[] }) {
+function UsersTab({ initialUsers }: { initialUsers: any[] }) {
+    const [users, setUsers] = useState<any[]>(initialUsers)
+    const [allUsers, setAllUsers] = useState<any[]>([])
+    const [loading, setLoading] = useState(false)
     const [selectedUser, setSelectedUser] = useState<any>(null)
     const [showCreditModal, setShowCreditModal] = useState(false)
     const [searchTerm, setSearchTerm] = useState('')
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(1)
+    const [totalUsers, setTotalUsers] = useState(0)
+    const [betaUsersToday, setBetaUsersToday] = useState(0)
+    const [showOnlyBeta, setShowOnlyBeta] = useState(false)
+    const [showOnlyRegular, setShowOnlyRegular] = useState(false)
 
-    const filteredUsers = useMemo(() => {
-        if (!searchTerm.trim()) return users
-        const term = searchTerm.toLowerCase()
-        return users.filter(u =>
-            u.name?.toLowerCase().includes(term) ||
-            u.email?.toLowerCase().includes(term)
-        )
-    }, [users, searchTerm])
+    // Fetch all users on mount
+    useEffect(() => {
+        fetchUsers()
+    }, [])
+
+    const fetchUsers = async (page = 1) => {
+        setLoading(true)
+        try {
+            const params = new URLSearchParams({
+                page: page.toString(),
+                limit: '100',
+                search: searchTerm,
+                includeBeta: 'true'
+            })
+            const res = await fetch(`/api/admin/users/list?${params}`)
+            if (res.ok) {
+                const data = await res.json()
+                setAllUsers(data.users)
+                setTotalUsers(data.total)
+                setBetaUsersToday(data.betaUsersToday)
+                setTotalPages(data.totalPages)
+                setCurrentPage(page)
+                
+                // Filter users based on beta/regular toggle
+                let filtered = data.users
+                if (showOnlyBeta) {
+                    filtered = filtered.filter(u => u.betaToday)
+                } else if (showOnlyRegular) {
+                    filtered = filtered.filter(u => !u.betaToday)
+                }
+                if (searchTerm.trim()) {
+                    const term = searchTerm.toLowerCase()
+                    filtered = filtered.filter(u =>
+                        u.name?.toLowerCase().includes(term) ||
+                        u.email?.toLowerCase().includes(term)
+                    )
+                }
+                setUsers(filtered)
+            }
+        } catch (error) {
+            console.error('Error fetching users:', error)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    // Apply filters when search term or beta/regular toggle changes
+    useEffect(() => {
+        let filtered = allUsers
+        if (showOnlyBeta) {
+            filtered = filtered.filter(u => u.betaToday)
+        } else if (showOnlyRegular) {
+            filtered = filtered.filter(u => !u.betaToday)
+        }
+        if (searchTerm.trim()) {
+            const term = searchTerm.toLowerCase()
+            filtered = filtered.filter(u =>
+                u.name?.toLowerCase().includes(term) ||
+                u.email?.toLowerCase().includes(term)
+            )
+        }
+        setUsers(filtered)
+    }, [searchTerm, showOnlyBeta, showOnlyRegular, allUsers])
+
+    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(e.target.value)
+        setCurrentPage(1)
+        fetchUsers(1)
+    }
 
     return (
         <div className="space-y-6">
@@ -677,96 +747,197 @@ function UsersTab({ users }: { users: any[] }) {
 
             <div className="bg-[#111114] border border-white/5 rounded-3xl overflow-hidden shadow-2xl">
                 <div className="p-4 border-b border-white/5">
-                <h3 className="font-bold text-lg mb-3">Gestión de Usuarios ({filteredUsers.length})</h3>
-                <div className="relative">
-                    <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary" />
-                    <input
-                        type="text"
-                        placeholder="Buscar por nombre o email..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 h-12 text-base focus:outline-none focus:border-primary-500 transition"
-                    />
+                    <div className="flex items-center justify-between mb-3">
+                        <h3 className="font-bold text-lg">
+                            Gestión de Usuarios 
+                            <span className="text-xs font-normal text-white/50 ml-2">
+                                (Total: {totalUsers} | Beta hoy: {betaUsersToday} | Regulares: {totalUsers - betaUsersToday})
+                            </span>
+                        </h3>
+                        {/* Filter Tabs: All / Beta / Regular */}
+                        <div className="flex items-center gap-1 bg-white/5 rounded-xl p-1">
+                            <button
+                                onClick={() => { setShowOnlyBeta(false); setShowOnlyRegular(false); }}
+                                className={`px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-widest transition-all ${
+                                    !showOnlyBeta && !showOnlyRegular 
+                                        ? 'bg-primary-600 text-white shadow-lg' 
+                                        : 'text-white/50 hover:text-white'
+                                }`}
+                            >
+                                Todos
+                            </button>
+                            <button
+                                onClick={() => { setShowOnlyBeta(true); setShowOnlyRegular(false); }}
+                                className={`px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-widest transition-all ${
+                                    showOnlyBeta 
+                                        ? 'bg-emerald-600 text-white shadow-lg' 
+                                        : 'text-white/50 hover:text-white'
+                                }`}
+                            >
+                                🧪 Beta ({betaUsersToday})
+                            </button>
+                            <button
+                                onClick={() => { setShowOnlyBeta(false); setShowOnlyRegular(true); }}
+                                className={`px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-widest transition-all ${
+                                    showOnlyRegular 
+                                        ? 'bg-blue-600 text-white shadow-lg' 
+                                        : 'text-white/50 hover:text-white'
+                                }`}
+                            >
+                                Usuarios ({totalUsers - betaUsersToday})
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div className="relative">
+                        <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary" />
+                        <input
+                            type="text"
+                            placeholder="Buscar por nombre o email..."
+                            value={searchTerm}
+                            onChange={handleSearch}
+                            className="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 h-12 text-base focus:outline-none focus:border-primary-500 transition"
+                        />
+                    </div>
                 </div>
-            </div>
-            {/* Desktop Table View */}
-            {/* Premium Mobile Card View — Eliminada tabla Legacy */}
-            <div className="grid grid-cols-1 gap-4 p-4">
-                {filteredUsers.length === 0 ? (
-                    <div className="text-center py-12 opacity-30">
-                        <Users className="w-12 h-12 mx-auto mb-4" />
-                        <p className="text-sm font-bold">{searchTerm ? 'No se encontraron usuarios' : 'No hay usuarios registrados'}</p>
+
+                {/* Loading State */}
+                {loading && (
+                    <div className="p-8 text-center text-white/50">
+                        <div className="w-8 h-8 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
+                        Cargando usuarios...
                     </div>
-                ) : filteredUsers.map(user => (
-                    <div key={user.id} className="bg-[#1a1a1d] border border-white/5 rounded-3xl p-5 shadow-xl space-y-5 transition-all active:scale-[0.98]">
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-4">
-                                <div className="w-14 h-14 rounded-2xl bg-zinc-800 p-0.5 ring-2 ring-white/5 overflow-hidden">
-                                    <img src={user.image || `https://ui-avatars.com/api/?name=${user.name}`} className="w-full h-full object-cover rounded-[0.9rem]" />
-                                </div>
-                                <div className="min-w-0">
-                                    <h4 className="font-black text-base text-white truncate">{user.name}</h4>
-                                    <p className="text-xs text-zinc-500 truncate">{user.email}</p>
-                                </div>
-                            </div>
-                            <div className={`px-3 py-1 rounded-full text-[10px] font-black tracking-widest ${user.isAdmin ? 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30' : 'bg-blue-500/20 text-blue-400 border border-blue-500/30'}`}>
-                                {user.isAdmin ? 'MASTER' : 'SOCIO'}
-                            </div>
-                        </div>
+                )}
 
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="bg-white/[0.03] rounded-2xl p-4 border border-white/5 flex flex-col gap-1">
-                                <span className="text-[10px] font-black uppercase text-zinc-500 tracking-[0.2em]">Créditos</span>
-                                <div className="flex items-center gap-3">
-                                    <span className={`text-xl font-black italic ${user.credits > 0 ? 'text-amber-400' : 'text-zinc-600'}`}>
-                                        {user.credits}
-                                    </span>
-                                    <button
-                                        onClick={() => {
-                                            setSelectedUser(user)
-                                            setShowCreditModal(true)
-                                        }}
-                                        className="w-8 h-8 flex items-center justify-center bg-amber-500/10 rounded-xl text-amber-500 active:scale-90 transition-transform"
-                                    >
-                                        <Coins size={16} />
-                                    </button>
+                {/* Users Grid */}
+                {!loading && (
+                    <div className="grid grid-cols-1 gap-4 p-4">
+                        {users.length === 0 ? (
+                            <div className="text-center py-12 opacity-30">
+                                <Users className="w-12 h-12 mx-auto mb-4" />
+                                <p className="text-sm font-bold">
+                                    {searchTerm 
+                                        ? 'No se encontraron usuarios' 
+                                        : showOnlyBeta 
+                                            ? 'No hay usuarios beta hoy' 
+                                            : showOnlyRegular 
+                                                ? 'No hay usuarios regulares' 
+                                                : 'No hay usuarios registrados'}
+                                </p>
+                            </div>
+                        ) : users.map(user => (
+                            <div key={user.id} className="bg-[#1a1a1d] border border-white/5 rounded-3xl p-5 shadow-xl space-y-5 transition-all active:scale-[0.98]">
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-14 h-14 rounded-2xl bg-zinc-800 p-0.5 ring-2 ring-white/5 overflow-hidden">
+                                            <img src={user.image || `https://ui-avatars.com/api/?name=${user.name}`} className="w-full h-full object-cover rounded-[0.9rem]" />
+                                        </div>
+                                        <div className="min-w-0">
+                                            <div className="flex items-center gap-2">
+                                                <h4 className="font-black text-base text-white truncate">{user.name}</h4>
+                                                {user.betaToday && (
+                                                    <span className="px-2 py-0.5 bg-emerald-600/20 text-emerald-400 text-[9px] font-black uppercase tracking-widest rounded-full border border-emerald-600/30">
+                                                        BETA
+                                                    </span>
+                                                )}
+                                                {user.isAdmin && (
+                                                    <span className="px-2 py-0.5 bg-indigo-600/20 text-indigo-400 text-[9px] font-black uppercase tracking-widest rounded-full border border-indigo-600/30">
+                                                        ADMIN
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <p className="text-xs text-zinc-500 truncate">{user.email}</p>
+                                        </div>
+                                    </div>
+                                    <div className={`px-3 py-1 rounded-full text-[10px] font-black tracking-widest ${
+                                        user.isAdmin ? 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30' 
+                                        : user.betaToday ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
+                                        : 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
+                                    }`}>
+                                        {user.isAdmin ? 'MASTER' : user.betaToday ? 'BETA' : 'SOCIO'}
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="bg-white/[0.03] rounded-2xl p-4 border border-white/5 flex flex-col gap-1">
+                                        <span className="text-[10px] font-black uppercase text-zinc-500 tracking-[0.2em]">Créditos</span>
+                                        <div className="flex items-center gap-3">
+                                            <span className={`text-xl font-black italic ${user.credits > 0 ? 'text-amber-400' : 'text-zinc-600'}`}>
+                                                {user.credits}
+                                            </span>
+                                            <button
+                                                onClick={() => {
+                                                    setSelectedUser(user)
+                                                    setShowCreditModal(true)
+                                                }}
+                                                className="w-8 h-8 flex items-center justify-center bg-amber-500/10 rounded-xl text-amber-500 active:scale-90 transition-transform"
+                                            >
+                                                <Coins size={16} />
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div className="bg-white/[0.03] rounded-2xl p-4 border border-white/5 flex flex-col gap-1">
+                                        <span className="text-[10px] font-black uppercase text-zinc-500 tracking-[0.2em]">Status</span>
+                                        <div className={`flex items-center gap-2 text-[11px] font-black tracking-tighter ${user.isActive ? 'text-green-500' : 'text-red-500'}`}>
+                                            <div className={`w-2 h-2 rounded-full ${user.isActive ? 'bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)]' : 'bg-red-500'}`} />
+                                            {user.isActive ? 'ACTIVO' : 'BLOQUEADO'}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Beta Session Time Today */}
+                                <BetaTimeCard betaToday={user.betaToday} />
+
+                                <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                                    <div className="flex flex-col">
+                                        <span className="text-[10px] font-black text-zinc-600 uppercase tracking-widest">Desde</span>
+                                        <span className="text-[10px] font-bold text-zinc-400">{new Date(user.createdAt).toLocaleDateString()}</span>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <AdminGenericAction
+                                            apiPath={`/api/admin/users/${user.id}`}
+                                            method="PATCH"
+                                            body={{ isActive: !user.isActive }}
+                                            label={user.isActive ? 'Suspender' : 'Reactivar'}
+                                        />
+                                        <AdminGenericAction
+                                            apiPath={`/api/admin/users/${user.id}`}
+                                            method="DELETE"
+                                            label="Baja"
+                                            danger
+                                        />
+                                    </div>
                                 </div>
                             </div>
+                        ))}
+                    </div>
+                )}
 
-                            <div className="bg-white/[0.03] rounded-2xl p-4 border border-white/5 flex flex-col gap-1">
-                                <span className="text-[10px] font-black uppercase text-zinc-500 tracking-[0.2em]">Status</span>
-                                <div className={`flex items-center gap-2 text-[11px] font-black tracking-tighter ${user.isActive ? 'text-green-500' : 'text-red-500'}`}>
-                                    <div className={`w-2 h-2 rounded-full ${user.isActive ? 'bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)]' : 'bg-red-500'}`} />
-                                    {user.isActive ? 'ACTIVO' : 'BLOQUEADO'}
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Beta Session Time Today */}
-                        <BetaTimeCard betaToday={user.betaToday} />
-
-                        <div className="flex items-center justify-between pt-4 border-t border-white/5">
-                            <div className="flex flex-col">
-                                <span className="text-[10px] font-black text-zinc-600 uppercase tracking-widest">Desde</span>
-                                <span className="text-[10px] font-bold text-zinc-400">{new Date(user.createdAt).toLocaleDateString()}</span>
-                            </div>
-                            <div className="flex gap-2">
-                                <AdminGenericAction
-                                    apiPath={`/api/admin/users/${user.id}`}
-                                    method="PATCH"
-                                    body={{ isActive: !user.isActive }}
-                                    label={user.isActive ? 'Suspender' : 'Reactivar'}
-                                />
-                                <AdminGenericAction
-                                    apiPath={`/api/admin/users/${user.id}`}
-                                    method="DELETE"
-                                    label="Baja"
-                                    danger
-                                />
-                            </div>
+                {/* Pagination */}
+                {!loading && totalPages > 1 && (
+                    <div className="px-4 py-3 border-t border-white/5 flex items-center justify-between">
+                        <span className="text-sm text-white/50">
+                            Página {currentPage} de {totalPages} ({totalUsers} total)
+                        </span>
+                        <div className="flex gap-2">
+                            <button
+                                onClick={() => fetchUsers(currentPage - 1)}
+                                disabled={currentPage === 1 || loading}
+                                className="px-3 py-1.5 bg-white/5 text-white/70 rounded-lg text-xs font-bold hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition"
+                            >
+                                Anterior
+                            </button>
+                            <button
+                                onClick={() => fetchUsers(currentPage + 1)}
+                                disabled={currentPage === totalPages || loading}
+                                className="px-3 py-1.5 bg-white/5 text-white/70 rounded-lg text-xs font-bold hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition"
+                            >
+                                Siguiente
+                            </button>
                         </div>
                     </div>
-                ))}
+                )}
             </div>
 
             {selectedUser && (
@@ -779,7 +950,6 @@ function UsersTab({ users }: { users: any[] }) {
                     }}
                 />
             )}
-        </div>
         </div>
     )
 }

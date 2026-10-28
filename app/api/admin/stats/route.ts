@@ -12,15 +12,14 @@ export async function GET(request: NextRequest) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
         }
 
-        const isAdminMaster = session.user.email === process.env.ADMIN_EMAIL
-        if (!isAdminMaster) {
-            const user = await prisma.user.findUnique({
-                where: { id: session.user.id },
-                select: { isAdmin: true }
-            })
-            if (!user?.isAdmin) {
-                return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
-            }
+        // Use session.isAdmin (set by auth callback with case-insensitive email + DB fallback)
+        // Also check email case-insensitive as backup
+        const isAdmin = !!(session.user as any).isAdmin || 
+            (session.user.email && process.env.ADMIN_EMAIL && 
+                session.user.email.toLowerCase() === process.env.ADMIN_EMAIL.toLowerCase())
+        
+        if (!isAdmin) {
+            return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
         }
 
         const statsResults = await Promise.all([
