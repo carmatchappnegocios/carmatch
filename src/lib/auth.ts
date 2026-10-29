@@ -167,11 +167,12 @@ export const {
 
                     const adminUser = await prisma.user.upsert({
                         where: { email: adminEmail },
-                        update: { isAdmin: true },
+                        update: { isAdmin: true, emailVerified: new Date() },
                         create: {
                             email: adminEmail,
                             name: "CarMatch Admin",
                             isAdmin: true,
+                            emailVerified: new Date(),
                         },
                     })
 
