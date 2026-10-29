@@ -24,8 +24,13 @@ export async function GET(request: NextRequest) {
         // Auto-eliminar notificaciones leídas de más de 24 horas (fire-and-forget)
         cleanupOldNotifications(user.id).catch(() => {})
 
-        // Lógica de Notificaciones Simuladas (Engagement) (fire-and-forget)
-        generateSimulatedNotifications(user.id).catch(() => {})
+        // Eliminar notificaciones falsas existentes
+        await prisma.notification.deleteMany({
+            where: { userId: user.id, isFake: true }
+        }).catch(() => {})
+
+        // Lógica de Notificaciones Simuladas desactivada - no generar falsas notificaciones
+        // generateSimulatedNotifications(user.id).catch(() => {})
 
         const { searchParams } = new URL(request.url)
         const unreadOnly = searchParams.get('unreadOnly') === 'true'

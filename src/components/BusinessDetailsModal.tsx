@@ -140,7 +140,7 @@ export default function BusinessDetailsModal({ business, onClose, categoryColor 
                         </>
                     ) : (
                         <div className="w-full h-full flex items-center justify-center bg-gray-800">
-                            <CategoryIcon iconName={categoryEmoji} size={64} className="text-gray-500" />
+                            <CategoryIcon iconName={categoryEmoji} size={64} />
                         </div>
                     )}
 
@@ -150,7 +150,7 @@ export default function BusinessDetailsModal({ business, onClose, categoryColor 
                             className="px-4 py-1.5 rounded-full text-xs font-bold text-white shadow-lg flex items-center gap-2 backdrop-blur-md bg-black/30 border border-white/20"
                             style={{ borderColor: categoryColor }}
                         >
-                            <CategoryIcon iconName={categoryEmoji} size={18} color={categoryColor} />
+                            <CategoryIcon iconName={categoryEmoji} size={18} color="#ffffff" />
                             <span className="tracking-wider">{(t(`map_store.categories.${business.category.toLowerCase()}`) || business.category).toUpperCase()}</span>
                         </span>
                     </div>

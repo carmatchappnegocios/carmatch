@@ -30,7 +30,7 @@ interface CategoryIconProps {
 
 const CategoryIcon = ({ iconName, className = '', size = 20, color }: CategoryIconProps) => {
     const Icon = ICON_MAP[iconName] || HelpCircle
-    return <Icon className={className} size={size} style={{ color }} />
+    return <Icon className={className} size={size} style={{ color: color || '#ffffff' }} />
 }
 
 export default CategoryIcon
