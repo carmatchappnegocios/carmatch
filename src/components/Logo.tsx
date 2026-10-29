@@ -1,4 +1,6 @@
 
+import Image from 'next/image'
+
 interface LogoProps {
     className?: string
     showText?: boolean
@@ -8,8 +10,15 @@ interface LogoProps {
 export function Logo({ className = "w-12 h-12", showText = false, textClassName = "text-2xl font-black tracking-tight" }: LogoProps) {
     return (
         <div className="flex items-center gap-2">
-            <div className={`relative flex items-center justify-center ${className} bg-transparent`}>
-                <span className="font-black text-xl md:text-2xl tracking-tight text-[#ff7a00]">Car<span className="text-white">Match</span></span>
+            <div className={`relative ${className} bg-transparent`}>
+                <Image
+                    src="/icon-192-v20.png"
+                    alt="CarMatch"
+                    fill
+                    priority
+                    className="object-contain mix-blend-multiply"
+                    sizes="(max-width: 768px) 48px, 56px"
+                />
             </div>
             {showText && (
                 <span className={`${textClassName} text-text-primary`}>CarMatch</span>
