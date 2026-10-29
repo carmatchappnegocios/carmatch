@@ -394,7 +394,7 @@ export default function SwipeFeed({ items, onLike, onDislike, onNeedMore }: Swip
             </div>
 
             {/* 📱 FIXED MOBILE FOOTER BUTTONS (Static, no animation) */}
-            <div className="lg:hidden w-full px-6 pb-6 pt-2 flex items-center justify-center gap-8 z-30 bg-background">
+            <div className="lg:hidden w-full px-6 pb-6 pt-2 shrink-0 flex items-center justify-center gap-8 z-30 bg-background" style={{ paddingBottom: 'calc(1.5rem + env(safe-area-inset-bottom))' }}>
                 <button 
                     onClick={() => handleSwipe('left')} 
                     disabled={isSwiping}
