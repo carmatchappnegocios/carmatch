@@ -5,6 +5,9 @@ export default {
         "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
         "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
         "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+        // ⚠️ App Router se movió a la carpeta raíz "app/" — debe escanearse para que
+        // Tailwind genere sus clases (si no, las purga y se rompen los layouts lg:/md:).
+        "./app/**/*.{js,ts,jsx,tsx,mdx}",
     ],
     theme: {
         extend: {
