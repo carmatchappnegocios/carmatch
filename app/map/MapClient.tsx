@@ -330,7 +330,7 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                 </div>
 
                 {/* 🗂️ PANEL DE FILTROS - Desktop: siempre visible | Mobile: overlay minimizable */}
-                <div className="lg:static lg:w-[300px] lg:shrink-0 lg:flex lg:flex-col lg:h-full lg:border-r lg:border-white/10 lg:bg-slate-900/95 lg:backdrop-blur-2xl lg:shadow-[20px_0_50px_rgba(0,0,0,0.5)] hidden">
+                <div className="lg:static lg:w-[300px] lg:shrink-0 lg:flex lg:flex-col lg:h-full lg:border-r lg:border-white/10 lg:bg-slate-900 lg:shadow-[20px_0_50px_rgba(0,0,0,0.5)] hidden">
                     {/* Filter Panel (Sidebar Content) - Desktop version */}
                     <div className="flex flex-col h-full bg-transparent">
                         {/* Scrollable Content Area */}
@@ -424,7 +424,7 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                         </div>
 
                         {/* Footer Sticky - Botón Publicar Negocio + Ver Mapa y Lista */}
-                        <div className="p-4 space-y-3 border-t border-white/10 bg-slate-900/50 flex-shrink-0">
+                        <div className="p-4 space-y-3 border-t border-white/10 bg-slate-900 flex-shrink-0">
                             <Link
                                 href="/my-businesses?action=new"
                                 onClick={(e) => {
@@ -566,7 +566,7 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                         </div>
 
                         {/* Footer Mobile Sticky - Botón Publicar Negocio + Ver Mapa y Lista */}
-                        <div className="p-4 space-y-3 border-t border-white/10 bg-slate-900/50 flex-shrink-0">
+                        <div className="p-4 space-y-3 border-t border-white/10 bg-slate-900 flex-shrink-0">
                             <Link
                                 href="/my-businesses?action=new"
                                 onClick={(e) => {
