@@ -441,12 +441,6 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                                 <Plus size={18} />
                                 <span>{t('map_store.publish_business')}</span>
                             </Link>
-                            <button
-                                onClick={() => setShowSidebar(false)}
-                                className="w-full py-3 bg-primary-700 text-white rounded-2xl font-black uppercase tracking-[0.2em] shadow-xl hover:bg-primary-600 active:scale-95 transition-all"
-                            >
-                                {t('map_store.view_list')}
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -583,12 +577,6 @@ export default function MapClient({ businesses, user }: MapClientProps) {
                                 <Plus size={18} />
                                 <span>{t('map_store.publish_business')}</span>
                             </Link>
-                            <button
-                                onClick={() => setShowSidebar(false)}
-                                className="w-full py-3 bg-primary-700 text-white rounded-2xl font-black uppercase tracking-[0.2em] shadow-xl hover:bg-primary-600 active:scale-95 transition-all"
-                            >
-                                {t('map_store.view_list')}
-                            </button>
                         </div>
                     </div>
                 </div>

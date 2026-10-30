@@ -16,7 +16,7 @@ export function Logo({ className = "w-12 h-12", showText = false, textClassName 
                     alt="CarMatch"
                     fill
                     priority
-                    className="object-contain mix-blend-multiply"
+                    className="object-contain mix-blend-screen"
                     sizes="(max-width: 768px) 48px, 56px"
                 />
             </div>
