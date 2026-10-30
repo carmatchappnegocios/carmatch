@@ -12,12 +12,11 @@ export function Logo({ className = "w-12 h-12", showText = false, textClassName 
         <div className="flex items-center gap-2">
             <div className={`relative ${className} bg-transparent`}>
                 <Image
-                    src="/custom-icon.png"
+                    src="/icon-512-v20-fixed.png"
                     alt="CarMatch"
                     fill
                     priority
                     className="object-contain"
-                    style={{ filter: 'brightness(1.05) contrast(1.05) saturate(1.05)' }}
                     sizes="(max-width: 768px) 48px, 56px"
                 />
             </div>
