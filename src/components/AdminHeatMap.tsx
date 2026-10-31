@@ -23,7 +23,7 @@ export default function AdminHeatMap({ data }: { data: IntelligenceData }) {
         map.current = new mapboxgl.Map({
             container: mapContainer.current,
             style: 'mapbox://styles/mapbox/dark-v11',
-            center: [-100.3161, 25.6866], // MTY
+            center: [-96.72, 17.06], // Oaxaca - ubicación por defecto del sitio
             zoom: 10,
             pitch: 45,
             bearing: -20,

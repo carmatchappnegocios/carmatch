@@ -361,20 +361,10 @@ export default function PublishClient() {
                 applyAiDetails(validation.details, validation.category)
             }
 
-            // 3. 🛡️ VALIDACIÓN Y FILTRADO (Portada vs Galería)
+            // 3. 🛡️ VALIDACIÓN NO BLOQUEANTE (async queue)
             const invalidIndices = validation.invalidIndices || []
-            const isCoverInvalid = invalidIndices.includes(0)
-            if (isCoverInvalid) {
-                // 🛑 BLOQUEO: Solo si la portada es mala
-                const reason = validation.reason || 'La foto de portada no es válida.'
-                setAiError(`⚠️ ${reason}`)
-                if (coverImage) {
-                    setInvalidImageUrls(new Set([coverImage]))
-                    setInvalidReasons({ [coverImage]: reason })
-                }
-                setIsAnalyzing(false)
-                return
-            }
+            // No blocking: solo filtramos galería silenciosamente, nunca bloqueamos la portada
+            // La verificación se encolará para procesamiento asíncrono posterior
 
             // 🧼 FILTRADO SILENCIOSO: Si hay fotos malas en la galería, las quitamos sin avisar
             if (invalidIndices.length > 0) {

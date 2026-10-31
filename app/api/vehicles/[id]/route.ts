@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/db'
+import { buildVehicleTitle, cleanVersion } from '@/lib/vehicleTitleHelper'
 
 /**
  * 🛠️ Helpers para parseo robusto de tipos
@@ -173,13 +174,21 @@ export async function PATCH(
                 finalUpdateData.status = status
             }
 
-            // Sincronizar título
-            if (updateData.brand || updateData.model || updateData.year || updateData.version || finalUpdateData.moderationStatus === 'APPROVED') {
-                const nextBrand = updateData.brand || vehicle.brand
-                const nextModel = updateData.model || vehicle.model
-                const nextVersion = updateData.version || (vehicle as any).version || ''
-                const nextYear = updateData.year !== undefined ? updateData.year : (vehicle as any).year
-                finalUpdateData.title = `${nextBrand} ${nextModel} ${nextVersion} ${nextYear}`.replace(/\s+/g, ' ').trim()
+            // Limpiar versión y sincronizar título
+            const nextBrand = updateData.brand || vehicle.brand
+            const nextModel = updateData.model || vehicle.model
+            const nextVersionRaw = updateData.version !== undefined ? updateData.version : (vehicle as any).version || ''
+            const nextYear = updateData.year !== undefined ? updateData.year : (vehicle as any).year
+
+            // Limpiar versión eliminando prefijo marca+modelo si existe
+            const cleanedVersion = cleanVersion(nextBrand, nextModel, nextVersionRaw)
+            // Guardar versión limpia si cambia marca/modelo/versión
+            if (updateData.version !== undefined || updateData.brand || updateData.model) {
+                finalUpdateData.version = cleanedVersion || null
+            }
+
+            if (updateData.brand || updateData.model || updateData.year || updateData.version !== undefined || finalUpdateData.moderationStatus === 'APPROVED') {
+                finalUpdateData.title = buildVehicleTitle(nextBrand, nextModel, cleanedVersion, nextYear)
             }
 
             if (keyFieldsChanged) {
@@ -200,6 +209,13 @@ export async function PATCH(
                 console.error('Error enviando notificaciones (non-blocking):', notificationError)
                 // No bloqueamos la respuesta si falla el envío de notificaciones
             }
+        }
+
+        // 🧹 Si se marca como vendido, eliminar de todos los favoritos
+        if (updatedVehicle.status === 'SOLD' && vehicle.status !== 'SOLD') {
+            await prisma.favorite.deleteMany({
+                where: { vehicleId: id }
+            })
         }
 
         return NextResponse.json({

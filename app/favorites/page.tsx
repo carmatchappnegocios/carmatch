@@ -22,7 +22,10 @@ export default async function FavoritesPage() {
 
     const favorites = await prisma.favorite.findMany({
         where: {
-            userId: currentUser.id
+            userId: currentUser.id,
+            vehicle: {
+                status: 'ACTIVE'
+            }
         },
         take: 50,
         include: {

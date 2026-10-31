@@ -38,12 +38,16 @@ import {
     DollarSign,
     CheckCircle2,
     Mail,
+    FileText,
 } from 'lucide-react'
 import dynamic from 'next/dynamic'
 
 const AdminHeatMap = dynamic<any>(() => import('@/components/AdminHeatMap'), { ssr: false })
 const AdminMobileNav = dynamic<any>(() => import('@/components/admin/AdminMobileNav'), { ssr: false })
 const CostsTab = dynamic<any>(() => import('@/components/admin/CostsTab'), { ssr: false })
+const IntelligenceMatrix = dynamic<any>(() => import('@/components/admin/IntelligenceMatrix'), { ssr: false })
+const CreditsPaymentsTab = dynamic<any>(() => import('@/components/admin/CreditsPaymentsTab'), { ssr: false })
+const AuditLogTab = dynamic<any>(() => import('@/components/admin/AuditLogTab'), { ssr: false })
 
 const BetaSessionsTab = dynamic<any>(() => import('@/components/admin/BetaSessionsTab'), { ssr: false })
 const CalendarTab = dynamic<any>(() => import('@/components/admin/CalendarTab'), { ssr: false })
@@ -53,7 +57,7 @@ import { testGeminiHealth, AiHealthReport } from './actions/ai-health-actions'
 import { scoutGlobalStations } from './actions/scout-actions'
 import { toast } from "sonner"
 
-type AdminView = 'overview' | 'users' | 'inventory' | 'map-store' | 'intelligence' | 'reports' | 'logs' | 'ai-hub' | 'costs' | 'calendario' | 'email' | 'more'
+type AdminView = 'overview' | 'users' | 'inventory' | 'map-store' | 'intelligence' | 'reports' | 'logs' | 'ai-hub' | 'costs' | 'email' | 'credits' | 'audit' | 'more'
 
 const AdminSidebar = dynamic<any>(() => import('@/components/admin/AdminSidebar'), { ssr: false })
 
@@ -201,10 +205,11 @@ function AdminPanelContent() {
         { id: 'map-store', icon: Store, label: 'MapStore' },
         { id: 'ai-hub', icon: Cpu, label: 'AI Hub' },
         { id: 'costs', icon: DollarSign, label: 'Gastos' },
-        { id: 'calendario', icon: Megaphone, label: 'Calendario' },
-        { id: 'email', icon: Mail, label: 'Correos' },
         { id: 'reports', icon: Flag, label: 'Reportes', badge: stats.reports?.filter((r: any) => r.status === 'PENDING').length || 0 },
         { id: 'logs', icon: Terminal, label: 'Registros' },
+        { id: 'credits', icon: Coins, label: 'Créditos' },
+        { id: 'audit', icon: FileText, label: 'Audit Log' },
+        { id: 'email', icon: Mail, label: 'Correos' },
     ]
 
     return (
@@ -249,7 +254,8 @@ function AdminPanelContent() {
                             {activeView === 'map-store' && <MapStoreTab businesses={stats.businesses.recent} />}
                             {activeView === 'ai-hub' && <AiHubTab />}
                             {activeView === 'costs' && <CostsTab />}
-                            {activeView === 'calendario' && <CalendarTab />}
+                            {activeView === 'credits' && <CreditsPaymentsTab />}
+                            {activeView === 'audit' && <AuditLogTab />}
                             {activeView === 'email' && <EmailAliasesTab />}
 
                             {activeView === 'reports' && <ReportsTab reports={stats.reports} />}
@@ -422,7 +428,7 @@ function OverviewTab({ stats, handleRunAnalyst, isAnalyzing, aiAnalysis, setActi
                     <div className="absolute top-0 left-0 right-0 p-4 border-b border-white/5 bg-black/50 backdrop-blur-sm z-10 flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                            <h3 className="text-sm font-black uppercase tracking-widest text-white">CarMatch Live Activity</h3>
+                            <h3 className="text-sm font-black uppercase tracking-widest text-white">Actividad en Vivo CarMatch</h3>
                         </div>
                         <span className="text-[10px] font-bold bg-white/10 px-2 py-1 rounded text-text-secondary">Tiempo Real</span>
                     </div>
@@ -481,7 +487,7 @@ function OverviewTab({ stats, handleRunAnalyst, isAnalyzing, aiAnalysis, setActi
             {/* Quick Stats Grid — Optimizado Táctil */}
             <div className="grid grid-cols-2 gap-3">
                 <StatCard2 icon={Users} label="Usuarios" value={stats.registrations?.total || stats.users.total} trend="Total" color="purple" simple />
-                <StatCard2 icon={TrendingUp} label="Crecimiento" value={stats.registrations?.thisMonth || 0} trend="+12%" color="green" simple />
+                <StatCard2 icon={TrendingUp} label="Crecimiento" value={stats.registrations?.thisMonth || 0} color="green" simple />
                 <StatCard2 icon={Car} label="Autos" value={stats.vehicles.active} trend="Stock" color="blue" simple />
                 <StatCard2 icon={Flag} label="Alertas" value={stats.reports.filter((r: any) => r.status === 'PENDING').length} trend="Inbox" color="red" simple />
             </div>
@@ -1656,7 +1662,7 @@ function IntelligenceTab({ stats }: { stats: any }) {
                 <div className="lg:col-span-2 bg-[#111114] border border-white/5 rounded-[40px] overflow-hidden shadow-2xl relative group">
                     <div className="absolute top-6 left-8 z-10 flex items-center gap-4 bg-black/60 backdrop-blur-xl px-5 py-2.5 rounded-2xl border border-white/10 shadow-lg">
                         <div className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse ring-4 ring-red-500/20" />
-                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white">Market Radar Live</span>
+                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white">Radar de Mercado en Vivo</span>
                     </div>
                     <AdminHeatMap data={intelligenceData} />
                 </div>
@@ -1798,6 +1804,8 @@ function IntelligenceTab({ stats }: { stats: any }) {
                     ))}
                 </div>
             </div>
+
+            <IntelligenceMatrix data={intelligenceData} />
         </div>
     )
 }

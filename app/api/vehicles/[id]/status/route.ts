@@ -80,6 +80,13 @@ export async function POST(
             data: updateData
         })
 
+        // 🧹 Si se marca como vendido, eliminar automáticamente de todos los favoritos
+        if (status === 'SOLD' && vehicle.status !== 'SOLD') {
+            await prisma.favorite.deleteMany({
+                where: { vehicleId: id }
+            })
+        }
+
         return NextResponse.json({ success: true, vehicle: updated })
 
     } catch (error) {

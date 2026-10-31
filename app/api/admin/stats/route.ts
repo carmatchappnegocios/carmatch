@@ -61,11 +61,13 @@ export async function GET(request: NextRequest) {
             }),
             prisma.vehicle.findMany({
                 take: 100,
+                where: { status: 'ACTIVE', moderationStatus: 'APPROVED' },
                 orderBy: { createdAt: 'desc' },
                 include: { user: { select: { name: true } } }
             }),
             prisma.business.findMany({
                 take: 100,
+                where: { isActive: true },
                 orderBy: { createdAt: 'desc' },
                 include: { user: { select: { name: true } } }
             }),

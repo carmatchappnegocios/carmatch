@@ -79,6 +79,28 @@ export async function GET(req: NextRequest) {
         else if (sort === 'year-asc') orderBy = { year: 'asc' }
         else if (sort === 'year-desc') orderBy = { year: 'desc' }
 
+        // Registrar búsqueda para mapa de calor
+        try {
+            await prisma.analyticsEvent.create({
+                data: {
+                    eventType: 'SEARCH',
+                    entityType: 'VEHICLE',
+                    metadata: {
+                        search,
+                        brand,
+                        model,
+                        city,
+                        vehicleType,
+                        minPrice,
+                        maxPrice,
+                        minYear,
+                        maxYear,
+                        sort
+                    }
+                }
+            })
+        } catch {}
+
         const [vehicles, total] = await Promise.all([
             prisma.vehicle.findMany({
                 where,

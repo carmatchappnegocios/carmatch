@@ -25,10 +25,13 @@ export async function GET(request: NextRequest) {
             return NextResponse.json({ error: 'Usuario no encontrado' }, { status: 404 })
         }
 
-        // Obtener favoritos con detalles del vehículo
+        // Obtener favoritos con detalles del vehículo (solo activos)
         const favorites = await prisma.favorite.findMany({
             where: {
-                userId: user.id
+                userId: user.id,
+                vehicle: {
+                    status: 'ACTIVE'
+                }
             },
             include: {
                 vehicle: {
