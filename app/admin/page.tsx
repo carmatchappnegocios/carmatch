@@ -39,6 +39,7 @@ import {
     CheckCircle2,
     Mail,
     FileText,
+    Bell,
 } from 'lucide-react'
 import dynamic from 'next/dynamic'
 
@@ -48,6 +49,7 @@ const CostsTab = dynamic<any>(() => import('@/components/admin/CostsTab'), { ssr
 const IntelligenceMatrix = dynamic<any>(() => import('@/components/admin/IntelligenceMatrix'), { ssr: false })
 const CreditsPaymentsTab = dynamic<any>(() => import('@/components/admin/CreditsPaymentsTab'), { ssr: false })
 const AuditLogTab = dynamic<any>(() => import('@/components/admin/AuditLogTab'), { ssr: false })
+const AlertsTab = dynamic<any>(() => import('@/components/admin/AlertsTab'), { ssr: false })
 
 const BetaSessionsTab = dynamic<any>(() => import('@/components/admin/BetaSessionsTab'), { ssr: false })
 const CalendarTab = dynamic<any>(() => import('@/components/admin/CalendarTab'), { ssr: false })
@@ -57,7 +59,7 @@ import { testGeminiHealth, AiHealthReport } from './actions/ai-health-actions'
 import { scoutGlobalStations } from './actions/scout-actions'
 import { toast } from "sonner"
 
-type AdminView = 'overview' | 'users' | 'inventory' | 'map-store' | 'intelligence' | 'reports' | 'logs' | 'ai-hub' | 'costs' | 'email' | 'credits' | 'audit' | 'more'
+type AdminView = 'overview' | 'users' | 'inventory' | 'map-store' | 'intelligence' | 'reports' | 'logs' | 'ai-hub' | 'costs' | 'email' | 'credits' | 'audit' | 'alerts' | 'more'
 
 const AdminSidebar = dynamic<any>(() => import('@/components/admin/AdminSidebar'), { ssr: false })
 
@@ -207,6 +209,7 @@ function AdminPanelContent() {
         { id: 'costs', icon: DollarSign, label: 'Gastos' },
         { id: 'reports', icon: Flag, label: 'Reportes', badge: stats.reports?.filter((r: any) => r.status === 'PENDING').length || 0 },
         { id: 'logs', icon: Terminal, label: 'Registros' },
+        { id: 'alerts', icon: Bell, label: 'Alertas' },
         { id: 'credits', icon: Coins, label: 'Créditos' },
         { id: 'audit', icon: FileText, label: 'Audit Log' },
         { id: 'email', icon: Mail, label: 'Correos' },
@@ -256,6 +259,7 @@ function AdminPanelContent() {
                             {activeView === 'costs' && <CostsTab />}
                             {activeView === 'credits' && <CreditsPaymentsTab />}
                             {activeView === 'audit' && <AuditLogTab />}
+                            {activeView === 'alerts' && <AlertsTab />}
                             {activeView === 'email' && <EmailAliasesTab />}
 
                             {activeView === 'reports' && <ReportsTab reports={stats.reports} />}
