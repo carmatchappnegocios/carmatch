@@ -25,7 +25,9 @@ function clusterPoints(points: Point[], precision = 2) {
   })
   return Array.from(map.entries()).map(([key, items]) => {
     const [lat, lng] = key.split(',').map(Number)
-    return { lat, lng, count: items.length, key }
+    // Try to infer city from first item if available
+    const city = items[0].city || ''
+    return { lat, lng, count: items.length, key, city }
   })
 }
 
@@ -34,16 +36,17 @@ export default function IntelligenceMatrix({ data }: { data: IntelligenceData })
     const searchClusters = clusterPoints(data.searches || [])
     const businessClusters = clusterPoints(data.businesses || [])
     
-    const businessMap = new Map(businessClusters.map(b => [b.key, b.count]))
+    const businessMap = new Map(businessClusters.map(b => [b.key, b]))
     const searchMap = new Map(searchClusters.map(s => [s.key, s.count]))
     
     const allKeys = new Set([...businessMap.keys(), ...searchMap.keys()])
     const matrix = Array.from(allKeys).map(key => {
-      const [lat, lng] = key.split(',').map(Number)
+      const business = businessMap.get(key)
       const demand = searchMap.get(key) || 0
-      const supply = businessMap.get(key) || 0
+      const supply = business ? business.count : 0
       const ratio = supply > 0 ? demand / supply : demand
-      return { lat, lng, demand, supply, ratio, key }
+      const city = business?.city || searchClusters.find(s => s.key === key)?.city || ''
+      return { lat: business?.lat || 0, lng: business?.lng || 0, demand, supply, ratio, key, city }
     })
     
     return matrix.sort((a, b) => b.ratio - a.ratio)
@@ -87,7 +90,7 @@ export default function IntelligenceMatrix({ data }: { data: IntelligenceData })
             <div key={c.key} className="flex items-center justify-between bg-white/[0.02] hover:bg-white/[0.05] px-5 py-3 rounded-2xl border border-white/5 transition">
               <div className="flex items-center gap-3">
                 <MapPin className="w-4 h-4 text-white/40" />
-                <span className="text-xs font-bold text-white/80">{c.lat.toFixed(2)}, {c.lng.toFixed(2)}</span>
+                <span className="text-xs font-bold text-white/80">{c.city || `${c.lat.toFixed(2)}, ${c.lng.toFixed(2)}`}</span>
               </div>
               <div className="flex items-center gap-6 text-[10px] font-black uppercase">
                 <span className="text-red-400">Demanda: {c.demand}</span>

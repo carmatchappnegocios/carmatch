@@ -61,7 +61,7 @@ export async function GET(request: NextRequest) {
             }),
             prisma.vehicle.findMany({
                 take: 100,
-                where: { status: 'ACTIVE', moderationStatus: 'APPROVED' },
+                where: { status: 'ACTIVE' },
                 orderBy: { createdAt: 'desc' },
                 include: { user: { select: { name: true } } }
             }),
@@ -69,7 +69,7 @@ export async function GET(request: NextRequest) {
                 take: 100,
                 where: { isActive: true },
                 orderBy: { createdAt: 'desc' },
-                include: { user: { select: { name: true } } }
+                select: { id: true, name: true, category: true, city: true, latitude: true, longitude: true }
             }),
             prisma.analyticsEvent.count({ where: { eventType: 'SHARE' } }),
             prisma.user.count({ where: { vehicles: { none: {} }, businesses: { none: {} } } }),
@@ -181,7 +181,7 @@ export async function GET(request: NextRequest) {
                 .map(v => ({ latitude: v.latitude, longitude: v.longitude, title: v.title })),
             businesses: recentBusinesses
                 .filter(b => b.latitude && b.longitude)
-                .map(b => ({ latitude: b.latitude, longitude: b.longitude, name: b.name, category: b.category })),
+                .map(b => ({ latitude: b.latitude, longitude: b.longitude, name: b.name, category: b.category, city: b.city })),
             stats: {
                 techTrends: {
                     fuels: vehicleFuelStats.map(f => [f.fuel || 'N/A', f._count.id]),
