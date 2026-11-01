@@ -101,6 +101,37 @@ export async function GET(req: NextRequest) {
             })
         } catch {}
 
+        // Registrar SearchMetric para inteligencia
+        try {
+            const cityLatLng: Record<string, { lat: number; lng: number }> = {
+                'oaxaca': { lat: 17.06, lng: -96.72 },
+                'cdmx': { lat: 19.43, lng: -99.13 },
+                'mexico': { lat: 19.43, lng: -99.13 },
+                'monterrey': { lat: 25.68, lng: -100.31 },
+                'guadalajara': { lat: 20.67, lng: -103.34 },
+            }
+            const key = city.toLowerCase()
+            const coords = cityLatLng[key] || { lat: 17.06, lng: -96.72 }
+            await prisma.searchMetric.create({
+                data: {
+                    query: search || brand || model || '',
+                    category: vehicleType || category || null,
+                    latitude: coords.lat,
+                    longitude: coords.lng,
+                    brand: brand || null,
+                    model: model || null,
+                    maxPrice: maxPrice ? parseFloat(maxPrice) : null,
+                    minPrice: minPrice ? parseFloat(minPrice) : null,
+                    maxYear: maxYear ? parseInt(maxYear) : null,
+                    minYear: minYear ? parseInt(minYear) : null,
+                    vehicleType: vehicleType || null,
+                    color: color || null,
+                    fuel: fuel || null,
+                    transmission: transmission || null,
+                }
+            })
+        } catch {}
+
         const [vehicles, total] = await Promise.all([
             prisma.vehicle.findMany({
                 where,

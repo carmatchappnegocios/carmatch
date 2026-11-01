@@ -34,6 +34,18 @@ export async function GET(
             return NextResponse.json({ error: 'No encontrado' }, { status: 404 })
         }
 
+        // Log vista de vehículo
+        try {
+            await prisma.analyticsEvent.create({
+                data: {
+                    eventType: 'VIEW',
+                    entityType: 'VEHICLE',
+                    entityId: id,
+                    metadata: { vehicleTitle: vehicle.title }
+                }
+            })
+        } catch {}
+
         return NextResponse.json({ vehicle })
     } catch (error) {
         return NextResponse.json({ error: 'Error' }, { status: 500 })
