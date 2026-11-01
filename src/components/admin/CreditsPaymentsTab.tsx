@@ -6,6 +6,7 @@ import { Coins, CreditCard, TrendingUp, AlertCircle, Calendar } from 'lucide-rea
 export default function CreditsPaymentsTab() {
   const [data, setData] = useState<any>(null)
   const [monday, setMonday] = useState<any>(null)
+  const [payments, setPayments] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -13,6 +14,11 @@ export default function CreditsPaymentsTab() {
       .then(r => r.json())
       .then(d => {
         setData(d)
+        return fetch('/api/admin/payments')
+      })
+      .then(r => r.json())
+      .then(p => {
+        setPayments(p.payments || [])
         return fetch('/api/admin/monday-metrics')
       })
       .then(r => r.json())
@@ -89,6 +95,27 @@ export default function CreditsPaymentsTab() {
           </div>
         </div>
         <p className="text-[10px] text-text-secondary mt-4">Semana iniciada: {monday ? new Date(monday.weekStart).toLocaleDateString('es-MX') : '-'}</p>
+      </div>
+
+      <div className="bg-[#111114] border border-white/5 rounded-[32px] p-8">
+        <h4 className="text-sm font-black uppercase tracking-widest text-green-400 mb-4">Historial de pagos</h4>
+        <div className="overflow-auto max-h-[40vh]">
+          <table className="w-full text-sm">
+            <thead className="text-[10px] uppercase tracking-widest text-white/50">
+              <tr><th className="text-left py-2">Fecha</th><th className="text-left py-2">Usuario</th><th className="text-left py-2">Monto</th><th className="text-left py-2">Créditos</th></tr>
+            </thead>
+            <tbody>
+              {payments.map((p,i)=>(
+                <tr key={i} className="border-t border-white/5">
+                  <td className="py-2 text-text-secondary">{new Date(p.createdAt).toLocaleString('es-MX')}</td>
+                  <td className="py-2 text-white">{p.user?.name || p.user?.email}</td>
+                  <td className="py-2 text-white">${Number(p.amount).toLocaleString('es-MX')}</td>
+                  <td className="py-2 text-white">{p.creditsAdded}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   )
