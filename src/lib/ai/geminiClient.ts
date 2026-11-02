@@ -105,12 +105,13 @@ export async function safeGenerateContent(promptOrParts: any, maxRetries = 3, ti
     let lastError: any;
 
     const flashStrategies = [
-        { v: 'v1beta', m: 'gemini-3.1-flash-lite-preview' },
+        { v: 'v1', m: 'gemini-1.5-flash-8b' },
+        { v: 'v1', m: 'gemini-2.0-flash-lite' },
         { v: 'v1beta', m: 'gemini-flash-latest' }
     ];
 
     const proStrategies = [
-        { v: 'v1beta', m: 'gemini-3.1-pro-preview' },
+        { v: 'v1', m: 'gemini-1.5-pro' },
         { v: 'v1beta', m: 'gemini-pro-latest' }
     ];
 
