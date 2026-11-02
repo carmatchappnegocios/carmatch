@@ -64,7 +64,7 @@ export async function PATCH(
 
         const user = await prisma.user.findUnique({
             where: { email: session.user.email! },
-            select: { id: true }
+            select: { id: true, isAdmin: true }
         })
 
         if (!user) {
@@ -126,7 +126,7 @@ export async function PATCH(
         // Envolvemos todo en una transacción interactiva para asegurar consistencia
         const updatedVehicle = await prisma.$transaction(async (tx) => {
             // 1. Si requiere crédito, procesar cobro PRIMERO dentro de la transacción
-            if (body.useCredit === true && (status === 'ACTIVE' || vehicle.status !== 'ACTIVE')) {
+            if (!user.isAdmin && body.useCredit === true && (status === 'ACTIVE' || vehicle.status !== 'ACTIVE')) {
                 const userWithCredits = await tx.user.findUnique({
                     where: { id: user.id },
                     select: { credits: true }

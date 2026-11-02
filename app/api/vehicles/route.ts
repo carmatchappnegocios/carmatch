@@ -3,6 +3,7 @@ import { revalidatePath } from 'next/cache'
 import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 import { isEmailVerified } from '@/lib/email-verified'
+import { buildVehicleTitle, cleanVersion } from '@/lib/vehicleTitleHelper'
 
 /**
  * 🛠️ Helpers para parseo robusto de tipos
@@ -108,9 +109,10 @@ export async function POST(request: NextRequest) {
         // Regenerar título respetando datos del usuario (Movido arriba para evitar ReferenceError)
         const finalBrand = brand || 'Desconocido'
         const finalModel = model || 'N/A'
-        const finalVersion = body.version || ''
+        const rawVersion = body.version || ''
+        const cleanedVersion = cleanVersion(finalBrand, finalModel, rawVersion)
         const finalYear = parseInt(year) || new Date().getFullYear()
-        const finalTitle = `${finalBrand} ${finalModel} ${finalVersion} ${finalYear}`.replace(/\s+/g, ' ').trim()
+        const finalTitle = buildVehicleTitle(finalBrand, finalModel, cleanedVersion, finalYear)
 
         if (isAdmin) {
             expiresAt.setFullYear(now.getFullYear() + 10)
@@ -130,11 +132,10 @@ export async function POST(request: NextRequest) {
             isFreePublication = true
         }
         else {
-            // 🛡️ ESTRATEGIA DE APROBACIÓN: Incluso después del vehículo 25, activar 30 días gratis
-            // para que los testers no vean muros de pago si suben muchos autos.
+            // Vehículo 26+ = pago. Se respeta free days iniciales pero aquí se cobra.
             expiresAt.setDate(now.getDate() + 30)
-            isFreePublication = true
-            initialStatus = 'ACTIVE'
+            isFreePublication = false
+            initialStatus = user.credits > 0 ? 'ACTIVE' : 'INACTIVE'
         }
 
         // 🛡️ [ZENITH AUDIT] SEGURIDAD: Moderación IA Activada
@@ -154,7 +155,8 @@ export async function POST(request: NextRequest) {
         // 🛡️ EJECUCIÓN ATÓMICA (Crédito + Registro + Contador)
         const vehicle = await prisma.$transaction(async (tx) => {
             // 1. Cobrar crédito si corresponde (Ignorar si es Admin)
-            if (!isAdmin && lifetimeCount >= 25 && body.useCredit === true && user.credits > 0) {
+            // Publico puede subir los que quiera mientras pague, respetando días gratis
+            if (!isAdmin && lifetimeCount >= 25 && user.credits > 0 && initialStatus === 'ACTIVE') {
                 console.log(`💳 Procesando crédito para usuario ${user.id}`);
                 await tx.user.update({
                     where: { id: user.id },
@@ -165,7 +167,7 @@ export async function POST(request: NextRequest) {
                     data: {
                         userId: user.id,
                         amount: -1,
-                        description: `Publicación de vehículo (Límite 25 excedido): ${finalTitle}`,
+                        description: `Publicación de vehículo (Pago por publicación): ${finalTitle}`,
                         details: { action: 'USE_CREDIT_PUBLISH', lifetimeCount }
                     }
                 });
@@ -179,7 +181,7 @@ export async function POST(request: NextRequest) {
                     description,
                     brand: finalBrand,
                     model: finalModel,
-                    version: finalVersion || null,
+                    version: cleanedVersion || null,
                     year: finalYear,
                     price: parseFloat(price),
                     city,
