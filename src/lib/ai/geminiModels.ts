@@ -30,10 +30,9 @@ export const AI_USE_CASES = {
     VEHICLE_DISCOVERY: 'FLASH',
     SEARCH_INTERPRETER: 'FLASH',
     CHATBOT: 'FLASH',
-    ADMIN_ANALYST: 'PRO',
+    ADMIN_ANALYST: 'FLASH',
 } as const;
 
 export function getModelForUseCase(useCase: keyof typeof AI_USE_CASES) {
-    if (useCase === 'ADMIN_ANALYST') return geminiPro;
     return geminiFlash;
 }
