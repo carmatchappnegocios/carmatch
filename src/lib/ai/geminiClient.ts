@@ -104,18 +104,15 @@ async function geminiRestFetch(promptOrParts: string | any[] | { contents: any[]
 export async function safeGenerateContent(promptOrParts: any, maxRetries = 3, tier: IntelligenceTier = 'FLASH') {
     let lastError: any;
 
+    // Solo modelos gratuitos, escalables a millones de usuarios
     const flashStrategies = [
         { v: 'v1', m: 'gemini-1.5-flash-8b' },
         { v: 'v1', m: 'gemini-2.0-flash-lite' },
         { v: 'v1beta', m: 'gemini-flash-latest' }
     ];
 
-    const proStrategies = [
-        { v: 'v1', m: 'gemini-1.5-pro' },
-        { v: 'v1beta', m: 'gemini-pro-latest' }
-    ];
-
-    const currentStrategies = tier === 'PRO' ? proStrategies : flashStrategies;
+    // PRO deshabilitado: todo cae a FLASH gratuito
+    const currentStrategies = flashStrategies;
 
     for (let i = 0; i < maxRetries; i++) {
         for (const strategy of currentStrategies) {
@@ -135,7 +132,7 @@ export async function safeGenerateContent(promptOrParts: any, maxRetries = 3, ti
 }
 
 export const geminiFlash = { generateContent: (req: any) => safeGenerateContent(req, 3, 'FLASH') };
-export const geminiPro = { generateContent: (req: any) => safeGenerateContent(req, 3, 'PRO') };
+export const geminiPro = { generateContent: (req: any) => safeGenerateContent(req, 3, 'FLASH') };
 export const geminiFlash8B = geminiFlash;
 export const geminiFlashLite = geminiFlash;
 export const geminiFlashConversational = geminiFlash;
