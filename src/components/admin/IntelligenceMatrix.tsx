@@ -33,24 +33,23 @@ function clusterPoints(points: Point[], precision = 2) {
 
 export default function IntelligenceMatrix({ data }: { data: IntelligenceData }) {
   const clusters = useMemo(() => {
-    // ... existing clusters code ...
+    const searchClusters = clusterPoints(data.searches || [])
+    const businessClusters = clusterPoints(data.businesses || [])
+    
+    const businessMap = new Map(businessClusters.map(b => [b.key, b]))
+    const searchMap = new Map(searchClusters.map(s => [s.key, s.count]))
+    
+    const allKeys = new Set([...businessMap.keys(), ...searchMap.keys()])
+    const matrix = Array.from(allKeys).map(key => {
+      const business = businessMap.get(key)
+      const demand = searchMap.get(key) || 0
+      const supply = business ? business.count : 0
+      const ratio = supply > 0 ? demand / supply : demand
+      const city = business?.city || searchClusters.find(s => s.key === key)?.city || ''
+      return { lat: business?.lat || 0, lng: business?.lng || 0, demand, supply, ratio, key, city }
+    })
+    
     return matrix.sort((a, b) => b.ratio - a.ratio)
-  }, [data])
-
-  const monopolyMatrix = useMemo(() => {
-    const map = new Map<string, { city: string; category: string; supply: number; demand: number }>()
-    ;(data.businesses || []).forEach(b => {
-      const key = `${b.city || 'Sin ciudad'}::${b.category || 'Sin categoría'}`
-      const cur = map.get(key) || { city: b.city || '', category: b.category || '', supply: 0, demand: 0 }
-      cur.supply += 1
-      map.set(key, cur)
-    })
-    ;(data.searches || []).forEach(s => {
-      // searches don't have city/category in current shape, use category from search
-      // We'll aggregate by category only with city derived from lat/lng approx
-      // For simplicity, use generic
-    })
-    return Array.from(map.values()).sort((a,b)=>b.supply-a.supply)
   }, [data])
 
   const topCities = useMemo(() => {
