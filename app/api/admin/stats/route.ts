@@ -158,37 +158,47 @@ export async function GET(request: NextRequest) {
         const thirtyDaysAgo = new Date();
         thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-        const [recentSearches, vehicleFuelStats, vehicleTransStats, vehicleColorStats] = await Promise.all([
-            prisma.searchMetric.findMany({
-                where: { createdAt: { gte: thirtyDaysAgo } },
-                take: 1000,
-                select: { latitude: true, longitude: true, query: true, category: true }
-            }),
-            prisma.vehicle.groupBy({ by: ['fuel'], _count: { id: true }, where: { status: 'ACTIVE' } }),
-            prisma.vehicle.groupBy({ by: ['transmission'], _count: { id: true }, where: { status: 'ACTIVE' } }),
-            prisma.vehicle.groupBy({ by: ['color'], _count: { id: true }, where: { status: 'ACTIVE' } })
-        ]);
+        let intelligence = {
+            searches: [],
+            vehicles: [],
+            businesses: [],
+            stats: { techTrends: { fuels: [], transmissions: [], colors: [] } }
+        };
+        try {
+            const [recentSearches, vehicleFuelStats, vehicleTransStats, vehicleColorStats] = await Promise.all([
+                prisma.searchMetric.findMany({
+                    where: { createdAt: { gte: thirtyDaysAgo } },
+                    take: 1000,
+                    select: { latitude: true, longitude: true, query: true, category: true }
+                }),
+                prisma.vehicle.groupBy({ by: ['fuel'], _count: { id: true }, where: { status: 'ACTIVE' } }),
+                prisma.vehicle.groupBy({ by: ['transmission'], _count: { id: true }, where: { status: 'ACTIVE' } }),
+                prisma.vehicle.groupBy({ by: ['color'], _count: { id: true }, where: { status: 'ACTIVE' } })
+            ]);
 
-        const intelligence = {
-            searches: recentSearches.map(s => ({ 
-                latitude: s.latitude, 
-                longitude: s.longitude, 
-                query: s.query, 
-                category: s.category 
-            })),
-            vehicles: recentVehicles
-                .filter(v => v.latitude && v.longitude)
-                .map(v => ({ latitude: v.latitude, longitude: v.longitude, title: v.title })),
-            businesses: recentBusinesses
-                .filter(b => b.latitude && b.longitude)
-                .map(b => ({ latitude: b.latitude, longitude: b.longitude, name: b.name, category: b.category, city: b.city })),
-            stats: {
-                techTrends: {
-                    fuels: vehicleFuelStats.map(f => [f.fuel || 'N/A', f._count.id]),
-                    transmissions: vehicleTransStats.map(t => [t.transmission || 'N/A', t._count.id]),
-                    colors: vehicleColorStats.map(c => [c.color || 'N/A', c._count.id])
+            intelligence = {
+                searches: recentSearches.map(s => ({ 
+                    latitude: s.latitude, 
+                    longitude: s.longitude, 
+                    query: s.query, 
+                    category: s.category 
+                })),
+                vehicles: recentVehicles
+                    .filter(v => v.latitude && v.longitude)
+                    .map(v => ({ latitude: v.latitude, longitude: v.longitude, title: v.title })),
+                businesses: recentBusinesses
+                    .filter(b => b.latitude && b.longitude)
+                    .map(b => ({ latitude: b.latitude, longitude: b.longitude, name: b.name, category: b.category, city: b.city })),
+                stats: {
+                    techTrends: {
+                        fuels: vehicleFuelStats.map(f => [f.fuel || 'N/A', f._count.id]),
+                        transmissions: vehicleTransStats.map(t => [t.transmission || 'N/A', t._count.id]),
+                        colors: vehicleColorStats.map(c => [c.color || 'N/A', c._count.id])
+                    }
                 }
-            }
+            };
+        } catch (e) {
+            console.error('[Admin Stats] Error building intelligence', e)
         }
 
         return NextResponse.json({
