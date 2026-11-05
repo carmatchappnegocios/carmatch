@@ -34,12 +34,13 @@ export async function GET(request: NextRequest) {
             return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
         }
 
+        const countryWhere = { OR: [ { country: { in: ['Mexico', 'México', 'MX'] } }, { country: null } ] }
         const statsResults = await Promise.all([
             prisma.user.count(),
             prisma.user.count({ where: { isActive: true } }),
-            prisma.vehicle.count({ where: { country: { in: ['Mexico', 'México', 'MX'] } } }),
-            prisma.vehicle.count({ where: { status: 'ACTIVE', country: { in: ['Mexico', 'México', 'MX'] } } }),
-            prisma.business.count({ where: { country: { in: ['Mexico', 'México', 'MX'] } } }),
+            prisma.vehicle.count({ where: countryWhere }),
+            prisma.vehicle.count({ where: { status: 'ACTIVE', ...countryWhere } }),
+            prisma.business.count({ where: countryWhere }),
             prisma.chat.count(),
             prisma.appointment.count(),
             prisma.appointment.count({ where: { status: 'ACCEPTED' } }),
@@ -61,13 +62,13 @@ export async function GET(request: NextRequest) {
             }),
             prisma.vehicle.findMany({
                 take: 100,
-                where: { status: 'ACTIVE', country: { in: ['Mexico', 'México', 'MX'] } },
+                where: { status: 'ACTIVE', ...countryWhere },
                 orderBy: { createdAt: 'desc' },
                 include: { user: { select: { name: true } } }
             }),
             prisma.business.findMany({
                 take: 100,
-                where: { isActive: true, country: { in: ['Mexico', 'México', 'MX'] } },
+                where: { isActive: true, ...countryWhere },
                 orderBy: { createdAt: 'desc' },
                 select: { id: true, name: true, category: true, city: true, latitude: true, longitude: true }
             }),
@@ -79,7 +80,7 @@ export async function GET(request: NextRequest) {
             prisma.business.count({ where: { isFreePublication: false } }),
             prisma.payment.aggregate({ where: { status: 'COMPLETED' }, _sum: { amount: true, creditsAdded: true } }),
             prisma.creditTransaction.aggregate({ where: { amount: { lt: 0 } }, _sum: { amount: true } }),
-            prisma.business.count({ where: { isActive: true, country: { in: ['Mexico', 'México', 'MX'] } } }),
+            prisma.business.count({ where: { isActive: true, ...countryWhere } }),
             prisma.sOSAlert.count(),
             prisma.user.count({ where: { createdAt: { gte: new Date(new Date().setHours(0,0,0,0)) } } }),
             prisma.user.count({ where: { createdAt: { gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1) } } })
