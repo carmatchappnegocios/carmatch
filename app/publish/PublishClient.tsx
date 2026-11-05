@@ -639,8 +639,28 @@ export default function PublishClient() {
                     const v = data.vehicle
 
                     // Populate form
-                    setVehicleCategory('automovil')
-                    setVehicleType(v.vehicleType || '')
+                    const subtype = v.vehicleType || ''
+                    const getCategoryFromSubtype = (st: string) => {
+                        const s = st?.trim()
+                        if (!s) return 'automovil'
+                        const commercialSubtypes = ['Pickup','Van de carga','Camión ligero','Camión pesado','Panel','Chasis cabina','Volteo','Refrigerado','Tráiler']
+                        const autoSubtypes = ['Sedán','SUV','Hatchback','Coupé','Convertible','Camioneta','Station Wagon','Crossover']
+                        const motoSubtypes = ['Deportiva','Touring','Cruiser','Scooter','Off-Road','Motoneta','Naked','Trimoto','ATV/Cuatrimoto','UTV/Side-by-Side']
+                        if (commercialSubtypes.includes(s)) return 'comercial'
+                        if (autoSubtypes.includes(s)) return 'automovil'
+                        if (motoSubtypes.includes(s)) return 'motocicleta'
+                        // Fallback by keywords
+                        const lower = s.toLowerCase()
+                        if (lower.includes('moto')) return 'motocicleta'
+                        if (lower.includes('camion') || lower.includes('pickup') || lower.includes('trailer') || lower.includes('volteo')) return 'comercial'
+                        if (lower.includes('autobus') || lower.includes('microbús') || lower.includes('van pasajeros')) return 'transporte'
+                        if (lower.includes('tractor') || lower.includes('excavadora') || lower.includes('montacargas')) return 'industrial'
+                        if (lower.includes('deportivo') || lower.includes('clásico') || lower.includes('modificado')) return 'especial'
+                        return 'automovil'
+                    }
+                    const category = getCategoryFromSubtype(subtype)
+                    setVehicleCategory(category)
+                    setVehicleType(subtype)
                     const vImages = v.images || []
                     setCoverImage(vImages[0] || null)
                     setGalleryImages(vImages.slice(1))
