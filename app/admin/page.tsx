@@ -215,13 +215,13 @@ function AdminPanelContent() {
         { id: 'users', icon: Users, label: 'Usuarios' },
         { id: 'inventory', icon: Car, label: 'Inventario' },
         { id: 'map-store', icon: Store, label: 'MapStore' },
-        { id: 'ai-hub', icon: Cpu, label: 'AI Hub' },
+        { id: 'ai-hub', icon: Cpu, label: 'Centro IA' },
         { id: 'costs', icon: DollarSign, label: 'Gastos' },
         { id: 'reports', icon: Flag, label: 'Reportes', badge: stats.reports?.filter((r: any) => r.status === 'PENDING').length || 0 },
         { id: 'logs', icon: Terminal, label: 'Registros' },
         { id: 'alerts', icon: Bell, label: 'Alertas' },
         { id: 'credits', icon: Coins, label: 'Créditos' },
-        { id: 'audit', icon: FileText, label: 'Audit Log' },
+        { id: 'audit', icon: FileText, label: 'Registro de Auditoría' },
         { id: 'email', icon: Mail, label: 'Correos' },
     ]
 
@@ -513,7 +513,7 @@ function OverviewTab({ stats, handleRunAnalyst, isAnalyzing, aiAnalysis, setActi
                         <div className="flex items-start gap-3 mb-3">
                             <Activity className="w-6 h-6 text-primary-500 shrink-0 mt-1" />
                             <div className="flex-1 min-w-0">
-                                <h3 className="text-lg font-black tracking-tight uppercase">Insight Engine AI</h3>
+                                <h3 className="text-lg font-black tracking-tight uppercase">Motor de Insight IA</h3>
                                 <p className="text-xs text-text-secondary mt-1">Análisis predictivo de mercado</p>
                             </div>
                         </div>
@@ -1382,7 +1382,7 @@ function LogsTab({ logs }: { logs: any[] }) {
     return (
         <div className="bg-[#111114] border border-white/5 rounded-3xl overflow-hidden shadow-2xl">
             <div className="p-6 border-b border-white/5 flex items-center justify-between">
-                <h3 className="font-bold text-lg flex items-center gap-2"><Terminal className="w-5 h-5" /> Audit Log</h3>
+                <h3 className="font-bold text-lg flex items-center gap-2"><Terminal className="w-5 h-5" /> Registro de Auditoría</h3>
                 <button
                     onClick={handleClearLogs}
                     disabled={clearing || logs.length === 0}

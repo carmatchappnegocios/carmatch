@@ -22,7 +22,7 @@ export default function AuditLogTab() {
     <div className="space-y-8 pb-24">
       <header>
         <h3 className="text-3xl font-black italic tracking-tighter uppercase text-white flex items-center gap-3">
-          <FileText className="text-primary-400" /> Audit Log
+          <FileText className="text-primary-400" /> Registro de Auditoría
         </h3>
         <p className="text-text-secondary mt-2">Registro de actividades del sistema</p>
       </header>
