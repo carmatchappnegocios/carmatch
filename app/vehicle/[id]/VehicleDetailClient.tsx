@@ -80,9 +80,10 @@ interface VehicleDetailProps {
     currentUserEmail?: string | null
     currentUserId?: string | null
     relatedVehicles?: any[]
+    appointments?: { id: string; status: string; monitoringActive: boolean; date: string; location?: string }[]
 }
 
-export default function VehicleDetailClient({ vehicle, currentUserEmail, currentUserId, relatedVehicles }: VehicleDetailProps) {
+export default function VehicleDetailClient({ vehicle, currentUserEmail, currentUserId, relatedVehicles, appointments = [] }: VehicleDetailProps) {
     const { t, locale } = useLanguage()
     const router = useRouter()
     const searchParams = useSearchParams()
@@ -495,6 +496,12 @@ export default function VehicleDetailClient({ vehicle, currentUserEmail, current
                                             <span className="flex items-center gap-1.5 px-3 py-1 bg-primary-600/10 text-primary-400 border border-primary-500/20 text-[10px] font-black uppercase tracking-wider rounded-md backdrop-blur-sm">
                                                 <BadgeCheck size={12} className="text-primary-400" />
                                                 {t('vehicle.detail.verified_badge')}
+                                            </span>
+                                        )}
+                                        {appointments.some(a => a.monitoringActive && a.status === 'ACCEPTED') && (
+                                            <span className="flex items-center gap-1.5 px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-black uppercase tracking-wider rounded-md backdrop-blur-sm">
+                                                <ShieldCheck size={12} className="text-emerald-400" />
+                                                Cita Segura Activa
                                             </span>
                                         )}
                                     </div>

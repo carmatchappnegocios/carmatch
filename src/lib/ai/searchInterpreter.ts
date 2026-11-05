@@ -1,6 +1,6 @@
 
 
-import { geminiPro } from "./geminiModels"; // 🚀 UPGRADE: Usamos PRO para "Entendimiento Humano" perfecto
+import { geminiFlash } from "./geminiModels"; // FREE ONLY: Usamos FLASH para "Entendimiento Humano"
 import { BRANDS, COLORS, TRANSMISSIONS, FUELS } from "../vehicleTaxonomy";
 import aiCache from "./aiCache"; // 💰 Sistema de caché para reducir costos
 import { orchestrator } from "./orchestrator";
@@ -91,9 +91,9 @@ export async function interpretSearchQuery(query: string, context: 'MARKET' | 'M
       return cachedResult as SearchIntent;
     }
 
-    // Si no está en caché, usamos el modelo PRO (Fallback legacy)
+    // Si no está en caché, usamos el modelo FLASH (Free only)
     const prompt = `Extrae filtros de búsqueda de: "${query}". Contexto: ${context}. Responde en JSON. Exactamente como la interfaz SearchIntent.`;
-    const result = await geminiPro.generateContent(prompt);
+    const result = await geminiFlash.generateContent(prompt);
     const responseText = result.response.text();
     const match = responseText.match(/\{[\s\S]*\}/);
     const aiOutput = match ? JSON.parse(match[0]) as SearchIntent : {} as SearchIntent;

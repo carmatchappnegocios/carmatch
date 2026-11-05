@@ -1,6 +1,6 @@
 
 
-import { geminiFlash8B, geminiFlash, geminiFlashLite, geminiPro } from "./geminiClient"; // ✅ Modelos optimizados (2026)
+import { geminiFlash8B, geminiFlash, geminiFlashLite } from "./geminiClient"; // ✅ Modelos gratuitos optimizados (2026)
 
 
 interface ImageAnalysisResult {
@@ -164,9 +164,9 @@ RESPONDE SOLO EL JSON.
         result = await modelToUse.generateContent([prompt, imagePart]);
 
       } catch (genError) {
-        console.warn(`⚠️ Error técnico en modelo (intento ${i + 1}), rotando a PRO...`);
+        console.warn(`⚠️ Error técnico en modelo (intento ${i + 1}), reintentando con FLASH...`);
         try {
-          result = await geminiPro.generateContent([prompt, imagePart]);
+          result = await geminiFlash.generateContent([prompt, imagePart]);
         } catch (e) {
           throw genError;
         }
@@ -453,8 +453,8 @@ isValid: false) ═══
       try {
         galleryResultRaw = await geminiFlash.generateContent([galleryPrompt, ...imageParts]);
       } catch (galleryError) {
-        console.warn("⚠️ Falló análisis de galería, intentando con respaldo...");
-        galleryResultRaw = await geminiPro.generateContent([galleryPrompt, ...imageParts]);
+        console.warn("⚠️ Falló análisis de galería, reintentando con FLASH...");
+        galleryResultRaw = await geminiFlash.generateContent([galleryPrompt, ...imageParts]);
       }
 
       const galleryResponse = await galleryResultRaw.response;
@@ -514,7 +514,7 @@ isValid: false) ═══
         inlineData: { data: img, mimeType: "image/jpeg" }
       }));
 
-      const result = await geminiPro.generateContent([prompt, ...imageParts]); // ✅ Pro
+      const result = await geminiFlash.generateContent([prompt, ...imageParts]); // ✅ FLASH gratuito
       const response = await result.response;
 
       return await processGeminiResponse(response); // Moviendo lógica a una función auxiliar para limpieza

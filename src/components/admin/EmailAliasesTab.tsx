@@ -15,20 +15,28 @@ interface Alias {
 export default function EmailAliasesTab() {
   const [aliases, setAliases] = useState<Alias[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [creating, setCreating] = useState(false)
   const [deleting, setDeleting] = useState<string | null>(null)
   const [newAlias, setNewAlias] = useState('')
   const [copied, setCopied] = useState<string | null>(null)
 
   const fetchAliases = async () => {
+    setLoading(true)
+    setError(null)
     try {
       const res = await fetch('/api/admin/email-aliases')
-      if (!res.ok) throw new Error('Error al cargar')
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}))
+        throw new Error(err.error || 'Error al cargar')
+      }
       const data = await res.json()
       setAliases(data.aliases || [])
     } catch (error) {
       console.error('Error fetching aliases:', error)
-      toast.error('No se pudieron cargar los aliases')
+      const msg = error instanceof Error ? error.message : 'No se pudieron cargar los aliases'
+      setError(msg)
+      toast.error(msg)
     } finally {
       setLoading(false)
     }
@@ -56,7 +64,7 @@ export default function EmailAliasesTab() {
       }
 
       const alias = await res.json()
-      setAliases([alias, ...aliases])
+      setAliases(prev => [alias, ...prev])
       setNewAlias('')
       toast.success(`${alias.email} creado correctamente`)
     } catch (error) {
@@ -75,12 +83,15 @@ export default function EmailAliasesTab() {
         method: 'DELETE',
       })
 
-      if (!res.ok) throw new Error('Error al eliminar')
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}))
+        throw new Error(err.error || 'Error al eliminar')
+      }
 
-      setAliases(aliases.filter((a) => a.id !== id))
+      setAliases(prev => prev.filter((a) => a.id !== id))
       toast.success(`${email} eliminado`)
     } catch (error) {
-      toast.error('No se pudo eliminar')
+      toast.error(error instanceof Error ? error.message : 'No se pudo eliminar')
     } finally {
       setDeleting(null)
     }
@@ -97,6 +108,20 @@ export default function EmailAliasesTab() {
     return (
       <div className="flex items-center justify-center h-64">
         <Loader2 className="w-8 h-8 animate-spin text-primary-500" />
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center h-64 gap-4">
+        <p className="text-zinc-400">{error}</p>
+        <button
+          onClick={fetchAliases}
+          className="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-400"
+        >
+          Reintentar
+        </button>
       </div>
     )
   }

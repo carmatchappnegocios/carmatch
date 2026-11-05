@@ -97,6 +97,58 @@ export default function CreditsPaymentsTab() {
         <p className="text-[10px] text-text-secondary mt-4">Semana iniciada: {monday ? new Date(monday.weekStart).toLocaleDateString('es-MX') : '-'}</p>
       </div>
 
+      {/* Monday 48h Per-Piece Metrics */}
+      <div className="bg-[#111114] border border-white/5 rounded-[32px] p-8">
+        <h4 className="text-sm font-black uppercase tracking-widest text-amber-400 mb-4 flex items-center gap-2">
+          <Calendar className="w-4 h-4" /> Métricas Lunes 48h por Pieza
+        </h4>
+        {monday?.monday48h?.isMonday ? (
+          <>
+            <p className="text-[11px] text-text-secondary mb-4">
+              Ventana: {new Date(monday.monday48h.window.periodStart).toLocaleString('es-MX')} → {new Date(monday.monday48h.window.periodEnd).toLocaleString('es-MX')} • Piezas activas: {monday.monday48h.totalActivePieces}
+            </p>
+            <div className="overflow-auto max-h-[50vh]">
+              <table className="w-full text-sm">
+                <thead className="text-[10px] uppercase tracking-widest text-white/50">
+                  <tr>
+                    <th className="text-left py-2">Vehículo</th>
+                    <th className="text-left py-2">Ciudad</th>
+                    <th className="text-right py-2">Views 48h</th>
+                    <th className="text-right py-2">Fav 48h</th>
+                    <th className="text-right py-2">Chats 48h</th>
+                    <th className="text-right py-2">Mensajes 48h</th>
+                    <th className="text-right py-2">Score</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {monday.monday48h.perPieceMetrics.map((p: any, i: number) => (
+                    <tr key={p.vehicleId || i} className="border-t border-white/5">
+                      <td className="py-2 text-white">
+                        <div className="font-bold">{p.brand} {p.model} {p.year}</div>
+                        <div className="text-[10px] text-text-secondary truncate max-w-[250px]">{p.title}</div>
+                      </td>
+                      <td className="py-2 text-text-secondary">{p.city || '-'}</td>
+                      <td className="py-2 text-right text-white">{p.views48h}</td>
+                      <td className="py-2 text-right text-amber-400 font-bold">{p.favorites48h}</td>
+                      <td className="py-2 text-right text-white">{p.chats48h}</td>
+                      <td className="py-2 text-right text-white">{p.messages48h}</td>
+                      <td className="py-2 text-right text-green-400 font-bold">{p.score48h}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {monday.monday48h.perPieceMetrics.length === 0 && (
+                <p className="text-text-secondary text-xs mt-4">Sin actividad en las últimas 48h</p>
+              )}
+            </div>
+          </>
+        ) : (
+          <p className="text-[11px] text-text-secondary">
+            Métricas por pieza se calculan solo los lunes. Hoy no es lunes.
+          </p>
+        )}
+      </div>
+
       <div className="bg-[#111114] border border-white/5 rounded-[32px] p-8">
         <h4 className="text-sm font-black uppercase tracking-widest text-green-400 mb-4">Historial de pagos</h4>
         <div className="overflow-auto max-h-[40vh]">

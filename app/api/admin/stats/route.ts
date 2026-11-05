@@ -154,6 +154,24 @@ export async function GET(request: NextRequest) {
             betaToday: sessionMap.get(u.id) || null
         }))
 
+        // 📌 Cita Segura: vehicles with active monitoring appointments
+        const activeCitaVehicleIds = new Set<string>()
+        try {
+            const activeCitaAppointments = await prisma.appointment.findMany({
+                where: { status: 'ACCEPTED', monitoringActive: true },
+                select: { chat: { select: { vehicleId: true } } }
+            })
+            activeCitaAppointments.forEach(a => {
+                if (a.chat?.vehicleId) activeCitaVehicleIds.add(a.chat.vehicleId)
+            })
+        } catch (e) {
+            console.error('[Admin Stats] Error fetching Cita Segura', e)
+        }
+        const enrichedVehicles = (recentVehicles as any[]).map(v => ({
+            ...v,
+            hasActiveCitaSegura: activeCitaVehicleIds.has(v.id)
+        }))
+
         // 🧠 Procesamiento de Inteligencia de Mercado (Datos Reales)
         const thirtyDaysAgo = new Date();
         thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
@@ -203,7 +221,7 @@ export async function GET(request: NextRequest) {
 
         return NextResponse.json({
             users: { total: totalUsers, active: activeUsers, recent: enrichedUsers, growth: growth.users },
-            vehicles: { total: totalVehicles, active: activeVehicles, recent: recentVehicles },
+            vehicles: { total: totalVehicles, active: activeVehicles, recent: enrichedVehicles },
             businesses: { total: totalBusinesses, recent: recentBusinesses },
             chats: { total: totalChats },
             appointments: { total: totalAppointments, active: activeAppointments },

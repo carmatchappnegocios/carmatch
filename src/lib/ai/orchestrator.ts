@@ -1,6 +1,6 @@
 
 
-import { geminiFlash, geminiPro, geminiFlashPrecise, geminiFlashConversational } from "./geminiModels";
+import { geminiFlash, geminiFlashPrecise, geminiFlashConversational } from "./geminiModels";
 import aiCache from "./aiCache";
 import { parseNaturalSearch } from "../searchParser";
 import { VEHICLE_CATEGORIES, BRANDS, COLORS, TRANSMISSIONS, FUELS } from "../vehicleTaxonomy";
@@ -93,8 +93,7 @@ class AIOrchestrator {
     }
 
     private getModelForRole(role: AIAgentRole, tier: 'FLASH' | 'PRO') {
-        if (tier === 'PRO') return geminiPro;
-
+        // PRO disabled: always use FLASH
         switch (role) {
             case 'INTERPRETER': return geminiFlashPrecise;
             case 'MODERATOR': return geminiFlashPrecise;
@@ -105,8 +104,8 @@ class AIOrchestrator {
     }
 
     private async verifyWithPro(task: string, flashData: any, role: AIAgentRole, context: any) {
-        console.log(`👑 [Nivel 4] Agente PRO entrando a verificar (Servicio 7 Estrellas)`);
-        const model = geminiPro;
+        console.log(`⚡ [Nivel 4] Verificación con FLASH (PRO deshabilitado)`);
+        const model = geminiFlash;
 
         try {
             const proPrompt = `
@@ -127,12 +126,12 @@ class AIOrchestrator {
             }
 
             return {
-                source: 'PRO',
+                source: 'FLASH_VERIFY',
                 data,
-                confidence: 1.0
+                confidence: 0.9
             };
         } catch (e) {
-            console.error("🚨 [CRITICAL] Fallo total del Orquestador (Flash & Pro fallaron):", e);
+            console.error("🚨 [CRITICAL] Fallo total del Orquestador (Flash falló):", e);
             // 🛡️ ÚLTIMA LÍNEA DE DEFENSA: Fallback estático para evitar crashes en el frontend
             return {
                 source: 'FAILSAFE',

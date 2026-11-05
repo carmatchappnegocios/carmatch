@@ -9,28 +9,48 @@ import {
 const FORWARD_DESTINATION = process.env.CLOUDFLARE_EMAIL_DESTINATION || 'carmatch.negocios@gmail.com'
 const DOMAIN = 'carmatchapp.net'
 
-function isAdmin(email: string | null | undefined): boolean {
-  return email === process.env.ADMIN_EMAIL
+function isAdminSession(session: any): boolean {
+  if (!session?.user) return false
+  // Check session admin flag set by NextAuth callbacks
+  if (session.user.isAdmin) return true
+  // Fallback to email match (case-insensitive)
+  const email = session.user.email
+  const adminEmail = process.env.ADMIN_EMAIL
+  if (email && adminEmail) {
+    return email.toLowerCase() === adminEmail.toLowerCase()
+  }
+  return false
 }
 
 export async function GET() {
   const session = await auth()
 
-  if (!session?.user?.email || !isAdmin(session.user.email)) {
+  if (!isAdminSession(session)) {
     return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
   }
 
   try {
     const rules = await listEmailRules()
     const aliases = rules
-      .filter((rule) => rule.matchers.some((m) => m.field === 'to' && m.value.endsWith(`@${DOMAIN}`)))
-      .map((rule) => ({
-        id: rule.id,
-        email: rule.matchers.find((m) => m.field === 'to')?.value || '',
-        name: rule.name,
-        enabled: rule.enabled,
-        createdAt: rule.created_on,
-      }))
+      .filter((rule) => {
+        const matcher = rule.matchers.find((m) => m.field === 'to' && typeof m.value === 'string')
+        if (!matcher) return false
+        const value = matcher.value
+        // Exclude wildcards / catch-all and ensure exact domain
+        if (value.includes('*')) return false
+        return value.endsWith(`@${DOMAIN}`)
+      })
+      .map((rule) => {
+        const matcher = rule.matchers.find((m) => m.field === 'to')
+        const email = matcher?.value || ''
+        return {
+          id: rule.id,
+          email,
+          name: rule.name,
+          enabled: rule.enabled,
+          createdAt: rule.created_on,
+        }
+      })
 
     return NextResponse.json({ aliases, catchAllActive: true, destination: FORWARD_DESTINATION })
   } catch (error) {
@@ -45,7 +65,7 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   const session = await auth()
 
-  if (!session?.user?.email || !isAdmin(session.user.email)) {
+  if (!isAdminSession(session)) {
     return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
   }
 
@@ -90,7 +110,7 @@ export async function POST(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   const session = await auth()
 
-  if (!session?.user?.email || !isAdmin(session.user.email)) {
+  if (!isAdminSession(session)) {
     return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
   }
 

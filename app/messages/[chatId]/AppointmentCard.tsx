@@ -10,8 +10,9 @@ interface Appointment {
     date: string
     location: string
     address?: string
-    status: 'PENDING' | 'ACCEPTED' | 'REJECTED' | 'CANCELLED'
+    status: 'PENDING' | 'ACCEPTED' | 'REJECTED' | 'CANCELLED' | 'COMPLETED' | 'FINISHED' | 'EMERGENCY'
     proposerId: string
+    monitoringActive?: boolean
 }
 
 interface AppointmentCardProps {
@@ -116,8 +117,15 @@ export default function AppointmentCard({ appointment, isOwn, onUpdateStatus, on
 
             <div className="flex items-center justify-between pt-2 border-t border-current/10">
                 <div className="flex flex-col">
-                    <div className="font-medium text-xs opacity-70 uppercase tracking-widest mb-0.5">
-                        {simpleStatus}
+                    <div className="flex items-center gap-2">
+                        <div className="font-medium text-xs opacity-70 uppercase tracking-widest mb-0.5">
+                            {simpleStatus}
+                        </div>
+                        {appointment.monitoringActive && (
+                            <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 uppercase tracking-widest">
+                                Cita Segura Activa
+                            </span>
+                        )}
                     </div>
                     {/* ⏳ COUNTDOWN / TIMER - Visible si es futuro y está activo */}
                     {['ACCEPTED', 'PENDING'].includes(currentStatus) && (

@@ -1060,9 +1060,16 @@ function InventoryTab({ vehicles }: { vehicles: any[] }) {
                             </div>
                             <div className="flex-1 min-w-0 py-1">
                                 <div className="flex items-center justify-between mb-1">
-                                    <span className={`text-[10px] font-black px-2 py-0.5 rounded-full ${vehicle.status === 'ACTIVE' ? 'bg-green-500/10 text-green-500' : 'bg-amber-500/10 text-amber-500'}`}>
-                                        {vehicle.status}
-                                    </span>
+                                    <div className="flex items-center gap-2">
+                                        <span className={`text-[10px] font-black px-2 py-0.5 rounded-full ${vehicle.status === 'ACTIVE' ? 'bg-green-500/10 text-green-500' : 'bg-amber-500/10 text-amber-500'}`}>
+                                            {vehicle.status}
+                                        </span>
+                                        {vehicle.hasActiveCitaSegura && (
+                                            <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                                                Cita Segura
+                                            </span>
+                                        )}
+                                    </div>
                                     <span className="text-[10px] font-bold text-zinc-600 truncate max-w-[80px]">{vehicle.city || 'N/A'}</span>
                                 </div>
                                 <h4 className="font-black text-sm text-white line-clamp-1 leading-tight">{vehicle.title}</h4>
@@ -1829,6 +1836,7 @@ function AiHubTab() {
     const [loading, setLoading] = useState(true)
     const [isUpdating, setIsUpdating] = useState(false)
     const [lastResult, setLastResult] = useState<any>(null)
+    const [modelHealth, setModelHealth] = useState<AiHealthReport | null>(null)
 
     const fetchLogs = async () => {
         try {
@@ -1844,8 +1852,18 @@ function AiHubTab() {
         }
     }
 
+    const fetchModelHealth = async () => {
+        try {
+            const res = await testGeminiHealth()
+            setModelHealth(res)
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
     useEffect(() => {
         fetchLogs()
+        fetchModelHealth()
     }, [])
 
     const handleManualUpdate = async () => {
@@ -1921,6 +1939,40 @@ function AiHubTab() {
                     </div>
                 </motion.div>
             )}
+
+            {/* Model Status - Free only */}
+            <div className="bg-[#111114] border border-white/5 rounded-3xl p-6">
+                <h4 className="text-lg font-black uppercase tracking-widest mb-4 flex items-center gap-2">
+                    <Cpu className="w-5 h-5 text-primary-500" /> Estado de Modelos IA (Free Only)
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="bg-black/30 p-4 rounded-xl border border-emerald-500/20">
+                        <p className="text-[10px] font-black uppercase text-emerald-400 mb-1">Modelo Activo</p>
+                        <p className="text-sm font-bold">gemini-1.5-flash-8b / gemini-2.0-flash-lite</p>
+                        <p className="text-[10px] text-zinc-500 mt-1">Costo: $0 · PRO deshabilitado</p>
+                    </div>
+                    <div className="bg-black/30 p-4 rounded-xl border border-white/10">
+                        <p className="text-[10px] font-black uppercase text-zinc-400 mb-1">Latencia</p>
+                        <p className="text-2xl font-black">{modelHealth ? `${modelHealth.latencyMs}ms` : '—'}</p>
+                        <p className="text-[10px] text-zinc-500 mt-1">Última verificación</p>
+                    </div>
+                    <div className="bg-black/30 p-4 rounded-xl border border-white/10">
+                        <p className="text-[10px] font-black uppercase text-zinc-400 mb-1">Estado</p>
+                        <p className={`text-sm font-bold ${modelHealth?.status === 'ok' ? 'text-emerald-400' : 'text-red-400'}`}>
+                            {modelHealth ? (modelHealth.status === 'ok' ? 'Operativo' : 'Error') : 'Verificando...'}
+                        </p>
+                        <p className="text-[10px] text-zinc-500 mt-1">Uso: Gratis · Sin PRO</p>
+                    </div>
+                </div>
+                <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3 text-[11px]">
+                    <div className="bg-white/5 p-3 rounded-xl">
+                        <span className="font-black text-primary-400">ADMIN_ANALYST:</span> <span className="text-white">FLASH</span>
+                    </div>
+                    <div className="bg-white/5 p-3 rounded-xl">
+                        <span className="font-black text-primary-400">Uso/Costo:</span> <span className="text-white">0 MXN · Solo modelos gratuitos</span>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

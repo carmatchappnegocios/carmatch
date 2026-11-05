@@ -121,6 +121,23 @@ export default async function ComprarVehiclePage({ params, searchParams }: Props
         notFound()
     }
 
+    // Fetch Cita Segura status for this vehicle
+    const appointments = await prisma.appointment.findMany({
+        where: {
+            chat: { vehicleId: vehicle.id },
+            status: { in: ['ACCEPTED', 'PENDING'] }
+        },
+        select: {
+            id: true,
+            status: true,
+            monitoringActive: true,
+            date: true,
+            location: true
+        },
+        orderBy: { date: 'desc' },
+        take: 10
+    })
+
     const brandEntity = getBrandEntity(vehicle.brand)
 
     // 🤖 ENTITY DETERMINATION: Detectamos el tipo de objeto para Schema.org (IA Friendly)
@@ -236,6 +253,7 @@ export default async function ComprarVehiclePage({ params, searchParams }: Props
                     currentUserEmail={session?.user?.email}
                     currentUserId={session?.user?.id}
                     relatedVehicles={serializeDecimal(relatedVehicles)}
+                    appointments={appointments}
                 />
             </Suspense>
         </>
