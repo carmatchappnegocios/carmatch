@@ -31,7 +31,7 @@ export var VEHICLE_CATEGORIES: Record<VehicleCategory, string[]> = {
 export var TRANSMISSIONS = ['Manual', 'Automática', 'CVT', 'Dual Clutch (DCT)', 'Tiptronic', 'Secuencial', 'Semi-automática']
 export var FUELS = ['Gasolina', 'Diésel', 'Híbrido (HEV)', 'Híbrido Enchufable (PHEV)', 'Eléctrico (BEV)', 'Gas LP', 'Gas Natural (GNC)', 'Hidrógeno (FCEV)', 'Etanol']
 export var TRACTIONS = ['Delantera (FWD)', 'Trasera (RWD)', '4x4 (4WD)', 'Integral (AWD)', '6x4', '6x6', '8x4', '8x8']
-export var COLORS = ['Blanco', 'Negro', 'Gris', 'Plata', 'Rojo', 'Azul', 'Verde', 'Amarillo', 'Naranja', 'Café', 'Beige', 'Oro', 'Bronce', 'Morado', 'Rosa', 'Bicolor', 'Mate', 'Otro']
+export var COLORS = ['Blanco', 'Negro', 'Gris', 'Plata', 'Rojo', 'Azul', 'Azul Marino', 'Verde', 'Amarillo', 'Naranja', 'Café', 'Beige', 'Oro', 'Bronce', 'Morado', 'Rosa', 'Bicolor', 'Mate', 'Otro']
 export var CONDITIONS = ['Nuevo', 'Seminuevo (Casi Nuevo)', 'Usado', 'Para Restaurar', 'Para Piezas']
 
 // 🌍 DICCIONARIO GLOBAL DE SINÓNIMOS (Base de Conocimiento para Inteligencia Artificial)
