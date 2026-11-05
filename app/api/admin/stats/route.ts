@@ -177,7 +177,7 @@ export async function GET(request: NextRequest) {
         const thirtyDaysAgo = new Date();
         thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-        let intelligence = {
+        let intelligence: any = {
             searches: [],
             vehicles: [],
             businesses: [],
