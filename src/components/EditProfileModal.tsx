@@ -52,15 +52,22 @@ export default function EditProfileModal({ isOpen, onClose, currentUser, userVeh
                 body: JSON.stringify({ name, image: selectedImage, trustedContactId })
             })
 
-            if (res.ok) {
-                // 🔥 Forzar actualización de la sesión JWT con los nuevos datos
-                await update({ name, image: selectedImage })
-
-                // Recarga completa para que Header lea el JWT cookie actualizado
-                window.location.reload()
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({}))
+                toast.error(err.error || 'Error al guardar perfil')
+                setLoading(false)
+                return
             }
+            const data = await res.json()
+
+            // 🔥 Forzar actualización de la sesión JWT con los nuevos datos
+            await update({ name: data.name, image: data.image })
+
+            // Recarga completa para que Header lea el JWT cookie actualizado
+            window.location.reload()
         } catch (error) {
             console.error('Error updating profile:', error)
+            toast.error('Error al actualizar perfil')
         } finally {
             setLoading(false)
         }

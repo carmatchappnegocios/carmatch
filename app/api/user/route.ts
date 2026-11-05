@@ -36,7 +36,7 @@ export async function PATCH(request: NextRequest) {
 
         // Validate image URL (only allow trusted domains or relative paths)
         if (image) {
-            const allowedDomains = ['lh3.googleusercontent.com', 'pbs.twimg.com', 'platform-lookaside.fbsbx.com']
+            const allowedDomains = ['lh3.googleusercontent.com', 'pbs.twimg.com', 'platform-lookaside.fbsbx.com', 'firebasestorage.googleapis.com', 's3.amazonaws.com', 'cdn.carmatchapp.net', 'carmatchapp.net']
             const isRelativePath = image.startsWith('/')
             const isAllowedDomain = allowedDomains.some(domain => image.includes(domain))
             if (!isRelativePath && !isAllowedDomain) {
