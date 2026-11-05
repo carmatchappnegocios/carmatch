@@ -147,10 +147,12 @@ export default async function MarketPage({
             let aiFilters: any = typeof searchCache.get === 'function' ? searchCache.get(searchParams.search) : undefined
 
             if (!aiFilters) {
-                // 💰 PASO 2: Llamar a IA solo si no está en caché
                 const userCity = searchParams.city || ""
-                aiFilters = await interpretSearchQuery(searchParams.search, 'MARKET', userCity)
-                // 💰 PASO 3: Guardar en caché
+                const aiWithTimeout = Promise.race([
+                    interpretSearchQuery(searchParams.search, 'MARKET', userCity),
+                    new Promise((_, reject) => setTimeout(() => reject(new Error('AI timeout')), 3000))
+                ])
+                aiFilters = await aiWithTimeout
                 searchCache.set(searchParams.search, aiFilters)
                 console.log(`🤖 [AI Search] Nueva búsqueda: "${searchParams.search}" en ${userCity || 'Global'}`)
             } else {

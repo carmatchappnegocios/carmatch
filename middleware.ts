@@ -50,6 +50,11 @@ export default auth((req) => {
     const isAdmin = !!req.auth?.user?.isAdmin
     const { pathname } = req.nextUrl
 
+    // 🔀 REDIRECT /marketcar -> /market
+    if (pathname === '/marketcar' || pathname.startsWith('/marketcar/')) {
+        return Response.redirect(new URL('/market' + req.nextUrl.search, req.url), 308)
+    }
+
     // Rutas protegidas que requieren autenticación (RED SOCIAL)
     const protectedRoutes = [
         '/profile',

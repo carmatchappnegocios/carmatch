@@ -845,23 +845,7 @@ export default function MarketClient({
                                                 </span>
                                             </div>
 
-                                            {/* Card 2: Promo Vende Tu Auto */}
-                                            <div className="bg-gradient-to-br from-primary-900/20 to-indigo-900/20 border-2 border-primary-500/30 hover:border-primary-500/50 rounded-2xl flex flex-col items-center justify-center p-6 text-center transition group min-h-[200px] relative">
-                                                <div className="flex flex-col items-center w-full">
-                                                    <p className="text-sm text-primary-200 font-bold uppercase tracking-wider mb-2">{t('market.while_searching')}</p>
-                                                    <h3 className="text-xl font-black text-white leading-tight mb-6">
-                                                        {t('market.generate_money_title')}
-                                                    </h3>
 
-                                                    <button
-                                                        onClick={() => session ? router.push('/publish') : router.push('/auth?callbackUrl=%2Fpublish')}
-                                                        className="inline-flex items-center gap-2 px-6 py-3 bg-white text-primary-900 rounded-xl hover:bg-white/90 transition font-black uppercase tracking-wide shadow-lg text-sm group-hover:scale-105 transform duration-200"
-                                                    >
-                                                        <Plus size={18} strokeWidth={3} />
-                                                        {t('market.convert_to_money')}
-                                                    </button>
-                                                </div>
-                                            </div>
                                         </div>
 
                                     )}

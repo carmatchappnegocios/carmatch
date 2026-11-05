@@ -119,6 +119,16 @@ function AdminPanelContent() {
         fetchStats()
     }, [])
 
+    useEffect(() => {
+        if (status === 'authenticated' && session?.user) {
+            fetch('/api/admin/audit-log', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'NAVIGATE_ADMIN', view: activeView, userId: session.user.id })
+            }).catch(()=>{})
+        }
+    }, [activeView, session, status])
+
     const handleRunAnalyst = async () => {
         setIsAnalyzing(true)
         try {

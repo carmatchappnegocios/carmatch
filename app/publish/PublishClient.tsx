@@ -325,6 +325,12 @@ export default function PublishClient() {
 
     const validateImagesAndProceed = async (retryCount = 0) => {
         if (!coverImage && galleryImages.length === 0) return
+        // No validar con IA al editar
+        if (editId) {
+            setIsAnalyzing(false)
+            handleNextStep()
+            return
+        }
         setIsAnalyzing(true)
         setAiError('')
         // NO establecer aiConfidence aquí - el useEffect lo manejará desde 0%
@@ -633,7 +639,7 @@ export default function PublishClient() {
                     const v = data.vehicle
 
                     // Populate form
-                    setVehicleCategory(v.vehicleType?.toLowerCase() || 'automovil')
+                    setVehicleCategory('automovil')
                     setVehicleType(v.vehicleType || '')
                     const vImages = v.images || []
                     setCoverImage(vImages[0] || null)
@@ -658,12 +664,28 @@ export default function PublishClient() {
                     setDisplacement(v.displacement?.toString() || '')
                     setCargoCapacity(v.cargoCapacity?.toString() || '')
                     setOperatingHours(v.operatingHours?.toString() || '')
+                    setHp(v.hp?.toString() || '')
+                    setTorque(v.torque || '')
+                    setAspiration(v.aspiration || '')
+                    setCylinders(v.cylinders?.toString() || '')
+                    setBatteryCapacity(v.batteryCapacity?.toString() || '')
+                    setRange(v.range?.toString() || '')
+                    setWeight(v.weight?.toString() || '')
+                    setAxles(v.axles?.toString() || '')
                     setLatitude(v.latitude)
                     setLongitude(v.longitude)
                     setCity(v.city)
                     setStateLocation(v.state || '')
                     setCountryLocation(v.country || 'MX')
                     setSelectedFeatures(v.features || [])
+                    // Marcar todos los campos como editados para evitar que la IA los sobrescriba al editar
+                    setUserEditedFields(new Set([
+                        'brand','model','version','year','price','currency',
+                        'description','mileage','transmission','fuel','engine','doors','color','condition',
+                        'traction','passengers','displacement','cargoCapacity','operatingHours','hp','torque',
+                        'aspiration','cylinders','batteryCapacity','range','weight','axles',
+                        'vehicleType','vehicleCategory'
+                    ]))
 
                 } catch (err) {
                     console.error(err)
