@@ -122,7 +122,7 @@ export default async function ComprarVehiclePage({ params, searchParams }: Props
     }
 
     // Fetch Cita Segura status for this vehicle
-    const appointments = await prisma.appointment.findMany({
+    const appointmentsRaw = await prisma.appointment.findMany({
         where: {
             chat: { vehicleId: vehicle.id },
             status: { in: ['ACCEPTED', 'PENDING'] }
@@ -137,6 +137,7 @@ export default async function ComprarVehiclePage({ params, searchParams }: Props
         orderBy: { date: 'desc' },
         take: 10
     })
+    const appointments = appointmentsRaw.map(a => ({ ...a, date: a.date.toISOString() }))
 
     const brandEntity = getBrandEntity(vehicle.brand)
 
